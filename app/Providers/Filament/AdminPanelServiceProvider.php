@@ -32,6 +32,8 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->path('admin')
             ->login(Login::class)
             ->profile()
+            ->brandLogo(asset('images/logo.png'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::Amber,
             ])
