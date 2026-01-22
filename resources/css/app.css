@@ -1,11 +1,173 @@
-@import 'tailwindcss';
+/* 1. Import Tailwind */
+@import "tailwindcss";
 
+/* 2. Import Filament CSS (REQUIRED for color variables) */
+@import "../../vendor/filament/support/resources/css/index.css";
+@import "../../vendor/filament/actions/resources/css/index.css";
+@import "../../vendor/filament/forms/resources/css/index.css";
+@import "../../vendor/filament/infolists/resources/css/index.css";
+@import "../../vendor/filament/notifications/resources/css/index.css";
+@import "../../vendor/filament/schemas/resources/css/index.css";
+@import "../../vendor/filament/tables/resources/css/index.css";
+@import "../../vendor/filament/widgets/resources/css/index.css";
+
+/* 3. Tailwind v4 configuration */
+@variant dark (&:where(.dark, .dark *));
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* 4. Theme configuration */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Fonts */
+    --font-sans:
+        "Figtree", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP",
+        ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji";
+    --font-heading:
+        "Poppins", "Roboto", "Noto Sans Hebrew", "Noto Kufi Arabic", "Noto Sans JP",
+        ui-sans-serif, system-ui, sans-serif;
+
+    /* Primary Colors - AMBER (Beszerzés module) */
+    --color-primary-50: #fffbeb;
+    --color-primary-100: #fef3c7;
+    --color-primary-200: #fde68a;
+    --color-primary-300: #fcd34d;
+    --color-primary-400: #fbbf24;
+    --color-primary-500: #f59e0b;
+    --color-primary-600: #d97706;
+    --color-primary-700: #b45309;
+    --color-primary-800: #92400e;
+    --color-primary-900: #78350f;
+    --color-primary-950: #451a03;
+
+    /* Success */
+    --color-success-500: #10b981;
+    --color-success-600: #059669;
+
+    /* Warning */
+    --color-warning-500: #f59e0b;
+    --color-warning-600: #d97706;
+
+    /* Danger */
+    --color-danger-500: #ef4444;
+    --color-danger-600: #dc2626;
+
+    /* Text Colors */
+    --color-text-primary: #323338;
+    --color-text-secondary: #676879;
+    --color-text-tertiary: #9699a6;
+    --color-text-disabled: #c5c7d0;
+    --color-text-inverse: #ffffff;
+    --color-text-link: #d97706;
+    --color-text-link-hover: #92400e;
+
+    /* Border Colors */
+    --color-border-default: #c5c7d0;
+    --color-border-light: #e6e9ef;
+    --color-border-focus: #d97706;
+    --color-border-error: #ef4444;
+
+    /* Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    /* Transitions */
+    --duration-fast: 70ms;
+    --duration-normal: 100ms;
+    --duration-slow: 150ms;
+    --duration-expressive: 250ms;
+    --duration-dramatic: 400ms;
+
+    --ease-enter: cubic-bezier(0, 0, 0.35, 1);
+    --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+    --ease-transition: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-emphasize: cubic-bezier(0, 0, 0.2, 1.4);
+}
+
+/* 5. Base styles */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* 6. Component utilities */
+@layer components {
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-size: var(--text-sm);
+        font-weight: var(--font-weight-medium);
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--duration-normal) var(--ease-transition);
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: var(--color-primary-600);
+        color: var(--color-text-inverse);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        background-color: var(--color-primary-700);
+    }
+
+    .btn-secondary {
+        background-color: var(--color-surface-secondary);
+        color: var(--color-text-primary);
+        border: 1px solid var(--color-border-default);
+    }
+
+    .card {
+        background-color: var(--color-surface-primary);
+        border: 1px solid var(--color-border-light);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+    }
+}
+
+/* 7. Custom animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+.animate-float-delayed-2 {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 4s;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+}
+
+.animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
 }
