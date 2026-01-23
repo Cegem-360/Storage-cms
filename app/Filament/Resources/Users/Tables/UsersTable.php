@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Models\User;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 
-class UsersTable
+final class UsersTable
 {
     public static function configure(Table $table): Table
     {
@@ -49,5 +55,44 @@ class UsersTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->label(__('Name'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label(__('Email'))
+                    ->searchable()
+                    ->sortable(),
+                IconColumn::make('is_super_admin')
+                    ->label(__('Admin'))
+                    ->boolean(),
+                IconColumn::make('is_active')
+                    ->label(__('Active'))
+                    ->boolean(),
+                TextColumn::make('created_at')
+                    ->label(__('Created'))
+                    ->date()
+                    ->sortable(),
+            ])
+            ->filters([
+                TernaryFilter::make('is_active')
+                    ->label(__('Active'))
+                    ->trueLabel(__('Active only'))
+                    ->falseLabel(__('Inactive only')),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (User $record): string => route('filament.admin.resources.users.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('name', 'asc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

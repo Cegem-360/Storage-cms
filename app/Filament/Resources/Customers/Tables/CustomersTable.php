@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Customers\Tables;
 
+use App\Models\Customer;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -65,5 +68,34 @@ final class CustomersTable
                     RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('email')
+                    ->label(__('Email'))
+                    ->searchable(),
+                TextColumn::make('phone')
+                    ->label(__('Phone'))
+                    ->searchable(),
+                TextColumn::make('company')
+                    ->label(__('Company'))
+                    ->searchable(),
+                TextColumn::make('type')
+                    ->badge(),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (Customer $record): string => route('filament.admin.resources.customers.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('name', 'asc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

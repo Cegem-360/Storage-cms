@@ -6,10 +6,13 @@ namespace App\Filament\Resources\IntrastatDeclarations\Tables;
 
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
+use App\Models\IntrastatDeclaration;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -92,5 +95,51 @@ final class IntrastatDeclarationsTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('declaration_number')
+                    ->label(__('Declaration #'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('direction')
+                    ->label(__('Direction'))
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('reference_period')
+                    ->label(__('Period'))
+                    ->getStateUsing(fn ($record) => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
+                    ->sortable(),
+                TextColumn::make('intrastat_lines_count')
+                    ->label(__('Lines'))
+                    ->counts('intrastatLines')
+                    ->badge()
+                    ->color('gray'),
+                TextColumn::make('status')
+                    ->label(__('Status'))
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('total_invoice_value')
+                    ->label(__('Total Value'))
+                    ->money('EUR')
+                    ->sortable(),
+            ])
+            ->filters([
+                SelectFilter::make('direction')
+                    ->options(IntrastatDirection::class),
+                SelectFilter::make('status')
+                    ->options(IntrastatStatus::class),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (IntrastatDeclaration $record): string => route('filament.admin.resources.intrastat-declarations.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('declaration_date', 'desc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

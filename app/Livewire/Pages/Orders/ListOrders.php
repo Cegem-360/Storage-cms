@@ -4,89 +4,35 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Orders;
 
-use App\Enums\OrderStatus;
+use App\Filament\Resources\Orders\Tables\OrdersTable;
 use App\Models\Order;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('components.layouts.dashboard')]
-final class ListOrders extends Component
+final class ListOrders extends Component implements HasActions, HasSchemas, HasTable
 {
-    use WithPagination;
+    use InteractsWithActions;
+    use InteractsWithSchemas;
+    use InteractsWithTable;
 
-    #[Url]
-    public string $search = '';
-
-    #[Url]
-    public string $sortBy = 'created_at';
-
-    #[Url]
-    public string $sortDir = 'desc';
-
-    #[Url]
-    public int $perPage = 10;
-
-    #[Url]
-    public string $status = '';
-
-    public function sort(string $column): void
+    public function table(Table $table): Table
     {
-        if ($this->sortBy === $column) {
-            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $column;
-            $this->sortDir = 'asc';
-        }
-        $this->resetPage();
-    }
-
-    public function updatedSearch(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedPerPage(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedStatus(): void
-    {
-        $this->resetPage();
+        return OrdersTable::configureDashboard(
+            $table->query(Order::query()->with(['supplier', 'customer']))
+        );
     }
 
     public function render(): View
     {
-        return view('livewire.pages.orders.list-orders', [
-            'orders' => $this->getOrders(),
-            'statuses' => OrderStatus::cases(),
-        ]);
-    }
-
-    private function getOrders(): LengthAwarePaginator
-    {
-        return Order::query()
-            ->with(['supplier', 'customer'])
-            ->when($this->search !== '', function ($query) {
-                $search = '%'.$this->search.'%';
-                $query->where(function ($q) use ($search) {
-                    $q->where('order_number', 'like', $search)
-                        ->orWhereHas('supplier', function ($supplierQuery) use ($search) {
-                            $supplierQuery->where('name', 'like', $search);
-                        })
-                        ->orWhereHas('customer', function ($customerQuery) use ($search) {
-                            $customerQuery->where('name', 'like', $search);
-                        });
-                });
-            })
-            ->when($this->status !== '', function ($query) {
-                $query->where('status', $this->status);
-            })
-            ->orderBy($this->sortBy, $this->sortDir)
-            ->paginate($this->perPage);
+        return view('livewire.pages.orders.list-orders');
     }
 }

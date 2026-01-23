@@ -1,19 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Suppliers\Tables;
 
+use App\Models\Supplier;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class SuppliersTable
+final class SuppliersTable
 {
     public static function configure(Table $table): Table
     {
@@ -73,5 +78,36 @@ class SuppliersTable
                     RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('company_name')
+                    ->label(__('Name'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('contact_person')
+                    ->label(__('Contact'))
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('email')
+                    ->label(__('Email'))
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('products_count')
+                    ->label(__('Products'))
+                    ->counts('products')
+                    ->sortable(),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (Supplier $record): string => route('filament.admin.resources.suppliers.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('company_name', 'asc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

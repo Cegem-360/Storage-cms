@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Receipts\Tables;
 
+use App\Models\Receipt;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class ReceiptsTable
+final class ReceiptsTable
 {
     public static function configure(Table $table): Table
     {
@@ -61,5 +66,35 @@ class ReceiptsTable
                     RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('receipt_number')
+                    ->label(__('Receipt #'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('order.order_number')
+                    ->label(__('Order'))
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('warehouse.name')
+                    ->label(__('Warehouse'))
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->label(__('Date'))
+                    ->date()
+                    ->sortable(),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (Receipt $record): string => route('filament.admin.resources.receipts.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

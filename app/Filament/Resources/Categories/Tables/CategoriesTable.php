@@ -1,18 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Categories\Tables;
 
+use App\Models\Category;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
-class CategoriesTable
+final class CategoriesTable
 {
     public static function configure(Table $table): Table
     {
@@ -51,5 +56,35 @@ class CategoriesTable
                     RestoreBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('name')
+                    ->label(__('Name'))
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('description')
+                    ->label(__('Description'))
+                    ->limit(50),
+                TextColumn::make('products_count')
+                    ->label(__('Products'))
+                    ->counts('products')
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label(__('Created'))
+                    ->date()
+                    ->sortable(),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (Category $record): string => route('filament.admin.resources.categories.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('name', 'asc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

@@ -4,73 +4,35 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Suppliers;
 
+use App\Filament\Resources\Suppliers\Tables\SuppliersTable;
 use App\Models\Supplier;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('components.layouts.dashboard')]
-final class ListSuppliers extends Component
+final class ListSuppliers extends Component implements HasActions, HasSchemas, HasTable
 {
-    use WithPagination;
+    use InteractsWithActions;
+    use InteractsWithSchemas;
+    use InteractsWithTable;
 
-    #[Url]
-    public string $search = '';
-
-    #[Url]
-    public string $sortBy = 'name';
-
-    #[Url]
-    public string $sortDir = 'asc';
-
-    #[Url]
-    public int $perPage = 10;
-
-    public function sort(string $column): void
+    public function table(Table $table): Table
     {
-        if ($this->sortBy === $column) {
-            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $column;
-            $this->sortDir = 'asc';
-        }
-        $this->resetPage();
-    }
-
-    public function updatedSearch(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedPerPage(): void
-    {
-        $this->resetPage();
+        return SuppliersTable::configureDashboard(
+            $table->query(Supplier::query())
+        );
     }
 
     public function render(): View
     {
-        return view('livewire.pages.suppliers.list-suppliers', [
-            'suppliers' => $this->getSuppliers(),
-        ]);
-    }
-
-    private function getSuppliers(): LengthAwarePaginator
-    {
-        return Supplier::query()
-            ->withCount('products')
-            ->when($this->search !== '', function ($query) {
-                $search = '%'.$this->search.'%';
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', $search)
-                        ->orWhere('email', 'like', $search)
-                        ->orWhere('phone', 'like', $search)
-                        ->orWhere('contact_person', 'like', $search);
-                });
-            })
-            ->orderBy($this->sortBy, $this->sortDir)
-            ->paginate($this->perPage);
+        return view('livewire.pages.suppliers.list-suppliers');
     }
 }

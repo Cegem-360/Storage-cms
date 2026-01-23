@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Filament\Resources\CnCodes\Tables;
 
 use App\Filament\Resources\CnCodes\Exports\CnCodeExport;
+use App\Models\CnCode;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportBulkAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -69,5 +72,38 @@ final class CnCodesTable
                 ]),
             ])
             ->defaultSort('code', 'asc');
+    }
+
+    public static function configureDashboard(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('code')
+                    ->label(__('Code'))
+                    ->searchable()
+                    ->sortable()
+                    ->weight('bold'),
+                TextColumn::make('description')
+                    ->label(__('Description'))
+                    ->searchable()
+                    ->limit(60)
+                    ->tooltip(fn (TextColumn $column): ?string => $column->getState()),
+                TextColumn::make('supplementary_unit')
+                    ->label(__('Supplementary Unit'))
+                    ->placeholder('—'),
+                TextColumn::make('intrastat_lines_count')
+                    ->label(__('Usage'))
+                    ->counts('intrastatLines')
+                    ->badge()
+                    ->color('gray'),
+            ])
+            ->recordActions([
+                Action::make('edit')
+                    ->url(fn (CnCode $record): string => route('filament.admin.resources.cn-codes.edit', $record))
+                    ->icon(Heroicon::PencilSquare)
+                    ->color('gray'),
+            ])
+            ->defaultSort('code', 'asc')
+            ->paginated([10, 25, 50, 100]);
     }
 }

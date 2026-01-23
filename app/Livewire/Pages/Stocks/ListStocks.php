@@ -4,87 +4,35 @@ declare(strict_types=1);
 
 namespace App\Livewire\Pages\Stocks;
 
+use App\Filament\Resources\Stocks\Tables\StocksTable;
 use App\Models\Stock;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 #[Layout('components.layouts.dashboard')]
-final class ListStocks extends Component
+final class ListStocks extends Component implements HasActions, HasSchemas, HasTable
 {
-    use WithPagination;
+    use InteractsWithActions;
+    use InteractsWithSchemas;
+    use InteractsWithTable;
 
-    #[Url]
-    public string $search = '';
-
-    #[Url]
-    public string $sortBy = 'quantity';
-
-    #[Url]
-    public string $sortDir = 'desc';
-
-    #[Url]
-    public int $perPage = 10;
-
-    #[Url]
-    public string $lowStock = '';
-
-    public function sort(string $column): void
+    public function table(Table $table): Table
     {
-        if ($this->sortBy === $column) {
-            $this->sortDir = $this->sortDir === 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortBy = $column;
-            $this->sortDir = 'asc';
-        }
-        $this->resetPage();
-    }
-
-    public function updatedSearch(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedPerPage(): void
-    {
-        $this->resetPage();
-    }
-
-    public function updatedLowStock(): void
-    {
-        $this->resetPage();
+        return StocksTable::configureDashboard(
+            $table->query(Stock::query()->with(['product', 'warehouse']))
+        );
     }
 
     public function render(): View
     {
-        return view('livewire.pages.stocks.list-stocks', [
-            'stocks' => $this->getStocks(),
-        ]);
-    }
-
-    private function getStocks(): LengthAwarePaginator
-    {
-        return Stock::query()
-            ->with(['product', 'warehouse'])
-            ->when($this->search !== '', function ($query) {
-                $search = '%'.$this->search.'%';
-                $query->where(function ($q) use ($search) {
-                    $q->whereHas('product', function ($productQuery) use ($search) {
-                        $productQuery->where('name', 'like', $search)
-                            ->orWhere('sku', 'like', $search);
-                    })
-                        ->orWhereHas('warehouse', function ($warehouseQuery) use ($search) {
-                            $warehouseQuery->where('name', 'like', $search);
-                        });
-                });
-            })
-            ->when($this->lowStock === 'yes', function ($query) {
-                $query->whereColumn('quantity', '<', 'minimum_quantity');
-            })
-            ->orderBy($this->sortBy, $this->sortDir)
-            ->paginate($this->perPage);
+        return view('livewire.pages.stocks.list-stocks');
     }
 }
