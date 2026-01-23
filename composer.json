@@ -19,7 +19,7 @@
     "require-dev": {
         "driftingly/rector-laravel": "^2.1.9",
         "fakerphp/faker": "^1.24.1",
-        "filament/blueprint": "^1.0.1",
+        "filament/blueprint": "^1.0",
         "laravel/boost": "^1.8",
         "laravel/pail": "^1.2.4",
         "laravel/pint": "^1.27",
@@ -94,5 +94,5 @@
             "type": "composer",
             "url": "https://packages.filamentphp.com/composer"
         }
-    ]
+        ]
 }
