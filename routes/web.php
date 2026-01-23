@@ -5,6 +5,26 @@ declare(strict_types=1);
 use App\Livewire\Page\DashboardPage;
 use App\Livewire\Page\ProfilePage;
 use App\Livewire\Page\SettingsPage;
+use App\Livewire\Pages\Batches\ListBatches;
+use App\Livewire\Pages\Categories\ListCategories;
+use App\Livewire\Pages\CnCodes\ListCnCodes;
+use App\Livewire\Pages\Customers\ListCustomers;
+use App\Livewire\Pages\Employees\ListEmployees;
+use App\Livewire\Pages\Intrastat\ListDeclarations;
+use App\Livewire\Pages\Intrastat\ListInbounds;
+use App\Livewire\Pages\Intrastat\ListOutbounds;
+use App\Livewire\Pages\Inventories\ListInventories;
+use App\Livewire\Pages\Orders\ListOrders;
+use App\Livewire\Pages\Products\ListProducts;
+use App\Livewire\Pages\Receipts\ListReceipts;
+use App\Livewire\Pages\Reports\ExpectedArrivals;
+use App\Livewire\Pages\Reports\StockOverview;
+use App\Livewire\Pages\Reports\ValuationReport;
+use App\Livewire\Pages\ReturnDeliveries\ListReturnDeliveries;
+use App\Livewire\Pages\Stocks\ListStocks;
+use App\Livewire\Pages\Suppliers\ListSuppliers;
+use App\Livewire\Pages\Users\ListUsers;
+use App\Livewire\Pages\Warehouses\ListWarehouses;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -38,19 +58,33 @@ Route::middleware(['auth'])->group(function (): void {
     Route::get('/dashboard/profile', ProfilePage::class)->name('dashboard.profile');
     Route::get('/dashboard/settings', SettingsPage::class)->name('dashboard.settings');
 
-    // Inventory routes - redirect to Filament resources
-    Route::get('/dashboard/products', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.products.index'))->name('dashboard.products');
-    Route::get('/dashboard/categories', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.categories.index'))->name('dashboard.categories');
-    Route::get('/dashboard/warehouses', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.warehouses.index'))->name('dashboard.warehouses');
-    Route::get('/dashboard/stocks', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.stocks.index'))->name('dashboard.stocks');
+    // Inventory Management routes - Livewire pages
+    Route::get('/dashboard/batches', ListBatches::class)->name('dashboard.batches');
+    Route::get('/dashboard/categories', ListCategories::class)->name('dashboard.categories');
+    Route::get('/dashboard/inventories', ListInventories::class)->name('dashboard.inventories');
+    Route::get('/dashboard/products', ListProducts::class)->name('dashboard.products');
+    Route::get('/dashboard/stocks', ListStocks::class)->name('dashboard.stocks');
+    Route::get('/dashboard/warehouses', ListWarehouses::class)->name('dashboard.warehouses');
+    Route::get('/dashboard/return-deliveries', ListReturnDeliveries::class)->name('dashboard.return-deliveries');
+    Route::get('/dashboard/suppliers', ListSuppliers::class)->name('dashboard.suppliers');
 
-    // Operations routes - redirect to Filament resources
-    Route::get('/dashboard/orders', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.orders.index'))->name('dashboard.orders');
-    Route::get('/dashboard/receipts', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.receipts.index'))->name('dashboard.receipts');
-    Route::get('/dashboard/movements', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.stock-movements.index'))->name('dashboard.movements');
-    Route::get('/dashboard/inventories', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.inventories.index'))->name('dashboard.inventories');
+    // Reports - Livewire pages
+    Route::get('/dashboard/stock-overview', StockOverview::class)->name('dashboard.stock-overview');
+    Route::get('/dashboard/expected-arrivals', ExpectedArrivals::class)->name('dashboard.expected-arrivals');
+    Route::get('/dashboard/valuation-report', ValuationReport::class)->name('dashboard.valuation-report');
 
-    // Partners routes - redirect to Filament resources
-    Route::get('/dashboard/suppliers', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.suppliers.index'))->name('dashboard.suppliers');
-    Route::get('/dashboard/customers', fn (): Redirector|RedirectResponse => to_route('filament.admin.resources.customers.index'))->name('dashboard.customers');
+    // Sales routes - Livewire pages
+    Route::get('/dashboard/customers', ListCustomers::class)->name('dashboard.customers');
+    Route::get('/dashboard/orders', ListOrders::class)->name('dashboard.orders');
+    Route::get('/dashboard/receipts', ListReceipts::class)->name('dashboard.receipts');
+
+    // Intrastat routes - Livewire pages
+    Route::get('/dashboard/cn-codes', ListCnCodes::class)->name('dashboard.cn-codes');
+    Route::get('/dashboard/intrastat-declarations', ListDeclarations::class)->name('dashboard.intrastat-declarations');
+    Route::get('/dashboard/intrastat-inbounds', ListInbounds::class)->name('dashboard.intrastat-inbounds');
+    Route::get('/dashboard/intrastat-outbounds', ListOutbounds::class)->name('dashboard.intrastat-outbounds');
+
+    // Administration routes - Livewire pages
+    Route::get('/dashboard/users', ListUsers::class)->name('dashboard.users');
+    Route::get('/dashboard/employees', ListEmployees::class)->name('dashboard.employees');
 });
