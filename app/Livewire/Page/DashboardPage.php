@@ -30,19 +30,19 @@ final class DashboardPage extends Component
     #[Computed]
     public function totalStock(): int
     {
-        return Stock::sum('quantity');
+        return (int) Stock::sum('quantity');
     }
 
     #[Computed]
     public function lowStockCount(): int
     {
-        return Stock::whereColumn('quantity', '<', 'minimum_quantity')->count();
+        return (int) Stock::whereColumn('quantity', '<', 'minimum_quantity')->count();
     }
 
     #[Computed]
     public function pendingOrders(): int
     {
-        return Order::whereIn('status', [OrderStatus::DRAFT, OrderStatus::CONFIRMED, OrderStatus::PROCESSING])->count();
+        return (int) Order::whereIn('status', [OrderStatus::DRAFT, OrderStatus::CONFIRMED, OrderStatus::PROCESSING])->count();
     }
 
     #[Computed]
@@ -74,11 +74,11 @@ final class DashboardPage extends Component
             $date = Carbon::now()->subDays($i);
             $labels[] = $date->format('M d');
 
-            $inboundData[] = StockMovement::whereDate('created_at', $date)
+            $inboundData[] = (int) StockMovement::whereDate('created_at', $date)
                 ->where('quantity', '>', 0)
                 ->sum('quantity');
 
-            $outboundData[] = abs(StockMovement::whereDate('created_at', $date)
+            $outboundData[] = abs((int) StockMovement::whereDate('created_at', $date)
                 ->where('quantity', '<', 0)
                 ->sum('quantity'));
         }
