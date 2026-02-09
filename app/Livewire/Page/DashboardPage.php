@@ -36,7 +36,7 @@ final class DashboardPage extends Component
     #[Computed]
     public function lowStockCount(): int
     {
-        return (int) Stock::whereColumn('quantity', '<', 'minimum_quantity')->count();
+        return (int) Stock::whereColumn('quantity', '<', 'minimum_stock')->count();
     }
 
     #[Computed]
@@ -49,7 +49,7 @@ final class DashboardPage extends Component
     public function lowStockProducts()
     {
         return Stock::with(['product', 'warehouse'])
-            ->whereColumn('quantity', '<', 'minimum_quantity')
+            ->whereColumn('quantity', '<', 'minimum_stock')
             ->limit(5)
             ->get();
     }

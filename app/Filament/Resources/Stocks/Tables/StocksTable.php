@@ -147,8 +147,8 @@ final class StocksTable
                 TernaryFilter::make('low_stock')
                     ->label(__('Low stock only'))
                     ->queries(
-                        true: fn ($query) => $query->whereColumn('quantity', '<', 'minimum_quantity'),
-                        false: fn ($query) => $query->whereColumn('quantity', '>=', 'minimum_quantity'),
+                        true: fn ($query) => $query->whereColumn('quantity', '<', 'minimum_stock'),
+                        false: fn ($query) => $query->whereColumn('quantity', '>=', 'minimum_stock'),
                     ),
             ])
             ->recordActions([

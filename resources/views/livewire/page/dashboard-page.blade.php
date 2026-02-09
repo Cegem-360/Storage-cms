@@ -114,7 +114,7 @@
                                     <td class="py-3 px-2 text-gray-900 dark:text-white">{{ $stock->product?->name }}</td>
                                     <td class="py-3 px-2 text-gray-600 dark:text-gray-400">{{ $stock->warehouse?->name }}</td>
                                     <td class="py-3 px-2 text-right text-red-600 dark:text-red-400 font-semibold">{{ $stock->quantity }}</td>
-                                    <td class="py-3 px-2 text-right text-gray-600 dark:text-gray-400">{{ $stock->minimum_quantity }}</td>
+                                    <td class="py-3 px-2 text-right text-gray-600 dark:text-gray-400">{{ $stock->minimum_stock }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

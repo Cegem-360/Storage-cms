@@ -42,7 +42,7 @@
         @php
             $warehouse = $stocks->first()?->warehouse;
             $totalQuantity = $stocks->sum('quantity');
-            $lowStockCount = $stocks->filter(fn($s) => $s->quantity < $s->minimum_quantity)->count();
+            $lowStockCount = $stocks->filter(fn($s) => $s->quantity < $s->minimum_stock)->count();
         @endphp
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
             {{-- Warehouse Header --}}
@@ -82,7 +82,7 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @foreach($stocks as $stock)
                             @php
-                                $isLowStock = $stock->quantity < $stock->minimum_quantity;
+                                $isLowStock = $stock->quantity < $stock->minimum_stock;
                             @endphp
                             <tr class="{{ $isLowStock ? 'bg-red-50 dark:bg-red-900/10' : '' }} hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
                                 <td class="px-6 py-4 text-sm font-mono text-gray-600 dark:text-gray-300">{{ $stock->product?->sku ?? '-' }}</td>
@@ -90,7 +90,7 @@
                                 <td class="px-6 py-4 text-sm text-right {{ $isLowStock ? 'text-red-600 dark:text-red-400 font-medium' : 'text-gray-900 dark:text-white' }}">
                                     {{ number_format($stock->quantity, 0, ',', ' ') }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-right text-gray-600 dark:text-gray-300">{{ number_format($stock->minimum_quantity, 0, ',', ' ') }}</td>
+                                <td class="px-6 py-4 text-sm text-right text-gray-600 dark:text-gray-300">{{ number_format($stock->minimum_stock, 0, ',', ' ') }}</td>
                                 <td class="px-6 py-4">
                                     @if($isLowStock)
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400">
