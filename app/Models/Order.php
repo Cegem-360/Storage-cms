@@ -9,7 +9,6 @@ use App\Enums\OrderType;
 use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -54,12 +53,6 @@ final class Order extends Model
     public function receipts(): HasMany
     {
         return $this->hasMany(Receipt::class);
-    }
-
-    // Helper methods
-    public function getOrderLines(): Collection
-    {
-        return $this->orderLines;
     }
 
     public function addLine(OrderLine $line): void

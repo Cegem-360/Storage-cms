@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Stock;
 use App\Models\StockTransaction;
 use App\Models\Warehouse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 final class InventoryValuationService
@@ -29,76 +30,27 @@ final class InventoryValuationService
 
     public function calculateFifoValue(Stock $stock): float
     {
-        $remainingQuantity = $stock->quantity;
-        $totalValue = 0.0;
-
-        $transactions = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            if ($remainingQuantity <= 0) {
-                break;
-            }
-
-            $quantityToUse = min($transaction->remaining_quantity, $remainingQuantity);
-            $totalValue += $quantityToUse * (float) $transaction->unit_cost;
-            $remainingQuantity -= $quantityToUse;
-        }
-
-        return $totalValue;
+        return $this->calculateOrderedValue($stock, 'asc');
     }
 
     public function calculateLifoValue(Stock $stock): float
     {
-        $remainingQuantity = $stock->quantity;
-        $totalValue = 0.0;
-
-        $transactions = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        foreach ($transactions as $transaction) {
-            if ($remainingQuantity <= 0) {
-                break;
-            }
-
-            $quantityToUse = min($transaction->remaining_quantity, $remainingQuantity);
-            $totalValue += $quantityToUse * (float) $transaction->unit_cost;
-            $remainingQuantity -= $quantityToUse;
-        }
-
-        return $totalValue;
+        return $this->calculateOrderedValue($stock, 'desc');
     }
 
     public function calculateWeightedAverageValue(Stock $stock): float
     {
-        $totalQuantity = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->sum('remaining_quantity');
+        $transactions = $this->inboundTransactionsQuery($stock)->get();
+
+        $totalQuantity = $transactions->sum('remaining_quantity');
 
         if ($totalQuantity === 0) {
             return 0.0;
         }
 
-        $totalCost = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->get()
-            ->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
+        $totalCost = $transactions->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
 
-        $averageCost = $totalCost / $totalQuantity;
-
-        return $stock->quantity * $averageCost;
+        return $stock->quantity * ($totalCost / $totalQuantity);
     }
 
     public function calculateStandardCostValue(Stock $stock): float
@@ -170,105 +122,27 @@ final class InventoryValuationService
 
     private function consumeFifo(Stock $stock, int $quantity, ?string $referenceType, ?int $referenceId, ?string $notes): Collection
     {
-        $remainingToConsume = $quantity;
-        $transactions = collect();
-
-        $inTransactions = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->orderBy('created_at', 'asc')
-            ->get();
-
-        foreach ($inTransactions as $inTransaction) {
-            if ($remainingToConsume <= 0) {
-                break;
-            }
-
-            $consumeQty = min($inTransaction->remaining_quantity, $remainingToConsume);
-
-            $outTransaction = StockTransaction::create([
-                'stock_id' => $stock->id,
-                'product_id' => $stock->product_id,
-                'warehouse_id' => $stock->warehouse_id,
-                'type' => StockTransactionType::OUTBOUND,
-                'quantity' => $consumeQty,
-                'unit_cost' => $inTransaction->unit_cost,
-                'total_cost' => $consumeQty * (float) $inTransaction->unit_cost,
-                'remaining_quantity' => 0,
-                'reference_type' => $referenceType,
-                'reference_id' => $referenceId,
-                'notes' => $notes,
-            ]);
-
-            $inTransaction->decrement('remaining_quantity', $consumeQty);
-            $remainingToConsume -= $consumeQty;
-            $transactions->push($outTransaction);
-        }
-
-        return $transactions;
+        return $this->consumeOrdered($stock, $quantity, 'asc', $referenceType, $referenceId, $notes);
     }
 
     private function consumeLifo(Stock $stock, int $quantity, ?string $referenceType, ?int $referenceId, ?string $notes): Collection
     {
-        $remainingToConsume = $quantity;
-        $transactions = collect();
-
-        $inTransactions = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        foreach ($inTransactions as $inTransaction) {
-            if ($remainingToConsume <= 0) {
-                break;
-            }
-
-            $consumeQty = min($inTransaction->remaining_quantity, $remainingToConsume);
-
-            $outTransaction = StockTransaction::create([
-                'stock_id' => $stock->id,
-                'product_id' => $stock->product_id,
-                'warehouse_id' => $stock->warehouse_id,
-                'type' => StockTransactionType::OUTBOUND,
-                'quantity' => $consumeQty,
-                'unit_cost' => $inTransaction->unit_cost,
-                'total_cost' => $consumeQty * (float) $inTransaction->unit_cost,
-                'remaining_quantity' => 0,
-                'reference_type' => $referenceType,
-                'reference_id' => $referenceId,
-                'notes' => $notes,
-            ]);
-
-            $inTransaction->decrement('remaining_quantity', $consumeQty);
-            $remainingToConsume -= $consumeQty;
-            $transactions->push($outTransaction);
-        }
-
-        return $transactions;
+        return $this->consumeOrdered($stock, $quantity, 'desc', $referenceType, $referenceId, $notes);
     }
 
     private function consumeAverage(Stock $stock, int $quantity, ?string $referenceType, ?int $referenceId, ?string $notes): Collection
     {
-        $totalQuantity = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->sum('remaining_quantity');
+        $inTransactions = $this->inboundTransactionsQuery($stock)
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $totalQuantity = $inTransactions->sum('remaining_quantity');
 
         if ($totalQuantity === 0) {
             return collect();
         }
 
-        $totalCost = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->get()
-            ->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
-
+        $totalCost = $inTransactions->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
         $averageCost = $totalCost / $totalQuantity;
 
         $outTransaction = StockTransaction::create([
@@ -285,14 +159,92 @@ final class InventoryValuationService
             'notes' => $notes,
         ]);
 
-        $inTransactions = StockTransaction::query()
-            ->where('stock_id', $stock->id)
-            ->where('type', StockTransactionType::INBOUND)
-            ->where('remaining_quantity', '>', 0)
-            ->orderBy('created_at', 'asc')
+        $this->decrementRemainingQuantities($inTransactions, $quantity);
+
+        return collect([$outTransaction]);
+    }
+
+    /**
+     * Shared valuation calculation for FIFO (asc) and LIFO (desc) ordering.
+     */
+    private function calculateOrderedValue(Stock $stock, string $direction): float
+    {
+        $remainingQuantity = $stock->quantity;
+        $totalValue = 0.0;
+
+        $transactions = $this->inboundTransactionsQuery($stock)
+            ->orderBy('created_at', $direction)
             ->get();
 
+        foreach ($transactions as $transaction) {
+            if ($remainingQuantity <= 0) {
+                break;
+            }
+
+            $quantityToUse = min($transaction->remaining_quantity, $remainingQuantity);
+            $totalValue += $quantityToUse * (float) $transaction->unit_cost;
+            $remainingQuantity -= $quantityToUse;
+        }
+
+        return $totalValue;
+    }
+
+    /**
+     * Shared consumption logic for FIFO (asc) and LIFO (desc) ordering.
+     */
+    private function consumeOrdered(Stock $stock, int $quantity, string $direction, ?string $referenceType, ?int $referenceId, ?string $notes): Collection
+    {
         $remainingToConsume = $quantity;
+        $transactions = collect();
+
+        $inTransactions = $this->inboundTransactionsQuery($stock)
+            ->orderBy('created_at', $direction)
+            ->get();
+
+        foreach ($inTransactions as $inTransaction) {
+            if ($remainingToConsume <= 0) {
+                break;
+            }
+
+            $consumeQty = min($inTransaction->remaining_quantity, $remainingToConsume);
+
+            $outTransaction = StockTransaction::create([
+                'stock_id' => $stock->id,
+                'product_id' => $stock->product_id,
+                'warehouse_id' => $stock->warehouse_id,
+                'type' => StockTransactionType::OUTBOUND,
+                'quantity' => $consumeQty,
+                'unit_cost' => $inTransaction->unit_cost,
+                'total_cost' => $consumeQty * (float) $inTransaction->unit_cost,
+                'remaining_quantity' => 0,
+                'reference_type' => $referenceType,
+                'reference_id' => $referenceId,
+                'notes' => $notes,
+            ]);
+
+            $inTransaction->decrement('remaining_quantity', $consumeQty);
+            $remainingToConsume -= $consumeQty;
+            $transactions->push($outTransaction);
+        }
+
+        return $transactions;
+    }
+
+    /**
+     * @return Builder<StockTransaction>
+     */
+    private function inboundTransactionsQuery(Stock $stock): Builder
+    {
+        return StockTransaction::query()
+            ->where('stock_id', $stock->id)
+            ->where('type', StockTransactionType::INBOUND)
+            ->where('remaining_quantity', '>', 0);
+    }
+
+    private function decrementRemainingQuantities(Collection $inTransactions, int $quantity): void
+    {
+        $remainingToConsume = $quantity;
+
         foreach ($inTransactions as $inTransaction) {
             if ($remainingToConsume <= 0) {
                 break;
@@ -302,8 +254,6 @@ final class InventoryValuationService
             $inTransaction->decrement('remaining_quantity', $consumeQty);
             $remainingToConsume -= $consumeQty;
         }
-
-        return collect([$outTransaction]);
     }
 
     private function updateStockValue(Stock $stock): void

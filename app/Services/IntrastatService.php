@@ -16,6 +16,7 @@ use App\Models\IntrastatDeclaration;
 use App\Models\IntrastatLine;
 use App\Models\Order;
 use DOMDocument;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use SimpleXMLElement;
 
@@ -27,7 +28,6 @@ final class IntrastatService
         IntrastatDirection $direction
     ): IntrastatDeclaration {
         return DB::transaction(function () use ($year, $month, $direction): IntrastatDeclaration {
-            // Create declaration
             $declaration = IntrastatDeclaration::query()->create([
                 'declaration_number' => $this->generateDeclarationNumber($year, $month, $direction),
                 'direction' => $direction,
@@ -37,15 +37,12 @@ final class IntrastatService
                 'status' => IntrastatStatus::DRAFT,
             ]);
 
-            // Get relevant orders for the period
             $orders = $this->getOrdersForPeriod($year, $month, $direction);
 
-            // Generate lines from orders
             foreach ($orders as $order) {
                 $this->generateLinesFromOrder($declaration, $order, $direction);
             }
 
-            // Calculate totals
             $declaration->calculateTotals();
 
             return $declaration;
@@ -295,17 +292,16 @@ final class IntrastatService
         int $month,
         IntrastatDirection $direction
     ): string {
-        $monthStr = mb_str_pad((string) $month, 2, '0', STR_PAD_LEFT);
         $dirCode = $direction === IntrastatDirection::ARRIVAL ? 'A' : 'D';
 
-        return "INTRASTAT-{$year}{$monthStr}-{$dirCode}";
+        return sprintf('INTRASTAT-%d%02d-%s', $year, $month, $dirCode);
     }
 
     private function getOrdersForPeriod(
         int $year,
         int $month,
         IntrastatDirection $direction
-    ) {
+    ): Collection {
         $orderType = $direction === IntrastatDirection::ARRIVAL
             ? OrderType::PURCHASE
             : OrderType::SALE;
@@ -324,34 +320,24 @@ final class IntrastatService
         Order $order,
         IntrastatDirection $direction
     ): void {
+        if ($direction === IntrastatDirection::ARRIVAL && (! $order->supplier || ! $order->supplier->is_eu_member || $order->supplier->country_code === CountryCode::HU)) {
+            return;
+        }
+
+        if ($direction === IntrastatDirection::DISPATCH && ! $order->customer) {
+            return;
+        }
+
         foreach ($order->orderLines as $orderLine) {
             $product = $orderLine->product;
-            // Skip if product doesn't have CN code or is not from/to EU
-            if (! $product) {
-                continue;
-            }
-            if (! $product->cn_code) {
-                continue;
-            }
 
-            // For purchases (arrival), check if supplier is from EU
-            if ($direction === IntrastatDirection::ARRIVAL && (! $order->supplier || ! $order->supplier->is_eu_member || $order->supplier->country_code === CountryCode::HU)) {
+            if (! $product?->cn_code) {
                 continue;
-            }
-
-            // For sales (dispatch), check if customer is from EU
-            if ($direction === IntrastatDirection::DISPATCH) {
-                if (! $order->customer) {
-                    continue;
-                }
-                // Would need customer country check here if we had that field
             }
 
             $netMass = $product->net_weight_kg
                 ? $product->net_weight_kg * $orderLine->quantity
                 : 0;
-
-            $lineTotal = $orderLine->subtotal;
 
             IntrastatLine::query()->create([
                 'intrastat_declaration_id' => $declaration->id,
@@ -363,8 +349,8 @@ final class IntrastatService
                 'net_mass' => $netMass,
                 'supplementary_unit' => $product->supplementary_unit,
                 'supplementary_quantity' => $product->supplementary_unit ? $orderLine->quantity : null,
-                'invoice_value' => $lineTotal,
-                'statistical_value' => $lineTotal, // Simplified: same as invoice value
+                'invoice_value' => $orderLine->subtotal,
+                'statistical_value' => $orderLine->subtotal,
                 'country_of_origin' => $product->country_of_origin ?? 'HU',
                 'country_of_consignment' => $direction === IntrastatDirection::ARRIVAL
                     ? ($order->supplier?->country_code ?? 'HU')

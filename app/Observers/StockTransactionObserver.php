@@ -13,33 +13,32 @@ use App\Enums\StockTransactionType;
 use App\Models\IntrastatDeclaration;
 use App\Models\IntrastatLine;
 use App\Models\Order;
-use App\Models\Stock;
 use App\Models\StockTransaction;
 
 final class StockTransactionObserver
 {
     public function created(StockTransaction $stockTransaction): void
     {
-        // Only create Intrastat lines for inbound stock transactions (purchases from EU)
         if ($stockTransaction->type !== StockTransactionType::INBOUND) {
             return;
         }
 
-        // Check if this transaction is related to an order
-        if ($stockTransaction->reference_type === Order::class && $stockTransaction->reference_id) {
-            $order = Order::find($stockTransaction->reference_id);
-
-            if (! $order || ! $order->supplier || ! $order->supplier->eu_tax_number) {
-                return;
-            }
-
-            $this->createInboundIntrastatLine($stockTransaction, $order);
+        if ($stockTransaction->reference_type !== Order::class || ! $stockTransaction->reference_id) {
+            return;
         }
+
+        /** @var Order|null $order */
+        $order = Order::query()->find($stockTransaction->reference_id);
+
+        if (! $order?->supplier?->eu_tax_number) {
+            return;
+        }
+
+        $this->createInboundIntrastatLine($stockTransaction, $order);
     }
 
     private function createInboundIntrastatLine(StockTransaction $stockTransaction, Order $order): void
     {
-        // Skip products without CN code - required by KSH
         if (! $stockTransaction->product->cn_code) {
             return;
         }

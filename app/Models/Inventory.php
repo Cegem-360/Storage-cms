@@ -46,13 +46,29 @@ final class Inventory extends Model
     public function addLine(InventoryLine $line): void
     {
         $this->inventoryLines()->save($line);
-        $this->calculateVariance();
+        $this->refreshVarianceData();
     }
 
     public function removeLine(InventoryLine $line): void
     {
         $line->delete();
-        $this->calculateVariance();
+        $this->refreshVarianceData();
+    }
+
+    /**
+     * Refresh the in-memory inventory lines so virtual variance columns are up to date.
+     */
+    public function refreshVarianceData(): void
+    {
+        $this->load('inventoryLines');
+    }
+
+    /**
+     * @deprecated Use refreshVarianceData() instead.
+     */
+    public function calculateVariance(): void
+    {
+        $this->refreshVarianceData();
     }
 
     public function complete(): void
@@ -97,7 +113,6 @@ final class Inventory extends Model
             'status' => InventoryStatus::class,
             'type' => InventoryType::class,
             'inventory_date' => 'date',
-
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Enums\ProductStatus;
 use App\Enums\UnitType;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -63,8 +64,10 @@ final class Product extends Model
         return $this->hasMany(SupplierPrice::class);
     }
 
-    // Helper methods
-    public function getActiveSupplierPrices()
+    /**
+     * @return Collection<int, SupplierPrice>
+     */
+    public function getActiveSupplierPrices(): Collection
     {
         return $this->supplierPrices()
             ->where('is_active', true)
@@ -87,7 +90,6 @@ final class Product extends Model
             ->first();
     }
 
-    // Helper methods
     public function isAvailable(): bool
     {
         return $this->stocks()->sum('quantity') > 0;
@@ -110,7 +112,10 @@ final class Product extends Model
         return $this->getTotalStock() <= $this->reorder_point;
     }
 
-    public function getExpectedArrivals()
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getExpectedArrivals(): Collection
     {
         return Order::query()
             ->whereHas('orderLines', fn ($query) => $query->where('product_id', $this->id))
@@ -128,15 +133,9 @@ final class Product extends Model
 
     public function getTotalExpectedQuantity(): int
     {
-        $total = 0;
-
-        foreach ($this->getExpectedArrivals() as $order) {
-            foreach ($order->orderLines as $line) {
-                $total += $line->quantity;
-            }
-        }
-
-        return $total;
+        return (int) $this->getExpectedArrivals()
+            ->flatMap(fn (Order $order) => $order->orderLines)
+            ->sum('quantity');
     }
 
     protected function casts(): array

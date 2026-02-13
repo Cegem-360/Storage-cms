@@ -26,13 +26,20 @@ final class StockObserver
 
     private function checkStockLevels(Stock $stock): void
     {
+        $isLowStock = $stock->isLowStock() && $stock->quantity > 0;
+        $isOverstock = $stock->maximum_stock > 0 && $stock->quantity > $stock->maximum_stock;
+
+        if (! $isLowStock && ! $isOverstock) {
+            return;
+        }
+
         $users = User::query()->where('is_super_admin', true)->get();
 
-        if ($stock->isLowStock() && $stock->quantity > 0) {
+        if ($isLowStock) {
             Notification::send($users, new LowStockAlert($stock));
         }
 
-        if ($stock->quantity > $stock->maximum_stock) {
+        if ($isOverstock) {
             Notification::send($users, new OverstockAlert($stock));
         }
     }

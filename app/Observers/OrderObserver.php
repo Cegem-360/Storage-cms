@@ -38,22 +38,52 @@ final class OrderObserver
 
     private function createInboundIntrastatLines(Order $order): void
     {
-        // Check if supplier has EU tax number (indicating EU supplier)
         if (! $order->supplier->eu_tax_number) {
             return;
         }
 
-        $declaration = $this->getOrCreateDeclaration(IntrastatDirection::ARRIVAL, $order->delivery_date);
+        $supplierCountry = $this->extractCountryCode($order->supplier->headquarters);
+
+        $this->createIntrastatLinesForOrder(
+            order: $order,
+            direction: IntrastatDirection::ARRIVAL,
+            countryOfConsignment: $supplierCountry ?? 'HU',
+            countryOfDestination: 'HU',
+            countryOfOrigin: $supplierCountry,
+        );
+    }
+
+    private function createOutboundIntrastatLines(Order $order): void
+    {
+        $customerCountry = $this->extractCountryCode($order->shipping_address);
+
+        if (! $customerCountry || ! $this->isEuCountry($customerCountry)) {
+            return;
+        }
+
+        $this->createIntrastatLinesForOrder(
+            order: $order,
+            direction: IntrastatDirection::DISPATCH,
+            countryOfConsignment: 'HU',
+            countryOfDestination: $customerCountry,
+        );
+    }
+
+    private function createIntrastatLinesForOrder(
+        Order $order,
+        IntrastatDirection $direction,
+        string $countryOfConsignment,
+        string $countryOfDestination,
+        ?string $countryOfOrigin = null,
+    ): void {
+        $declaration = $this->getOrCreateDeclaration($direction, $order->delivery_date);
 
         foreach ($order->orderLines as $orderLine) {
-            if (! $orderLine->product) {
+            if (! $orderLine->product?->cn_code) {
                 continue;
             }
 
-            // Skip products without CN code - required by KSH
-            if (! $orderLine->product->cn_code) {
-                continue;
-            }
+            $lineValue = $orderLine->quantity * $orderLine->unit_price;
 
             IntrastatLine::create([
                 'intrastat_declaration_id' => $declaration->id,
@@ -63,53 +93,11 @@ final class OrderObserver
                 'cn_code' => $orderLine->product->cn_code,
                 'quantity' => $orderLine->quantity,
                 'net_mass' => ($orderLine->product->weight ?? 0) * $orderLine->quantity,
-                'invoice_value' => $orderLine->quantity * $orderLine->unit_price,
-                'statistical_value' => $orderLine->quantity * $orderLine->unit_price,
-                'country_of_origin' => $this->extractCountryCode($order->supplier->headquarters),
-                'country_of_consignment' => $this->extractCountryCode($order->supplier->headquarters) ?? 'HU',
-                'country_of_destination' => 'HU',
-                'transaction_type' => IntrastatTransactionType::OUTRIGHT_PURCHASE_SALE,
-                'transport_mode' => IntrastatTransportMode::ROAD,
-                'delivery_terms' => IntrastatDeliveryTerms::EXW,
-                'description' => $orderLine->product->name,
-            ]);
-        }
-
-        $declaration->calculateTotals();
-    }
-
-    private function createOutboundIntrastatLines(Order $order): void
-    {
-        // Check if customer has EU address (indicating EU customer)
-        $customerCountry = $this->extractCountryCode($order->shipping_address);
-
-        if (! $customerCountry || ! $this->isEuCountry($customerCountry)) {
-            return;
-        }
-
-        $declaration = $this->getOrCreateDeclaration(IntrastatDirection::DISPATCH, $order->delivery_date);
-
-        foreach ($order->orderLines as $orderLine) {
-            if (! $orderLine->product) {
-                continue;
-            }
-
-            // Skip products without CN code - required by KSH
-            if (! $orderLine->product->cn_code) {
-                continue;
-            }
-
-            IntrastatLine::create([
-                'intrastat_declaration_id' => $declaration->id,
-                'order_id' => $order->id,
-                'product_id' => $orderLine->product_id,
-                'cn_code' => $orderLine->product->cn_code,
-                'quantity' => $orderLine->quantity,
-                'net_mass' => ($orderLine->product->weight ?? 0) * $orderLine->quantity,
-                'invoice_value' => $orderLine->quantity * $orderLine->unit_price,
-                'statistical_value' => $orderLine->quantity * $orderLine->unit_price,
-                'country_of_consignment' => 'HU',
-                'country_of_destination' => $customerCountry,
+                'invoice_value' => $lineValue,
+                'statistical_value' => $lineValue,
+                'country_of_origin' => $countryOfOrigin,
+                'country_of_consignment' => $countryOfConsignment,
+                'country_of_destination' => $countryOfDestination,
                 'transaction_type' => IntrastatTransactionType::OUTRIGHT_PURCHASE_SALE,
                 'transport_mode' => IntrastatTransportMode::ROAD,
                 'delivery_terms' => IntrastatDeliveryTerms::EXW,

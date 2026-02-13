@@ -16,7 +16,8 @@
         "laravel/framework": "^12.48.1",
         "laravel/tinker": "^2.11.0",
         "mbezhanov/faker-provider-collection": "^2.0.2",
-        "picqer/php-barcode-generator": "^3.2"
+        "picqer/php-barcode-generator": "^3.2",
+        "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
