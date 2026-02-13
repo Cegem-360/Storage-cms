@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\CountryCode;
 use App\Enums\IntrastatDeliveryTerms;
 use App\Enums\IntrastatTransactionType;
 use App\Enums\IntrastatTransportMode;
@@ -70,6 +71,9 @@ final class IntrastatLine extends Model
             'supplementary_quantity' => 'decimal:2',
             'invoice_value' => 'decimal:2',
             'statistical_value' => 'decimal:2',
+            'country_of_origin' => CountryCode::class,
+            'country_of_consignment' => CountryCode::class,
+            'country_of_destination' => CountryCode::class,
             'transaction_type' => IntrastatTransactionType::class,
             'transport_mode' => IntrastatTransportMode::class,
             'delivery_terms' => IntrastatDeliveryTerms::class,
