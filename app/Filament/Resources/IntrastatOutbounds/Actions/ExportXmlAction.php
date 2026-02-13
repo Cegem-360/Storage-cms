@@ -7,7 +7,7 @@ namespace App\Filament\Resources\IntrastatOutbounds\Actions;
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
-use App\Services\IntrastatService;
+use App\Services\IntrastatXmlExporter;
 use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -20,7 +20,7 @@ final class ExportXmlAction
         return Action::make('export_xml')
             ->label('XML Export (Egyszerűsített)')
             ->icon(Heroicon::OutlinedArrowDownTray)
-            ->action(function (IntrastatService $service): BinaryFileResponse {
+            ->action(function (IntrastatXmlExporter $service): BinaryFileResponse {
                 $declarations = IntrastatDeclaration::query()
                     ->where('direction', IntrastatDirection::DISPATCH)
                     ->where('status', IntrastatStatus::READY)

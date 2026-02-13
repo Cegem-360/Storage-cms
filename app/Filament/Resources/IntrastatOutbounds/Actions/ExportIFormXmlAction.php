@@ -7,7 +7,7 @@ namespace App\Filament\Resources\IntrastatOutbounds\Actions;
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
-use App\Services\IntrastatService;
+use App\Services\IntrastatXmlExporter;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
@@ -34,7 +34,7 @@ final class ExportIFormXmlAction
                     ->required()
                     ->native(false),
             ])
-            ->action(function (array $data, IntrastatService $service): BinaryFileResponse {
+            ->action(function (array $data, IntrastatXmlExporter $service): BinaryFileResponse {
                 $date = Date::parse($data['period']);
 
                 $declarations = IntrastatDeclaration::query()
