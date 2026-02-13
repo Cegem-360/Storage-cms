@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Stocks\Tables;
 
 use App\Models\Stock;
-use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -34,7 +33,7 @@ final class StocksTable
                     ->numeric()
                     ->sortable()
                     ->badge()
-                    ->color(self::stockStatusColor()),
+                    ->color(fn (Stock $record): string => $record->getStockLevel()->getColor()),
                 TextColumn::make('reserved_quantity')
                     ->numeric()
                     ->sortable(),
@@ -44,11 +43,7 @@ final class StocksTable
                     ->numeric()
                     ->sortable()
                     ->badge()
-                    ->color(fn (Stock $record): string => match (true) {
-                        $record->getAvailableQuantity() === 0 => 'danger',
-                        $record->getAvailableQuantity() <= $record->minimum_stock => 'warning',
-                        default => 'success',
-                    }),
+                    ->color(fn (Stock $record): string => $record->getStockLevel()->getColor()),
                 TextColumn::make('minimum_stock')
                     ->numeric()
                     ->sortable(),
@@ -62,14 +57,9 @@ final class StocksTable
 
                 IconColumn::make('alert')
                     ->label('Alert')
-                    ->icon(self::stockStatusIcon())
-                    ->color(self::stockStatusColor())
-                    ->tooltip(fn (Stock $record): string => match ($record->getStockStatus()) {
-                        'out_of_stock' => 'Out of stock',
-                        'low_stock' => "Low stock: {$record->quantity} (min: {$record->minimum_stock})",
-                        'overstock' => "Overstock: {$record->quantity} (max: {$record->maximum_stock})",
-                        default => 'Stock level OK',
-                    }),
+                    ->icon(fn (Stock $record): string => $record->getStockLevel()->getIcon()->value)
+                    ->color(fn (Stock $record): string => $record->getStockLevel()->getColor())
+                    ->tooltip(fn (Stock $record): string => $record->getStockLevel()->getLabel()),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -119,14 +109,14 @@ final class StocksTable
                     ->numeric()
                     ->sortable()
                     ->badge()
-                    ->color(self::stockStatusColor()),
+                    ->color(fn (Stock $record): string => $record->getStockLevel()->getColor()),
                 TextColumn::make('minimum_stock')
                     ->label('Minimum')
                     ->numeric(),
                 IconColumn::make('alert')
                     ->label('Status')
-                    ->icon(self::stockStatusIcon())
-                    ->color(self::stockStatusColor()),
+                    ->icon(fn (Stock $record): string => $record->getStockLevel()->getIcon()->value)
+                    ->color(fn (Stock $record): string => $record->getStockLevel()->getColor()),
             ])
             ->filters([
                 TernaryFilter::make('low_stock')
@@ -144,25 +134,5 @@ final class StocksTable
             ])
             ->defaultSort('quantity', 'desc')
             ->paginated([10, 25, 50, 100]);
-    }
-
-    private static function stockStatusColor(): Closure
-    {
-        return fn (Stock $record): string => match ($record->getStockStatus()) {
-            'out_of_stock' => 'danger',
-            'low_stock' => 'warning',
-            'overstock' => 'info',
-            default => 'success',
-        };
-    }
-
-    private static function stockStatusIcon(): Closure
-    {
-        return fn (Stock $record): string => match ($record->getStockStatus()) {
-            'out_of_stock' => Heroicon::OutlinedXCircle,
-            'low_stock' => Heroicon::OutlinedExclamationTriangle,
-            'overstock' => Heroicon::OutlinedArrowTrendingUp,
-            default => Heroicon::OutlinedCheckCircle,
-        };
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Products\Tables;
 
+use App\Enums\ProductStatus;
 use App\Models\Product;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
@@ -59,7 +60,7 @@ final class ProductsTable
 
                 IconColumn::make('stock_alert')
                     ->label('Stock Alert')
-                    ->icon(fn (Product $record): string => match (true) {
+                    ->icon(fn (Product $record): Heroicon => match (true) {
                         $record->needsReorder() => Heroicon::OutlinedExclamationTriangle,
                         $record->getTotalStock() === 0 => Heroicon::OutlinedXCircle,
                         default => Heroicon::OutlinedCheckCircle,
@@ -130,21 +131,11 @@ final class ProductsTable
                     ->money('HUF')
                     ->sortable(),
                 TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'active' => 'success',
-                        'inactive' => 'gray',
-                        'discontinued' => 'danger',
-                        default => 'gray',
-                    }),
+                    ->badge(),
             ])
             ->filters([
                 SelectFilter::make('status')
-                    ->options([
-                        'active' => __('Active'),
-                        'inactive' => __('Inactive'),
-                        'discontinued' => __('Discontinued'),
-                    ]),
+                    ->options(ProductStatus::class),
             ])
             ->recordActions([
                 Action::make('edit')

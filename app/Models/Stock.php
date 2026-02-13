@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\StockLevel;
 use App\Enums\StockStatus;
 use App\Observers\StockObserver;
 use Exception;
@@ -91,13 +92,13 @@ final class Stock extends Model
         return $this->quantity > $this->maximum_stock;
     }
 
-    public function getStockStatus(): string
+    public function getStockLevel(): StockLevel
     {
         return match (true) {
-            $this->quantity === 0 => 'out_of_stock',
-            $this->isLowStock() => 'low_stock',
-            $this->isOverstock() => 'overstock',
-            default => 'normal',
+            $this->quantity === 0 => StockLevel::OUT_OF_STOCK,
+            $this->isLowStock() => StockLevel::LOW_STOCK,
+            $this->isOverstock() => StockLevel::OVERSTOCK,
+            default => StockLevel::NORMAL,
         };
     }
 
