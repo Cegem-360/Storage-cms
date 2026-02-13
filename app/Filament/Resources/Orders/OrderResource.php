@@ -24,7 +24,7 @@ final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
 
     public static function form(Schema $schema): Schema
     {
@@ -61,6 +61,7 @@ final class OrderResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->with(['orderLines.product', 'receipts'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

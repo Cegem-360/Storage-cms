@@ -25,7 +25,7 @@ final class ReturnDeliveryResource extends Resource
 {
     protected static ?string $model = ReturnDelivery::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
 
     protected static ?string $navigationLabel = 'Return Deliveries';
 

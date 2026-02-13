@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Pages;
 
 use App\Filament\Widgets\LowStockWidget;
+use App\Filament\Widgets\OrderSuggestionWidget;
 use App\Filament\Widgets\RecentOrdersWidget;
 use App\Filament\Widgets\StockMovementChartWidget;
 use App\Filament\Widgets\StockStatsWidget;
@@ -25,6 +26,7 @@ final class Dashboard extends BaseDashboard
             StockMovementChartWidget::class,
             LowStockWidget::class,
             RecentOrdersWidget::class,
+            OrderSuggestionWidget::class,
         ];
     }
 

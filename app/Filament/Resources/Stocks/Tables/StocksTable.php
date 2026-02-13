@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Stocks\Tables;
 
 use App\Models\Stock;
+use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,15 +34,21 @@ final class StocksTable
                     ->numeric()
                     ->sortable()
                     ->badge()
-                    ->color(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'danger',
-                        $record->isLowStock() => 'warning',
-                        $record->quantity > $record->maximum_stock => 'info',
-                        default => 'success',
-                    }),
+                    ->color(self::stockStatusColor()),
                 TextColumn::make('reserved_quantity')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('available_quantity')
+                    ->label(__('Available Stock'))
+                    ->state(fn (Stock $record): int => $record->getAvailableQuantity())
+                    ->numeric()
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (Stock $record): string => match (true) {
+                        $record->getAvailableQuantity() === 0 => 'danger',
+                        $record->getAvailableQuantity() <= $record->minimum_stock => 'warning',
+                        default => 'success',
+                    }),
                 TextColumn::make('minimum_stock')
                     ->numeric()
                     ->sortable(),
@@ -55,22 +62,12 @@ final class StocksTable
 
                 IconColumn::make('alert')
                     ->label('Alert')
-                    ->icon(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'heroicon-o-x-circle',
-                        $record->isLowStock() => 'heroicon-o-exclamation-triangle',
-                        $record->quantity > $record->maximum_stock => 'heroicon-o-arrow-trending-up',
-                        default => 'heroicon-o-check-circle',
-                    })
-                    ->color(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'danger',
-                        $record->isLowStock() => 'warning',
-                        $record->quantity > $record->maximum_stock => 'info',
-                        default => 'success',
-                    })
-                    ->tooltip(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'Out of stock',
-                        $record->isLowStock() => 'Low stock: '.$record->quantity.' (min: '.$record->minimum_stock.')',
-                        $record->quantity > $record->maximum_stock => 'Overstock: '.$record->quantity.' (max: '.$record->maximum_stock.')',
+                    ->icon(self::stockStatusIcon())
+                    ->color(self::stockStatusColor())
+                    ->tooltip(fn (Stock $record): string => match ($record->getStockStatus()) {
+                        'out_of_stock' => 'Out of stock',
+                        'low_stock' => "Low stock: {$record->quantity} (min: {$record->minimum_stock})",
+                        'overstock' => "Overstock: {$record->quantity} (max: {$record->maximum_stock})",
                         default => 'Stock level OK',
                     }),
                 TextColumn::make('created_at')
@@ -122,26 +119,14 @@ final class StocksTable
                     ->numeric()
                     ->sortable()
                     ->badge()
-                    ->color(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'danger',
-                        $record->isLowStock() => 'warning',
-                        default => 'success',
-                    }),
+                    ->color(self::stockStatusColor()),
                 TextColumn::make('minimum_stock')
                     ->label(__('Minimum'))
                     ->numeric(),
                 IconColumn::make('alert')
                     ->label(__('Status'))
-                    ->icon(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'heroicon-o-x-circle',
-                        $record->isLowStock() => 'heroicon-o-exclamation-triangle',
-                        default => 'heroicon-o-check-circle',
-                    })
-                    ->color(fn (Stock $record): string => match (true) {
-                        $record->quantity === 0 => 'danger',
-                        $record->isLowStock() => 'warning',
-                        default => 'success',
-                    }),
+                    ->icon(self::stockStatusIcon())
+                    ->color(self::stockStatusColor()),
             ])
             ->filters([
                 TernaryFilter::make('low_stock')
@@ -159,5 +144,25 @@ final class StocksTable
             ])
             ->defaultSort('quantity', 'desc')
             ->paginated([10, 25, 50, 100]);
+    }
+
+    private static function stockStatusColor(): Closure
+    {
+        return fn (Stock $record): string => match ($record->getStockStatus()) {
+            'out_of_stock' => 'danger',
+            'low_stock' => 'warning',
+            'overstock' => 'info',
+            default => 'success',
+        };
+    }
+
+    private static function stockStatusIcon(): Closure
+    {
+        return fn (Stock $record): string => match ($record->getStockStatus()) {
+            'out_of_stock' => 'heroicon-o-x-circle',
+            'low_stock' => 'heroicon-o-exclamation-triangle',
+            'overstock' => 'heroicon-o-arrow-trending-up',
+            default => 'heroicon-o-check-circle',
+        };
     }
 }

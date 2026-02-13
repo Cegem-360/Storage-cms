@@ -59,6 +59,12 @@ final class LowStockWidget extends BaseWidget
                     ->numeric()
                     ->sortable(),
 
+                TextColumn::make('available_quantity')
+                    ->label(__('Available Stock'))
+                    ->state(fn (Stock $record): int => $record->getAvailableQuantity())
+                    ->numeric()
+                    ->color('warning'),
+
                 TextColumn::make('difference')
                     ->label(__('Shortage'))
                     ->state(fn (Stock $record): int => $record->minimum_stock - $record->quantity)

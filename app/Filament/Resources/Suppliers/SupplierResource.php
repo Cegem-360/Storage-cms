@@ -24,7 +24,7 @@ final class SupplierResource extends Resource
 {
     protected static ?string $model = Supplier::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::MASTER_DATA;
 
     protected static ?int $navigationSort = 99;
 

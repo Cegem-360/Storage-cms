@@ -24,7 +24,7 @@ final class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
 
     public static function form(Schema $schema): Schema
     {

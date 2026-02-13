@@ -10,21 +10,23 @@ use Filament\Support\Icons\Heroicon;
 
 enum NavigationGroup: string implements HasIcon, HasLabel
 {
-    case INVENTORY_MANAGEMENT = 'Inventory Management';
-    case SALES = 'Sales';
+    case MASTER_DATA = 'Master Data';
+    case INVENTORY = 'Inventory';
     case PURCHASING = 'Purchasing';
-    case ADMINISTRATION = 'Administration';
+    case REPORTS = 'Reports';
     case INTRASTAT = 'Intrastat';
+    case ADMINISTRATION = 'Administration';
     case SETTINGS = 'Settings';
 
     public function getLabel(): string
     {
         return match ($this) {
-            self::INVENTORY_MANAGEMENT => __('Inventory Management'),
-            self::SALES => __('Sales'),
+            self::MASTER_DATA => __('Master Data'),
+            self::INVENTORY => __('Inventory'),
             self::PURCHASING => __('Purchasing'),
-            self::ADMINISTRATION => __('Administration'),
+            self::REPORTS => __('Reports'),
             self::INTRASTAT => __('Intrastat'),
+            self::ADMINISTRATION => __('Administration'),
             self::SETTINGS => __('Settings'),
         };
     }
@@ -32,11 +34,12 @@ enum NavigationGroup: string implements HasIcon, HasLabel
     public function getIcon(): ?Heroicon
     {
         return match ($this) {
-            self::INVENTORY_MANAGEMENT => Heroicon::OutlinedCubeTransparent,
-            self::SALES => Heroicon::OutlinedShoppingCart,
-            self::PURCHASING => Heroicon::OutlinedTruck,
-            self::ADMINISTRATION => Heroicon::OutlinedUserGroup,
+            self::MASTER_DATA => Heroicon::OutlinedCircleStack,
+            self::INVENTORY => Heroicon::OutlinedCubeTransparent,
+            self::PURCHASING => Heroicon::OutlinedShoppingCart,
+            self::REPORTS => Heroicon::OutlinedChartBar,
             self::INTRASTAT => Heroicon::OutlinedGlobeEuropeAfrica,
+            self::ADMINISTRATION => Heroicon::OutlinedUserGroup,
             self::SETTINGS => Heroicon::OutlinedCog6Tooth,
         };
     }

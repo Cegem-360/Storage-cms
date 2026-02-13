@@ -6,6 +6,7 @@ namespace App\Filament\Pages;
 
 use App\Enums\NavigationGroup;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Models\Warehouse;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
@@ -20,7 +21,7 @@ final class WarehouseStockOverview extends Page implements HasTable
 
     protected string $view = 'filament.pages.warehouse-stock-overview';
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
 
     protected static ?string $title = 'Warehouse Stock Overview';
 
@@ -33,11 +34,10 @@ final class WarehouseStockOverview extends Page implements HasTable
         return $table
             ->query(Product::query()->with(['stocks.warehouse']))
             ->columns($this->getColumns())
-            ->filters([])
             ->defaultSort('name');
     }
 
-    protected function getColumns(): array
+    private function getColumns(): array
     {
         $warehouses = Warehouse::query()->where('is_active', true)->get();
 
@@ -55,36 +55,40 @@ final class WarehouseStockOverview extends Page implements HasTable
         foreach ($warehouses as $warehouse) {
             $columns[] = TextColumn::make("stock_warehouse_{$warehouse->id}")
                 ->label($warehouse->name)
-                ->state(function (Product $record) use ($warehouse): string {
-                    $stock = $record->stocks->firstWhere('warehouse_id', $warehouse->id);
-
-                    return $stock ? (string) $stock->quantity : '0';
-                })
+                ->state(fn (Product $record): string => (string) ($this->findStock($record, $warehouse->id)?->quantity ?? 0))
                 ->alignEnd()
                 ->badge()
                 ->color(function (Product $record) use ($warehouse): string {
-                    $stock = $record->stocks->firstWhere('warehouse_id', $warehouse->id);
+                    $stock = $this->findStock($record, $warehouse->id);
 
                     if (! $stock || $stock->quantity === 0) {
                         return 'gray';
                     }
 
-                    if ($stock->isLowStock()) {
-                        return 'danger';
-                    }
-
-                    return 'success';
+                    return $stock->isLowStock() ? 'danger' : 'success';
                 });
         }
 
         $columns[] = TextColumn::make('total_stock')
-            ->label('Total Stock')
+            ->label(__('Total Stock'))
             ->state(fn (Product $record): int => $record->stocks->sum('quantity'))
             ->alignEnd()
             ->weight('bold')
             ->badge()
             ->color('primary');
 
+        $columns[] = TextColumn::make('available_stock')
+            ->label(__('Available Stock'))
+            ->state(fn (Product $record): int => $record->stocks->sum(fn (Stock $stock): int => $stock->getAvailableQuantity()))
+            ->alignEnd()
+            ->badge()
+            ->color('success');
+
         return $columns;
+    }
+
+    private function findStock(Product $product, int $warehouseId): ?Stock
+    {
+        return $product->stocks->firstWhere('warehouse_id', $warehouseId);
     }
 }

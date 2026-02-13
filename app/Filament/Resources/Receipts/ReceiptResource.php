@@ -24,7 +24,7 @@ final class ReceiptResource extends Resource
 {
     protected static ?string $model = Receipt::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
 
     public static function form(Schema $schema): Schema
     {
@@ -61,6 +61,7 @@ final class ReceiptResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
+            ->with(['receiptLines.product', 'receiptLines.warehouse'])
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);

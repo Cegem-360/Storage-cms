@@ -22,7 +22,7 @@ final class ExpectedStockArrivals extends Page implements HasTable
 
     protected string $view = 'filament.pages.expected-stock-arrivals';
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
 
     protected static ?string $title = 'Expected Stock Arrivals';
 

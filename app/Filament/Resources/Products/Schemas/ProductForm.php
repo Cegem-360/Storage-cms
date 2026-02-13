@@ -6,11 +6,15 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use App\Enums\ProductStatus;
 use App\Enums\UnitType;
+use App\Services\BarcodeService;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 
 final class ProductForm
@@ -32,7 +36,21 @@ final class ProductForm
                             ->maxLength(255),
                         TextInput::make('barcode')
                             ->label('Barcode / Vonalkód')
-                            ->maxLength(100),
+                            ->maxLength(100)
+                            ->afterContent(
+                                Action::make('generateBarcode')
+                                    ->label(__('Generate Barcode'))
+                                    ->icon('heroicon-o-qr-code')
+                                    ->color('gray')
+                                    ->action(function (Set $set): void {
+                                        $set('barcode', BarcodeService::generateEan13());
+
+                                        Notification::make()
+                                            ->title(__('Barcode generated successfully'))
+                                            ->success()
+                                            ->send();
+                                    }),
+                            ),
                         Textarea::make('description')
                             ->label('Description / Leírás')
                             ->rows(3)

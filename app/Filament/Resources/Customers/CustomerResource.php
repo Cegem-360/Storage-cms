@@ -24,7 +24,7 @@ final class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::MASTER_DATA;
 
     public static function form(Schema $schema): Schema
     {

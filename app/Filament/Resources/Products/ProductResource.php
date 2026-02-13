@@ -24,7 +24,7 @@ final class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::MASTER_DATA;
 
     protected static ?string $recordTitleAttribute = 'name';
 

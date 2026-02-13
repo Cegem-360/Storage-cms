@@ -32,7 +32,7 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected string $view = 'filament.pages.inventory-valuation-report';
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
 
     protected static ?string $title = 'Inventory Valuation Report';
 

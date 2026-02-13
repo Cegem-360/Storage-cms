@@ -49,6 +49,11 @@ final class Order extends Model
         return $this->hasMany(OrderLine::class);
     }
 
+    public function receipts(): HasMany
+    {
+        return $this->hasMany(Receipt::class);
+    }
+
     // Helper methods
     public function getOrderLines(): Collection
     {

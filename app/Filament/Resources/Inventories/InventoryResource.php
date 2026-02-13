@@ -23,7 +23,7 @@ final class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
 
     public static function form(Schema $schema): Schema
     {

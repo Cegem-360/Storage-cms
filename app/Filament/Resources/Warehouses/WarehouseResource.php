@@ -25,7 +25,7 @@ final class WarehouseResource extends Resource
 {
     protected static ?string $model = Warehouse::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::MASTER_DATA;
 
     protected static ?string $recordTitleAttribute = 'name';
 
