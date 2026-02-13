@@ -68,9 +68,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
                             return '-';
                         }
 
-                        $onTime = $completed->filter(function ($order): bool {
-                            return ! $order->delivery_date || $order->updated_at <= $order->delivery_date->endOfDay();
-                        })->count();
+                        $onTime = $completed->filter(fn ($order): bool => ! $order->delivery_date || $order->updated_at <= $order->delivery_date->endOfDay())->count();
 
                         return number_format(($onTime / $completed->count()) * 100, 1).'%';
                     })

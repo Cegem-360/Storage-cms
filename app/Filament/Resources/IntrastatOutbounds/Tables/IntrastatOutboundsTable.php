@@ -78,7 +78,7 @@ final class IntrastatOutboundsTable
                     ->sortable(),
                 TextColumn::make('reference_period')
                     ->label('Period')
-                    ->getStateUsing(fn ($record) => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
+                    ->getStateUsing(fn ($record): string => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
                     ->sortable(),
                 TextColumn::make('intrastat_lines_count')
                     ->label('Lines')

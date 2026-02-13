@@ -101,7 +101,7 @@ final class OrdersTable
             ->filters([
                 SelectFilter::make('status')
                     ->options(collect(OrderStatus::cases())
-                        ->mapWithKeys(fn ($status) => [$status->value => $status->getLabel()])
+                        ->mapWithKeys(fn ($status): array => [$status->value => $status->getLabel()])
                         ->toArray()),
             ])
             ->recordActions([

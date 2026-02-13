@@ -9,6 +9,7 @@ use App\Enums\ReturnReason;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class ReturnDeliveryLine extends Model
 {
@@ -35,11 +36,6 @@ final class ReturnDeliveryLine extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function calculateLineTotal(): float
-    {
-        return $this->quantity * $this->unit_price;
-    }
-
     public function canBeRestocked(): bool
     {
         return $this->condition->canBeRestocked();
@@ -50,12 +46,14 @@ final class ReturnDeliveryLine extends Model
         return $this->condition->requiresDisposal();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
             'condition' => ProductCondition::class,
             'return_reason' => ReturnReason::class,
             'unit_price' => 'decimal:2',
+            'line_total' => 'float',
         ];
     }
 }

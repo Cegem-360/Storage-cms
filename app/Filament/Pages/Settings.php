@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
+use Override;
 
 final class Settings extends Page
 {
@@ -30,11 +31,13 @@ final class Settings extends Page
 
     protected static ?string $title = 'System Settings';
 
+    #[Override]
     public static function getNavigationLabel(): string
     {
         return __('Settings');
     }
 
+    #[Override]
     public function getTitle(): string
     {
         return __('System Settings');
@@ -98,6 +101,7 @@ final class Settings extends Page
             ->send();
     }
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

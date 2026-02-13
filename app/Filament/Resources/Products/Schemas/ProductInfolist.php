@@ -175,11 +175,9 @@ final class ProductInfolist
                                     }),
                                 TextEntry::make('quantity')
                                     ->label('Quantity')
-                                    ->state(function ($record, Product $rootRecord): int {
-                                        return $record->orderLines
-                                            ->where('product_id', $rootRecord->id)
-                                            ->sum('quantity');
-                                    })
+                                    ->state(fn ($record, Product $rootRecord): int => $record->orderLines
+                                        ->where('product_id', $rootRecord->id)
+                                        ->sum('quantity'))
                                     ->numeric()
                                     ->badge()
                                     ->color('info'),

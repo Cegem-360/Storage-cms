@@ -14,11 +14,13 @@ use Filament\Actions\ImportAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Response;
+use Override;
 
 final class ListCnCodes extends ListRecords
 {
     protected static string $resource = CnCodeResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -33,7 +35,7 @@ final class ListCnCodes extends ListRecords
                     $csv .= "84713010,\"Hordozható adatfeldolgozó gépek, maximum 10 kg\",darab\n";
                     $csv .= "04069050,Sajt mozzarella,kg\n";
 
-                    return Response::streamDownload(function () use ($csv) {
+                    return Response::streamDownload(function () use ($csv): void {
                         echo $csv;
                     }, 'cn_codes_template.csv', [
                         'Content-Type' => 'text/csv',

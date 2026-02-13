@@ -43,7 +43,7 @@ final class BatchesTable
                     ->label('Expiry Date')
                     ->date()
                     ->sortable()
-                    ->color(fn ($record) => $record->isExpired() ? 'danger' : null),
+                    ->color(fn ($record): ?string => $record->isExpired() ? 'danger' : null),
                 TextColumn::make('quality_status')
                     ->label('Status')
                     ->badge()
@@ -95,7 +95,7 @@ final class BatchesTable
                     ->label('Expiry Date')
                     ->date()
                     ->sortable()
-                    ->color(fn ($record) => $record->isExpired() ? 'danger' : null),
+                    ->color(fn ($record): ?string => $record->isExpired() ? 'danger' : null),
             ])
             ->recordActions([
                 Action::make('edit')

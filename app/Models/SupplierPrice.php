@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class SupplierPrice extends Model
 {
@@ -55,11 +56,7 @@ final class SupplierPrice extends Model
         return $this->isValidAt();
     }
 
-    public function calculateTotalPrice(int $quantity): float
-    {
-        return $this->price * $quantity;
-    }
-
+    #[Override]
     protected function casts(): array
     {
         return [

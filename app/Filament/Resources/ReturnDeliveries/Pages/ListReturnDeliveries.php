@@ -9,11 +9,13 @@ use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
+use Override;
 
 final class ListReturnDeliveries extends ListRecords
 {
     protected static string $resource = ReturnDeliveryResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

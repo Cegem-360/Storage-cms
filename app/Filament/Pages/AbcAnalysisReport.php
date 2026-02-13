@@ -63,11 +63,9 @@ final class AbcAnalysisReport extends Page implements HasTable
                     ->label('Total Stock Value')
                     ->state(fn (Product $record): float => $this->calculateStockValue($record))
                     ->money('HUF')
-                    ->sortable(query: function (Builder $query, string $direction): Builder {
-                        return $query->orderByRaw(
-                            '(SELECT COALESCE(SUM(stocks.quantity * stocks.unit_cost), 0) FROM stocks WHERE stocks.product_id = products.id AND stocks.deleted_at IS NULL) '.$direction
-                        );
-                    })
+                    ->sortable(query: fn (Builder $query, string $direction): Builder => $query->orderByRaw(
+                        '(SELECT COALESCE(SUM(stocks.quantity * stocks.unit_cost), 0) FROM stocks WHERE stocks.product_id = products.id AND stocks.deleted_at IS NULL) '.$direction
+                    ))
                     ->alignEnd(),
 
                 TextColumn::make('abc_category')
@@ -118,7 +116,7 @@ final class AbcAnalysisReport extends Page implements HasTable
      */
     private function getAbcAnalysisData(): Collection
     {
-        if ($this->abcAnalysisCache !== null) {
+        if ($this->abcAnalysisCache instanceof Collection) {
             return $this->abcAnalysisCache;
         }
 

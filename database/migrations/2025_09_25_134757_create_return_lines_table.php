@@ -21,6 +21,7 @@ return new class() extends Migration
             $table->foreignIdFor(Product::class)->constrained();
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2);
+            $table->decimal('line_total', 12, 2)->virtualAs('quantity * unit_price');
             $table->string('condition', 50);
             $table->string('return_reason', 100);
             $table->string('batch_number')->nullable();

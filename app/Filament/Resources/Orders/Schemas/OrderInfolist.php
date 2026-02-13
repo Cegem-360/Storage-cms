@@ -9,6 +9,7 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Number;
 
 final class OrderInfolist
 {
@@ -66,7 +67,7 @@ final class OrderInfolist
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
                                     ->label('Subtotal')
-                                    ->state(fn ($record): string => number_format($record->calculateSubtotal(), 2).' HUF'),
+                                    ->state(fn ($record): string => Number::currency($record->subtotal, in: 'HUF', locale: 'hu')),
                                 TextEntry::make('note')
                                     ->label('Note')
                                     ->placeholder('-'),

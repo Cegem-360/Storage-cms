@@ -12,8 +12,8 @@ use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
-describe('Customer Model', function () {
-    it('can be created with valid attributes', function () {
+describe('Customer Model', function (): void {
+    it('can be created with valid attributes', function (): void {
         $customer = Customer::factory()->create([
             'customer_code' => 'CUST-12345',
             'name' => 'Acme Corporation',
@@ -29,41 +29,41 @@ describe('Customer Model', function () {
             ->and($customer->type)->toBe(CustomerType::RETAIL);
     });
 
-    it('requires a unique email', function () {
+    it('requires a unique email', function (): void {
         Customer::factory()->create(['email' => 'duplicate@example.com']);
 
         expect(fn () => Customer::factory()->create(['email' => 'duplicate@example.com']))
             ->toThrow(QueryException::class);
     });
 
-    it('requires a unique customer code', function () {
+    it('requires a unique customer code', function (): void {
         Customer::factory()->create(['customer_code' => 'CUST-12345']);
 
         expect(fn () => Customer::factory()->create(['customer_code' => 'CUST-12345']))
             ->toThrow(QueryException::class);
     });
 
-    it('can be soft deleted', function () {
+    it('can be soft deleted', function (): void {
         $customer = Customer::factory()->create();
 
         $customer->delete();
 
         expect($customer->trashed())->toBeTrue()
             ->and(Customer::withTrashed()->find($customer->id))->not->toBeNull()
-            ->and(Customer::find($customer->id))->toBeNull();
+            ->and(Customer::query()->find($customer->id))->toBeNull();
     });
 
-    it('can be restored after soft deletion', function () {
+    it('can be restored after soft deletion', function (): void {
         $customer = Customer::factory()->create();
         $customer->delete();
 
         $customer->restore();
 
         expect($customer->trashed())->toBeFalse()
-            ->and(Customer::find($customer->id))->not->toBeNull();
+            ->and(Customer::query()->find($customer->id))->not->toBeNull();
     });
 
-    it('can be force deleted', function () {
+    it('can be force deleted', function (): void {
         $customer = Customer::factory()->create();
         $customerId = $customer->id;
 
@@ -73,14 +73,14 @@ describe('Customer Model', function () {
     });
 });
 
-describe('Customer Relationships', function () {
-    it('has many orders', function () {
+describe('Customer Relationships', function (): void {
+    it('has many orders', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->orders())->toBeInstanceOf(HasMany::class);
     });
 
-    it('can have multiple orders associated', function () {
+    it('can have multiple orders associated', function (): void {
         $customer = Customer::factory()->create();
         $orders = Order::factory()->count(3)->create([
             'customer_id' => $customer->id,
@@ -90,15 +90,15 @@ describe('Customer Relationships', function () {
             ->and($customer->orders->pluck('id')->toArray())->toBe($orders->pluck('id')->toArray());
     });
 
-    it('returns empty collection when customer has no orders', function () {
+    it('returns empty collection when customer has no orders', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->orders)->toBeEmpty();
     });
 });
 
-describe('Customer Helper Methods', function () {
-    it('can check credit limit', function () {
+describe('Customer Helper Methods', function (): void {
+    it('can check credit limit', function (): void {
         $customer = Customer::factory()->create([
             'credit_limit' => 10000,
             'balance' => 5000,
@@ -108,7 +108,7 @@ describe('Customer Helper Methods', function () {
             ->and($customer->checkCreditLimit(6000))->toBeFalse();
     });
 
-    it('can update balance', function () {
+    it('can update balance', function (): void {
         $customer = Customer::factory()->create([
             'balance' => 1000,
         ]);
@@ -118,7 +118,7 @@ describe('Customer Helper Methods', function () {
         expect($customer->fresh()->balance)->toBe('1500.00');
     });
 
-    it('can decrease balance', function () {
+    it('can decrease balance', function (): void {
         $customer = Customer::factory()->create([
             'balance' => 1000,
         ]);
@@ -129,8 +129,8 @@ describe('Customer Helper Methods', function () {
     });
 });
 
-describe('Customer Queries', function () {
-    it('can search by email', function () {
+describe('Customer Queries', function (): void {
+    it('can search by email', function (): void {
         $customer = Customer::factory()->create(['email' => 'search@example.com']);
         Customer::factory()->count(5)->create();
 
@@ -139,7 +139,7 @@ describe('Customer Queries', function () {
         expect($found->id)->toBe($customer->id);
     });
 
-    it('can search by customer code', function () {
+    it('can search by customer code', function (): void {
         $customer = Customer::factory()->create(['customer_code' => 'CUST-99999']);
         Customer::factory()->count(5)->create();
 
@@ -148,7 +148,7 @@ describe('Customer Queries', function () {
         expect($found->id)->toBe($customer->id);
     });
 
-    it('can search by name', function () {
+    it('can search by name', function (): void {
         $customer = Customer::factory()->create(['name' => 'XYZ Corporation']);
         Customer::factory()->count(5)->create();
 
@@ -157,7 +157,7 @@ describe('Customer Queries', function () {
         expect($found->id)->toBe($customer->id);
     });
 
-    it('can filter by type', function () {
+    it('can filter by type', function (): void {
         Customer::factory()->count(3)->create(['type' => CustomerType::RETAIL]);
         Customer::factory()->count(2)->create(['type' => CustomerType::WHOLESALE]);
 
@@ -167,8 +167,8 @@ describe('Customer Queries', function () {
     });
 });
 
-describe('Customer Data Validation', function () {
-    it('stores billing address as array', function () {
+describe('Customer Data Validation', function (): void {
+    it('stores billing address as array', function (): void {
         $billingAddress = [
             'street' => '123 Main St',
             'city' => 'Springfield',
@@ -184,7 +184,7 @@ describe('Customer Data Validation', function () {
         expect($customer->fresh()->billing_address)->toBe($billingAddress);
     });
 
-    it('stores shipping address as array', function () {
+    it('stores shipping address as array', function (): void {
         $shippingAddress = [
             'street' => '456 Oak Ave',
             'city' => 'Chicago',
@@ -200,7 +200,7 @@ describe('Customer Data Validation', function () {
         expect($customer->fresh()->shipping_address)->toBe($shippingAddress);
     });
 
-    it('stores credit limit as decimal', function () {
+    it('stores credit limit as decimal', function (): void {
         $customer = Customer::factory()->create([
             'credit_limit' => 15000.50,
         ]);
@@ -208,7 +208,7 @@ describe('Customer Data Validation', function () {
         expect($customer->fresh()->credit_limit)->toBe('15000.50');
     });
 
-    it('stores balance as decimal', function () {
+    it('stores balance as decimal', function (): void {
         $customer = Customer::factory()->create([
             'balance' => 2500.75,
         ]);
@@ -217,8 +217,8 @@ describe('Customer Data Validation', function () {
     });
 });
 
-describe('Customer Factory', function () {
-    it('creates customers with faker data', function () {
+describe('Customer Factory', function (): void {
+    it('creates customers with faker data', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->customer_code)->not->toBeNull()
@@ -232,7 +232,7 @@ describe('Customer Factory', function () {
             ->and($customer->type)->not->toBeNull();
     });
 
-    it('creates multiple customers with unique emails', function () {
+    it('creates multiple customers with unique emails', function (): void {
         $customers = Customer::factory()->count(10)->create();
 
         $emails = $customers->pluck('email')->toArray();
@@ -241,7 +241,7 @@ describe('Customer Factory', function () {
             ->and(count($emails))->toBe(count(array_unique($emails)));
     });
 
-    it('creates multiple customers with unique customer codes', function () {
+    it('creates multiple customers with unique customer codes', function (): void {
         $customers = Customer::factory()->count(10)->create();
 
         $codes = $customers->pluck('customer_code')->toArray();
@@ -251,22 +251,22 @@ describe('Customer Factory', function () {
     });
 });
 
-describe('Customer Timestamps', function () {
-    it('sets created_at timestamp on creation', function () {
+describe('Customer Timestamps', function (): void {
+    it('sets created_at timestamp on creation', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->created_at)->not->toBeNull()
             ->and($customer->created_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has updated_at timestamp', function () {
+    it('has updated_at timestamp', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->updated_at)->not->toBeNull()
             ->and($customer->updated_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('sets deleted_at timestamp on soft delete', function () {
+    it('sets deleted_at timestamp on soft delete', function (): void {
         $customer = Customer::factory()->create();
 
         $customer->delete();

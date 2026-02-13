@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class OrderLine extends Model
 {
@@ -31,21 +32,14 @@ final class OrderLine extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function calculateSubtotal(): float
-    {
-        return $this->quantity * $this->unit_price * (1 - $this->discount_percent / 100);
-    }
-
-    public function calculateDiscount(): float
-    {
-        return $this->quantity * $this->unit_price * ($this->discount_percent / 100);
-    }
-
+    #[Override]
     protected function casts(): array
     {
         return [
             'unit_price' => 'decimal:2',
             'discount_percent' => 'decimal:2',
+            'subtotal' => 'float',
+            'discount_amount' => 'float',
         ];
     }
 }

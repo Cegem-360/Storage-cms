@@ -22,11 +22,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->service = new IntrastatService();
 });
 
-it('generates declaration for period with arrival direction', function () {
+it('generates declaration for period with arrival direction', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
         'is_eu_member' => true,
@@ -61,7 +61,7 @@ it('generates declaration for period with arrival direction', function () {
         ->and($declaration->intrastatLines()->count())->toBeGreaterThan(0);
 });
 
-it('generates declaration for period with dispatch direction', function () {
+it('generates declaration for period with dispatch direction', function (): void {
     $customer = Customer::factory()->create();
 
     $product = Product::factory()->create([
@@ -92,13 +92,13 @@ it('generates declaration for period with dispatch direction', function () {
         ->and($declaration->status)->toBe(IntrastatStatus::DRAFT);
 });
 
-it('generates declaration number correctly', function () {
+it('generates declaration number correctly', function (): void {
     $declaration = $this->service->generateDeclarationForPeriod(2025, 3, IntrastatDirection::ARRIVAL);
 
     expect($declaration->declaration_number)->toContain('INTRASTAT-202503-A');
 });
 
-it('calculates totals after generating lines', function () {
+it('calculates totals after generating lines', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::FR,
         'is_eu_member' => true,
@@ -130,7 +130,7 @@ it('calculates totals after generating lines', function () {
         ->and($declaration->total_net_mass)->toBeGreaterThan(0);
 });
 
-it('exports declaration to XML successfully', function () {
+it('exports declaration to XML successfully', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->arrival()
         ->withTotals(100000, 100000, 150.5)
@@ -161,7 +161,7 @@ it('exports declaration to XML successfully', function () {
         ->and($xml)->toContain('<FLOW_CODE>A</FLOW_CODE>');
 });
 
-it('exports XML with correct flow code for dispatch', function () {
+it('exports XML with correct flow code for dispatch', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->dispatch()
         ->create();
@@ -177,7 +177,7 @@ it('exports XML with correct flow code for dispatch', function () {
     expect($xml)->toContain('<FLOW_CODE>D</FLOW_CODE>');
 });
 
-it('validates declaration with no lines', function () {
+it('validates declaration with no lines', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     $errors = $this->service->validateDeclaration($declaration);
@@ -185,7 +185,7 @@ it('validates declaration with no lines', function () {
     expect($errors)->toContain('Declaration must have at least one line');
 });
 
-it('validates line with invalid CN code', function () {
+it('validates line with invalid CN code', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     IntrastatLine::factory()->create([
@@ -199,7 +199,7 @@ it('validates line with invalid CN code', function () {
         ->and($errors[0])->toContain('KN kód kötelező, pontosan 8 számjegyből kell állnia');
 });
 
-it('validates line with invalid net mass', function () {
+it('validates line with invalid net mass', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     IntrastatLine::factory()->create([
@@ -213,7 +213,7 @@ it('validates line with invalid net mass', function () {
     expect($errors)->toContain('Sor 1: Nettó tömeg kötelező, minimum 0.001 kg');
 });
 
-it('validates line with invalid invoice value', function () {
+it('validates line with invalid invoice value', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     IntrastatLine::factory()->create([
@@ -228,7 +228,7 @@ it('validates line with invalid invoice value', function () {
     expect($errors)->toContain('Sor 1: Számlaérték kötelező, minimum 1 HUF');
 });
 
-it('validates line with invalid country code', function () {
+it('validates line with invalid country code', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     IntrastatLine::factory()->create([
@@ -245,7 +245,7 @@ it('validates line with invalid country code', function () {
     expect($errors)->toContain('Sor 1: Feladás országa érvénytelen (csak EU tagállamok, HU kivételével)');
 });
 
-it('skips orders without CN code when generating lines', function () {
+it('skips orders without CN code when generating lines', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
         'is_eu_member' => true,
@@ -274,7 +274,7 @@ it('skips orders without CN code when generating lines', function () {
     expect($declaration->intrastatLines()->count())->toBe(0);
 });
 
-it('skips non-EU suppliers when generating arrival lines', function () {
+it('skips non-EU suppliers when generating arrival lines', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::US,
         'is_eu_member' => false, // Non-EU supplier
@@ -303,7 +303,7 @@ it('skips non-EU suppliers when generating arrival lines', function () {
     expect($declaration->intrastatLines()->count())->toBe(0);
 });
 
-it('skips Hungarian suppliers when generating arrival lines', function () {
+it('skips Hungarian suppliers when generating arrival lines', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::HU,
         'is_eu_member' => true,
@@ -332,7 +332,7 @@ it('skips Hungarian suppliers when generating arrival lines', function () {
     expect($declaration->intrastatLines()->count())->toBe(0);
 });
 
-it('includes supplementary unit in XML if provided', function () {
+it('includes supplementary unit in XML if provided', function (): void {
     $declaration = IntrastatDeclaration::factory()->create();
 
     IntrastatLine::factory()
@@ -349,7 +349,7 @@ it('includes supplementary unit in XML if provided', function () {
         ->and($xml)->toContain('<SUPPLEMENTARY_QUANTITY>100.00</SUPPLEMENTARY_QUANTITY>');
 });
 
-it('includes country of origin for arrivals in XML', function () {
+it('includes country of origin for arrivals in XML', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->arrival()
         ->create();
@@ -366,7 +366,7 @@ it('includes country of origin for arrivals in XML', function () {
     expect($xml)->toContain('<COUNTRY_OF_ORIGIN>CN</COUNTRY_OF_ORIGIN>');
 });
 
-it('does not include country of origin for dispatches in XML', function () {
+it('does not include country of origin for dispatches in XML', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->dispatch()
         ->create();
@@ -383,7 +383,7 @@ it('does not include country of origin for dispatches in XML', function () {
     expect($xml)->not->toContain('<COUNTRY_OF_ORIGIN>');
 });
 
-it('uses transaction within generateDeclarationForPeriod', function () {
+it('uses transaction within generateDeclarationForPeriod', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
         'is_eu_member' => true,
@@ -408,15 +408,15 @@ it('uses transaction within generateDeclarationForPeriod', function () {
         'unit_price' => 10000,
     ]);
 
-    $initialDeclarationCount = IntrastatDeclaration::count();
+    $initialDeclarationCount = IntrastatDeclaration::query()->count();
 
     $declaration = $this->service->generateDeclarationForPeriod(2025, 1, IntrastatDirection::ARRIVAL);
 
-    expect(IntrastatDeclaration::count())->toBe($initialDeclarationCount + 1)
+    expect(IntrastatDeclaration::query()->count())->toBe($initialDeclarationCount + 1)
         ->and($declaration->exists)->toBeTrue();
 });
 
-it('exports declaration to iFORM XML for KSH-Elektra submission', function () {
+it('exports declaration to iFORM XML for KSH-Elektra submission', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->dispatch()
         ->withTotals(360000, 360000, 20.0)
@@ -459,7 +459,7 @@ it('exports declaration to iFORM XML for KSH-Elektra submission', function () {
         ->and($xml)->toContain('<value>20.000</value>');
 });
 
-it('exports arrival declaration to iFORM XML with correct OSAP code', function () {
+it('exports arrival declaration to iFORM XML with correct OSAP code', function (): void {
     $declaration = IntrastatDeclaration::factory()
         ->arrival()
         ->withTotals(100000, 100000, 15.5)

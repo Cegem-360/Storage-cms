@@ -10,7 +10,7 @@ use function Pest\Laravel\assertDatabaseHas;
 
 uses()->group('database');
 
-it('can track product stock across multiple warehouses', function () {
+it('can track product stock across multiple warehouses', function (): void {
     $product = Product::factory()->create(['sku' => 'TEST-001', 'name' => 'Test Product']);
     $warehouseA = Warehouse::factory()->create(['name' => 'Warehouse A', 'code' => 'WH-A']);
     $warehouseB = Warehouse::factory()->create(['name' => 'Warehouse B', 'code' => 'WH-B']);
@@ -58,7 +58,7 @@ it('can track product stock across multiple warehouses', function () {
     ]);
 });
 
-it('can view stock by warehouse for a specific product', function () {
+it('can view stock by warehouse for a specific product', function (): void {
     $product = Product::factory()->create(['sku' => 'TEST-002', 'name' => 'Another Product']);
     $warehouse1 = Warehouse::factory()->create(['name' => 'Main Warehouse', 'code' => 'MAIN']);
     $warehouse2 = Warehouse::factory()->create(['name' => 'Secondary Warehouse', 'code' => 'SEC']);
@@ -85,7 +85,7 @@ it('can view stock by warehouse for a specific product', function () {
     expect($stockInWarehouse2->quantity)->toBe(75);
 });
 
-it('enforces unique product-warehouse constraint', function () {
+it('enforces unique product-warehouse constraint', function (): void {
     $product = Product::factory()->create();
     $warehouse = Warehouse::factory()->create();
 
@@ -102,7 +102,7 @@ it('enforces unique product-warehouse constraint', function () {
     ]);
 })->throws(Exception::class);
 
-it('can list all warehouses with stock for a product', function () {
+it('can list all warehouses with stock for a product', function (): void {
     $product = Product::factory()->create(['sku' => 'TEST-003']);
     $warehouses = Warehouse::factory()->count(4)->create();
 

@@ -7,12 +7,14 @@ namespace App\Models;
 use App\Enums\ReturnReason;
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 final class ReturnDelivery extends Model
 {
@@ -64,16 +66,9 @@ final class ReturnDelivery extends Model
         $this->refreshTotal();
     }
 
-    public function calculateTotal(): float
-    {
-        return $this->returnDeliveryLines->sum(function ($line): int|float {
-            return $line->quantity * $line->unit_price;
-        });
-    }
-
     public function refreshTotal(): void
     {
-        $this->update(['total_amount' => $this->calculateTotal()]);
+        $this->update(['total_amount' => $this->calculated_total]);
     }
 
     public function process(): void
@@ -127,6 +122,14 @@ final class ReturnDelivery extends Model
         return $this->type === ReturnType::SUPPLIER_RETURN;
     }
 
+    protected function calculatedTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => (float) $this->returnDeliveryLines->sum(fn (ReturnDeliveryLine $line): float => $line->line_total),
+        );
+    }
+
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -37,7 +37,7 @@ final class IntrastatDeclarationsTable
 
                 TextColumn::make('reference_period')
                     ->label('Hivatkozási időszak')
-                    ->getStateUsing(fn ($record) => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
+                    ->getStateUsing(fn ($record): string => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
                     ->sortable(['reference_year', 'reference_month']),
 
                 TextColumn::make('status')
@@ -83,7 +83,7 @@ final class IntrastatDeclarationsTable
 
                 SelectFilter::make('reference_year')
                     ->label('Év')
-                    ->options(fn () => collect(range(now()->year - 2, now()->year + 1))->mapWithKeys(fn ($year) => [$year => $year])),
+                    ->options(fn () => collect(range(now()->year - 2, now()->year + 1))->mapWithKeys(fn ($year): array => [$year => $year])),
             ])
             ->defaultSort('declaration_date', 'desc')
             ->recordActions([
@@ -111,7 +111,7 @@ final class IntrastatDeclarationsTable
                     ->sortable(),
                 TextColumn::make('reference_period')
                     ->label('Period')
-                    ->getStateUsing(fn ($record) => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
+                    ->getStateUsing(fn ($record): string => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
                     ->sortable(),
                 TextColumn::make('intrastat_lines_count')
                     ->label('Lines')

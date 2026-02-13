@@ -11,11 +11,11 @@ use App\Services\Inventory\InventoryValuationService;
 
 uses()->group('database');
 
-beforeEach(function () {
-    $this->service = app(InventoryValuationService::class);
+beforeEach(function (): void {
+    $this->service = resolve(InventoryValuationService::class);
 });
 
-it('calculates FIFO valuation correctly', function () {
+it('calculates FIFO valuation correctly', function (): void {
     $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
     $product = Product::factory()->create();
     $stock = Stock::factory()->create([
@@ -47,7 +47,7 @@ it('calculates FIFO valuation correctly', function () {
     expect($value)->toBe(360.0);
 });
 
-it('calculates LIFO valuation correctly', function () {
+it('calculates LIFO valuation correctly', function (): void {
     $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::LIFO]);
     $product = Product::factory()->create();
     $stock = Stock::factory()->create([
@@ -79,7 +79,7 @@ it('calculates LIFO valuation correctly', function () {
     expect($value)->toBe(300.0);
 });
 
-it('calculates weighted average valuation correctly', function () {
+it('calculates weighted average valuation correctly', function (): void {
     $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::WEIGHTED_AVERAGE]);
     $product = Product::factory()->create();
     $stock = Stock::factory()->create([
@@ -112,7 +112,7 @@ it('calculates weighted average valuation correctly', function () {
     expect(round($value, 2))->toBe(360.0);
 });
 
-it('calculates standard cost valuation correctly', function () {
+it('calculates standard cost valuation correctly', function (): void {
     $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::STANDARD_COST]);
     $product = Product::factory()->create(['standard_cost' => 15.00]);
     $stock = Stock::factory()->create([
@@ -126,7 +126,7 @@ it('calculates standard cost valuation correctly', function () {
     expect($value)->toBe(1500.0);
 });
 
-it('calculates warehouse total value', function () {
+it('calculates warehouse total value', function (): void {
     $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
     $product1 = Product::factory()->create();
     $product2 = Product::factory()->create();
@@ -152,7 +152,7 @@ it('calculates warehouse total value', function () {
     expect($totalValue)->toBe(2000.0);
 });
 
-it('calculates product total value across warehouses', function () {
+it('calculates product total value across warehouses', function (): void {
     $warehouse1 = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
     $warehouse2 = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
     $product = Product::factory()->create();
@@ -178,8 +178,8 @@ it('calculates product total value across warehouses', function () {
     expect($totalValue)->toBe(1600.0);
 });
 
-describe('getCategoryTotalValue', function () {
-    it('calculates category total value with single warehouse', function () {
+describe('getCategoryTotalValue', function (): void {
+    it('calculates category total value with single warehouse', function (): void {
         $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $category = Category::factory()->create();
         $product1 = Product::factory()->create(['category_id' => $category->id]);
@@ -206,7 +206,7 @@ describe('getCategoryTotalValue', function () {
         expect($totalValue)->toBe(2000.0);
     });
 
-    it('calculates category total value across multiple warehouses', function () {
+    it('calculates category total value across multiple warehouses', function (): void {
         $warehouse1 = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $warehouse2 = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $category = Category::factory()->create();
@@ -234,7 +234,7 @@ describe('getCategoryTotalValue', function () {
         expect($totalValue)->toBe(3500.0);
     });
 
-    it('returns zero for category with no stock', function () {
+    it('returns zero for category with no stock', function (): void {
         $category = Category::factory()->create();
         Product::factory()->create(['category_id' => $category->id]);
 
@@ -243,7 +243,7 @@ describe('getCategoryTotalValue', function () {
         expect($totalValue)->toBe(0.0);
     });
 
-    it('excludes products from other categories', function () {
+    it('excludes products from other categories', function (): void {
         $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $category1 = Category::factory()->create();
         $category2 = Category::factory()->create();
@@ -272,7 +272,7 @@ describe('getCategoryTotalValue', function () {
         expect($totalValue)->toBe(1000.0);
     });
 
-    it('handles different valuation methods per warehouse', function () {
+    it('handles different valuation methods per warehouse', function (): void {
         $warehouseFIFO = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $warehouseLIFO = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::LIFO]);
         $category = Category::factory()->create();
@@ -303,7 +303,7 @@ describe('getCategoryTotalValue', function () {
         expect($totalValue)->toBe(2200.0);
     });
 
-    it('includes only available stock quantity', function () {
+    it('includes only available stock quantity', function (): void {
         $warehouse = Warehouse::factory()->create(['valuation_method' => InventoryValuationMethod::FIFO]);
         $category = Category::factory()->create();
         $product = Product::factory()->create(['category_id' => $category->id]);

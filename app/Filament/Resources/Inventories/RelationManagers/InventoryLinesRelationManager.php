@@ -24,11 +24,13 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 final class InventoryLinesRelationManager extends RelationManager
 {
     protected static string $relationship = 'inventoryLines';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -42,7 +44,7 @@ final class InventoryLinesRelationManager extends RelationManager
                             ->preload()
                             ->required()
                             ->live()
-                            ->afterStateUpdated(function ($state, $set) {
+                            ->afterStateUpdated(function ($state, $set): void {
                                 if ($state) {
                                     $product = Product::query()
                                         ->with('stocks')
@@ -91,7 +93,7 @@ final class InventoryLinesRelationManager extends RelationManager
                                     ->required()
                                     ->minValue(0)
                                     ->live(debounce: 1000)
-                                    ->afterStateUpdated(function ($state, Get $get, Set $set) {
+                                    ->afterStateUpdated(function ($state, Get $get, Set $set): void {
                                         $systemQuantity = $get('system_quantity') ?? 0;
                                         $actualQuantity = $get('actual_quantity') ?? 0;
                                         $unitCost = $state ?? 0;
@@ -107,7 +109,7 @@ final class InventoryLinesRelationManager extends RelationManager
                                     ->minValue(0)
                                     ->prefix('Ft')
                                     ->live()
-                                    ->afterStateUpdated(function ($state, Get $get, Set $set) {
+                                    ->afterStateUpdated(function ($state, Get $get, Set $set): void {
                                         $systemQuantity = $get('system_quantity') ?? 0;
                                         $actualQuantity = $get('actual_quantity') ?? 0;
                                         $unitCost = $state ?? 0;
@@ -120,7 +122,7 @@ final class InventoryLinesRelationManager extends RelationManager
 
                         TextInput::make('variance_value')
                             ->label('Eltérés értéke')
-                            ->afterStateHydrated(function ($state, $get, $set) {
+                            ->afterStateHydrated(function ($state, $get, $set): void {
                                 $systemQuantity = $get('system_quantity') ?? 0;
                                 $actualQuantity = $get('actual_quantity') ?? 0;
                                 $unitCost = $get('unit_cost') ?? 0;
@@ -177,10 +179,9 @@ final class InventoryLinesRelationManager extends RelationManager
 
                 TextColumn::make('variance_quantity')
                     ->label('Eltérés')
-                    ->getStateUsing(fn (Model $record) => $record->calculateVarianceQuantity())
                     ->numeric()
                     ->badge()
-                    ->color(fn (Model $record) => match ($record->getDiscrepancyType()) {
+                    ->color(fn (Model $record): string => match ($record->getDiscrepancyType()) {
                         DiscrepancyType::SHORTAGE => 'danger',
                         DiscrepancyType::OVERAGE => 'warning',
                         DiscrepancyType::MATCH => 'success',
@@ -194,10 +195,9 @@ final class InventoryLinesRelationManager extends RelationManager
 
                 TextColumn::make('variance_value')
                     ->label('Eltérés értéke')
-                    ->getStateUsing(fn (Model $record) => $record->calculateVarianceValue())
                     ->money('HUF')
                     ->sortable()
-                    ->color(fn (Model $record) => $record->hasVariance() ? 'danger' : 'success'),
+                    ->color(fn (Model $record): string => $record->hasVariance() ? 'danger' : 'success'),
 
                 TextColumn::make('condition')
                     ->label('Állapot')
@@ -221,24 +221,24 @@ final class InventoryLinesRelationManager extends RelationManager
 
                         return $data;
                     })
-                    ->after(function () {
+                    ->after(function (): void {
                         $this->getOwnerRecord()->calculateVariance();
                     }),
             ])
             ->recordActions([
                 EditAction::make()
-                    ->after(function () {
+                    ->after(function (): void {
                         $this->getOwnerRecord()->calculateVariance();
                     }),
                 DeleteAction::make()
-                    ->after(function () {
+                    ->after(function (): void {
                         $this->getOwnerRecord()->calculateVariance();
                     }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()
-                        ->after(function () {
+                        ->after(function (): void {
                             $this->getOwnerRecord()->calculateVariance();
                         }),
                 ]),

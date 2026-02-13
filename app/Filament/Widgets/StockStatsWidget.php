@@ -12,21 +12,24 @@ use App\Models\Stock;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Number;
+use Override;
 
 final class StockStatsWidget extends StatsOverviewWidget
 {
     protected static ?int $sort = 1;
 
+    #[Override]
     protected function getStats(): array
     {
-        $totalProducts = Product::count();
-        $totalStock = (int) Stock::sum('quantity');
-        $lowStockCount = Stock::whereColumn('quantity', '<=', 'minimum_stock')->count();
-        $pendingOrders = Order::where('type', OrderType::PURCHASE)
+        $totalProducts = Product::query()->count();
+        $totalStock = (int) Stock::query()->sum('quantity');
+        $lowStockCount = Stock::query()->whereColumn('quantity', '<=', 'minimum_stock')->count();
+        $pendingOrders = Order::query()->where('type', OrderType::PURCHASE)
             ->whereIn('status', [OrderStatus::CONFIRMED, OrderStatus::PROCESSING, OrderStatus::SHIPPED])
             ->count();
 
-        $monthlyPurchaseCost = Order::where('type', OrderType::PURCHASE)
+        $monthlyPurchaseCost = Order::query()->where('type', OrderType::PURCHASE)
             ->whereMonth('order_date', now()->month)
             ->whereYear('order_date', now()->year)
             ->sum('total_amount');
@@ -62,12 +65,12 @@ final class StockStatsWidget extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedTruck)
                 ->color('info'),
 
-            Stat::make(__('Monthly Purchase Cost'), number_format((float) $monthlyPurchaseCost, 0, '.', ' ').' Ft')
+            Stat::make(__('Monthly Purchase Cost'), Number::currency((float) $monthlyPurchaseCost, in: 'HUF', locale: 'hu', precision: 0))
                 ->description(__("This month's purchases"))
                 ->descriptionIcon(Heroicon::OutlinedBanknotes)
                 ->color('warning'),
 
-            Stat::make(__('Inventory Value'), number_format((float) $inventoryValue, 0, '.', ' ').' Ft')
+            Stat::make(__('Inventory Value'), Number::currency((float) $inventoryValue, in: 'HUF', locale: 'hu', precision: 0))
                 ->description(__('Total stock value'))
                 ->descriptionIcon(Heroicon::OutlinedCalculator)
                 ->color('success'),

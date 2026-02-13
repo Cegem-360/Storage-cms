@@ -13,12 +13,14 @@ use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
+use Override;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 final class ViewProduct extends ViewRecord
 {
     protected static string $resource = ProductResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -47,7 +49,7 @@ final class ViewProduct extends ViewRecord
                 ->action(function (Product $record) {
                     $generator = new BarcodeGeneratorPNG();
                     $barcodeImage = base64_encode(
-                        $generator->getBarcode($record->barcode, $generator::TYPE_EAN_13)
+                        $generator->getBarcode($record->barcode, BarcodeGeneratorPNG::TYPE_EAN_13)
                     );
 
                     $pdf = Pdf::loadView('pdf.product-label', [

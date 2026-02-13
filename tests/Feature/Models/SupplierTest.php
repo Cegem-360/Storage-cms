@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('can create a supplier', function () {
+it('can create a supplier', function (): void {
     $supplier = Supplier::factory()->create([
         'company_name' => 'Test Supplier Inc.',
         'email' => 'test@supplier.com',
@@ -23,7 +23,7 @@ it('can create a supplier', function () {
         ->and($supplier->is_active)->toBeTrue();
 });
 
-it('can update supplier rating', function () {
+it('can update supplier rating', function (): void {
     $supplier = Supplier::factory()->create(['rating' => SupplierRating::GOOD]);
 
     $supplier->update(['rating' => SupplierRating::EXCELLENT]);
@@ -31,55 +31,55 @@ it('can update supplier rating', function () {
     expect($supplier->fresh()->rating)->toBe(SupplierRating::EXCELLENT);
 });
 
-it('can create supplier with excellent rating using factory state', function () {
+it('can create supplier with excellent rating using factory state', function (): void {
     $supplier = Supplier::factory()->excellent()->create();
 
     expect($supplier->rating)->toBe(SupplierRating::EXCELLENT);
 });
 
-it('can create blacklisted supplier using factory state', function () {
+it('can create blacklisted supplier using factory state', function (): void {
     $supplier = Supplier::factory()->blacklisted()->create();
 
     expect($supplier->rating)->toBe(SupplierRating::BLACKLISTED)
         ->and($supplier->is_active)->toBeFalse();
 });
 
-it('has products relationship', function () {
+it('has products relationship', function (): void {
     $supplier = Supplier::factory()->create();
 
     expect($supplier->products())->toBeInstanceOf(HasMany::class);
 });
 
-it('has orders relationship', function () {
+it('has orders relationship', function (): void {
     $supplier = Supplier::factory()->create();
 
     expect($supplier->orders())->toBeInstanceOf(HasMany::class);
 });
 
-it('casts headquarters and mailing_address to array', function () {
+it('casts headquarters and mailing_address to array', function (): void {
     $supplier = Supplier::factory()->create();
 
     expect($supplier->headquarters)->toBeArray()
         ->and($supplier->mailing_address)->toBeArray();
 });
 
-it('casts is_active to boolean', function () {
+it('casts is_active to boolean', function (): void {
     $supplier = Supplier::factory()->create(['is_active' => 1]);
 
     expect($supplier->is_active)->toBeBool();
 });
 
-it('can soft delete a supplier', function () {
+it('can soft delete a supplier', function (): void {
     $supplier = Supplier::factory()->create();
     $supplierId = $supplier->id;
 
     $supplier->delete();
 
-    expect(Supplier::find($supplierId))->toBeNull()
+    expect(Supplier::query()->find($supplierId))->toBeNull()
         ->and(Supplier::withTrashed()->find($supplierId))->not->toBeNull();
 });
 
-it('has unique code', function () {
+it('has unique code', function (): void {
     $code = 'SUP-1234';
     Supplier::factory()->create(['code' => $code]);
 
@@ -87,7 +87,7 @@ it('has unique code', function () {
         ->toThrow(QueryException::class);
 });
 
-it('casts country_code to CountryCode enum', function () {
+it('casts country_code to CountryCode enum', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
     ]);
@@ -96,7 +96,7 @@ it('casts country_code to CountryCode enum', function () {
         ->and($supplier->country_code)->toBe(CountryCode::DE);
 });
 
-it('casts is_eu_member to boolean', function () {
+it('casts is_eu_member to boolean', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
         'is_eu_member' => true,
@@ -106,7 +106,7 @@ it('casts is_eu_member to boolean', function () {
         ->and($supplier->is_eu_member)->toBeTrue();
 });
 
-it('sets is_eu_member correctly based on country_code', function () {
+it('sets is_eu_member correctly based on country_code', function (): void {
     $euSupplier = Supplier::factory()->create([
         'country_code' => CountryCode::DE,
     ]);
@@ -120,7 +120,7 @@ it('sets is_eu_member correctly based on country_code', function () {
         ->and($nonEuSupplier->country_code->isEuMember())->toBeFalse();
 });
 
-it('creates supplier with random country from factory', function () {
+it('creates supplier with random country from factory', function (): void {
     $supplier = Supplier::factory()->create();
 
     expect($supplier->country_code)->toBeInstanceOf(CountryCode::class)
@@ -128,7 +128,7 @@ it('creates supplier with random country from factory', function () {
         ->and($supplier->is_eu_member)->toBe($supplier->country_code->isEuMember());
 });
 
-it('has country label from enum', function () {
+it('has country label from enum', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::FR,
     ]);
@@ -136,7 +136,7 @@ it('has country label from enum', function () {
     expect($supplier->country_code->getLabel())->toBe('Franciaország');
 });
 
-it('can create supplier with all EU member countries', function () {
+it('can create supplier with all EU member countries', function (): void {
     $euCountries = [
         CountryCode::AT, CountryCode::BE, CountryCode::BG, CountryCode::HR,
         CountryCode::CY, CountryCode::CZ, CountryCode::DK, CountryCode::EE,
@@ -159,7 +159,7 @@ it('can create supplier with all EU member countries', function () {
     }
 });
 
-it('can create supplier with XI (Northern Ireland)', function () {
+it('can create supplier with XI (Northern Ireland)', function (): void {
     $supplier = Supplier::factory()->create([
         'country_code' => CountryCode::XI,
         'is_eu_member' => false,

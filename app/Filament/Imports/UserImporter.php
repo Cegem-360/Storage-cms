@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Imports;
 
 use App\Models\User;
@@ -7,8 +9,9 @@ use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Number;
+use Override;
 
-class UserImporter extends Importer
+final class UserImporter extends Importer
 {
     protected static ?string $model = User::class;
 
@@ -37,21 +40,22 @@ class UserImporter extends Importer
         ];
     }
 
-    public function resolveRecord(): User
-    {
-        return User::firstOrNew([
-            'email' => $this->data['email'],
-        ]);
-    }
-
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Your user import has completed and ' . Number::format($import->successful_rows) . ' ' . str('row')->plural($import->successful_rows) . ' imported.';
+        $body = 'Your user import has completed and '.Number::format($import->successful_rows).' '.str('row')->plural($import->successful_rows).' imported.';
 
-        if ($failedRowsCount = $import->getFailedRowsCount()) {
-            $body .= ' ' . Number::format($failedRowsCount) . ' ' . str('row')->plural($failedRowsCount) . ' failed to import.';
+        if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
+            $body .= ' '.Number::format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to import.';
         }
 
         return $body;
+    }
+
+    #[Override]
+    public function resolveRecord(): User
+    {
+        return User::query()->firstOrNew([
+            'email' => $this->data['email'],
+        ]);
     }
 }

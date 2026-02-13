@@ -15,11 +15,13 @@ use Filament\Actions\RestoreAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
+use Override;
 
 final class EditInventory extends EditRecord
 {
     protected static string $resource = InventoryResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

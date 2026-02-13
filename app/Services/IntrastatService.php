@@ -28,7 +28,7 @@ final class IntrastatService
     ): IntrastatDeclaration {
         return DB::transaction(function () use ($year, $month, $direction): IntrastatDeclaration {
             // Create declaration
-            $declaration = IntrastatDeclaration::create([
+            $declaration = IntrastatDeclaration::query()->create([
                 'declaration_number' => $this->generateDeclarationNumber($year, $month, $direction),
                 'direction' => $direction,
                 'reference_year' => $year,
@@ -326,17 +326,17 @@ final class IntrastatService
     ): void {
         foreach ($order->orderLines as $orderLine) {
             $product = $orderLine->product;
-
             // Skip if product doesn't have CN code or is not from/to EU
-            if (! $product || ! $product->cn_code) {
+            if (! $product) {
+                continue;
+            }
+            if (! $product->cn_code) {
                 continue;
             }
 
             // For purchases (arrival), check if supplier is from EU
-            if ($direction === IntrastatDirection::ARRIVAL) {
-                if (! $order->supplier || ! $order->supplier->is_eu_member || $order->supplier->country_code === CountryCode::HU) {
-                    continue;
-                }
+            if ($direction === IntrastatDirection::ARRIVAL && (! $order->supplier || ! $order->supplier->is_eu_member || $order->supplier->country_code === CountryCode::HU)) {
+                continue;
             }
 
             // For sales (dispatch), check if customer is from EU
@@ -351,9 +351,9 @@ final class IntrastatService
                 ? $product->net_weight_kg * $orderLine->quantity
                 : 0;
 
-            $lineTotal = $orderLine->calculateSubtotal();
+            $lineTotal = $orderLine->subtotal;
 
-            IntrastatLine::create([
+            IntrastatLine::query()->create([
                 'intrastat_declaration_id' => $declaration->id,
                 'order_id' => $order->id,
                 'product_id' => $product->id,

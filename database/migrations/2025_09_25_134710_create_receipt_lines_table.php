@@ -23,7 +23,9 @@ return new class() extends Migration
             $table->foreignIdFor(Warehouse::class)->constrained();
             $table->integer('quantity_expected');
             $table->integer('quantity_received');
+            $table->integer('variance')->virtualAs('quantity_received - quantity_expected');
             $table->decimal('unit_price', 10, 2);
+            $table->decimal('line_total', 12, 2)->virtualAs('quantity_received * unit_price');
             $table->string('condition', 50)->default('GOOD');
             $table->string('expiry_date')->nullable();
             $table->string('batch_number')->nullable();

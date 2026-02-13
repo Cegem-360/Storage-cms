@@ -14,6 +14,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Override;
 
 final class OrderSuggestionWidget extends BaseWidget
 {
@@ -33,6 +34,7 @@ final class OrderSuggestionWidget extends BaseWidget
         return __('Products below reorder point');
     }
 
+    #[Override]
     public function table(Table $table): Table
     {
         return $table
@@ -84,8 +86,8 @@ final class OrderSuggestionWidget extends BaseWidget
                     ->icon(Heroicon::OutlinedShoppingCart)
                     ->color('primary')
                     ->action(function (Product $record): void {
-                        $order = Order::create([
-                            'order_number' => 'PO-'.now()->format('Ymd').'-'.mb_str_pad((string) (Order::count() + 1), 4, '0', STR_PAD_LEFT),
+                        $order = Order::query()->create([
+                            'order_number' => 'PO-'.now()->format('Ymd').'-'.mb_str_pad((string) (Order::query()->count() + 1), 4, '0', STR_PAD_LEFT),
                             'type' => OrderType::PURCHASE,
                             'supplier_id' => $record->supplier_id,
                             'status' => OrderStatus::DRAFT,

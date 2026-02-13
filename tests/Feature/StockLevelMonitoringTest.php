@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification;
 
 uses()->group('database');
 
-it('can set minimum and maximum stock levels for a product in a warehouse', function () {
+it('can set minimum and maximum stock levels for a product in a warehouse', function (): void {
     $product = Product::factory()->create([
         'min_stock' => 10,
         'max_stock' => 100,
@@ -34,7 +34,7 @@ it('can set minimum and maximum stock levels for a product in a warehouse', func
     expect($stock->quantity)->toBe(50);
 });
 
-it('detects low stock condition', function () {
+it('detects low stock condition', function (): void {
     $product = Product::factory()->create();
     $warehouse = Warehouse::factory()->create();
 
@@ -52,7 +52,7 @@ it('detects low stock condition', function () {
     expect($stock->isLowStock())->toBeFalse();
 });
 
-it('detects reorder point reached for product', function () {
+it('detects reorder point reached for product', function (): void {
     $product = Product::factory()->create([
         'reorder_point' => 50,
     ]);
@@ -72,7 +72,7 @@ it('detects reorder point reached for product', function () {
     expect($product->calculateReorderQuantity())->toBeGreaterThan(0);
 });
 
-it('sends low stock alert notification when stock drops below minimum', function () {
+it('sends low stock alert notification when stock drops below minimum', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true, 'email' => 'admin@example.com']);
@@ -90,15 +90,13 @@ it('sends low stock alert notification when stock drops below minimum', function
     $stock->update(['quantity' => 8]);
 
     Notification::assertSentTo(
-        User::where('is_super_admin', true)->get(),
+        User::query()->where('is_super_admin', true)->get(),
         LowStockAlert::class,
-        function ($notification) use ($stock) {
-            return $notification->stock->id === $stock->id;
-        }
+        fn ($notification): bool => $notification->stock->id === $stock->id
     );
 });
 
-it('sends overstock alert notification when stock exceeds maximum', function () {
+it('sends overstock alert notification when stock exceeds maximum', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true, 'email' => 'admin@example.com']);
@@ -116,15 +114,13 @@ it('sends overstock alert notification when stock exceeds maximum', function () 
     $stock->update(['quantity' => 120]);
 
     Notification::assertSentTo(
-        User::where('is_super_admin', true)->get(),
+        User::query()->where('is_super_admin', true)->get(),
         OverstockAlert::class,
-        function ($notification) use ($stock) {
-            return $notification->stock->id === $stock->id;
-        }
+        fn ($notification): bool => $notification->stock->id === $stock->id
     );
 });
 
-it('does not send alert when stock level is normal', function () {
+it('does not send alert when stock level is normal', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true]);
@@ -145,7 +141,7 @@ it('does not send alert when stock level is normal', function () {
     Notification::assertNothingSent();
 });
 
-it('calculates recommended reorder quantity correctly', function () {
+it('calculates recommended reorder quantity correctly', function (): void {
     $product = Product::factory()->create([
         'max_stock' => 100,
         'reorder_point' => 20,

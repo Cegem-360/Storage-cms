@@ -8,15 +8,16 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Product;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Number;
 
 final class OrderForm
 {
@@ -28,7 +29,7 @@ final class OrderForm
                     ->schema([
                         TextInput::make('order_number')
                             ->label('Order Number')
-                            ->default(fn () => 'ORD-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
+                            ->default(fn (): string => 'ORD-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                             ->required(),
                         Select::make('type')
                             ->label('Order Type')
@@ -76,7 +77,7 @@ final class OrderForm
                                     ->live()
                                     ->afterStateUpdated(function (?string $state, Set $set): void {
                                         if ($state) {
-                                            $product = Product::find($state);
+                                            $product = Product::query()->find($state);
                                             if ($product) {
                                                 $set('unit_price', (string) $product->price);
                                             }
@@ -112,14 +113,14 @@ final class OrderForm
                                     ->live(debounce: 500)
                                     ->columnSpan(1),
 
-                                Placeholder::make('line_total')
+                                TextEntry::make('line_total')
                                     ->label('Subtotal')
-                                    ->content(function (Get $get): string {
+                                    ->state(function (Get $get): string {
                                         $quantity = (float) ($get('quantity') ?? 0);
                                         $unitPrice = (float) ($get('unit_price') ?? 0);
                                         $discount = (float) ($get('discount_percent') ?? 0);
 
-                                        return number_format($quantity * $unitPrice * (1 - $discount / 100), 2).' HUF';
+                                        return Number::currency($quantity * $unitPrice * (1 - $discount / 100), in: 'HUF', locale: 'hu');
                                     })
                                     ->columnSpan(2),
 
@@ -132,19 +133,20 @@ final class OrderForm
                             ->reorderable(false)
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['product_id']
-                                ? Product::find($state['product_id'])?->name
+                                ? Product::query()->find($state['product_id'])?->name
                                 : null
                             ),
                     ]),
 
                 Section::make(__('Summary'))
                     ->schema([
-                        Placeholder::make('calculated_total')
+                        TextEntry::make('calculated_total')
                             ->label('Total')
-                            ->content(fn ($record): string => $record
-                                ? number_format((float) $record->calculateTotal(), 2).' HUF'
-                                : '0.00 HUF'
-                            ),
+                            ->state(fn ($record): string => Number::currency(
+                                $record?->calculated_total ?? 0,
+                                in: 'HUF',
+                                locale: 'hu',
+                            )),
                     ])
                     ->visibleOn(['edit', 'view']),
             ]);

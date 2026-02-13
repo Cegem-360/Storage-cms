@@ -96,7 +96,7 @@ it('calculates total correctly', function (): void {
         'discount_percent' => 10, // 10% discount
     ]);
 
-    $total = $order->calculateTotal();
+    $total = $order->calculated_total;
     // (2 * 25.00) + (1 * 30.00 * 0.9) = 50.00 + 27.00 = 77.00
     expect($total)->toBe(77.0);
 });

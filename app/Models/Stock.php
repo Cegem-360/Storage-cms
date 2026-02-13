@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 #[ObservedBy(StockObserver::class)]
 final class Stock extends Model
@@ -103,6 +104,7 @@ final class Stock extends Model
     }
 
     // Unique constraint: one stock per product per warehouse
+    #[Override]
     protected static function boot(): void
     {
         parent::boot();
@@ -119,6 +121,7 @@ final class Stock extends Model
         });
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

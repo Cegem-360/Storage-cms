@@ -12,11 +12,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->service = new StockMovementService();
 });
 
-it('executes transfer movement successfully', function () {
+it('executes transfer movement successfully', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -51,7 +51,7 @@ it('executes transfer movement successfully', function () {
         ->and($targetStock->quantity)->toBe(50);
 });
 
-it('executes inbound movement successfully', function () {
+it('executes inbound movement successfully', function (): void {
     $product = Product::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
 
@@ -77,7 +77,7 @@ it('executes inbound movement successfully', function () {
         ->and($targetStock->quantity)->toBe(100);
 });
 
-it('executes outbound movement successfully', function () {
+it('executes outbound movement successfully', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
 
@@ -103,7 +103,7 @@ it('executes outbound movement successfully', function () {
         ->and($sourceStock->fresh()->quantity)->toBe(70);
 });
 
-it('throws exception when quantity is zero or negative', function () {
+it('throws exception when quantity is zero or negative', function (): void {
     $movement = StockMovement::factory()->create([
         'quantity' => 0,
     ]);
@@ -111,7 +111,7 @@ it('throws exception when quantity is zero or negative', function () {
     $this->service->execute($movement);
 })->throws(Exception::class, 'Invalid quantity: must be greater than zero');
 
-it('throws exception when movement has no source or target warehouse', function () {
+it('throws exception when movement has no source or target warehouse', function (): void {
     $movement = StockMovement::factory()->create([
         'source_warehouse_id' => null,
         'target_warehouse_id' => null,
@@ -121,19 +121,19 @@ it('throws exception when movement has no source or target warehouse', function 
     $this->service->execute($movement);
 })->throws(Exception::class, 'Invalid movement: must have source or target warehouse');
 
-it('throws exception when movement is already completed', function () {
+it('throws exception when movement is already completed', function (): void {
     $movement = StockMovement::factory()->completed()->create();
 
     $this->service->execute($movement);
 })->throws(Exception::class, 'Movement already completed');
 
-it('throws exception when movement is cancelled', function () {
+it('throws exception when movement is cancelled', function (): void {
     $movement = StockMovement::factory()->cancelled()->create();
 
     $this->service->execute($movement);
 })->throws(Exception::class, 'Cannot execute cancelled movement');
 
-it('throws exception when insufficient stock in source warehouse', function () {
+it('throws exception when insufficient stock in source warehouse', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -156,7 +156,7 @@ it('throws exception when insufficient stock in source warehouse', function () {
     $this->service->execute($movement);
 })->throws(Exception::class, 'Insufficient stock in source warehouse');
 
-it('throws exception when no stock exists in source warehouse', function () {
+it('throws exception when no stock exists in source warehouse', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -172,7 +172,7 @@ it('throws exception when no stock exists in source warehouse', function () {
     $this->service->execute($movement);
 })->throws(Exception::class, 'Insufficient stock in source warehouse');
 
-it('creates target stock if it does not exist', function () {
+it('creates target stock if it does not exist', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -207,7 +207,7 @@ it('creates target stock if it does not exist', function () {
     )->toBeTrue();
 });
 
-it('respects reserved quantity when checking available stock', function () {
+it('respects reserved quantity when checking available stock', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -230,7 +230,7 @@ it('respects reserved quantity when checking available stock', function () {
     $this->service->execute($movement);
 })->throws(Exception::class, 'Insufficient stock in source warehouse');
 
-it('cancels movement successfully', function () {
+it('cancels movement successfully', function (): void {
     $movement = StockMovement::factory()->planned()->create();
 
     $this->service->cancel($movement);
@@ -238,7 +238,7 @@ it('cancels movement successfully', function () {
     expect($movement->fresh()->status->value)->toBe('cancelled');
 });
 
-it('wraps execution in database transaction', function () {
+it('wraps execution in database transaction', function (): void {
     $product = Product::factory()->create();
     $sourceWarehouse = Warehouse::factory()->create();
     $targetWarehouse = Warehouse::factory()->create();
@@ -265,7 +265,7 @@ it('wraps execution in database transaction', function () {
 
     try {
         $this->service->execute($movement);
-    } catch (Exception $e) {
+    } catch (Exception) {
         // If an exception occurs, the transaction should rollback
     }
 

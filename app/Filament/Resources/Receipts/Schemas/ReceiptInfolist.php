@@ -58,7 +58,6 @@ final class ReceiptInfolist
                                     ->numeric(),
                                 TextEntry::make('variance')
                                     ->label('Variance')
-                                    ->state(fn ($record): int => $record->calculateVariance())
                                     ->numeric()
                                     ->color(fn ($record): string => $record->isDiscrepant() ? 'danger' : 'success'),
                                 TextEntry::make('unit_price')

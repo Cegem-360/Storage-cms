@@ -9,14 +9,15 @@ use App\Enums\ReturnReason;
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Number;
 
 final class ReturnDeliveryForm
 {
@@ -28,7 +29,7 @@ final class ReturnDeliveryForm
                     ->schema([
                         TextInput::make('return_number')
                             ->label('Return Number')
-                            ->default(fn () => 'RET-'.mb_strtoupper(uniqid()))
+                            ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                             ->required()
                             ->maxLength(100)
                             ->unique(ignoreRecord: true),
@@ -62,21 +63,21 @@ final class ReturnDeliveryForm
                             ->label('Related Order')
                             ->searchable()
                             ->preload()
-                            ->visible(fn (Get $get) => $get('type') === ReturnType::CUSTOMER_RETURN),
+                            ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                         Select::make('customer_id')
                             ->relationship('order.customer', 'name')
                             ->label('Customer')
                             ->searchable()
                             ->preload()
-                            ->visible(fn (Get $get) => $get('type') === ReturnType::CUSTOMER_RETURN),
+                            ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                         Select::make('supplier_id')
                             ->relationship('order.supplier', 'company_name')
                             ->label('Supplier')
                             ->searchable()
                             ->preload()
-                            ->visible(fn (Get $get) => $get('type') === ReturnType::SUPPLIER_RETURN),
+                            ->visible(fn (Get $get): bool => $get('type') === ReturnType::SUPPLIER_RETURN),
 
                         Select::make('processed_by')
                             ->relationship('processedBy', 'first_name')
@@ -157,9 +158,13 @@ final class ReturnDeliveryForm
 
                 Section::make('Summary')
                     ->schema([
-                        Placeholder::make('total_amount')
+                        TextEntry::make('total_amount')
                             ->label('Total Amount')
-                            ->content(fn ($record) => $record ? number_format($record->total_amount, 2).' HUF' : '0.00 HUF'),
+                            ->state(fn ($record): string => Number::currency(
+                                $record?->total_amount ?? 0,
+                                in: 'HUF',
+                                locale: 'hu',
+                            )),
                     ])
                     ->visibleOn('edit'),
             ]);

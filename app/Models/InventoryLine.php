@@ -8,6 +8,7 @@ use App\Enums\DiscrepancyType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class InventoryLine extends Model
 {
@@ -35,16 +36,6 @@ final class InventoryLine extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function calculateVarianceQuantity(): int
-    {
-        return $this->actual_quantity - $this->system_quantity;
-    }
-
-    public function calculateVarianceValue(): float
-    {
-        return $this->calculateVarianceQuantity() * $this->unit_cost;
-    }
-
     public function hasVariance(): bool
     {
         return $this->actual_quantity !== $this->system_quantity;
@@ -69,12 +60,15 @@ final class InventoryLine extends Model
         };
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
             'system_quantity' => 'integer',
             'actual_quantity' => 'integer',
+            'variance_quantity' => 'integer',
             'unit_cost' => 'decimal:2',
+            'variance_value' => 'float',
             'expiry_date' => 'date',
             'condition' => DiscrepancyType::class,
         ];

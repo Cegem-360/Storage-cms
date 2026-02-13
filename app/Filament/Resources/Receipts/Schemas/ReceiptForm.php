@@ -8,16 +8,18 @@ use App\Enums\ProductCondition;
 use App\Enums\ReceiptStatus;
 use App\Models\Order;
 use App\Models\OrderLine;
+use App\Models\Receipt;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Number;
 
 final class ReceiptForm
 {
@@ -29,7 +31,7 @@ final class ReceiptForm
                     ->schema([
                         TextInput::make('receipt_number')
                             ->label('Receipt Number')
-                            ->default(fn () => 'REC-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
+                            ->default(fn (): string => 'REC-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                             ->required(),
                         Select::make('order_id')
                             ->label('Order')
@@ -126,9 +128,9 @@ final class ReceiptForm
                                     ->live(debounce: 500)
                                     ->columnSpan(1),
 
-                                Placeholder::make('variance')
+                                TextEntry::make('variance')
                                     ->label('Variance')
-                                    ->content(function (Get $get): string {
+                                    ->state(function (Get $get): string {
                                         $received = (int) ($get('quantity_received') ?? 0);
                                         $expected = (int) ($get('quantity_expected') ?? 0);
                                         $variance = $received - $expected;
@@ -170,12 +172,13 @@ final class ReceiptForm
 
                 Section::make(__('Summary'))
                     ->schema([
-                        Placeholder::make('calculated_total')
+                        TextEntry::make('calculated_total')
                             ->label('Total')
-                            ->content(fn ($record): string => $record
-                                ? number_format((float) $record->calculateTotal(), 2).' HUF'
-                                : '0.00 HUF'
-                            ),
+                            ->state(fn (Receipt $record): string => Number::currency(
+                                $record?->calculated_total ?? 0,
+                                in: 'HUF',
+                                locale: 'hu',
+                            )),
                     ])
                     ->visibleOn(['edit', 'view']),
             ]);

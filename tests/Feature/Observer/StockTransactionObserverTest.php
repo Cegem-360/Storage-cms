@@ -13,7 +13,7 @@ use App\Models\Supplier;
 
 use function Pest\Laravel\assertDatabaseHas;
 
-it('creates intrastat line when stock transaction is created for EU order', function () {
+it('creates intrastat line when stock transaction is created for EU order', function (): void {
     $supplier = Supplier::factory()->create([
         'eu_tax_number' => 'BE123456789',
         'headquarters' => [
@@ -45,10 +45,10 @@ it('creates intrastat line when stock transaction is created for EU order', func
         'reference_id' => $order->id,
     ]);
 
-    expect(IntrastatDeclaration::count())->toBe(1);
-    expect(IntrastatLine::count())->toBe(1);
+    expect(IntrastatDeclaration::query()->count())->toBe(1);
+    expect(IntrastatLine::query()->count())->toBe(1);
 
-    $declaration = IntrastatDeclaration::first();
+    $declaration = IntrastatDeclaration::query()->first();
     expect($declaration->direction)->toBe(IntrastatDirection::ARRIVAL);
 
     assertDatabaseHas('intrastat_lines', [
@@ -63,7 +63,7 @@ it('creates intrastat line when stock transaction is created for EU order', func
     ]);
 });
 
-it('does not create intrastat line for outbound stock transaction', function () {
+it('does not create intrastat line for outbound stock transaction', function (): void {
     $product = Product::factory()->create();
 
     StockTransaction::factory()->create([
@@ -72,11 +72,11 @@ it('does not create intrastat line for outbound stock transaction', function () 
         'quantity' => 10,
     ]);
 
-    expect(IntrastatDeclaration::count())->toBe(0);
-    expect(IntrastatLine::count())->toBe(0);
+    expect(IntrastatDeclaration::query()->count())->toBe(0);
+    expect(IntrastatLine::query()->count())->toBe(0);
 });
 
-it('does not create intrastat line when supplier has no EU tax number', function () {
+it('does not create intrastat line when supplier has no EU tax number', function (): void {
     $supplier = Supplier::factory()->create([
         'eu_tax_number' => null,
     ]);
@@ -96,11 +96,11 @@ it('does not create intrastat line when supplier has no EU tax number', function
         'reference_id' => $order->id,
     ]);
 
-    expect(IntrastatDeclaration::count())->toBe(0);
-    expect(IntrastatLine::count())->toBe(0);
+    expect(IntrastatDeclaration::query()->count())->toBe(0);
+    expect(IntrastatLine::query()->count())->toBe(0);
 });
 
-it('does not create intrastat line when transaction has no order reference', function () {
+it('does not create intrastat line when transaction has no order reference', function (): void {
     $product = Product::factory()->create();
 
     StockTransaction::factory()->create([
@@ -110,11 +110,11 @@ it('does not create intrastat line when transaction has no order reference', fun
         'reference_id' => null,
     ]);
 
-    expect(IntrastatDeclaration::count())->toBe(0);
-    expect(IntrastatLine::count())->toBe(0);
+    expect(IntrastatDeclaration::query()->count())->toBe(0);
+    expect(IntrastatLine::query()->count())->toBe(0);
 });
 
-it('calculates net mass correctly based on product weight', function () {
+it('calculates net mass correctly based on product weight', function (): void {
     $supplier = Supplier::factory()->create([
         'eu_tax_number' => 'AT987654321',
         'headquarters' => ['country' => 'AT'],
@@ -141,11 +141,11 @@ it('calculates net mass correctly based on product weight', function () {
         'reference_id' => $order->id,
     ]);
 
-    $line = IntrastatLine::first();
+    $line = IntrastatLine::query()->first();
     expect($line->net_mass)->toBe('58.000'); // 7.25 * 8
 });
 
-it('creates declaration for current month when transaction is created', function () {
+it('creates declaration for current month when transaction is created', function (): void {
     $supplier = Supplier::factory()->create([
         'eu_tax_number' => 'PL123123123',
         'headquarters' => ['country' => 'PL'],
@@ -166,12 +166,12 @@ it('creates declaration for current month when transaction is created', function
         'reference_id' => $order->id,
     ]);
 
-    $declaration = IntrastatDeclaration::first();
+    $declaration = IntrastatDeclaration::query()->first();
     expect($declaration->reference_year)->toBe((int) now()->format('Y'));
     expect($declaration->reference_month)->toBe((int) now()->format('m'));
 });
 
-it('reuses existing declaration for same month', function () {
+it('reuses existing declaration for same month', function (): void {
     $supplier = Supplier::factory()->create([
         'eu_tax_number' => 'CZ111222333',
         'headquarters' => ['country' => 'CZ'],
@@ -199,7 +199,7 @@ it('reuses existing declaration for same month', function () {
         'reference_id' => $order1->id,
     ]);
 
-    expect(IntrastatDeclaration::count())->toBe(1);
+    expect(IntrastatDeclaration::query()->count())->toBe(1);
 
     // Second transaction in same month
     StockTransaction::factory()->create([
@@ -210,7 +210,7 @@ it('reuses existing declaration for same month', function () {
     ]);
 
     // Should still be one declaration
-    expect(IntrastatDeclaration::count())->toBe(1);
+    expect(IntrastatDeclaration::query()->count())->toBe(1);
     // But two lines
-    expect(IntrastatLine::count())->toBe(2);
+    expect(IntrastatLine::query()->count())->toBe(2);
 });

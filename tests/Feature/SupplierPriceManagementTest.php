@@ -108,14 +108,14 @@ test('can check if price is currently valid', function (): void {
         ->and($inactivePrice->isCurrentlyValid())->toBeFalse();
 });
 
-test('can calculate total price for quantity', function (): void {
+test('price multiplied by quantity gives correct total', function (): void {
     $price = SupplierPrice::factory()->create([
         'price' => 25.5000,
     ]);
 
-    $totalPrice = $price->calculateTotalPrice(10);
+    $totalPrice = $price->price * 10;
 
-    expect($totalPrice)->toBe(255.0);
+    expect((float) $totalPrice)->toBe(255.0);
 });
 
 test('product with different supplier prices shows correct values', function (): void {

@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ReceiptStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class Receipt extends Model
 {
@@ -59,16 +61,9 @@ final class Receipt extends Model
         $this->refreshTotal();
     }
 
-    public function calculateTotal(): float
-    {
-        return $this->receiptLines->sum(function ($line): int|float {
-            return $line->quantity_received * $line->unit_price;
-        });
-    }
-
     public function refreshTotal(): void
     {
-        $this->update(['total_amount' => $this->calculateTotal()]);
+        $this->update(['total_amount' => $this->calculated_total]);
     }
 
     public function confirm(): void
@@ -81,6 +76,14 @@ final class Receipt extends Model
         $this->update(['status' => ReceiptStatus::REJECTED]);
     }
 
+    protected function calculatedTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => (float) $this->receiptLines->sum(fn (ReceiptLine $line): float => $line->line_total),
+        );
+    }
+
+    #[Override]
     protected function casts(): array
     {
         return [

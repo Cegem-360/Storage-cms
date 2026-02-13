@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Warehouses\Schemas;
 
 use App\Models\Warehouse;
@@ -7,7 +9,7 @@ use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class WarehouseInfolist
+final class WarehouseInfolist
 {
     public static function configure(Schema $schema): Schema
     {

@@ -61,7 +61,7 @@ final class WarehouseStockOverview extends Page implements HasTable
                 ->color(function (Product $record) use ($warehouse): string {
                     $stock = $this->findStock($record, $warehouse->id);
 
-                    if (! $stock || $stock->quantity === 0) {
+                    if (! $stock instanceof Stock || $stock->quantity === 0) {
                         return 'gray';
                     }
 

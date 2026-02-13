@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class ReceiptLine extends Model
 {
@@ -40,16 +41,6 @@ final class ReceiptLine extends Model
         return $this->belongsTo(Warehouse::class);
     }
 
-    public function calculateVariance(): int
-    {
-        return $this->quantity_received - $this->quantity_expected;
-    }
-
-    public function calculateLineTotal(): float
-    {
-        return $this->quantity_received * $this->unit_price;
-    }
-
     public function isDiscrepant(): bool
     {
         return $this->quantity_received !== $this->quantity_expected;
@@ -60,10 +51,13 @@ final class ReceiptLine extends Model
         return $this->condition !== 'GOOD';
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
             'unit_price' => 'decimal:2',
+            'variance' => 'integer',
+            'line_total' => 'float',
             'expiry_date' => 'date',
         ];
     }

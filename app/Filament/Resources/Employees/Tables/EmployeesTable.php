@@ -82,7 +82,7 @@ final class EmployeesTable
                     ->sortable(),
                 TextColumn::make('full_name')
                     ->label('Name')
-                    ->state(fn ($record) => $record->last_name.' '.$record->first_name)
+                    ->state(fn ($record): string => $record->last_name.' '.$record->first_name)
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(['last_name', 'first_name']),
                 TextColumn::make('position')

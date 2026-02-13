@@ -21,7 +21,9 @@ return new class() extends Migration
             $table->foreignIdFor(Product::class)->constrained();
             $table->integer('system_quantity');
             $table->integer('actual_quantity');
+            $table->integer('variance_quantity')->virtualAs('actual_quantity - system_quantity');
             $table->decimal('unit_cost', 10, 2);
+            $table->decimal('variance_value', 12, 2)->virtualAs('(actual_quantity - system_quantity) * unit_cost');
             $table->string('condition', 50)->default('GOOD');
             $table->string('batch_number')->nullable();
             $table->date('expiry_date')->nullable();

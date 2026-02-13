@@ -8,11 +8,11 @@ use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
 use App\Services\IntrastatService;
-use Carbon\Carbon;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Date;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
@@ -35,7 +35,7 @@ final class ExportIFormXmlAction
                     ->native(false),
             ])
             ->action(function (array $data, IntrastatService $service): BinaryFileResponse {
-                $date = Carbon::parse($data['period']);
+                $date = Date::parse($data['period']);
 
                 $declarations = IntrastatDeclaration::query()
                     ->where('direction', IntrastatDirection::DISPATCH)

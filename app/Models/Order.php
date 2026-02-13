@@ -8,12 +8,14 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 #[ObservedBy(OrderObserver::class)]
 final class Order extends Model
@@ -72,16 +74,9 @@ final class Order extends Model
         $this->refreshTotal();
     }
 
-    public function calculateTotal(): float
-    {
-        return $this->orderLines->sum(function (OrderLine $line): int|float {
-            return $line->quantity * $line->unit_price * (1 - $line->discount_percent / 100);
-        });
-    }
-
     public function refreshTotal(): void
     {
-        $this->update(['total_amount' => $this->calculateTotal()]);
+        $this->update(['total_amount' => $this->calculated_total]);
     }
 
     public function process(): void
@@ -99,6 +94,14 @@ final class Order extends Model
         return $this->order_number;
     }
 
+    protected function calculatedTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => (float) $this->orderLines->sum(fn (OrderLine $line): float => $line->subtotal),
+        );
+    }
+
+    #[Override]
     protected function casts(): array
     {
         return [

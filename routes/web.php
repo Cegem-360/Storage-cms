@@ -31,9 +31,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function (): View|Factory {
-    return view('home');
-})->name('home');
+Route::get('/', fn (): View|Factory => view('home'))->name('home');
 
 Route::get('/language/{locale}', function (string $locale): RedirectResponse {
     if (! in_array($locale, ['en', 'hu'], true)) {

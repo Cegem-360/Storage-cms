@@ -9,6 +9,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Override;
 
 final class LowStockWidget extends BaseWidget
 {
@@ -23,6 +24,7 @@ final class LowStockWidget extends BaseWidget
         return __('Low Stock Alerts');
     }
 
+    #[Override]
     public function table(Table $table): Table
     {
         return $table

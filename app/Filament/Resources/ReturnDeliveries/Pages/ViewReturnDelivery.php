@@ -11,11 +11,13 @@ use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Support\Icons\Heroicon;
+use Override;
 
 final class ViewReturnDelivery extends ViewRecord
 {
     protected static string $resource = ReturnDeliveryResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [
@@ -27,7 +29,7 @@ final class ViewReturnDelivery extends ViewRecord
                 ->icon(Heroicon::OutlinedCheckCircle)
                 ->color('success')
                 ->requiresConfirmation()
-                ->visible(fn ($record) => $record->status === ReturnStatus::INSPECTED)
+                ->visible(fn ($record): bool => $record->status === ReturnStatus::INSPECTED)
                 ->action(function ($record): void {
                     $record->approve();
 
@@ -42,7 +44,7 @@ final class ViewReturnDelivery extends ViewRecord
                 ->icon(Heroicon::OutlinedXCircle)
                 ->color('danger')
                 ->requiresConfirmation()
-                ->visible(fn ($record) => in_array($record->status, [ReturnStatus::PENDING_INSPECTION, ReturnStatus::INSPECTED]))
+                ->visible(fn ($record): bool => in_array($record->status, [ReturnStatus::PENDING_INSPECTION, ReturnStatus::INSPECTED]))
                 ->action(function ($record): void {
                     $record->reject();
 
@@ -57,7 +59,7 @@ final class ViewReturnDelivery extends ViewRecord
                 ->icon(Heroicon::OutlinedArrowPath)
                 ->color('info')
                 ->requiresConfirmation()
-                ->visible(fn ($record) => $record->status === ReturnStatus::APPROVED && $record->isCustomerReturn())
+                ->visible(fn ($record): bool => $record->status === ReturnStatus::APPROVED && $record->isCustomerReturn())
                 ->action(function ($record): void {
                     $record->restock();
 

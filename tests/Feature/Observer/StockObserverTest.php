@@ -8,7 +8,7 @@ use App\Notifications\LowStockAlert;
 use App\Notifications\OverstockAlert;
 use Illuminate\Support\Facades\Notification;
 
-it('sends low stock alert when stock quantity falls below minimum', function () {
+it('sends low stock alert when stock quantity falls below minimum', function (): void {
     Notification::fake();
 
     $admin = User::factory()->create(['is_super_admin' => true]);
@@ -22,7 +22,7 @@ it('sends low stock alert when stock quantity falls below minimum', function () 
     Notification::assertSentTo($admin, LowStockAlert::class);
 });
 
-it('sends overstock alert when stock quantity exceeds maximum', function () {
+it('sends overstock alert when stock quantity exceeds maximum', function (): void {
     Notification::fake();
 
     $admin = User::factory()->create(['is_super_admin' => true]);
@@ -36,7 +36,7 @@ it('sends overstock alert when stock quantity exceeds maximum', function () {
     Notification::assertSentTo($admin, OverstockAlert::class);
 });
 
-it('sends low stock alert when quantity is updated below minimum', function () {
+it('sends low stock alert when quantity is updated below minimum', function (): void {
     Notification::fake();
 
     $admin = User::factory()->create(['is_super_admin' => true]);
@@ -55,7 +55,7 @@ it('sends low stock alert when quantity is updated below minimum', function () {
     Notification::assertSentTo($admin, LowStockAlert::class);
 });
 
-it('does not send low stock alert when quantity is zero', function () {
+it('does not send low stock alert when quantity is zero', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true]);
@@ -67,12 +67,12 @@ it('does not send low stock alert when quantity is zero', function () {
     ]);
 
     Notification::assertNotSentTo(
-        User::where('is_super_admin', true)->get(),
+        User::query()->where('is_super_admin', true)->get(),
         LowStockAlert::class
     );
 });
 
-it('sends notifications to all super admins', function () {
+it('sends notifications to all super admins', function (): void {
     Notification::fake();
 
     $admin1 = User::factory()->create(['is_super_admin' => true]);
@@ -90,7 +90,7 @@ it('sends notifications to all super admins', function () {
     Notification::assertNotSentTo($regularUser, LowStockAlert::class);
 });
 
-it('does not send notification when quantity changes but stays within normal range', function () {
+it('does not send notification when quantity changes but stays within normal range', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true]);
@@ -108,7 +108,7 @@ it('does not send notification when quantity changes but stays within normal ran
     Notification::assertNothingSent();
 });
 
-it('does not send notification when non-quantity field is updated', function () {
+it('does not send notification when non-quantity field is updated', function (): void {
     Notification::fake();
 
     User::factory()->create(['is_super_admin' => true]);
@@ -126,7 +126,7 @@ it('does not send notification when non-quantity field is updated', function () 
     Notification::assertNothingSent();
 });
 
-it('sends overstock alert when quantity is updated above maximum', function () {
+it('sends overstock alert when quantity is updated above maximum', function (): void {
     Notification::fake();
 
     $admin = User::factory()->create(['is_super_admin' => true]);
@@ -144,7 +144,7 @@ it('sends overstock alert when quantity is updated above maximum', function () {
     Notification::assertSentTo($admin, OverstockAlert::class);
 });
 
-it('sends both low stock and overstock alerts correctly based on thresholds', function () {
+it('sends both low stock and overstock alerts correctly based on thresholds', function (): void {
     Notification::fake();
 
     $admin = User::factory()->create(['is_super_admin' => true]);

@@ -16,13 +16,14 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard\Step;
 
 final class CreateReturnDeliveryWithSteps extends CreateRecord
 {
-    use CreateRecord\Concerns\HasWizard;
+    use HasWizard;
 
     protected static string $resource = ReturnDeliveryResource::class;
 
@@ -39,7 +40,7 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                 ->schema([
                     TextInput::make('return_number')
                         ->label('Return Number')
-                        ->default(fn () => 'RET-'.mb_strtoupper(uniqid()))
+                        ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                         ->required()
                         ->maxLength(100)
                         ->unique(ignoreRecord: true),
@@ -70,12 +71,12 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                 ->description(__('Customer, supplier, or order information'))
                 ->schema([
                     Select::make('order_id')
-                        ->relationship('order', 'order_number', modifyQueryUsing: function ($query) {
+                        ->relationship('order', 'order_number', modifyQueryUsing: function ($query): void {
                             $query->where('status', '!=', 'cancelled');
                         })
                         ->label('Related Order')
-                        ->afterStateUpdated(function (Set $set, int $state) {
-                            $order = Order::find($state);
+                        ->afterStateUpdated(function (Set $set, int $state): void {
+                            $order = Order::query()->find($state);
                             dump($order);
                             $set('customer_id', $order?->customer_id);
                             $set('supplier_id', $order?->supplier_id);
@@ -83,21 +84,21 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                         ->searchable()
                         ->preload()
                         ->live()
-                        ->visible(fn (Get $get) => $get('type') === ReturnType::CUSTOMER_RETURN),
+                        ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                     Select::make('customer_id')
                         ->relationship('order.customer', 'name')
                         ->label('Customer')
                         ->searchable()
                         ->preload()
-                        ->visible(fn (Get $get) => $get('type') === ReturnType::CUSTOMER_RETURN),
+                        ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                     Select::make('supplier_id')
                         ->relationship('order.supplier', 'company_name')
                         ->label('Supplier')
                         ->searchable()
                         ->preload()
-                        ->visible(fn (Get $get) => $get('type') === ReturnType::SUPPLIER_RETURN),
+                        ->visible(fn (Get $get): bool => $get('type') === ReturnType::SUPPLIER_RETURN),
 
                     Select::make('processed_by')
                         ->relationship('processedBy', 'first_name')

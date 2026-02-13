@@ -10,6 +10,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Override;
 
 final class RecentOrdersWidget extends BaseWidget
 {
@@ -24,6 +25,7 @@ final class RecentOrdersWidget extends BaseWidget
         return __('Recent Purchase Orders');
     }
 
+    #[Override]
     public function table(Table $table): Table
     {
         return $table
