@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ReturnDeliveries\Pages;
 
+use App\Filament\Exports\ReturnDeliveryExporter;
 use App\Filament\Resources\ReturnDeliveries\ReturnDeliveryResource;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Actions\ExportAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Override;
@@ -24,6 +26,10 @@ final class ListReturnDeliveries extends ListRecords
                 ->label('Create with Wizard')
                 ->icon(Heroicon::OutlinedSparkles)
                 ->url(ReturnDeliveryResource::getUrl('create-with-steps')),
+            ExportAction::make()
+                ->exporter(ReturnDeliveryExporter::class)
+                ->label('Exportálás')
+                ->color('warning'),
         ];
     }
 }

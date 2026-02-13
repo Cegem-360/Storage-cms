@@ -14,6 +14,7 @@
         "barryvdh/laravel-dompdf": "^3.1",
         "filament/filament": "^5.0",
         "laravel/framework": "^12.48.1",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.11.0",
         "mbezhanov/faker-provider-collection": "^2.0.2",
         "picqer/php-barcode-generator": "^3.2",
