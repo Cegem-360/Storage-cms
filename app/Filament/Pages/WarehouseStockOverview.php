@@ -70,7 +70,7 @@ final class WarehouseStockOverview extends Page implements HasTable
         }
 
         $columns[] = TextColumn::make('total_stock')
-            ->label(__('Total Stock'))
+            ->label('Total Stock')
             ->state(fn (Product $record): int => $record->stocks->sum('quantity'))
             ->alignEnd()
             ->weight('bold')
@@ -78,7 +78,7 @@ final class WarehouseStockOverview extends Page implements HasTable
             ->color('primary');
 
         $columns[] = TextColumn::make('available_stock')
-            ->label(__('Available Stock'))
+            ->label('Available Stock')
             ->state(fn (Product $record): int => $record->stocks->sum(fn (Stock $stock): int => $stock->getAvailableQuantity()))
             ->alignEnd()
             ->badge()

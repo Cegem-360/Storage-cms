@@ -18,26 +18,26 @@ final class ReceiptInfolist
                 Section::make(__('Receipt Information'))
                     ->schema([
                         TextEntry::make('receipt_number')
-                            ->label(__('Receipt Number')),
+                            ->label('Receipt Number'),
                         TextEntry::make('order.order_number')
-                            ->label(__('Order'))
+                            ->label('Order')
                             ->placeholder('-'),
                         TextEntry::make('warehouse.name')
-                            ->label(__('Warehouse')),
+                            ->label('Warehouse'),
                         TextEntry::make('receivedBy.first_name')
-                            ->label(__('Received By'))
+                            ->label('Received By')
                             ->placeholder('-'),
                         TextEntry::make('receipt_date')
-                            ->label(__('Receipt Date'))
+                            ->label('Receipt Date')
                             ->date(),
                         TextEntry::make('status')
-                            ->label(__('Status'))
+                            ->label('Status')
                             ->badge(),
                         TextEntry::make('total_amount')
-                            ->label(__('Total Amount'))
+                            ->label('Total Amount')
                             ->money('HUF'),
                         TextEntry::make('notes')
-                            ->label(__('Notes'))
+                            ->label('Notes')
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
@@ -49,33 +49,33 @@ final class ReceiptInfolist
                             ->label('')
                             ->schema([
                                 TextEntry::make('product.name')
-                                    ->label(__('Product')),
+                                    ->label('Product'),
                                 TextEntry::make('quantity_expected')
-                                    ->label(__('Expected Qty'))
+                                    ->label('Expected Qty')
                                     ->numeric(),
                                 TextEntry::make('quantity_received')
-                                    ->label(__('Received Qty'))
+                                    ->label('Received Qty')
                                     ->numeric(),
                                 TextEntry::make('variance')
-                                    ->label(__('Variance'))
+                                    ->label('Variance')
                                     ->state(fn ($record): int => $record->calculateVariance())
                                     ->numeric()
                                     ->color(fn ($record): string => $record->isDiscrepant() ? 'danger' : 'success'),
                                 TextEntry::make('unit_price')
-                                    ->label(__('Unit Price'))
+                                    ->label('Unit Price')
                                     ->money('HUF'),
                                 TextEntry::make('condition')
-                                    ->label(__('Condition'))
+                                    ->label('Condition')
                                     ->badge(),
                                 TextEntry::make('batch_number')
-                                    ->label(__('Batch Number'))
+                                    ->label('Batch Number')
                                     ->placeholder('-'),
                                 TextEntry::make('expiry_date')
-                                    ->label(__('Expiry Date'))
+                                    ->label('Expiry Date')
                                     ->date()
                                     ->placeholder('-'),
                                 TextEntry::make('note')
-                                    ->label(__('Note'))
+                                    ->label('Note')
                                     ->placeholder('-'),
                             ])
                             ->columns(3),
@@ -84,11 +84,11 @@ final class ReceiptInfolist
                 Section::make(__('Timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
+                            ->label('Created At')
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
+                            ->label('Updated At')
                             ->dateTime()
                             ->placeholder('-'),
                     ])

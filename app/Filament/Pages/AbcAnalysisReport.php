@@ -7,6 +7,7 @@ namespace App\Filament\Pages;
 use App\Enums\NavigationGroup;
 use App\Models\Product;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -44,22 +45,22 @@ final class AbcAnalysisReport extends Page implements HasTable
             )
             ->columns([
                 TextColumn::make('sku')
-                    ->label(__('SKU'))
+                    ->label('SKU')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable()
                     ->sortable()
                     ->limit(40),
 
                 TextColumn::make('category.name')
-                    ->label(__('Categories'))
+                    ->label('Categories')
                     ->searchable(),
 
                 TextColumn::make('total_stock_value')
-                    ->label(__('Total Stock Value'))
+                    ->label('Total Stock Value')
                     ->state(fn (Product $record): float => $this->calculateStockValue($record))
                     ->money('HUF')
                     ->sortable(query: function (Builder $query, string $direction): Builder {
@@ -70,7 +71,7 @@ final class AbcAnalysisReport extends Page implements HasTable
                     ->alignEnd(),
 
                 TextColumn::make('abc_category')
-                    ->label(__('ABC Category'))
+                    ->label('ABC Category')
                     ->state(fn (Product $record): string => $this->getAbcAnalysis($record->id)['category'])
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -81,7 +82,7 @@ final class AbcAnalysisReport extends Page implements HasTable
                     ->alignCenter(),
 
                 TextColumn::make('cumulative_percentage')
-                    ->label(__('Cumulative %'))
+                    ->label('Cumulative %')
                     ->state(fn (Product $record): string => number_format($this->getAbcAnalysis($record->id)['cumulative_percentage'], 1).'%')
                     ->alignEnd(),
             ])
@@ -89,7 +90,7 @@ final class AbcAnalysisReport extends Page implements HasTable
             ->paginated([10, 25, 50, 100])
             ->heading(__('Product categorization by value'))
             ->emptyStateHeading(__('No product data available'))
-            ->emptyStateIcon('heroicon-o-chart-bar');
+            ->emptyStateIcon(Heroicon::OutlinedChartBar);
     }
 
     private function calculateStockValue(Product $product): float

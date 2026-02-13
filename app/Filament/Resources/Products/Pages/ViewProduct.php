@@ -12,6 +12,7 @@ use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 final class ViewProduct extends ViewRecord
@@ -24,8 +25,8 @@ final class ViewProduct extends ViewRecord
             EditAction::make(),
 
             Action::make('generateBarcode')
-                ->label(__('Generate Barcode'))
-                ->icon('heroicon-o-qr-code')
+                ->label('Generate Barcode')
+                ->icon(Heroicon::OutlinedQrCode)
                 ->color('gray')
                 ->visible(fn (Product $record): bool => empty($record->barcode))
                 ->requiresConfirmation()
@@ -39,8 +40,8 @@ final class ViewProduct extends ViewRecord
                 }),
 
             Action::make('printLabel')
-                ->label(__('Print Label'))
-                ->icon('heroicon-o-printer')
+                ->label('Print Label')
+                ->icon(Heroicon::OutlinedPrinter)
                 ->color('info')
                 ->visible(fn (Product $record): bool => ! empty($record->barcode))
                 ->action(function (Product $record) {

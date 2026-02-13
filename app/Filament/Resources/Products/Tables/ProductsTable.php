@@ -60,9 +60,9 @@ final class ProductsTable
                 IconColumn::make('stock_alert')
                     ->label('Stock Alert')
                     ->icon(fn (Product $record): string => match (true) {
-                        $record->needsReorder() => 'heroicon-o-exclamation-triangle',
-                        $record->getTotalStock() === 0 => 'heroicon-o-x-circle',
-                        default => 'heroicon-o-check-circle',
+                        $record->needsReorder() => Heroicon::OutlinedExclamationTriangle,
+                        $record->getTotalStock() === 0 => Heroicon::OutlinedXCircle,
+                        default => Heroicon::OutlinedCheckCircle,
                     })
                     ->color(fn (Product $record): string => match (true) {
                         $record->getTotalStock() === 0 => 'danger',
@@ -121,10 +121,10 @@ final class ProductsTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('category.name')
-                    ->label(__('Category'))
+                    ->label('Category')
                     ->searchable(),
                 TextColumn::make('supplier.company_name')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->searchable(),
                 TextColumn::make('price')
                     ->money('HUF')

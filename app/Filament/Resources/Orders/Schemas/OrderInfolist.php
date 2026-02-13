@@ -19,30 +19,30 @@ final class OrderInfolist
                 Section::make(__('Order Information'))
                     ->schema([
                         TextEntry::make('order_number')
-                            ->label(__('Order Number')),
+                            ->label('Order Number'),
                         TextEntry::make('type')
-                            ->label(__('Order Type')),
+                            ->label('Order Type'),
                         TextEntry::make('customer.name')
-                            ->label(__('Customer'))
+                            ->label('Customer')
                             ->placeholder('-'),
                         TextEntry::make('supplier.company_name')
-                            ->label(__('Supplier'))
+                            ->label('Supplier')
                             ->placeholder('-'),
                         TextEntry::make('status')
-                            ->label(__('Status'))
+                            ->label('Status')
                             ->badge(),
                         TextEntry::make('order_date')
-                            ->label(__('Order Date'))
+                            ->label('Order Date')
                             ->date(),
                         TextEntry::make('delivery_date')
-                            ->label(__('Delivery Date'))
+                            ->label('Delivery Date')
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('total_amount')
-                            ->label(__('Total Amount'))
+                            ->label('Total Amount')
                             ->money('HUF'),
                         TextEntry::make('shipping_address')
-                            ->label(__('Shipping Address'))
+                            ->label('Shipping Address')
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
@@ -54,21 +54,21 @@ final class OrderInfolist
                             ->label('')
                             ->schema([
                                 TextEntry::make('product.name')
-                                    ->label(__('Product')),
+                                    ->label('Product'),
                                 TextEntry::make('quantity')
-                                    ->label(__('Quantity'))
+                                    ->label('Quantity')
                                     ->numeric(),
                                 TextEntry::make('unit_price')
-                                    ->label(__('Unit Price'))
+                                    ->label('Unit Price')
                                     ->money('HUF'),
                                 TextEntry::make('discount_percent')
-                                    ->label(__('Discount'))
+                                    ->label('Discount')
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
-                                    ->label(__('Subtotal'))
+                                    ->label('Subtotal')
                                     ->state(fn ($record): string => number_format($record->calculateSubtotal(), 2).' HUF'),
                                 TextEntry::make('note')
-                                    ->label(__('Note'))
+                                    ->label('Note')
                                     ->placeholder('-'),
                             ])
                             ->columns(3),
@@ -80,15 +80,15 @@ final class OrderInfolist
                             ->label('')
                             ->schema([
                                 TextEntry::make('receipt_number')
-                                    ->label(__('Receipt Number')),
+                                    ->label('Receipt Number'),
                                 TextEntry::make('receipt_date')
-                                    ->label(__('Receipt Date'))
+                                    ->label('Receipt Date')
                                     ->date(),
                                 TextEntry::make('status')
-                                    ->label(__('Status'))
+                                    ->label('Status')
                                     ->badge(),
                                 TextEntry::make('total_amount')
-                                    ->label(__('Total Amount'))
+                                    ->label('Total Amount')
                                     ->money('HUF'),
                             ])
                             ->columns(4)
@@ -98,15 +98,15 @@ final class OrderInfolist
                 Section::make(__('Timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
+                            ->label('Created At')
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
+                            ->label('Updated At')
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('deleted_at')
-                            ->label(__('Deleted At'))
+                            ->label('Deleted At')
                             ->dateTime()
                             ->visible(fn (Order $record): bool => $record->trashed()),
                     ])

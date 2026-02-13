@@ -39,7 +39,7 @@ final class StocksTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('available_quantity')
-                    ->label(__('Available Stock'))
+                    ->label('Available Stock')
                     ->state(fn (Stock $record): int => $record->getAvailableQuantity())
                     ->numeric()
                     ->sortable()
@@ -108,29 +108,29 @@ final class StocksTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('product.name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->searchable(),
                 TextColumn::make('quantity')
-                    ->label(__('Quantity'))
+                    ->label('Quantity')
                     ->numeric()
                     ->sortable()
                     ->badge()
                     ->color(self::stockStatusColor()),
                 TextColumn::make('minimum_stock')
-                    ->label(__('Minimum'))
+                    ->label('Minimum')
                     ->numeric(),
                 IconColumn::make('alert')
-                    ->label(__('Status'))
+                    ->label('Status')
                     ->icon(self::stockStatusIcon())
                     ->color(self::stockStatusColor()),
             ])
             ->filters([
                 TernaryFilter::make('low_stock')
-                    ->label(__('Low stock only'))
+                    ->label('Low stock only')
                     ->queries(
                         true: fn ($query) => $query->whereColumn('quantity', '<', 'minimum_stock'),
                         false: fn ($query) => $query->whereColumn('quantity', '>=', 'minimum_stock'),
@@ -159,10 +159,10 @@ final class StocksTable
     private static function stockStatusIcon(): Closure
     {
         return fn (Stock $record): string => match ($record->getStockStatus()) {
-            'out_of_stock' => 'heroicon-o-x-circle',
-            'low_stock' => 'heroicon-o-exclamation-triangle',
-            'overstock' => 'heroicon-o-arrow-trending-up',
-            default => 'heroicon-o-check-circle',
+            'out_of_stock' => Heroicon::OutlinedXCircle,
+            'low_stock' => Heroicon::OutlinedExclamationTriangle,
+            'overstock' => Heroicon::OutlinedArrowTrendingUp,
+            default => Heroicon::OutlinedCheckCircle,
         };
     }
 }

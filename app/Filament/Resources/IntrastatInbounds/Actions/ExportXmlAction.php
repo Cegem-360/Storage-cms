@@ -9,6 +9,7 @@ use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
 use App\Services\IntrastatService;
 use Filament\Actions\Action;
+use Filament\Support\Icons\Heroicon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
@@ -18,7 +19,7 @@ final class ExportXmlAction
     {
         return Action::make('export_xml')
             ->label('XML Export (Egyszerűsített)')
-            ->icon('heroicon-o-arrow-down-tray')
+            ->icon(Heroicon::OutlinedArrowDownTray)
             ->action(function (IntrastatService $service): BinaryFileResponse {
                 $declarations = IntrastatDeclaration::query()
                     ->where('direction', IntrastatDirection::ARRIVAL)

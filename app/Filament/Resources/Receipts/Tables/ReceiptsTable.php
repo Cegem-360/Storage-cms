@@ -73,18 +73,18 @@ final class ReceiptsTable
         return $table
             ->columns([
                 TextColumn::make('receipt_number')
-                    ->label(__('Receipt #'))
+                    ->label('Receipt #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('order.order_number')
-                    ->label(__('Order'))
+                    ->label('Order')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->searchable(),
                 TextColumn::make('created_at')
-                    ->label(__('Date'))
+                    ->label('Date')
                     ->date()
                     ->sortable(),
             ])

@@ -79,22 +79,22 @@ final class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
-                    ->label(__('Order #'))
+                    ->label('Order #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('supplier.company_name')
-                    ->label(__('Supplier/Customer'))
+                    ->label('Supplier/Customer')
                     ->placeholder('-')
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('total_amount')
-                    ->label(__('Total'))
+                    ->label('Total')
                     ->money('HUF')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('Date'))
+                    ->label('Date')
                     ->date()
                     ->sortable(),
             ])

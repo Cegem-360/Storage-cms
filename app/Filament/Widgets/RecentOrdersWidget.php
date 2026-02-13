@@ -6,6 +6,7 @@ namespace App\Filament\Widgets;
 
 use App\Enums\OrderType;
 use App\Models\Order;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -35,40 +36,40 @@ final class RecentOrdersWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('order_number')
-                    ->label(__('Order #'))
+                    ->label('Order #')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('supplier.name')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->searchable()
                     ->sortable()
                     ->limit(25),
 
                 TextColumn::make('order_date')
-                    ->label(__('Order Date'))
+                    ->label('Order Date')
                     ->date()
                     ->sortable(),
 
                 TextColumn::make('delivery_date')
-                    ->label(__('Expected Delivery'))
+                    ->label('Expected Delivery')
                     ->date()
                     ->sortable()
                     ->placeholder(__('Not set')),
 
                 TextColumn::make('status')
-                    ->label(__('Status'))
+                    ->label('Status')
                     ->badge()
                     ->sortable(),
 
                 TextColumn::make('total_amount')
-                    ->label(__('Total'))
+                    ->label('Total')
                     ->money('HUF')
                     ->sortable(),
             ])
             ->paginated(false)
             ->emptyStateHeading(__('No recent orders'))
             ->emptyStateDescription(__('Create your first purchase order to see it here.'))
-            ->emptyStateIcon('heroicon-o-shopping-cart');
+            ->emptyStateIcon(Heroicon::OutlinedShoppingCart);
     }
 }

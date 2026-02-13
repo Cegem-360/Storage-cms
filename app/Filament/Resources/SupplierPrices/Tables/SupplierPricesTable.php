@@ -21,61 +21,61 @@ final class SupplierPricesTable
         return $table
             ->columns([
                 TextColumn::make('supplier.company_name')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('product.name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('price')
-                    ->label(__('Price'))
+                    ->label('Price')
                     ->money('HUF')
                     ->sortable(),
                 TextColumn::make('currency')
-                    ->label(__('Currency'))
+                    ->label('Currency')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('minimum_order_quantity')
-                    ->label(__('Min. Qty'))
+                    ->label('Min. Qty')
                     ->numeric()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('lead_time_days')
-                    ->label(__('Lead Time'))
+                    ->label('Lead Time')
                     ->suffix(' '.__('days'))
                     ->numeric()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('valid_from')
-                    ->label(__('Valid From'))
+                    ->label('Valid From')
                     ->date()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('valid_until')
-                    ->label(__('Valid Until'))
+                    ->label('Valid Until')
                     ->date()
                     ->sortable()
                     ->toggleable(),
                 IconColumn::make('is_active')
-                    ->label(__('Active'))
+                    ->label('Active')
                     ->boolean()
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('Created At'))
+                    ->label('Created At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label(__('Active')),
+                    ->label('Active'),
                 SelectFilter::make('supplier_id')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->relationship('supplier', 'company_name')
                     ->searchable()
                     ->preload(),
                 SelectFilter::make('product_id')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->relationship('product', 'name')
                     ->searchable()
                     ->preload(),

@@ -111,25 +111,25 @@ final class ReturnDeliveriesTable
         return $table
             ->columns([
                 TextColumn::make('return_number')
-                    ->label(__('Return #'))
+                    ->label('Return #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('order.order_number')
-                    ->label(__('Order'))
+                    ->label('Order')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('return_date')
-                    ->label(__('Date'))
+                    ->label('Date')
                     ->date()
                     ->sortable(),
                 TextColumn::make('total_amount')
-                    ->label(__('Amount'))
+                    ->label('Amount')
                     ->money('HUF')
                     ->sortable(),
             ])

@@ -77,32 +77,32 @@ final class EmployeesTable
         return $table
             ->columns([
                 TextColumn::make('employee_code')
-                    ->label(__('Code'))
+                    ->label('Code')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('full_name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->state(fn ($record) => $record->last_name.' '.$record->first_name)
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(['last_name', 'first_name']),
                 TextColumn::make('position')
-                    ->label(__('Position'))
+                    ->label('Position')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('department')
-                    ->label(__('Department'))
+                    ->label('Department')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->placeholder('-'),
                 IconColumn::make('is_active')
-                    ->label(__('Active'))
+                    ->label('Active')
                     ->boolean(),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label(__('Active'))
+                    ->label('Active')
                     ->trueLabel(__('Active only'))
                     ->falseLabel(__('Inactive only')),
             ])

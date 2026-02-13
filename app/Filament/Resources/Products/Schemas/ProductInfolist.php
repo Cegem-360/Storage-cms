@@ -21,7 +21,7 @@ final class ProductInfolist
                 Section::make('Basic Information')
                     ->schema([
                         TextEntry::make('sku')
-                            ->label('SKU / Cikkszám'),
+                            ->label('SKU'),
                         TextEntry::make('name')
                             ->label('Product Name'),
                         TextEntry::make('barcode')

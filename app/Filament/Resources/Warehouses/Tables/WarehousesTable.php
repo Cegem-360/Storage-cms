@@ -71,18 +71,18 @@ final class WarehousesTable
         return $table
             ->columns([
                 TextColumn::make('code')
-                    ->label(__('Code'))
+                    ->label('Code')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('address')
-                    ->label(__('Address'))
+                    ->label('Address')
                     ->searchable(),
                 TextColumn::make('stocks_count')
-                    ->label(__('Stock Items'))
+                    ->label('Stock Items')
                     ->counts('stocks')
                     ->sortable(),
             ])

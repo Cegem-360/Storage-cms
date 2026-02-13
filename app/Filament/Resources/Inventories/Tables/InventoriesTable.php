@@ -73,17 +73,17 @@ final class InventoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->searchable(),
                 TextColumn::make('status')
-                    ->label(__('Status'))
+                    ->label('Status')
                     ->badge(),
                 TextColumn::make('created_at')
-                    ->label(__('Date'))
+                    ->label('Date')
                     ->date()
                     ->sortable(),
             ])

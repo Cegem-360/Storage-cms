@@ -79,20 +79,20 @@ final class CnCodesTable
         return $table
             ->columns([
                 TextColumn::make('code')
-                    ->label(__('Code'))
+                    ->label('Code')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
                 TextColumn::make('description')
-                    ->label(__('Description'))
+                    ->label('Description')
                     ->searchable()
                     ->limit(60)
                     ->tooltip(fn (TextColumn $column): ?string => $column->getState()),
                 TextColumn::make('supplementary_unit')
-                    ->label(__('Supplementary Unit'))
+                    ->label('Supplementary Unit')
                     ->placeholder('—'),
                 TextColumn::make('intrastat_lines_count')
-                    ->label(__('Usage'))
+                    ->label('Usage')
                     ->counts('intrastatLines')
                     ->badge()
                     ->color('gray'),

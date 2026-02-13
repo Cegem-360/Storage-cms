@@ -10,6 +10,7 @@ use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Support\Icons\Heroicon;
 
 final class ViewReturnDelivery extends ViewRecord
 {
@@ -22,8 +23,8 @@ final class ViewReturnDelivery extends ViewRecord
                 ->visible(fn ($record) => $record->status->isEditable()),
 
             Action::make('approve')
-                ->label('Approve')
-                ->icon('heroicon-o-check-circle')
+                ->label(__('Approve'))
+                ->icon(Heroicon::OutlinedCheckCircle)
                 ->color('success')
                 ->requiresConfirmation()
                 ->visible(fn ($record) => $record->status === ReturnStatus::INSPECTED)
@@ -32,13 +33,13 @@ final class ViewReturnDelivery extends ViewRecord
 
                     Notification::make()
                         ->success()
-                        ->title('Return approved')
+                        ->title(__('Return approved'))
                         ->send();
                 }),
 
             Action::make('reject')
-                ->label('Reject')
-                ->icon('heroicon-o-x-circle')
+                ->label(__('Reject'))
+                ->icon(Heroicon::OutlinedXCircle)
                 ->color('danger')
                 ->requiresConfirmation()
                 ->visible(fn ($record) => in_array($record->status, [ReturnStatus::PENDING_INSPECTION, ReturnStatus::INSPECTED]))
@@ -47,13 +48,13 @@ final class ViewReturnDelivery extends ViewRecord
 
                     Notification::make()
                         ->success()
-                        ->title('Return rejected')
+                        ->title(__('Return rejected'))
                         ->send();
                 }),
 
             Action::make('restock')
-                ->label('Restock')
-                ->icon('heroicon-o-arrow-path')
+                ->label(__('Restock'))
+                ->icon(Heroicon::OutlinedArrowPath)
                 ->color('info')
                 ->requiresConfirmation()
                 ->visible(fn ($record) => $record->status === ReturnStatus::APPROVED && $record->isCustomerReturn())
@@ -62,8 +63,8 @@ final class ViewReturnDelivery extends ViewRecord
 
                     Notification::make()
                         ->success()
-                        ->title('Items restocked')
-                        ->body('Stock levels have been updated.')
+                        ->title(__('Items restocked'))
+                        ->body(__('Stock levels have been updated.'))
                         ->send();
                 }),
         ];

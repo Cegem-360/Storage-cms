@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -45,42 +46,42 @@ final class OrderSuggestionWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('sku')
-                    ->label(__('SKU'))
+                    ->label('SKU')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable()
                     ->sortable()
                     ->limit(30),
 
                 TextColumn::make('current_stock')
-                    ->label(__('Current Stock'))
+                    ->label('Current Stock')
                     ->state(fn (Product $record): int => $record->getTotalStock())
                     ->numeric()
                     ->color('danger'),
 
                 TextColumn::make('reorder_point')
-                    ->label(__('Reorder Point'))
+                    ->label('Reorder Point')
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('suggested_qty')
-                    ->label(__('Suggested Qty'))
+                    ->label('Suggested Qty')
                     ->state(fn (Product $record): int => $record->calculateReorderQuantity())
                     ->numeric()
                     ->color('primary')
                     ->weight('bold'),
 
                 TextColumn::make('supplier.company_name')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->sortable(),
             ])
             ->recordActions([
                 Action::make('create_order')
-                    ->label(__('Create Order'))
-                    ->icon('heroicon-o-shopping-cart')
+                    ->label('Create Order')
+                    ->icon(Heroicon::OutlinedShoppingCart)
                     ->color('primary')
                     ->action(function (Product $record): void {
                         $order = Order::create([
@@ -111,6 +112,6 @@ final class OrderSuggestionWidget extends BaseWidget
             ->paginated([5, 10, 25])
             ->emptyStateHeading(__('No products need reordering'))
             ->emptyStateDescription(__('All products are above their reorder points.'))
-            ->emptyStateIcon('heroicon-o-check-circle');
+            ->emptyStateIcon(Heroicon::OutlinedCheckCircle);
     }
 }

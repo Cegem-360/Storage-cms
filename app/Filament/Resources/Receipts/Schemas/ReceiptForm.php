@@ -28,11 +28,11 @@ final class ReceiptForm
                 Section::make(__('Receipt Information'))
                     ->schema([
                         TextInput::make('receipt_number')
-                            ->label(__('Receipt Number'))
+                            ->label('Receipt Number')
                             ->default(fn () => 'REC-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                             ->required(),
                         Select::make('order_id')
-                            ->label(__('Order'))
+                            ->label('Order')
                             ->relationship('order', 'order_number')
                             ->searchable()
                             ->preload()
@@ -63,28 +63,28 @@ final class ReceiptForm
                                 $set('receiptLines', $lines);
                             }),
                         Select::make('warehouse_id')
-                            ->label(__('Warehouse'))
+                            ->label('Warehouse')
                             ->relationship('warehouse', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('received_by')
-                            ->label(__('Received By'))
+                            ->label('Received By')
                             ->relationship('receivedBy', 'first_name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         DatePicker::make('receipt_date')
-                            ->label(__('Receipt Date'))
+                            ->label('Receipt Date')
                             ->default(now())
                             ->required(),
                         Select::make('status')
-                            ->label(__('Status'))
+                            ->label('Status')
                             ->options(ReceiptStatus::class)
                             ->default(ReceiptStatus::PENDING)
                             ->required(),
                         Textarea::make('notes')
-                            ->label(__('Notes'))
+                            ->label('Notes')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -96,7 +96,7 @@ final class ReceiptForm
                             ->relationship()
                             ->schema([
                                 Select::make('product_id')
-                                    ->label(__('Product'))
+                                    ->label('Product')
                                     ->relationship('product', 'name')
                                     ->searchable()
                                     ->preload()
@@ -104,14 +104,14 @@ final class ReceiptForm
                                     ->columnSpan(3),
 
                                 Select::make('warehouse_id')
-                                    ->label(__('Warehouse'))
+                                    ->label('Warehouse')
                                     ->relationship('warehouse', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->columnSpan(2),
 
                                 TextInput::make('quantity_expected')
-                                    ->label(__('Expected Qty'))
+                                    ->label('Expected Qty')
                                     ->numeric()
                                     ->required()
                                     ->default(0)
@@ -119,7 +119,7 @@ final class ReceiptForm
                                     ->columnSpan(1),
 
                                 TextInput::make('quantity_received')
-                                    ->label(__('Received Qty'))
+                                    ->label('Received Qty')
                                     ->numeric()
                                     ->required()
                                     ->default(0)
@@ -127,7 +127,7 @@ final class ReceiptForm
                                     ->columnSpan(1),
 
                                 Placeholder::make('variance')
-                                    ->label(__('Variance'))
+                                    ->label('Variance')
                                     ->content(function (Get $get): string {
                                         $received = (int) ($get('quantity_received') ?? 0);
                                         $expected = (int) ($get('quantity_expected') ?? 0);
@@ -138,28 +138,28 @@ final class ReceiptForm
                                     ->columnSpan(1),
 
                                 TextInput::make('unit_price')
-                                    ->label(__('Unit Price'))
+                                    ->label('Unit Price')
                                     ->numeric()
                                     ->default(0)
                                     ->prefix('HUF')
                                     ->columnSpan(1),
 
                                 Select::make('condition')
-                                    ->label(__('Condition'))
+                                    ->label('Condition')
                                     ->options(ProductCondition::class)
                                     ->default(ProductCondition::GOOD)
                                     ->columnSpan(1),
 
                                 DatePicker::make('expiry_date')
-                                    ->label(__('Expiry Date'))
+                                    ->label('Expiry Date')
                                     ->columnSpan(1),
 
                                 TextInput::make('batch_number')
-                                    ->label(__('Batch Number'))
+                                    ->label('Batch Number')
                                     ->columnSpan(1),
 
                                 Textarea::make('note')
-                                    ->label(__('Note'))
+                                    ->label('Note')
                                     ->columnSpan(4),
                             ])
                             ->columns(4)
@@ -171,7 +171,7 @@ final class ReceiptForm
                 Section::make(__('Summary'))
                     ->schema([
                         Placeholder::make('calculated_total')
-                            ->label(__('Total'))
+                            ->label('Total')
                             ->content(fn ($record): string => $record
                                 ? number_format((float) $record->calculateTotal(), 2).' HUF'
                                 : '0.00 HUF'

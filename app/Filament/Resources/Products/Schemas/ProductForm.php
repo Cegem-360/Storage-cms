@@ -16,6 +16,7 @@ use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 final class ProductForm
 {
@@ -26,21 +27,21 @@ final class ProductForm
                 Section::make('Basic Information')
                     ->schema([
                         TextInput::make('sku')
-                            ->label('SKU / Cikkszám')
+                            ->label('SKU')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(100),
                         TextInput::make('name')
-                            ->label('Product Name / Megnevezés')
+                            ->label('Product Name')
                             ->required()
                             ->maxLength(255),
                         TextInput::make('barcode')
-                            ->label('Barcode / Vonalkód')
+                            ->label('Barcode')
                             ->maxLength(100)
                             ->afterContent(
                                 Action::make('generateBarcode')
-                                    ->label(__('Generate Barcode'))
-                                    ->icon('heroicon-o-qr-code')
+                                    ->label('Generate Barcode')
+                                    ->icon(Heroicon::OutlinedQrCode)
                                     ->color('gray')
                                     ->action(function (Set $set): void {
                                         $set('barcode', BarcodeService::generateEan13());
@@ -52,7 +53,7 @@ final class ProductForm
                                     }),
                             ),
                         Textarea::make('description')
-                            ->label('Description / Leírás')
+                            ->label('Description')
                             ->rows(3)
                             ->columnSpanFull(),
                     ])
@@ -61,7 +62,7 @@ final class ProductForm
                 Section::make('Classification')
                     ->schema([
                         Select::make('category_id')
-                            ->label('Category / Kategória')
+                            ->label('Category')
                             ->relationship('category', 'name')
                             ->required()
                             ->searchable()
@@ -71,13 +72,13 @@ final class ProductForm
                                     ->required(),
                             ]),
                         Select::make('supplier_id')
-                            ->label('Primary Supplier / Elsődleges Beszállító')
+                            ->label('Primary Supplier')
                             ->relationship('supplier', 'company_name')
                             ->required()
                             ->searchable()
                             ->preload(),
                         Select::make('status')
-                            ->label('Status / Státusz')
+                            ->label('Status')
                             ->options(ProductStatus::class)
                             ->default(ProductStatus::ACTIVE)
                             ->required(),
@@ -87,27 +88,27 @@ final class ProductForm
                 Section::make('Measurements')
                     ->schema([
                         Select::make('unit_of_measure')
-                            ->label('Unit of Measure / Mértékegység')
+                            ->label('Unit of Measure')
                             ->options(UnitType::class)
                             ->default(UnitType::PIECE)
                             ->required(),
                         TextInput::make('weight')
-                            ->label('Weight (kg) / Súly')
+                            ->label('Weight (kg)')
                             ->numeric()
                             ->minValue(0)
                             ->suffix('kg'),
                         TextInput::make('dimensions.length')
-                            ->label('Length (cm) / Hossz')
+                            ->label('Length (cm)')
                             ->numeric()
                             ->minValue(0)
                             ->suffix('cm'),
                         TextInput::make('dimensions.width')
-                            ->label('Width (cm) / Szélesség')
+                            ->label('Width (cm)')
                             ->numeric()
                             ->minValue(0)
                             ->suffix('cm'),
                         TextInput::make('dimensions.height')
-                            ->label('Height (cm) / Magasság')
+                            ->label('Height (cm)')
                             ->numeric()
                             ->minValue(0)
                             ->suffix('cm'),
@@ -118,7 +119,7 @@ final class ProductForm
                 Section::make('Pricing')
                     ->schema([
                         TextInput::make('price')
-                            ->label('Price / Ár')
+                            ->label('Price')
                             ->required()
                             ->numeric()
                             ->minValue(0)
@@ -133,26 +134,26 @@ final class ProductForm
                         Grid::make(3)
                             ->schema([
                                 TextInput::make('min_stock')
-                                    ->label('Minimum Stock / Min. Készlet')
+                                    ->label('Minimum Stock')
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
-                                    ->helperText('Alert when stock falls below this level'),
+                                    ->helperText(__('Alert when stock falls below this level')),
                                 TextInput::make('reorder_point')
-                                    ->label('Reorder Point / Rendelési pont')
+                                    ->label('Reorder Point')
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
-                                    ->helperText('Trigger reorder when reaching this level'),
+                                    ->helperText(__('Trigger reorder when reaching this level')),
                                 TextInput::make('max_stock')
-                                    ->label('Maximum Stock / Max. Készlet')
+                                    ->label('Maximum Stock')
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
-                                    ->helperText('Maximum stock level to maintain'),
+                                    ->helperText(__('Maximum stock level to maintain')),
                             ]),
                     ])
                     ->collapsible(),

@@ -58,7 +58,7 @@ final class Settings extends Page
                     ->description(__('Configure inventory management preferences'))
                     ->schema([
                         TextInput::make('low_stock_threshold')
-                            ->label(__('Low Stock Threshold'))
+                            ->label('Low Stock Threshold')
                             ->helperText(__('Default threshold for low stock alerts'))
                             ->numeric()
                             ->required()
@@ -66,7 +66,7 @@ final class Settings extends Page
                             ->default(10),
 
                         Toggle::make('auto_reorder_enabled')
-                            ->label(__('Enable Auto Reorder'))
+                            ->label('Enable Auto Reorder')
                             ->helperText(__('Automatically create purchase orders when stock falls below reorder point')),
                     ])
                     ->columns(2),
@@ -75,7 +75,7 @@ final class Settings extends Page
                     ->description(__('Configure system notification preferences'))
                     ->schema([
                         TextInput::make('notification_email')
-                            ->label(__('Notification Email'))
+                            ->label('Notification Email')
                             ->helperText(__('Email address for system alerts'))
                             ->email()
                             ->maxLength(255),
@@ -102,7 +102,7 @@ final class Settings extends Page
     {
         return [
             Action::make('save')
-                ->label(__('Save Settings'))
+                ->label('Save Settings')
                 ->action('save')
                 ->icon(Heroicon::Check),
         ];

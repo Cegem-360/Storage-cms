@@ -63,18 +63,18 @@ final class CategoriesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('description')
-                    ->label(__('Description'))
+                    ->label('Description')
                     ->limit(50),
                 TextColumn::make('products_count')
-                    ->label(__('Products'))
+                    ->label('Products')
                     ->counts('products')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('Created'))
+                    ->label('Created')
                     ->date()
                     ->sortable(),
             ])

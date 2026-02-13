@@ -20,7 +20,7 @@ final class ListSupplierPrices extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(SupplierPriceImporter::class)
-                ->label(__('Import Price List')),
+                ->label('Import Price List'),
         ];
     }
 }

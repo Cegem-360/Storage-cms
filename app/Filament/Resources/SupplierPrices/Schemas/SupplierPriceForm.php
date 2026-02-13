@@ -21,34 +21,34 @@ final class SupplierPriceForm
                 Section::make(__('Price Information'))
                     ->schema([
                         Select::make('supplier_id')
-                            ->label(__('Supplier'))
+                            ->label('Supplier')
                             ->relationship('supplier', 'company_name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('product_id')
-                            ->label(__('Product'))
+                            ->label('Product')
                             ->relationship('product', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         TextInput::make('price')
-                            ->label(__('Price'))
+                            ->label('Price')
                             ->numeric()
                             ->required()
                             ->prefix('HUF'),
                         TextInput::make('currency')
-                            ->label(__('Currency'))
+                            ->label('Currency')
                             ->default('HUF')
                             ->required()
                             ->maxLength(3),
                         TextInput::make('minimum_order_quantity')
-                            ->label(__('Min. Order Quantity'))
+                            ->label('Min. Order Quantity')
                             ->numeric()
                             ->default(1)
                             ->minValue(1),
                         TextInput::make('lead_time_days')
-                            ->label(__('Lead Time'))
+                            ->label('Lead Time')
                             ->numeric()
                             ->suffix(__('days')),
                     ])
@@ -57,14 +57,14 @@ final class SupplierPriceForm
                 Section::make(__('Validity'))
                     ->schema([
                         DatePicker::make('valid_from')
-                            ->label(__('Valid From')),
+                            ->label('Valid From'),
                         DatePicker::make('valid_until')
-                            ->label(__('Valid Until')),
+                            ->label('Valid Until'),
                         Toggle::make('is_active')
-                            ->label(__('Active'))
+                            ->label('Active')
                             ->default(true),
                         Textarea::make('notes')
-                            ->label(__('Notes'))
+                            ->label('Notes')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),

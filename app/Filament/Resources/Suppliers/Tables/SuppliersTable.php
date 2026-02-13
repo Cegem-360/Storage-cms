@@ -85,19 +85,19 @@ final class SuppliersTable
         return $table
             ->columns([
                 TextColumn::make('company_name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('contact_person')
-                    ->label(__('Contact'))
+                    ->label('Contact')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('email')
-                    ->label(__('Email'))
+                    ->label('Email')
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('products_count')
-                    ->label(__('Products'))
+                    ->label('Products')
                     ->counts('products')
                     ->sortable(),
             ])

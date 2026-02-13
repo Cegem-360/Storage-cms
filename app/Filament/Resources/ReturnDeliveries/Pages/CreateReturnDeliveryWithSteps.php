@@ -34,8 +34,8 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
     protected function getSteps(): array
     {
         return [
-            Step::make('Return Information')
-                ->description('Basic return details and type')
+            Step::make(__('Return Information'))
+                ->description(__('Basic return details and type'))
                 ->schema([
                     TextInput::make('return_number')
                         ->label('Return Number')
@@ -66,8 +66,8 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                 ])
                 ->columns(2),
 
-            Step::make('Related Records')
-                ->description('Customer, supplier, or order information')
+            Step::make(__('Related Records'))
+                ->description(__('Customer, supplier, or order information'))
                 ->schema([
                     Select::make('order_id')
                         ->relationship('order', 'order_number', modifyQueryUsing: function ($query) {
@@ -108,8 +108,8 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                 ])
                 ->columns(2),
 
-            Step::make('Return Details')
-                ->description('Status, reason, and notes')
+            Step::make(__('Return Details'))
+                ->description(__('Status, reason, and notes'))
                 ->schema([
                     Select::make('status')
                         ->options(ReturnStatus::class)
@@ -126,8 +126,8 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                 ])
                 ->columns(2),
 
-            Step::make('Return Items')
-                ->description('Add products to return')
+            Step::make(__('Return Items'))
+                ->description(__('Add products to return'))
                 ->schema([
                     Repeater::make('returnDeliveryLines')
                         ->relationship()

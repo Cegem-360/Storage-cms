@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\Stock;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -34,39 +35,39 @@ final class LowStockWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('product.sku')
-                    ->label(__('SKU'))
+                    ->label('SKU')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('product.name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable()
                     ->sortable()
                     ->limit(30),
 
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->sortable(),
 
                 TextColumn::make('quantity')
-                    ->label(__('Current'))
+                    ->label('Current')
                     ->numeric()
                     ->sortable()
                     ->color('danger'),
 
                 TextColumn::make('minimum_stock')
-                    ->label(__('Minimum'))
+                    ->label('Minimum')
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('available_quantity')
-                    ->label(__('Available Stock'))
+                    ->label('Available Stock')
                     ->state(fn (Stock $record): int => $record->getAvailableQuantity())
                     ->numeric()
                     ->color('warning'),
 
                 TextColumn::make('difference')
-                    ->label(__('Shortage'))
+                    ->label('Shortage')
                     ->state(fn (Stock $record): int => $record->minimum_stock - $record->quantity)
                     ->numeric()
                     ->color('danger')
@@ -75,6 +76,6 @@ final class LowStockWidget extends BaseWidget
             ->paginated(false)
             ->emptyStateHeading(__('No low stock alerts'))
             ->emptyStateDescription(__('All products are above minimum stock levels.'))
-            ->emptyStateIcon('heroicon-o-check-circle');
+            ->emptyStateIcon(Heroicon::OutlinedCheckCircle);
     }
 }

@@ -27,36 +27,36 @@ final class OrderForm
                 Section::make(__('Order Information'))
                     ->schema([
                         TextInput::make('order_number')
-                            ->label(__('Order Number'))
+                            ->label('Order Number')
                             ->default(fn () => 'ORD-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                             ->required(),
                         Select::make('type')
-                            ->label(__('Order Type'))
+                            ->label('Order Type')
                             ->options(OrderType::class)
                             ->enum(OrderType::class)
                             ->required(),
                         Select::make('customer_id')
-                            ->label(__('Customer'))
+                            ->label('Customer')
                             ->relationship('customer', 'name')
                             ->searchable()
                             ->preload(),
                         Select::make('supplier_id')
-                            ->label(__('Supplier'))
+                            ->label('Supplier')
                             ->relationship('supplier', 'company_name')
                             ->searchable()
                             ->preload(),
                         Select::make('status')
-                            ->label(__('Status'))
+                            ->label('Status')
                             ->options(OrderStatus::class)
                             ->default(OrderStatus::DRAFT)
                             ->required(),
                         DatePicker::make('order_date')
-                            ->label(__('Order Date'))
+                            ->label('Order Date')
                             ->required(),
                         DatePicker::make('delivery_date')
-                            ->label(__('Delivery Date')),
+                            ->label('Delivery Date'),
                         Textarea::make('shipping_address')
-                            ->label(__('Shipping Address'))
+                            ->label('Shipping Address')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -68,7 +68,7 @@ final class OrderForm
                             ->relationship()
                             ->schema([
                                 Select::make('product_id')
-                                    ->label(__('Product'))
+                                    ->label('Product')
                                     ->relationship('product', 'name')
                                     ->searchable()
                                     ->preload()
@@ -85,7 +85,7 @@ final class OrderForm
                                     ->columnSpan(3),
 
                                 TextInput::make('quantity')
-                                    ->label(__('Quantity'))
+                                    ->label('Quantity')
                                     ->numeric()
                                     ->required()
                                     ->default(1)
@@ -94,7 +94,7 @@ final class OrderForm
                                     ->columnSpan(1),
 
                                 TextInput::make('unit_price')
-                                    ->label(__('Unit Price'))
+                                    ->label('Unit Price')
                                     ->numeric()
                                     ->required()
                                     ->default(0)
@@ -103,7 +103,7 @@ final class OrderForm
                                     ->columnSpan(1),
 
                                 TextInput::make('discount_percent')
-                                    ->label(__('Discount'))
+                                    ->label('Discount')
                                     ->numeric()
                                     ->default(0)
                                     ->minValue(0)
@@ -113,7 +113,7 @@ final class OrderForm
                                     ->columnSpan(1),
 
                                 Placeholder::make('line_total')
-                                    ->label(__('Subtotal'))
+                                    ->label('Subtotal')
                                     ->content(function (Get $get): string {
                                         $quantity = (float) ($get('quantity') ?? 0);
                                         $unitPrice = (float) ($get('unit_price') ?? 0);
@@ -124,7 +124,7 @@ final class OrderForm
                                     ->columnSpan(2),
 
                                 Textarea::make('note')
-                                    ->label(__('Note'))
+                                    ->label('Note')
                                     ->columnSpan(4),
                             ])
                             ->columns(4)
@@ -140,7 +140,7 @@ final class OrderForm
                 Section::make(__('Summary'))
                     ->schema([
                         Placeholder::make('calculated_total')
-                            ->label(__('Total'))
+                            ->label('Total')
                             ->content(fn ($record): string => $record
                                 ? number_format((float) $record->calculateTotal(), 2).' HUF'
                                 : '0.00 HUF'

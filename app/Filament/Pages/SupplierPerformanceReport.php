@@ -9,6 +9,7 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Supplier;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -42,24 +43,24 @@ final class SupplierPerformanceReport extends Page implements HasTable
             )
             ->columns([
                 TextColumn::make('company_name')
-                    ->label(__('Supplier'))
+                    ->label('Supplier')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('total_orders')
-                    ->label(__('Total Orders'))
+                    ->label('Total Orders')
                     ->state(fn (Supplier $record): int => $record->orders->count())
                     ->numeric()
                     ->alignEnd(),
 
                 TextColumn::make('completed_orders')
-                    ->label(__('Completed Orders'))
+                    ->label('Completed Orders')
                     ->state(fn (Supplier $record): int => $this->completedOrders($record)->count())
                     ->numeric()
                     ->alignEnd(),
 
                 TextColumn::make('on_time_rate')
-                    ->label(__('On-Time Rate'))
+                    ->label('On-Time Rate')
                     ->state(function (Supplier $record): string {
                         $completed = $this->completedOrders($record);
 
@@ -90,7 +91,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
                     ->alignCenter(),
 
                 TextColumn::make('avg_lead_time')
-                    ->label(__('Avg. Lead Time'))
+                    ->label('Avg. Lead Time')
                     ->state(function (Supplier $record): string {
                         $completed = $this->completedOrders($record)
                             ->filter(fn ($order): bool => $order->order_date && $order->updated_at);
@@ -106,7 +107,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
                     ->alignEnd(),
 
                 TextColumn::make('total_order_value')
-                    ->label(__('Total Order Value'))
+                    ->label('Total Order Value')
                     ->state(fn (Supplier $record): float => (float) $record->orders->sum('total_amount'))
                     ->money('HUF')
                     ->alignEnd()
@@ -117,7 +118,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
             ->paginated([10, 25, 50, 100])
             ->heading(__('Supplier delivery and quality statistics'))
             ->emptyStateHeading(__('No supplier data available'))
-            ->emptyStateIcon('heroicon-o-building-office');
+            ->emptyStateIcon(Heroicon::OutlinedBuildingOffice);
     }
 
     private function completedOrders(Supplier $supplier): Collection

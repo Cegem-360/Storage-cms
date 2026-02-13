@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Exception;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
+use Filament\Support\Icons\Heroicon;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use ZipArchive;
 
@@ -21,7 +22,7 @@ final class ExportIFormXmlAction
     {
         return Action::make('export_iform_xml')
             ->label('iFORM XML Export (KSH-Elektra)')
-            ->icon('heroicon-o-cloud-arrow-up')
+            ->icon(Heroicon::OutlinedCloudArrowUp)
             ->fillForm([
                 'period' => now()->startOfMonth(),
             ])

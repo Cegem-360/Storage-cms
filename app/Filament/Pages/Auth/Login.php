@@ -30,7 +30,7 @@ final class Login extends BasePage
     protected function getEmailFormComponent(): TextInput
     {
         return TextInput::make('email')
-            ->label(__('Enter your work email'))
+            ->label('Enter your work email')
             ->email()
             ->required()
             ->autocomplete()
@@ -42,7 +42,7 @@ final class Login extends BasePage
     protected function getPasswordFormComponent(): TextInput
     {
         return TextInput::make('password')
-            ->label(__('Password'))
+            ->label('Password')
             ->password()
             ->revealable()
             ->autocomplete('current-password')
@@ -53,7 +53,7 @@ final class Login extends BasePage
     protected function getRememberFormComponent(): Checkbox
     {
         return Checkbox::make('remember')
-            ->label(__('Remember me'))
+            ->label('Remember me')
             ->extraInputAttributes(['tabindex' => 3]);
     }
 }

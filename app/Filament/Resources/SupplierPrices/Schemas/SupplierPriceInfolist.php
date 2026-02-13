@@ -18,19 +18,19 @@ final class SupplierPriceInfolist
                 Section::make(__('Price Information'))
                     ->schema([
                         TextEntry::make('supplier.company_name')
-                            ->label(__('Supplier')),
+                            ->label('Supplier'),
                         TextEntry::make('product.name')
-                            ->label(__('Product')),
+                            ->label('Product'),
                         TextEntry::make('price')
-                            ->label(__('Price'))
+                            ->label('Price')
                             ->money('HUF'),
                         TextEntry::make('currency')
-                            ->label(__('Currency')),
+                            ->label('Currency'),
                         TextEntry::make('minimum_order_quantity')
-                            ->label(__('Min. Order Quantity'))
+                            ->label('Min. Order Quantity')
                             ->numeric(),
                         TextEntry::make('lead_time_days')
-                            ->label(__('Lead Time'))
+                            ->label('Lead Time')
                             ->suffix(' '.__('days')),
                     ])
                     ->columns(2),
@@ -38,18 +38,18 @@ final class SupplierPriceInfolist
                 Section::make(__('Validity'))
                     ->schema([
                         TextEntry::make('valid_from')
-                            ->label(__('Valid From'))
+                            ->label('Valid From')
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('valid_until')
-                            ->label(__('Valid Until'))
+                            ->label('Valid Until')
                             ->date()
                             ->placeholder('-'),
                         IconEntry::make('is_active')
-                            ->label(__('Active'))
+                            ->label('Active')
                             ->boolean(),
                         TextEntry::make('notes')
-                            ->label(__('Notes'))
+                            ->label('Notes')
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
@@ -58,11 +58,11 @@ final class SupplierPriceInfolist
                 Section::make(__('Timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
+                            ->label('Created At')
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
+                            ->label('Updated At')
                             ->dateTime()
                             ->placeholder('-'),
                     ])

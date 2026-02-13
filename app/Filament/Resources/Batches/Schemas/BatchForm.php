@@ -21,18 +21,18 @@ final class BatchForm
                 Section::make('Basic Information')
                     ->schema([
                         TextInput::make('batch_number')
-                            ->label('Batch Number / Sarzs Szám')
+                            ->label('Batch Number')
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(100),
                         Select::make('product_id')
-                            ->label('Product / Termék')
+                            ->label('Product')
                             ->relationship('product', 'name')
                             ->required()
                             ->searchable()
                             ->preload(),
                         Select::make('supplier_id')
-                            ->label('Supplier / Beszállító')
+                            ->label('Supplier')
                             ->relationship('supplier', 'company_name')
                             ->required()
                             ->searchable()
@@ -43,22 +43,22 @@ final class BatchForm
                 Section::make('Dates')
                     ->schema([
                         DatePicker::make('manufacture_date')
-                            ->label('Manufacture Date / Gyártási Dátum'),
+                            ->label('Manufacture Date'),
                         DatePicker::make('expiry_date')
-                            ->label('Expiry Date / Lejárati Dátum'),
+                            ->label('Expiry Date'),
                     ])
                     ->columns(2),
 
                 Section::make('Quantity & Status')
                     ->schema([
                         TextInput::make('quantity')
-                            ->label('Quantity / Mennyiség')
+                            ->label('Quantity')
                             ->required()
                             ->numeric()
                             ->minValue(0)
                             ->default(0),
                         Select::make('quality_status')
-                            ->label('Quality Status / Minőségi Státusz')
+                            ->label('Quality Status')
                             ->options(QualityStatus::class)
                             ->default(QualityStatus::PENDING_CHECK)
                             ->required(),

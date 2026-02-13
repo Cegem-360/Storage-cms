@@ -62,27 +62,27 @@ final class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Name'))
+                    ->label('Name')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label(__('Email'))
+                    ->label('Email')
                     ->searchable()
                     ->sortable(),
                 IconColumn::make('is_super_admin')
-                    ->label(__('Admin'))
+                    ->label('Admin')
                     ->boolean(),
                 IconColumn::make('is_active')
-                    ->label(__('Active'))
+                    ->label('Active')
                     ->boolean(),
                 TextColumn::make('created_at')
-                    ->label(__('Created'))
+                    ->label('Created')
                     ->date()
                     ->sortable(),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label(__('Active'))
+                    ->label('Active')
                     ->trueLabel(__('Active only'))
                     ->falseLabel(__('Inactive only')),
             ])

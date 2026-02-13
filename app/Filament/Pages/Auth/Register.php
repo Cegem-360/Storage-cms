@@ -29,7 +29,7 @@ final class Register extends BaseRegister
     protected function getNameFormComponent(): TextInput
     {
         return TextInput::make('name')
-            ->label(__('Full name'))
+            ->label('Full name')
             ->required()
             ->maxLength(255)
             ->autofocus();
@@ -38,7 +38,7 @@ final class Register extends BaseRegister
     protected function getEmailFormComponent(): TextInput
     {
         return TextInput::make('email')
-            ->label(__('Work email'))
+            ->label('Work email')
             ->email()
             ->required()
             ->maxLength(255)
@@ -48,7 +48,7 @@ final class Register extends BaseRegister
     protected function getPasswordFormComponent(): TextInput
     {
         return TextInput::make('password')
-            ->label(__('Password'))
+            ->label('Password')
             ->password()
             ->revealable()
             ->required()
@@ -60,7 +60,7 @@ final class Register extends BaseRegister
     protected function getPasswordConfirmationFormComponent(): TextInput
     {
         return TextInput::make('passwordConfirmation')
-            ->label(__('Confirm password'))
+            ->label('Confirm password')
             ->password()
             ->revealable()
             ->required()

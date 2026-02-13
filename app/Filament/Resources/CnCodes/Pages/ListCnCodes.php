@@ -12,6 +12,7 @@ use Filament\Actions\CreateAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Response;
 
 final class ListCnCodes extends ListRecords
@@ -24,7 +25,7 @@ final class ListCnCodes extends ListRecords
             CreateAction::make(),
             Action::make('downloadTemplate')
                 ->label('Példa CSV letöltése')
-                ->icon('heroicon-o-arrow-down-tray')
+                ->icon(Heroicon::OutlinedArrowDownTray)
                 ->color('gray')
                 ->action(function () {
                     $csv = "code,description,supplementary_unit\n";

@@ -24,7 +24,7 @@ final class EditInventory extends EditRecord
     {
         return [
             Action::make('applyCorrections')
-                ->label(__('Apply Corrections'))
+                ->label('Apply Corrections')
                 ->icon(Heroicon::OutlinedCheckCircle)
                 ->color('success')
                 ->requiresConfirmation()
@@ -48,7 +48,7 @@ final class EditInventory extends EditRecord
                 ->visible(fn (): bool => $this->getRecord()->status === InventoryStatus::COMPLETED),
 
             Action::make('exportPdf')
-                ->label(__('Print Inventory Sheet'))
+                ->label('Print Inventory Sheet')
                 ->icon(Heroicon::OutlinedDocumentArrowDown)
                 ->color('gray')
                 ->action(function () {

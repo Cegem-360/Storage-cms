@@ -73,28 +73,28 @@ final class IntrastatOutboundsTable
         return $table
             ->columns([
                 TextColumn::make('declaration_number')
-                    ->label(__('Declaration #'))
+                    ->label('Declaration #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('reference_period')
-                    ->label(__('Period'))
+                    ->label('Period')
                     ->getStateUsing(fn ($record) => $record->reference_year.'/'.mb_str_pad((string) $record->reference_month, 2, '0', STR_PAD_LEFT))
                     ->sortable(),
                 TextColumn::make('intrastat_lines_count')
-                    ->label(__('Lines'))
+                    ->label('Lines')
                     ->counts('intrastatLines')
                     ->badge()
                     ->color('success'),
                 TextColumn::make('status')
-                    ->label(__('Status'))
+                    ->label('Status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('total_invoice_value')
-                    ->label(__('Total Value'))
+                    ->label('Total Value')
                     ->money('EUR')
                     ->sortable(),
                 TextColumn::make('total_net_mass')
-                    ->label(__('Net Mass'))
+                    ->label('Net Mass')
                     ->numeric(decimalPlaces: 2)
                     ->suffix(' kg')
                     ->sortable(),

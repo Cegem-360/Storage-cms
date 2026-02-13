@@ -78,13 +78,13 @@ final class CustomersTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label(__('Email'))
+                    ->label('Email')
                     ->searchable(),
                 TextColumn::make('phone')
-                    ->label(__('Phone'))
+                    ->label('Phone')
                     ->searchable(),
                 TextColumn::make('company')
-                    ->label(__('Company'))
+                    ->label('Company')
                     ->searchable(),
                 TextColumn::make('type')
                     ->badge(),

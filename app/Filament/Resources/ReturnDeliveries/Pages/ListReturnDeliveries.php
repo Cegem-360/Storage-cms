@@ -8,6 +8,7 @@ use App\Filament\Resources\ReturnDeliveries\ReturnDeliveryResource;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Icons\Heroicon;
 
 final class ListReturnDeliveries extends ListRecords
 {
@@ -19,7 +20,7 @@ final class ListReturnDeliveries extends ListRecords
             CreateAction::make(),
             Action::make('createWithSteps')
                 ->label('Create with Wizard')
-                ->icon('heroicon-o-sparkles')
+                ->icon(Heroicon::OutlinedSparkles)
                 ->url(ReturnDeliveryResource::getUrl('create-with-steps')),
         ];
     }

@@ -79,20 +79,20 @@ final class BatchesTable
         return $table
             ->columns([
                 TextColumn::make('batch_number')
-                    ->label(__('Batch #'))
+                    ->label('Batch #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('product.name')
-                    ->label(__('Product'))
+                    ->label('Product')
                     ->searchable(),
                 TextColumn::make('warehouse.name')
-                    ->label(__('Warehouse'))
+                    ->label('Warehouse')
                     ->searchable(),
                 TextColumn::make('quantity')
-                    ->label(__('Quantity'))
+                    ->label('Quantity')
                     ->numeric(),
                 TextColumn::make('expiry_date')
-                    ->label(__('Expiry Date'))
+                    ->label('Expiry Date')
                     ->date()
                     ->sortable()
                     ->color(fn ($record) => $record->isExpired() ? 'danger' : null),
