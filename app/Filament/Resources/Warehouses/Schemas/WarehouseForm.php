@@ -24,7 +24,7 @@ final class WarehouseForm
                 Textarea::make('address')
                     ->columnSpanFull(),
                 Select::make('type')
-                    ->enum(WarehouseType::class)
+                    ->options(WarehouseType::class)
                     ->required(),
                 TextInput::make('capacity')
                     ->numeric(),

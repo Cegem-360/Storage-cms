@@ -10,6 +10,7 @@ use App\Models\Employee;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class EmployeeController extends Controller
 {
@@ -30,7 +31,7 @@ final class EmployeeController extends Controller
         $validated = $request->validate([
             'user_id' => ['nullable', 'integer', 'exists:users,id'],
             'warehouse_id' => ['nullable', 'integer', 'exists:warehouses,id'],
-            'employee_code' => ['required', 'string', 'max:50', 'unique:employees,employee_code'],
+            'employee_code' => ['required', 'string', 'max:50', Rule::unique('employees', 'employee_code')->where('team_id', $request->user()->team_id)],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
@@ -58,7 +59,7 @@ final class EmployeeController extends Controller
         $validated = $request->validate([
             'user_id' => ['nullable', 'integer', 'exists:users,id'],
             'warehouse_id' => ['nullable', 'integer', 'exists:warehouses,id'],
-            'employee_code' => ['sometimes', 'string', 'max:50', 'unique:employees,employee_code,'.$employee->id],
+            'employee_code' => ['sometimes', 'string', 'max:50', Rule::unique('employees', 'employee_code')->ignore($employee->id)->where('team_id', $request->user()->team_id)],
             'first_name' => ['sometimes', 'string', 'max:255'],
             'last_name' => ['sometimes', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],

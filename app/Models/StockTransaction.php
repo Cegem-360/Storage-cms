@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\StockTransactionType;
+use App\Models\Concerns\BelongsToTeam;
 use App\Observers\StockTransactionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,9 +16,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 #[ObservedBy(StockTransactionObserver::class)]
 final class StockTransaction extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
 
     protected $fillable = [
+        'team_id',
         'stock_id',
         'product_id',
         'warehouse_id',

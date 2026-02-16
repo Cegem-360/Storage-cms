@@ -121,6 +121,7 @@ final class IntrastatService
                 'declaration_number' => sprintf('%s-%s-%02d', $direction->value, $year, $month),
                 'declaration_date' => $date,
                 'status' => IntrastatStatus::DRAFT,
+                'team_id' => auth()->user()?->team_id,
             ]
         );
     }

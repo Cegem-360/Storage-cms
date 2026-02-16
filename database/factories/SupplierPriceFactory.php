@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ final class SupplierPriceFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'product_id' => Product::factory(),
             'supplier_id' => Supplier::factory(),
             'price' => fake()->randomFloat(4, 1, 10000),

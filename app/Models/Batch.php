@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTeam;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,10 +14,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Batch extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'batch_number',
         'product_id',
         'supplier_id',

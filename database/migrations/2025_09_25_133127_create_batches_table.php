@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,8 @@ return new class() extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
-            $table->string('batch_number', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('batch_number', 100);
             $table->foreignIdFor(Product::class)->constrained();
             $table->foreignIdFor(Supplier::class)->constrained();
             $table->date('manufacture_date')->nullable();
@@ -28,6 +30,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'batch_number']);
             $table->index(['expiry_date']);
             $table->index(['quality_status']);
             $table->index(['batch_number']);

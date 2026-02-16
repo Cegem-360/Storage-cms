@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,13 +16,15 @@ return new class() extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
             $table->string('name');
-            $table->string('code', 50)->unique();
+            $table->string('code', 50);
             $table->foreignId('parent_id')->nullable()->constrained('categories');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'code']);
             $table->index(['parent_id']);
         });
     }

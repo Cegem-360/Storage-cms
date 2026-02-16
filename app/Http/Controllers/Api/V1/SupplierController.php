@@ -10,6 +10,7 @@ use App\Models\Supplier;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class SupplierController extends Controller
 {
@@ -27,7 +28,7 @@ final class SupplierController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'code' => ['required', 'string', 'max:255', 'unique:suppliers,code'],
+            'code' => ['required', 'string', 'max:255', Rule::unique('suppliers', 'code')->where('team_id', $request->user()->team_id)],
             'company_name' => ['required', 'string', 'max:255'],
             'trade_name' => ['nullable', 'string', 'max:255'],
             'headquarters' => ['nullable', 'array'],
@@ -61,7 +62,7 @@ final class SupplierController extends Controller
     public function update(Request $request, Supplier $supplier): SupplierResource
     {
         $validated = $request->validate([
-            'code' => ['sometimes', 'string', 'max:255', 'unique:suppliers,code,'.$supplier->id],
+            'code' => ['sometimes', 'string', 'max:255', Rule::unique('suppliers', 'code')->ignore($supplier->id)->where('team_id', $request->user()->team_id)],
             'company_name' => ['sometimes', 'string', 'max:255'],
             'trade_name' => ['nullable', 'string', 'max:255'],
             'headquarters' => ['nullable', 'array'],

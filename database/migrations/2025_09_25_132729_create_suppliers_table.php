@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,8 @@ return new class() extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 50)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('code', 50);
 
             $table->string('company_name');
             $table->string('trade_name')->nullable();
@@ -36,6 +38,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'code']);
             $table->index(['is_active']);
             $table->index(['rating']);
         });

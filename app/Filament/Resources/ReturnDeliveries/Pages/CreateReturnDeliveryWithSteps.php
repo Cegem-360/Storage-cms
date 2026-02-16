@@ -43,7 +43,7 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                         ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                         ->required()
                         ->maxLength(100)
-                        ->unique(ignoreRecord: true),
+                        ->scopedUnique(ignoreRecord: true),
 
                     Select::make('type')
                         ->label('Return Type')

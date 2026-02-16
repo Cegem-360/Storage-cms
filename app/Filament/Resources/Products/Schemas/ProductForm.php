@@ -29,7 +29,7 @@ final class ProductForm
                         TextInput::make('sku')
                             ->label('SKU')
                             ->required()
-                            ->unique(ignoreRecord: true)
+                            ->scopedUnique(ignoreRecord: true)
                             ->maxLength(100),
                         TextInput::make('name')
                             ->label('Product Name')

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Category;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,8 @@ return new class() extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('sku', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('sku', 100);
             $table->string('cn_code', 8)->nullable();
             $table->string('country_of_origin', 2)->nullable();
             $table->decimal('net_weight_kg', 10, 3)->nullable();
@@ -39,6 +41,7 @@ return new class() extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+            $table->unique(['team_id', 'sku']);
             $table->index(['status', 'cn_code', 'category_id', 'supplier_id', 'sku']);
         });
     }

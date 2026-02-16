@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\StockStatus;
 use App\Models\Product;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ final class StockFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'product_id' => Product::factory(),
             'warehouse_id' => Warehouse::factory(),
             'quantity' => fake()->numberBetween(0, 500),

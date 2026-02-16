@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\WarehouseType;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ final class WarehouseFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'code' => fake()->unique()->lexify('WH-???###'),
             'name' => fake()->company().' Warehouse',
             'address' => fake()->address(),

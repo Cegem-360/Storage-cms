@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Supplier;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,8 @@ return new class() extends Migration
     {
         Schema::create('return_deliveries', function (Blueprint $table) {
             $table->id();
-            $table->string('return_number', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('return_number', 100);
             $table->string('type', 50);
             $table->foreignIdFor(Order::class)->nullable()->constrained();
             $table->foreignIdFor(Customer::class)->nullable()->constrained();
@@ -35,6 +37,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'return_number']);
             $table->index(['type']);
             $table->index(['status']);
             $table->index(['return_date']);

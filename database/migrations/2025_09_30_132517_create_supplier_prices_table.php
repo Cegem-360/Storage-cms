@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ return new class() extends Migration
     {
         Schema::create('supplier_prices', function (Blueprint $table): void {
             $table->id();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Supplier::class)->constrained()->cascadeOnDelete();
             $table->decimal('price', 15, 4);
@@ -27,7 +29,7 @@ return new class() extends Migration
 
             $table->timestamps();
 
-            $table->unique(['product_id', 'supplier_id', 'valid_from']);
+            $table->unique(['team_id', 'product_id', 'supplier_id', 'valid_from']);
             $table->index(['product_id', 'is_active']);
             $table->index(['supplier_id', 'is_active']);
             $table->index(['valid_from', 'valid_until']);

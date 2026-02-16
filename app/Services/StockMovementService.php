@@ -74,6 +74,7 @@ final class StockMovementService
             'warehouse_id' => $movement->target_warehouse_id,
         ], [
             'quantity' => 0,
+            'team_id' => $movement->team_id,
         ]);
 
         $targetStock->increment('quantity', $movement->quantity);

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\User;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,9 +17,10 @@ return new class() extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->unsignedBigInteger('warehouse_id')->nullable(); // FK nélkül először
-            $table->string('employee_code', 50)->unique();
+            $table->string('employee_code', 50);
             $table->string('first_name');
             $table->string('last_name');
             $table->string('position')->nullable();
@@ -29,6 +31,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'employee_code']);
             $table->index(['warehouse_id']);
             $table->index(['is_active']);
             $table->index(['department']);

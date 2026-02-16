@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +16,10 @@ return new class() extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_code')->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('customer_code');
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('phone')->nullable();
             $table->json('billing_address')->nullable();
             $table->json('shipping_address')->nullable();
@@ -26,6 +28,9 @@ return new class() extends Migration
             $table->string('type')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->unique(['team_id', 'customer_code']);
+            $table->unique(['team_id', 'email']);
         });
     }
 

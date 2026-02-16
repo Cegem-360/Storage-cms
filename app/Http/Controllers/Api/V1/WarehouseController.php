@@ -10,6 +10,7 @@ use App\Models\Warehouse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class WarehouseController extends Controller
 {
@@ -27,7 +28,7 @@ final class WarehouseController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'code' => ['required', 'string', 'max:255', 'unique:warehouses,code'],
+            'code' => ['required', 'string', 'max:255', Rule::unique('warehouses', 'code')->where('team_id', $request->user()->team_id)],
             'name' => ['required', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
@@ -56,7 +57,7 @@ final class WarehouseController extends Controller
     public function update(Request $request, Warehouse $warehouse): WarehouseResource
     {
         $validated = $request->validate([
-            'code' => ['sometimes', 'string', 'max:255', 'unique:warehouses,code,'.$warehouse->id],
+            'code' => ['sometimes', 'string', 'max:255', Rule::unique('warehouses', 'code')->ignore($warehouse->id)->where('team_id', $request->user()->team_id)],
             'name' => ['sometimes', 'string', 'max:255'],
             'address' => ['nullable', 'string', 'max:255'],
             'type' => ['sometimes', 'string', 'max:255'],

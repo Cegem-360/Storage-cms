@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,8 @@ return new class() extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->string('receipt_number', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('receipt_number', 100);
             $table->foreignIdFor(Order::class)->nullable()->constrained();
             $table->foreignIdFor(Warehouse::class)->constrained();
             $table->foreignIdFor(Employee::class, 'received_by')->constrained();
@@ -29,6 +31,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'receipt_number']);
             $table->index(['status']);
             $table->index(['receipt_date']);
             $table->index(['warehouse_id']);

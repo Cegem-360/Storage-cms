@@ -14,8 +14,9 @@ uses(RefreshDatabase::class);
 
 describe('GET /api/v1/orders', function (): void {
     it('lists orders', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        Order::factory()->salesOrder()->count(3)->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        Order::factory()->salesOrder()->count(3)->recycle($user->team)->create();
 
         $response = $this->getJson('/api/v1/orders');
 
@@ -31,9 +32,10 @@ describe('GET /api/v1/orders', function (): void {
     });
 
     it('filters orders by status', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        Order::factory()->salesOrder()->draft()->count(2)->create();
-        Order::factory()->salesOrder()->confirmed()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        Order::factory()->salesOrder()->draft()->count(2)->recycle($user->team)->create();
+        Order::factory()->salesOrder()->confirmed()->recycle($user->team)->create();
 
         $response = $this->getJson('/api/v1/orders?status=draft');
 
@@ -54,9 +56,10 @@ describe('GET /api/v1/orders', function (): void {
 
 describe('GET /api/v1/orders/{id}', function (): void {
     it('shows a single order with lines', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $order = Order::factory()->salesOrder()->create();
-        $product = Product::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $order = Order::factory()->salesOrder()->recycle($user->team)->create();
+        $product = Product::factory()->recycle($user->team)->create();
         OrderLine::factory()->create([
             'order_id' => $order->id,
             'product_id' => $product->id,
@@ -81,8 +84,9 @@ describe('GET /api/v1/orders/{id}', function (): void {
 
 describe('GET /api/v1/orders/{order}/lines', function (): void {
     it('lists order lines', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $order = Order::factory()->salesOrder()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $order = Order::factory()->salesOrder()->recycle($user->team)->create();
         OrderLine::factory()->count(3)->create(['order_id' => $order->id]);
 
         $response = $this->getJson("/api/v1/orders/{$order->id}/lines");
@@ -97,8 +101,9 @@ describe('GET /api/v1/orders/{order}/lines', function (): void {
     });
 
     it('shows a single order line', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $order = Order::factory()->salesOrder()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $order = Order::factory()->salesOrder()->recycle($user->team)->create();
         $line = OrderLine::factory()->create(['order_id' => $order->id]);
 
         $response = $this->getJson("/api/v1/orders/{$order->id}/lines/{$line->id}");

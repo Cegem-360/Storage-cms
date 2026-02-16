@@ -8,6 +8,7 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Enums\ProductStatus;
 use App\Enums\UnitType;
+use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,10 +18,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Product extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'sku',
         'name',
         'description',

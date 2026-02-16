@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\ReceiptStatus;
 use App\Models\Employee;
 use App\Models\Order;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ final class ReceiptFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'receipt_number' => 'REC-'.fake()->unique()->numerify('######'),
             'order_id' => Order::factory(),
             'warehouse_id' => Warehouse::factory(),

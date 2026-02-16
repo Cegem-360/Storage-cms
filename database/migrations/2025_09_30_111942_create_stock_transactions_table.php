@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,7 @@ return new class() extends Migration
     {
         Schema::create('stock_transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
             $table->foreignIdFor(Stock::class)->constrained('stocks')->cascadeOnDelete();
             $table->foreignIdFor(Product::class)->constrained('products');
             $table->foreignIdFor(Warehouse::class)->constrained('warehouses');

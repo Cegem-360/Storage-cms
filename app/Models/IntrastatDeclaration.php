@@ -6,15 +6,18 @@ namespace App\Models;
 
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
+use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class IntrastatDeclaration extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
 
     protected $fillable = [
+        'team_id',
         'declaration_number',
         'direction',
         'reference_year',

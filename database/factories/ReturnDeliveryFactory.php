@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\Supplier;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -29,6 +30,7 @@ final class ReturnDeliveryFactory extends Factory
         $type = fake()->randomElement(ReturnType::cases());
 
         return [
+            'team_id' => Team::factory(),
             'return_number' => 'RET-'.fake()->unique()->numerify('######'),
             'type' => $type,
             'order_id' => $type === ReturnType::CUSTOMER_RETURN ? Order::factory() : null,

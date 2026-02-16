@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\CountryCode;
 use App\Enums\SupplierRating;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -79,11 +80,12 @@ it('can soft delete a supplier', function (): void {
         ->and(Supplier::withTrashed()->find($supplierId))->not->toBeNull();
 });
 
-it('has unique code', function (): void {
+it('has unique code within the same team', function (): void {
+    $team = Team::factory()->create();
     $code = 'SUP-1234';
-    Supplier::factory()->create(['code' => $code]);
+    Supplier::factory()->recycle($team)->create(['code' => $code]);
 
-    expect(fn () => Supplier::factory()->create(['code' => $code]))
+    expect(fn () => Supplier::factory()->recycle($team)->create(['code' => $code]))
         ->toThrow(QueryException::class);
 });
 

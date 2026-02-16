@@ -32,7 +32,7 @@ final class ReturnDeliveryForm
                             ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                             ->required()
                             ->maxLength(100)
-                            ->unique(ignoreRecord: true),
+                            ->scopedUnique(ignoreRecord: true),
 
                         Select::make('type')
                             ->label('Return Type')
@@ -161,7 +161,7 @@ final class ReturnDeliveryForm
                         TextEntry::make('total_amount')
                             ->label('Total Amount')
                             ->state(fn ($record): string => Number::currency(
-                                $record?->total_amount ?? 0,
+                                (float) ($record?->total_amount ?? 0),
                                 in: 'HUF',
                                 locale: 'hu',
                             )),

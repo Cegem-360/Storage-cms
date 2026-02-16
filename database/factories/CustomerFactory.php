@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Enums\CustomerType;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,6 +21,7 @@ final class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'customer_code' => 'CUST-'.fake()->unique()->numberBetween(10000, 99999),
             'name' => fake()->company(),
             'email' => fake()->unique()->safeEmail(),

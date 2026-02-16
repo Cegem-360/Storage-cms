@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\ReturnReason;
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
+use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,10 +19,12 @@ use Override;
 
 final class ReturnDelivery extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'return_number',
         'type',
         'order_id',
@@ -97,6 +100,7 @@ final class ReturnDelivery extends Model
                             'warehouse_id' => $this->warehouse_id,
                         ],
                         [
+                            'team_id' => $this->team_id,
                             'quantity' => 0,
                             'reserved_quantity' => 0,
                             'minimum_stock' => 0,

@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class ProductController extends Controller
 {
@@ -28,7 +29,7 @@ final class ProductController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'sku' => ['required', 'string', 'max:100', 'unique:products,sku'],
+            'sku' => ['required', 'string', 'max:100', Rule::unique('products', 'sku')->where('team_id', $request->user()->team_id)],
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'barcode' => ['nullable', 'string', 'max:100'],
@@ -66,7 +67,7 @@ final class ProductController extends Controller
     public function update(Request $request, Product $product): ProductResource
     {
         $validated = $request->validate([
-            'sku' => ['sometimes', 'string', 'max:100', 'unique:products,sku,'.$product->id],
+            'sku' => ['sometimes', 'string', 'max:100', Rule::unique('products', 'sku')->ignore($product->id)->where('team_id', $request->user()->team_id)],
             'name' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'barcode' => ['nullable', 'string', 'max:100'],

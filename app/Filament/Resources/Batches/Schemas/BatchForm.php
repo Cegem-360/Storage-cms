@@ -23,7 +23,7 @@ final class BatchForm
                         TextInput::make('batch_number')
                             ->label('Batch Number')
                             ->required()
-                            ->unique(ignoreRecord: true)
+                            ->scopedUnique(ignoreRecord: true)
                             ->maxLength(100),
                         Select::make('product_id')
                             ->label('Product')

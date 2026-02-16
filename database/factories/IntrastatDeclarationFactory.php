@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
+use App\Models\Team;
 use DateTimeImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ final class IntrastatDeclarationFactory extends Factory
         $direction = fake()->randomElement(IntrastatDirection::cases());
 
         return [
+            'team_id' => Team::factory(),
             'declaration_number' => $this->generateDeclarationNumber($referenceDate, $direction),
             'direction' => $direction,
             'reference_year' => (int) $referenceDate->format('Y'),

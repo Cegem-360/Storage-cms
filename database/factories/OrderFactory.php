@@ -8,6 +8,7 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Customer;
 use App\Models\Supplier;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,8 +24,9 @@ final class OrderFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'order_number' => 'ORD-'.fake()->unique()->numberBetween(10000, 99999),
-            'type' => OrderType::SALES, // Default to sales
+            'type' => OrderType::SALES,
             'customer_id' => null,
             'supplier_id' => null,
             'status' => OrderStatus::DRAFT,

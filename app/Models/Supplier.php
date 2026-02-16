@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\CountryCode;
 use App\Enums\SupplierRating;
+use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,10 +14,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Supplier extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'code',
         'company_name',
         'trade_name',

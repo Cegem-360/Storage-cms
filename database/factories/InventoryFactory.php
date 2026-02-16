@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\InventoryStatus;
 use App\Enums\InventoryType;
 use App\Models\Employee;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ final class InventoryFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'inventory_number' => 'INV-'.fake()->unique()->numerify('######'),
             'warehouse_id' => Warehouse::factory(),
             'conducted_by' => Employee::factory(),

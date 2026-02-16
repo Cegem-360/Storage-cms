@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Batch;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,7 @@ return new class() extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
             $table->foreignIdFor(Product::class)->constrained();
             $table->foreignIdFor(Warehouse::class)->constrained();
             $table->integer('quantity')->default(0);
@@ -32,7 +34,7 @@ return new class() extends Migration
             $table->softDeletes();
 
             // Unique constraint: one stock per product per warehouse
-            $table->unique(['product_id', 'warehouse_id']);
+            $table->unique(['team_id', 'product_id', 'warehouse_id']);
             $table->index(['status']);
             $table->index(['quantity']);
         });

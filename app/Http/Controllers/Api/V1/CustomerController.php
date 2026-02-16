@@ -10,6 +10,7 @@ use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class CustomerController extends Controller
 {
@@ -30,9 +31,9 @@ final class CustomerController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'customer_code' => ['required', 'string', 'max:255', 'unique:customers,customer_code'],
+            'customer_code' => ['required', 'string', 'max:255', Rule::unique('customers', 'customer_code')->where('team_id', $request->user()->team_id)],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers,email'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('customers', 'email')->where('team_id', $request->user()->team_id)],
             'phone' => ['nullable', 'string', 'max:255'],
             'billing_address' => ['nullable', 'array'],
             'shipping_address' => ['nullable', 'array'],
@@ -56,9 +57,9 @@ final class CustomerController extends Controller
     public function update(Request $request, Customer $customer): CustomerResource
     {
         $validated = $request->validate([
-            'customer_code' => ['sometimes', 'string', 'max:255', 'unique:customers,customer_code,'.$customer->id],
+            'customer_code' => ['sometimes', 'string', 'max:255', Rule::unique('customers', 'customer_code')->ignore($customer->id)->where('team_id', $request->user()->team_id)],
             'name' => ['sometimes', 'string', 'max:255'],
-            'email' => ['sometimes', 'string', 'email', 'max:255', 'unique:customers,email,'.$customer->id],
+            'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('customers', 'email')->ignore($customer->id)->where('team_id', $request->user()->team_id)],
             'phone' => ['nullable', 'string', 'max:255'],
             'billing_address' => ['nullable', 'array'],
             'shipping_address' => ['nullable', 'array'],

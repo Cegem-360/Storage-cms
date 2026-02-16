@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\StockTransactionType;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,6 +27,7 @@ final class StockTransactionFactory extends Factory
         $quantity = fake()->numberBetween(1, 100);
 
         return [
+            'team_id' => Team::factory(),
             'stock_id' => Stock::factory(),
             'product_id' => Product::factory(),
             'warehouse_id' => Warehouse::factory(),

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,9 +12,11 @@ use Override;
 
 final class SupplierPrice extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
 
     protected $fillable = [
+        'team_id',
         'product_id',
         'supplier_id',
         'price',

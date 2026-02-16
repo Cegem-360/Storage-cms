@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Team;
 use App\Models\Warehouse;
 
 use function Pest\Laravel\assertDatabaseHas;
@@ -85,17 +86,18 @@ it('can view stock by warehouse for a specific product', function (): void {
     expect($stockInWarehouse2->quantity)->toBe(75);
 });
 
-it('enforces unique product-warehouse constraint', function (): void {
-    $product = Product::factory()->create();
-    $warehouse = Warehouse::factory()->create();
+it('enforces unique product-warehouse constraint within the same team', function (): void {
+    $team = Team::factory()->create();
+    $product = Product::factory()->recycle($team)->create();
+    $warehouse = Warehouse::factory()->recycle($team)->create();
 
-    Stock::factory()->create([
+    Stock::factory()->recycle($team)->create([
         'product_id' => $product->id,
         'warehouse_id' => $warehouse->id,
         'quantity' => 100,
     ]);
 
-    Stock::factory()->create([
+    Stock::factory()->recycle($team)->create([
         'product_id' => $product->id,
         'warehouse_id' => $warehouse->id,
         'quantity' => 50,

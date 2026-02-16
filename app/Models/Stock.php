@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Enums\StockLevel;
 use App\Enums\StockStatus;
+use App\Models\Concerns\BelongsToTeam;
 use App\Observers\StockObserver;
 use Exception;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -19,10 +20,12 @@ use Override;
 #[ObservedBy(StockObserver::class)]
 final class Stock extends Model
 {
+    use BelongsToTeam;
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'product_id',
         'warehouse_id',
         'quantity',
@@ -35,7 +38,6 @@ final class Stock extends Model
         'total_value',
     ];
 
-    // Relationships
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
@@ -56,7 +58,6 @@ final class Stock extends Model
         return $this->hasMany(StockTransaction::class);
     }
 
-    // Helper methods
     public function getAvailableQuantity(): int
     {
         return max(0, $this->quantity - $this->reserved_quantity);
@@ -103,19 +104,19 @@ final class Stock extends Model
         };
     }
 
-    // Unique constraint: one stock per product per warehouse
     #[Override]
     protected static function boot(): void
     {
         parent::boot();
 
-        self::creating(function ($stock): void {
-            // Ensure unique product-warehouse combination
-            $existing = self::query()->where('product_id', $stock->product_id)
+        self::creating(function (self $stock): void {
+            $alreadyExists = self::withoutGlobalScopes()
+                ->where('product_id', $stock->product_id)
                 ->where('warehouse_id', $stock->warehouse_id)
-                ->first();
+                ->where('team_id', $stock->team_id)
+                ->exists();
 
-            if ($existing) {
+            if ($alreadyExists) {
                 throw new Exception('Stock already exists for this product in this warehouse');
             }
         });

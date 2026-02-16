@@ -15,8 +15,9 @@ uses(RefreshDatabase::class);
 
 describe('GET /api/v1/products', function (): void {
     it('lists products', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $products = Product::factory()->count(3)->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $products = Product::factory()->count(3)->recycle($user->team)->create();
 
         $response = $this->getJson('/api/v1/products');
 
@@ -32,9 +33,10 @@ describe('GET /api/v1/products', function (): void {
     });
 
     it('filters products by status', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        Product::factory()->active()->count(2)->create();
-        Product::factory()->discontinued()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        Product::factory()->active()->count(2)->recycle($user->team)->create();
+        Product::factory()->discontinued()->recycle($user->team)->create();
 
         $response = $this->getJson('/api/v1/products?status=active');
 
@@ -55,8 +57,9 @@ describe('GET /api/v1/products', function (): void {
 
 describe('GET /api/v1/products/{id}', function (): void {
     it('shows a single product', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $product = Product::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $product = Product::factory()->recycle($user->team)->create();
 
         $response = $this->getJson("/api/v1/products/{$product->id}");
 
@@ -77,9 +80,10 @@ describe('GET /api/v1/products/{id}', function (): void {
 
 describe('POST /api/v1/products', function (): void {
     it('creates a product', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $category = Category::factory()->create();
-        $supplier = Supplier::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $category = Category::factory()->recycle($user->team)->create();
+        $supplier = Supplier::factory()->recycle($user->team)->create();
 
         $data = [
             'sku' => 'SKU-TEST-001',
@@ -124,8 +128,9 @@ describe('POST /api/v1/products', function (): void {
 
 describe('PUT /api/v1/products/{id}', function (): void {
     it('updates a product', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $product = Product::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $product = Product::factory()->recycle($user->team)->create();
 
         $response = $this->putJson("/api/v1/products/{$product->id}", [
             'name' => 'Updated Product Name',
@@ -145,8 +150,9 @@ describe('PUT /api/v1/products/{id}', function (): void {
 
 describe('DELETE /api/v1/products/{id}', function (): void {
     it('deletes a product', function (): void {
-        Sanctum::actingAs(User::factory()->create());
-        $product = Product::factory()->create();
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $product = Product::factory()->recycle($user->team)->create();
 
         $response = $this->deleteJson("/api/v1/products/{$product->id}");
 

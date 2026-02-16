@@ -10,6 +10,7 @@ use App\Models\Batch;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 final class BatchController extends Controller
 {
@@ -28,7 +29,7 @@ final class BatchController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'batch_number' => ['required', 'string', 'max:255', 'unique:batches,batch_number'],
+            'batch_number' => ['required', 'string', 'max:255', Rule::unique('batches', 'batch_number')->where('team_id', $request->user()->team_id)],
             'product_id' => ['required', 'integer', 'exists:products,id'],
             'supplier_id' => ['nullable', 'integer', 'exists:suppliers,id'],
             'manufacture_date' => ['nullable', 'date'],
@@ -55,7 +56,7 @@ final class BatchController extends Controller
     public function update(Request $request, Batch $batch): BatchResource
     {
         $validated = $request->validate([
-            'batch_number' => ['sometimes', 'string', 'max:255', 'unique:batches,batch_number,'.$batch->id],
+            'batch_number' => ['sometimes', 'string', 'max:255', Rule::unique('batches', 'batch_number')->ignore($batch->id)->where('team_id', $request->user()->team_id)],
             'product_id' => ['sometimes', 'integer', 'exists:products,id'],
             'supplier_id' => ['nullable', 'integer', 'exists:suppliers,id'],
             'manufacture_date' => ['nullable', 'date'],

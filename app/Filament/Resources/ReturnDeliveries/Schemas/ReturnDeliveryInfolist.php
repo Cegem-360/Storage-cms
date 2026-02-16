@@ -39,7 +39,9 @@ final class ReturnDeliveryInfolist
 
                         TextEntry::make('processedBy.first_name')
                             ->label('Processed By')
-                            ->formatStateUsing(fn ($record) => $record->processedBy?->getFullName() ?? '-'),
+                            ->formatStateUsing(fn (ReturnDelivery $record): string => $record->processedBy
+                                ? $record->processedBy->first_name.' '.$record->processedBy->last_name
+                                : '-'),
                     ])
                     ->columns(3),
 

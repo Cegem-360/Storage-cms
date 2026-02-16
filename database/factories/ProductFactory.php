@@ -8,6 +8,7 @@ use App\Enums\ProductStatus;
 use App\Enums\UnitType;
 use App\Models\Category;
 use App\Models\Supplier;
+use App\Models\Team;
 use Bezhanov\Faker\Provider\Commerce;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -26,6 +27,7 @@ final class ProductFactory extends Factory
         fake()->addProvider(new Commerce(fake()));
 
         return [
+            'team_id' => Team::factory(),
             'sku' => 'SKU-'.fake()->unique()->numerify('#####'),
             'name' => fake()->productName,
             'description' => fake()->sentence(),

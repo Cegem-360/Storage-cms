@@ -27,7 +27,7 @@ final class IntrastatDeclarationForm
                                 TextInput::make('declaration_number')
                                     ->label('Bevallási szám')
                                     ->required()
-                                    ->unique(ignoreRecord: true)
+                                    ->scopedUnique(ignoreRecord: true)
                                     ->maxLength(255)
                                     ->placeholder('INTRA-202510-ARR-001'),
 

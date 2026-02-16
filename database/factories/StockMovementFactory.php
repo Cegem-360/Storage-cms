@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\MovementStatus;
 use App\Enums\MovementType;
 use App\Models\Product;
+use App\Models\Team;
 use App\Models\Warehouse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,7 @@ final class StockMovementFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'movement_number' => 'MV-'.fake()->unique()->numerify('######'),
             'type' => fake()->randomElement(MovementType::cases()),
             'source_warehouse_id' => Warehouse::factory(),

@@ -6,6 +6,7 @@ use App\Models\Batch;
 use App\Models\Employee;
 use App\Models\Product;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,8 @@ return new class() extends Migration
     {
         Schema::create('stock_movements', function (Blueprint $table) {
             $table->id();
-            $table->string('movement_number', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('movement_number', 100);
             $table->string('type', 50); // INBOUND, OUTBOUND, TRANSFER, ADJUSTMENT, etc.
             $table->foreignIdFor(Warehouse::class, 'source_warehouse_id')->nullable()->constrained('warehouses');
             $table->foreignIdFor(Warehouse::class, 'target_warehouse_id')->nullable()->constrained('warehouses');
@@ -33,6 +35,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'movement_number']);
             $table->index(['type']);
             $table->index(['status']);
             $table->index(['executed_at']);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ final class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
+            'team_id' => Team::factory(),
             'name' => fake()->unique()->word(),
             'code' => fake()->unique()->regexify('[A-Z]{3}[0-9]{3}'),
             'description' => fake()->sentence(),

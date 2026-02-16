@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enums\CustomerType;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -29,17 +30,19 @@ describe('Customer Model', function (): void {
             ->and($customer->type)->toBe(CustomerType::RETAIL);
     });
 
-    it('requires a unique email', function (): void {
-        Customer::factory()->create(['email' => 'duplicate@example.com']);
+    it('requires a unique email within the same team', function (): void {
+        $team = Team::factory()->create();
+        Customer::factory()->recycle($team)->create(['email' => 'duplicate@example.com']);
 
-        expect(fn () => Customer::factory()->create(['email' => 'duplicate@example.com']))
+        expect(fn () => Customer::factory()->recycle($team)->create(['email' => 'duplicate@example.com']))
             ->toThrow(QueryException::class);
     });
 
-    it('requires a unique customer code', function (): void {
-        Customer::factory()->create(['customer_code' => 'CUST-12345']);
+    it('requires a unique customer code within the same team', function (): void {
+        $team = Team::factory()->create();
+        Customer::factory()->recycle($team)->create(['customer_code' => 'CUST-12345']);
 
-        expect(fn () => Customer::factory()->create(['customer_code' => 'CUST-12345']))
+        expect(fn () => Customer::factory()->recycle($team)->create(['customer_code' => 'CUST-12345']))
             ->toThrow(QueryException::class);
     });
 

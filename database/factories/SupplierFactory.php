@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\CountryCode;
 use App\Enums\SupplierRating;
+use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,6 +25,7 @@ final class SupplierFactory extends Factory
         $countryCode = fake()->randomElement(CountryCode::class);
 
         return [
+            'team_id' => Team::factory(),
             'code' => 'SUP-'.fake()->unique()->numberBetween(1000, 9999),
             'company_name' => $company,
             'trade_name' => $company.' '.fake()->companySuffix(),

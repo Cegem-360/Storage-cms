@@ -23,16 +23,19 @@ use App\Http\Controllers\Api\V1\StockMovementController;
 use App\Http\Controllers\Api\V1\StockTransactionController;
 use App\Http\Controllers\Api\V1\SupplierController;
 use App\Http\Controllers\Api\V1\SupplierPriceController;
+use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WarehouseController;
+use App\Http\Middleware\EnsureUserBelongsToTeam;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
 
-Route::post('/tokens/create', function (Request $request) {
+Route::post('/tokens/create', function (Request $request): array {
     $request->validate([
         'email' => ['required', 'email'],
         'password' => ['required'],
@@ -50,12 +53,10 @@ Route::post('/tokens/create', function (Request $request) {
     return ['token' => $user->createToken($request->device_name)->plainTextToken];
 });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(function () {
+    Route::get('/user', fn (Request $request) => $request->user());
 
-    Route::delete('/tokens/revoke', function (Request $request) {
+    Route::delete('/tokens/revoke', function (Request $request): Response {
         /** @var PersonalAccessToken $token */
         $token = $request->user()->currentAccessToken();
         $token->delete();
@@ -89,6 +90,9 @@ Route::middleware('auth:sanctum')->group(function () {
             'return-deliveries' => ReturnDeliveryController::class,
             'intrastat-declarations' => IntrastatDeclarationController::class,
         ], ['only' => ['index', 'show']]);
+
+        // Super admin only
+        Route::apiResource('teams', TeamController::class);
 
         // Nested child resources
         Route::apiResource('orders.lines', OrderLineController::class)->only(['index', 'show']);

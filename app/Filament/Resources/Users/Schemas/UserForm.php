@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -25,6 +26,12 @@ final class UserForm
                 TextInput::make('password')
                     ->password()
                     ->required(),
+                Select::make('team_id')
+                    ->label('Team')
+                    ->relationship('team', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->visible(fn (): bool => auth()->user()?->is_super_admin ?? false),
                 Toggle::make('is_super_admin')
                     ->required(),
                 Toggle::make('is_active')

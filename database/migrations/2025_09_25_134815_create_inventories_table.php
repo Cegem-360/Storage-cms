@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Models\Employee;
 use App\Models\Warehouse;
+use App\Models\Team;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,8 @@ return new class() extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('inventory_number', 100)->unique();
+            $table->foreignIdFor(Team::class)->nullable()->constrained();
+            $table->string('inventory_number', 100);
             $table->foreignIdFor(Warehouse::class)->constrained();
             $table->foreignIdFor(Employee::class, 'conducted_by')->constrained();
             $table->date('inventory_date');
@@ -27,6 +29,7 @@ return new class() extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->unique(['team_id', 'inventory_number']);
             $table->index(['status']);
             $table->index(['inventory_date']);
             $table->index(['warehouse_id']);
