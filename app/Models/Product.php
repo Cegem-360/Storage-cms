@@ -100,7 +100,7 @@ final class Product extends Model
 
     public function getTotalStock(): int
     {
-        return $this->stocks()->sum('quantity');
+        return (int) $this->stocks()->sum('quantity');
     }
 
     public function calculateReorderQuantity(): int
