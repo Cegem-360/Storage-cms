@@ -54,7 +54,7 @@
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                     @forelse($orders as $order)
                         @php
-                            $daysUntil = now()->diffInDays($order->expected_delivery_date, false);
+                            $daysUntil = now()->diffInDays($order->delivery_date, false);
                             $isOverdue = $daysUntil < 0;
                             $isToday = $daysUntil === 0;
                             $isSoon = $daysUntil > 0 && $daysUntil <= 3;
@@ -72,11 +72,11 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4">
-                                <span class="text-sm text-gray-600 dark:text-gray-300">{{ $order->items->count() }} {{ __('items') }}</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-300">{{ $order->orderLines->count() }} {{ __('items') }}</span>
                             </td>
                             <td class="px-6 py-4">
                                 <span class="text-sm {{ $isOverdue ? 'text-red-600 dark:text-red-400 font-medium' : ($isToday ? 'text-amber-600 dark:text-amber-400 font-medium' : 'text-gray-600 dark:text-gray-300') }}">
-                                    {{ $order->expected_delivery_date->format('Y-m-d') }}
+                                    {{ $order->delivery_date->format('Y-m-d') }}
                                 </span>
                             </td>
                             <td class="px-6 py-4">

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Pest\Expectation;
 use Tests\TestCase;
 
 /*
@@ -30,7 +31,11 @@ pest()->extend(TestCase::class)
 | to assert different things. Of course, you may extend the Expectation API at any time.
 |
 */
-
+/** @link https://pestphp.com/docs/custom-expectations */
+expect()->extend('toBeOne', function (): Expectation {
+    /** @var Expectation<int> $this */
+    return $this->toBe(1);
+});
 /*
 |--------------------------------------------------------------------------
 | Functions

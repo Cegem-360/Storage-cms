@@ -108,7 +108,9 @@
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @foreach($group['items'] as $stock)
                             @php
-                                $unitCost = $stock->product->standard_cost ?? 0;
+                                $unitCost = $stock->unit_cost > 0
+                                    ? $stock->unit_cost
+                                    : ($stock->product?->standard_cost ?? $stock->product?->price ?? 0);
                                 $totalValue = $stock->quantity * $unitCost;
                             @endphp
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">

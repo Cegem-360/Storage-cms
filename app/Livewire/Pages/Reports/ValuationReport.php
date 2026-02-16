@@ -45,7 +45,7 @@ final class ValuationReport extends Component
                 return [
                     'name' => $warehouse?->name ?? 'Unknown',
                     'total_quantity' => $items->sum('quantity'),
-                    'total_value' => $items->sum(fn ($stock) => $stock->quantity * ($stock->product->standard_cost ?? 0)),
+                    'total_value' => $items->sum(fn (Stock $stock): float => $stock->quantity * $this->getUnitCost($stock)),
                     'items' => $items,
                 ];
             });
@@ -57,7 +57,7 @@ final class ValuationReport extends Component
             return [
                 'name' => $category?->name ?? 'Uncategorized',
                 'total_quantity' => $items->sum('quantity'),
-                'total_value' => $items->sum(fn ($stock) => $stock->quantity * ($stock->product->standard_cost ?? 0)),
+                'total_value' => $items->sum(fn (Stock $stock): float => $stock->quantity * $this->getUnitCost($stock)),
                 'items' => $items,
             ];
         });
@@ -73,7 +73,20 @@ final class ValuationReport extends Component
 
         return [
             'total_quantity' => $stocks->sum('quantity'),
-            'total_value' => $stocks->sum(fn ($stock) => $stock->quantity * ($stock->product->standard_cost ?? 0)),
+            'total_value' => $stocks->sum(fn (Stock $stock): float => $stock->quantity * $this->getUnitCost($stock)),
         ];
+    }
+
+    private function getUnitCost(Stock $stock): float
+    {
+        if ($stock->unit_cost > 0) {
+            return (float) $stock->unit_cost;
+        }
+
+        if ($stock->product?->standard_cost !== null) {
+            return (float) $stock->product->standard_cost;
+        }
+
+        return (float) ($stock->product?->price ?? 0);
     }
 }

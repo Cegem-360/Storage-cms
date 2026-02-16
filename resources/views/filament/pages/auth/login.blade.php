@@ -20,13 +20,7 @@
         </div>
     </form>
 
-    <div class="mt-10 text-center space-y-3">
-        <p class="text-sm text-gray-500">
-            {{ __("Don't have an account?") }}
-            <a href="{{ route('filament.admin.auth.register') }}" class="font-medium text-amber-600 hover:text-amber-700">
-                {{ __('Register') }}
-            </a>
-        </p>
+    <div class="mt-10 text-center">
         <p class="text-sm text-gray-400">
             <a href="#" class="hover:text-gray-600">
                 {{ __("Can't sign in? Visit the help center") }}

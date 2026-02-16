@@ -40,10 +40,10 @@ final class ExpectedArrivals extends Component
     private function getOrders(): LengthAwarePaginator
     {
         return Order::query()
-            ->with(['supplier', 'items.product'])
+            ->with(['supplier', 'orderLines.product'])
             ->where('type', OrderType::PURCHASE)
             ->whereIn('status', [OrderStatus::CONFIRMED, OrderStatus::PROCESSING])
-            ->whereNotNull('expected_delivery_date')
+            ->whereNotNull('delivery_date')
             ->when($this->search !== '', function ($query) {
                 $search = '%'.$this->search.'%';
                 $query->where(function ($q) use ($search) {
@@ -53,7 +53,7 @@ final class ExpectedArrivals extends Component
                         });
                 });
             })
-            ->orderBy('expected_delivery_date', 'asc')
+            ->orderBy('delivery_date', 'asc')
             ->paginate($this->perPage);
     }
 }

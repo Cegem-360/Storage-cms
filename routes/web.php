@@ -47,7 +47,7 @@ Route::get('/language/{locale}', function (string $locale): RedirectResponse {
 // Guest routes - redirect to Filament auth pages
 Route::middleware(['guest'])->group(function (): void {
     Route::get('/login', fn (): Redirector|RedirectResponse => to_route('filament.admin.auth.login'))->name('login');
-    Route::get('/register', fn (): Redirector|RedirectResponse => to_route('filament.admin.auth.register'))->name('register');
+    Route::get('/register', fn (): Redirector|RedirectResponse => to_route('filament.admin.auth.login'))->name('register');
 });
 
 // Authenticated dashboard routes

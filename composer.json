@@ -21,20 +21,20 @@
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^3.6",
-        "driftingly/rector-laravel": "^2.1.9",
-        "fakerphp/faker": "^1.24.1",
-        "filament/blueprint": "^2.0",
+        "barryvdh/laravel-ide-helper": "*",
+        "driftingly/rector-laravel": "*",
+        "fakerphp/faker": "*",
+        "filament/blueprint": "*",
         "laravel/boost": "*",
-        "laravel/mcp": "^0.5.5",
-        "laravel/pail": "^1.2.4",
-        "laravel/pint": "^1.27",
-        "laravel/sail": "^1.52",
-        "mockery/mockery": "^1.6.12",
-        "nunomaduro/collision": "^8.8.3",
-        "pestphp/pest": "^4.3.1",
-        "pestphp/pest-plugin-laravel": "^4.0",
-        "rector/rector": "^2.3.4"
+        "laravel/mcp": "*",
+        "laravel/pail": "*",
+        "laravel/pint": "*",
+        "laravel/sail": "*",
+        "mockery/mockery": "*",
+        "nunomaduro/collision": "*",
+        "pestphp/pest": "*",
+        "pestphp/pest-plugin-laravel": "*",
+        "rector/rector": "*"
     },
     "autoload": {
         "psr-4": {

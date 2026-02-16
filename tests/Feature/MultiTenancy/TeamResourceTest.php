@@ -10,8 +10,10 @@ use App\Models\Team;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use Pest\Plugins\Parallel\Handlers\Pest;
 
 uses(RefreshDatabase::class);
+uses(Pest::class)->in('MultiTenancy');
 
 beforeEach(function (): void {
     $this->superAdmin = User::factory()->create(['is_super_admin' => true]);

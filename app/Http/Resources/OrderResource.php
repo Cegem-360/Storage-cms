@@ -17,7 +17,7 @@ final class OrderResource extends JsonResource
             'type' => $this->type,
             'status' => $this->status,
             'order_date' => $this->order_date,
-            'expected_delivery_date' => $this->expected_delivery_date,
+            'delivery_date' => $this->delivery_date,
             'total_amount' => $this->total_amount,
             'notes' => $this->notes,
             'customer' => new CustomerResource($this->whenLoaded('customer')),
