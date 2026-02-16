@@ -30,6 +30,7 @@ final class StockFactory extends Factory
             'reserved_quantity' => 0,
             'minimum_stock' => fake()->numberBetween(5, 20),
             'maximum_stock' => fake()->numberBetween(100, 1000),
+            'unit_cost' => fake()->randomFloat(4, 0.5, 800),
             'status' => fake()->randomElement(StockStatus::class),
         ];
     }

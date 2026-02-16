@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire\Page;
 
+use App\Models\Team;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
@@ -26,18 +26,23 @@ final class SettingsPage extends Component
 
     public function mount(): void
     {
-        $this->lowStockThreshold = (int) Cache::get('settings.low_stock_threshold', 10);
-        $this->autoReorderEnabled = (bool) Cache::get('settings.auto_reorder_enabled', false);
-        $this->notificationEmail = Cache::get('settings.notification_email');
+        $team = $this->getTeam();
+        $team->load('settings');
+
+        $this->lowStockThreshold = (int) $team->getSetting('low_stock_threshold', 10);
+        $this->autoReorderEnabled = (bool) $team->getSetting('auto_reorder_enabled', false);
+        $this->notificationEmail = $team->getSetting('notification_email');
     }
 
     public function save(): void
     {
         $this->validate();
 
-        Cache::forever('settings.low_stock_threshold', $this->lowStockThreshold);
-        Cache::forever('settings.auto_reorder_enabled', $this->autoReorderEnabled);
-        Cache::forever('settings.notification_email', $this->notificationEmail);
+        $team = $this->getTeam();
+
+        $team->setSetting('low_stock_threshold', $this->lowStockThreshold);
+        $team->setSetting('auto_reorder_enabled', $this->autoReorderEnabled);
+        $team->setSetting('notification_email', $this->notificationEmail);
 
         session()->flash('success', __('Settings saved'));
     }
@@ -45,5 +50,10 @@ final class SettingsPage extends Component
     public function render(): Factory|View
     {
         return view('livewire.page.settings-page');
+    }
+
+    private function getTeam(): Team
+    {
+        return auth()->user()->team;
     }
 }

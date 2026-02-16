@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Widgets;
 
-use App\Enums\OrderStatus;
-use App\Enums\OrderType;
-use App\Models\Order;
 use App\Models\Product;
+use App\Services\AutoReorderService;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
@@ -86,29 +84,22 @@ final class OrderSuggestionWidget extends BaseWidget
                     ->icon(Heroicon::OutlinedShoppingCart)
                     ->color('primary')
                     ->action(function (Product $record): void {
-                        $order = Order::query()->create([
-                            'order_number' => 'PO-'.now()->format('Ymd').'-'.mb_str_pad((string) (Order::query()->count() + 1), 4, '0', STR_PAD_LEFT),
-                            'type' => OrderType::PURCHASE,
-                            'supplier_id' => $record->supplier_id,
-                            'status' => OrderStatus::DRAFT,
-                            'order_date' => now(),
-                            'total_amount' => 0,
-                        ]);
+                        $team = auth()->user()->team;
+                        $order = app(AutoReorderService::class)->createDraftOrder($record, $team);
 
-                        $order->orderLines()->create([
-                            'product_id' => $record->id,
-                            'quantity' => $record->calculateReorderQuantity(),
-                            'unit_price' => $record->standard_cost ?? $record->price ?? 0,
-                            'discount_percent' => 0,
-                        ]);
-
-                        $order->refreshTotal();
-
-                        Notification::make()
-                            ->title(__('Order created'))
-                            ->body(__('Draft purchase order created for').' '.$record->name)
-                            ->success()
-                            ->send();
+                        if ($order) {
+                            Notification::make()
+                                ->title(__('Order created'))
+                                ->body(__('Draft purchase order created for').' '.$record->name)
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title(__('Order not created'))
+                                ->body(__('A purchase order already exists or supplier is missing for').' '.$record->name)
+                                ->warning()
+                                ->send();
+                        }
                     }),
             ])
             ->paginated([5, 10, 25])

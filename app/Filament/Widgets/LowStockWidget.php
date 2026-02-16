@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\Stock;
+use App\Models\Team;
+use App\Models\User;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -27,11 +29,25 @@ final class LowStockWidget extends BaseWidget
     #[Override]
     public function table(Table $table): Table
     {
+        $teamThreshold = $this->getTeamThreshold();
+
         return $table
             ->query(
                 Stock::query()
                     ->with(['product', 'warehouse'])
-                    ->whereColumn('quantity', '<=', 'minimum_stock')
+                    ->where(function ($query) use ($teamThreshold): void {
+                        $query->where(function ($q): void {
+                            $q->where('minimum_stock', '>', 0)
+                                ->whereColumn('quantity', '<=', 'minimum_stock');
+                        });
+
+                        if ($teamThreshold > 0) {
+                            $query->orWhere(function ($q) use ($teamThreshold): void {
+                                $q->where('minimum_stock', 0)
+                                    ->where('quantity', '<=', $teamThreshold);
+                            });
+                        }
+                    })
                     ->orderBy('quantity')
                     ->limit(10)
             )
@@ -70,7 +86,13 @@ final class LowStockWidget extends BaseWidget
 
                 TextColumn::make('difference')
                     ->label('Shortage')
-                    ->state(fn (Stock $record): int => $record->minimum_stock - $record->quantity)
+                    ->state(function (Stock $record) use ($teamThreshold): int {
+                        $minimum = $record->minimum_stock > 0
+                            ? $record->minimum_stock
+                            : $teamThreshold;
+
+                        return $minimum - $record->quantity;
+                    })
                     ->numeric()
                     ->color('danger')
                     ->prefix('-'),
@@ -79,5 +101,19 @@ final class LowStockWidget extends BaseWidget
             ->emptyStateHeading(__('No low stock alerts'))
             ->emptyStateDescription(__('All products are above minimum stock levels.'))
             ->emptyStateIcon(Heroicon::OutlinedCheckCircle);
+    }
+
+    private function getTeamThreshold(): int
+    {
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        if (! $user?->team_id) {
+            return 0;
+        }
+
+        $team = Team::query()->with('settings')->find($user->team_id);
+
+        return (int) $team?->getSetting('low_stock_threshold', 0);
     }
 }

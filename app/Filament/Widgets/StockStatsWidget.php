@@ -9,6 +9,8 @@ use App\Enums\OrderType;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Team;
+use App\Models\User;
 use Filament\Support\Icons\Heroicon;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -22,9 +24,25 @@ final class StockStatsWidget extends StatsOverviewWidget
     #[Override]
     protected function getStats(): array
     {
+        $teamThreshold = $this->getTeamThreshold();
+
         $totalProducts = Product::query()->count();
         $totalStock = (int) Stock::query()->sum('quantity');
-        $lowStockCount = Stock::query()->whereColumn('quantity', '<=', 'minimum_stock')->count();
+        $lowStockCount = Stock::query()
+            ->where(function ($query) use ($teamThreshold): void {
+                $query->where(function ($q): void {
+                    $q->where('minimum_stock', '>', 0)
+                        ->whereColumn('quantity', '<=', 'minimum_stock');
+                });
+
+                if ($teamThreshold > 0) {
+                    $query->orWhere(function ($q) use ($teamThreshold): void {
+                        $q->where('minimum_stock', 0)
+                            ->where('quantity', '<=', $teamThreshold);
+                    });
+                }
+            })
+            ->count();
         $pendingOrders = Order::query()->where('type', OrderType::PURCHASE)
             ->whereIn('status', [OrderStatus::CONFIRMED, OrderStatus::PROCESSING, OrderStatus::SHIPPED])
             ->count();
@@ -80,5 +98,19 @@ final class StockStatsWidget extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedArrowPath)
                 ->color($needReorder > 0 ? 'warning' : 'success'),
         ];
+    }
+
+    private function getTeamThreshold(): int
+    {
+        /** @var User|null $user */
+        $user = auth()->user();
+
+        if (! $user?->team_id) {
+            return 0;
+        }
+
+        $team = Team::query()->with('settings')->find($user->team_id);
+
+        return (int) $team?->getSetting('low_stock_threshold', 0);
     }
 }

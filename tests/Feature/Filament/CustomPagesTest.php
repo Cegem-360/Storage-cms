@@ -13,10 +13,11 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Supplier;
+use App\Models\Team;
+use App\Models\TeamSetting;
 use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Cache;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
@@ -32,10 +33,12 @@ describe('Settings page', function (): void {
             ->assertOk();
     });
 
-    it('loads existing settings from cache', function (): void {
-        Cache::forever('settings.low_stock_threshold', 25);
-        Cache::forever('settings.auto_reorder_enabled', true);
-        Cache::forever('settings.notification_email', 'alerts@example.com');
+    it('loads existing settings from database', function (): void {
+        $team = $this->user->team;
+
+        TeamSetting::factory()->for($team)->create(['key' => 'low_stock_threshold', 'value' => '25']);
+        TeamSetting::factory()->for($team)->create(['key' => 'auto_reorder_enabled', 'value' => '1']);
+        TeamSetting::factory()->for($team)->create(['key' => 'notification_email', 'value' => 'alerts@example.com']);
 
         Livewire::test(Settings::class)
             ->assertOk()
@@ -56,9 +59,29 @@ describe('Settings page', function (): void {
             ->call('save')
             ->assertNotified();
 
-        expect((int) Cache::get('settings.low_stock_threshold'))->toBe(15)
-            ->and(Cache::get('settings.auto_reorder_enabled'))->toBeTrue()
-            ->and(Cache::get('settings.notification_email'))->toBe('test@example.com');
+        $team = $this->user->team;
+        $team->load('settings');
+
+        expect($team->getSetting('low_stock_threshold'))->toBe('15')
+            ->and($team->getSetting('auto_reorder_enabled'))->toBe('1')
+            ->and($team->getSetting('notification_email'))->toBe('test@example.com');
+    });
+
+    it('scopes settings per team', function (): void {
+        $otherTeam = Team::factory()->create();
+        $otherTeam->setSetting('low_stock_threshold', '99');
+
+        $team = $this->user->team;
+        $team->setSetting('low_stock_threshold', '20');
+
+        Livewire::test(Settings::class)
+            ->assertOk()
+            ->assertFormSet([
+                'low_stock_threshold' => 20,
+            ]);
+
+        $otherTeam->load('settings');
+        expect($otherTeam->getSetting('low_stock_threshold'))->toBe('99');
     });
 
     it('validates low stock threshold is required', function (): void {

@@ -46,6 +46,7 @@ final class ProductFactory extends Factory
             'max_stock' => fake()->numberBetween(100, 500),
             'reorder_point' => fake()->numberBetween(10, 50),
             'price' => fake()->randomFloat(2, 1, 1000),
+            'standard_cost' => fake()->randomFloat(4, 0.5, 800),
             'status' => fake()->randomElement(ProductStatus::class),
         ];
     }

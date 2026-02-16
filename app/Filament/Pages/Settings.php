@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages;
 
+use App\Models\Team;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
@@ -13,7 +14,6 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Support\Facades\Cache;
 use Override;
 
 final class Settings extends Page
@@ -45,11 +45,13 @@ final class Settings extends Page
 
     public function mount(): void
     {
+        $team = $this->getTeam();
+        $team->load('settings');
+
         $this->form->fill([
-            'low_stock_threshold' => Cache::get('settings.low_stock_threshold', 10),
-            'auto_reorder_enabled' => Cache::get('settings.auto_reorder_enabled', false),
-            'default_warehouse_id' => Cache::get('settings.default_warehouse_id'),
-            'notification_email' => Cache::get('settings.notification_email'),
+            'low_stock_threshold' => $team->getSetting('low_stock_threshold', 10),
+            'auto_reorder_enabled' => (bool) $team->getSetting('auto_reorder_enabled', false),
+            'notification_email' => $team->getSetting('notification_email'),
         ]);
     }
 
@@ -90,10 +92,11 @@ final class Settings extends Page
     public function save(): void
     {
         $data = $this->form->getState();
+        $team = $this->getTeam();
 
-        Cache::forever('settings.low_stock_threshold', $data['low_stock_threshold']);
-        Cache::forever('settings.auto_reorder_enabled', $data['auto_reorder_enabled']);
-        Cache::forever('settings.notification_email', $data['notification_email']);
+        $team->setSetting('low_stock_threshold', $data['low_stock_threshold']);
+        $team->setSetting('auto_reorder_enabled', $data['auto_reorder_enabled']);
+        $team->setSetting('notification_email', $data['notification_email']);
 
         Notification::make()
             ->success()
@@ -110,5 +113,10 @@ final class Settings extends Page
                 ->action('save')
                 ->icon(Heroicon::Check),
         ];
+    }
+
+    private function getTeam(): Team
+    {
+        return auth()->user()->team;
     }
 }

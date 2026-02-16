@@ -29,6 +29,26 @@ final class Team extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function settings(): HasMany
+    {
+        return $this->hasMany(TeamSetting::class);
+    }
+
+    public function getSetting(string $key, mixed $default = null): mixed
+    {
+        return $this->settings->firstWhere('key', $key)?->value ?? $default;
+    }
+
+    public function setSetting(string $key, mixed $value): void
+    {
+        $this->settings()->updateOrCreate(
+            ['key' => $key],
+            ['value' => $value],
+        );
+
+        $this->unsetRelation('settings');
+    }
+
     /**
      * @return array<string, string>
      */
