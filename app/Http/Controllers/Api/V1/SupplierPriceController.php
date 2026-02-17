@@ -19,7 +19,7 @@ final class SupplierPriceController extends Controller
             ->when($request->filled('product_id'), fn ($q) => $q->where('product_id', $request->integer('product_id')))
             ->when($request->filled('supplier_id'), fn ($q) => $q->where('supplier_id', $request->integer('supplier_id')))
             ->when($request->filled('is_active'), fn ($q) => $q->where('is_active', $request->boolean('is_active')))
-            ->with(['product', 'supplier'])
+            ->with(['product', 'supplier', 'tiers'])
             ->paginate($request->integer('per_page', 15));
 
         return SupplierPriceResource::collection($supplierPrices);

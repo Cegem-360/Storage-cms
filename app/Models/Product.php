@@ -83,7 +83,7 @@ final class Product extends Model
                 $query->whereNull('valid_until')
                     ->orWhere('valid_until', '>=', now());
             })
-            ->with('supplier')
+            ->with(['supplier', 'tiers'])
             ->get();
     }
 

@@ -8,6 +8,7 @@ use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Override;
 
 final class SupplierPrice extends Model
@@ -57,6 +58,26 @@ final class SupplierPrice extends Model
     public function isCurrentlyValid(): bool
     {
         return $this->isValidAt();
+    }
+
+    public function tiers(): HasMany
+    {
+        return $this->hasMany(SupplierPriceTier::class);
+    }
+
+    public function getPriceForQuantity(int $quantity): string
+    {
+        $tier = $this->tiers
+            ->sortByDesc('min_quantity')
+            ->first(function (SupplierPriceTier $tier) use ($quantity): bool {
+                if ($quantity < $tier->min_quantity) {
+                    return false;
+                }
+
+                return $tier->max_quantity === null || $quantity <= $tier->max_quantity;
+            });
+
+        return $tier?->price ?? $this->price;
     }
 
     #[Override]

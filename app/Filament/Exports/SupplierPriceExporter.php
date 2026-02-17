@@ -37,7 +37,7 @@ final class SupplierPriceExporter extends Exporter
             ExportColumn::make('valid_from')
                 ->label('Érvényes ettől'),
 
-            ExportColumn::make('valid_to')
+            ExportColumn::make('valid_until')
                 ->label('Érvényes eddig'),
         ];
     }

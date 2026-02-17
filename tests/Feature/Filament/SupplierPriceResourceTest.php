@@ -9,6 +9,7 @@ use App\Filament\Resources\SupplierPrices\Pages\ViewSupplierPrice;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\SupplierPrice;
+use App\Models\SupplierPriceTier;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;

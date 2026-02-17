@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\SupplierPrice;
+use App\Models\SupplierPriceTier;
 
 uses()->group('price-management');
 
@@ -139,4 +140,99 @@ test('product with different supplier prices shows correct values', function ():
         ->and((float) $priceA->price)->toBe(3.0)
         ->and($priceB->supplier->company_name)->toBe('B Szállító')
         ->and((float) $priceB->price)->toBe(2.5);
+});
+
+describe('Quantity Discount Tiers', function (): void {
+    it('can create tiers for a supplier price', function (): void {
+        $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 1,
+            'max_quantity' => 10,
+            'price' => 500.0000,
+        ]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 11,
+            'max_quantity' => 50,
+            'price' => 450.0000,
+        ]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 51,
+            'max_quantity' => null,
+            'price' => 400.0000,
+        ]);
+
+        expect($supplierPrice->tiers)->toHaveCount(3);
+    });
+
+    it('returns correct tier price for quantity', function (): void {
+        $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 1,
+            'max_quantity' => 10,
+            'price' => 500.0000,
+        ]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 11,
+            'max_quantity' => 50,
+            'price' => 450.0000,
+        ]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 51,
+            'max_quantity' => null,
+            'price' => 400.0000,
+        ]);
+
+        expect($supplierPrice->getPriceForQuantity(5))->toBe('500.0000')
+            ->and($supplierPrice->getPriceForQuantity(10))->toBe('500.0000')
+            ->and($supplierPrice->getPriceForQuantity(11))->toBe('450.0000')
+            ->and($supplierPrice->getPriceForQuantity(25))->toBe('450.0000')
+            ->and($supplierPrice->getPriceForQuantity(51))->toBe('400.0000')
+            ->and($supplierPrice->getPriceForQuantity(100))->toBe('400.0000');
+    });
+
+    it('returns base price when no tiers exist', function (): void {
+        $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
+
+        expect($supplierPrice->getPriceForQuantity(10))->toBe('500.0000');
+    });
+
+    it('returns base price when quantity does not match any tier', function (): void {
+        $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 10,
+            'max_quantity' => 50,
+            'price' => 450.0000,
+        ]);
+
+        expect($supplierPrice->getPriceForQuantity(5))->toBe('500.0000');
+    });
+
+    it('cascades delete when supplier price is deleted', function (): void {
+        $supplierPrice = SupplierPrice::factory()->create();
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 1,
+            'max_quantity' => 10,
+            'price' => 100.0000,
+        ]);
+
+        $supplierPrice->delete();
+
+        expect(SupplierPriceTier::query()->where('supplier_price_id', $supplierPrice->id)->count())->toBe(0);
+    });
 });

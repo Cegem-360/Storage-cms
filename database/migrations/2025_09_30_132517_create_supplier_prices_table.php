@@ -34,10 +34,23 @@ return new class() extends Migration
             $table->index(['supplier_id', 'is_active']);
             $table->index(['valid_from', 'valid_until']);
         });
+
+        Schema::create('supplier_price_tiers', function (Blueprint $table): void {
+            $table->id();
+            $table->foreignId('supplier_price_id')->constrained()->cascadeOnDelete();
+            $table->integer('min_quantity');
+            $table->integer('max_quantity')->nullable();
+            $table->decimal('price', 15, 4);
+            $table->timestamps();
+
+            $table->unique(['supplier_price_id', 'min_quantity']);
+            $table->index(['supplier_price_id', 'min_quantity', 'max_quantity'], 'spt_price_qty_index');
+        });
     }
 
     public function down(): void
     {
+        Schema::dropIfExists('supplier_price_tiers');
         Schema::dropIfExists('supplier_prices');
     }
 };

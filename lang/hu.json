@@ -719,5 +719,9 @@
     "Monthly Token Limit": "Havi token korlát",
     "Maximum number of AI tokens per month. Set to 0 for unlimited.": "Maximális AI tokenek havonta. Állítsd 0-ra a korlátlan használathoz.",
     "Current Month Usage": "Aktuális havi használat",
-    "Unlimited": "Korlátlan"
+    "Unlimited": "Korlátlan",
+    "Quantity Discount Tiers": "Mennyiségi kedvezmény sávok",
+    "Min. Quantity": "Min. mennyiség",
+    "Max. Quantity": "Max. mennyiség",
+    "Tiers": "Sávok"
 }

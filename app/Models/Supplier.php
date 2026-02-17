@@ -51,6 +51,11 @@ final class Supplier extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function supplierPrices(): HasMany
+    {
+        return $this->hasMany(SupplierPrice::class);
+    }
+
     public function hasCertification(string $type): bool
     {
         // TODO: Implement certification check

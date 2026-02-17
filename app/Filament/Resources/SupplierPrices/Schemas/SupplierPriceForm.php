@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\SupplierPrices\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -18,56 +19,87 @@ final class SupplierPriceForm
     {
         return $schema
             ->components([
-                Section::make('Price Information')
+                Section::make(__('Price Information'))
                     ->schema([
                         Select::make('supplier_id')
-                            ->label('Supplier')
+                            ->label(__('Supplier'))
                             ->relationship('supplier', 'company_name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('product_id')
-                            ->label('Product')
+                            ->label(__('Product'))
                             ->relationship('product', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         TextInput::make('price')
-                            ->label('Price')
+                            ->label(__('Price'))
                             ->numeric()
                             ->required()
                             ->prefix('HUF'),
                         TextInput::make('currency')
-                            ->label('Currency')
+                            ->label(__('Currency'))
                             ->default('HUF')
                             ->required()
                             ->maxLength(3),
                         TextInput::make('minimum_order_quantity')
-                            ->label('Min. Order Quantity')
+                            ->label(__('Min. Order Quantity'))
                             ->numeric()
                             ->default(1)
                             ->minValue(1),
                         TextInput::make('lead_time_days')
-                            ->label('Lead Time')
+                            ->label(__('Lead Time'))
                             ->numeric()
                             ->suffix(__('days')),
                     ])
                     ->columns(2),
 
-                Section::make('Validity')
+                Section::make(__('Validity'))
                     ->schema([
                         DatePicker::make('valid_from')
-                            ->label('Valid From'),
+                            ->label(__('Valid From')),
                         DatePicker::make('valid_until')
-                            ->label('Valid Until'),
+                            ->label(__('Valid Until')),
                         Toggle::make('is_active')
-                            ->label('Active')
+                            ->label(__('Active'))
                             ->default(true),
                         Textarea::make('notes')
-                            ->label('Notes')
+                            ->label(__('Notes'))
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
+
+                Section::make(__('Quantity Discount Tiers'))
+                    ->schema([
+                        Repeater::make('tiers')
+                            ->label('')
+                            ->relationship()
+                            ->schema([
+                                TextInput::make('min_quantity')
+                                    ->label(__('Min. Quantity'))
+                                    ->numeric()
+                                    ->required()
+                                    ->minValue(1),
+                                TextInput::make('max_quantity')
+                                    ->label(__('Max. Quantity'))
+                                    ->numeric()
+                                    ->nullable(),
+                                TextInput::make('price')
+                                    ->label(__('Price'))
+                                    ->numeric()
+                                    ->required()
+                                    ->prefix('HUF'),
+                            ])
+                            ->columns(3)
+                            ->defaultItems(0)
+                            ->reorderable(false)
+                            ->collapsible()
+                            ->itemLabel(fn (array $state): ?string => isset($state['min_quantity'], $state['price'])
+                                ? "{$state['min_quantity']}+ ".__('pcs')." → {$state['price']} HUF"
+                                : null
+                            ),
+                    ]),
             ]);
     }
 }

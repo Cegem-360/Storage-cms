@@ -56,6 +56,12 @@ final class SupplierPricesTable
                     ->date()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('tiers_count')
+                    ->label(__('Tiers'))
+                    ->counts('tiers')
+                    ->badge()
+                    ->sortable()
+                    ->toggleable(),
                 IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean()

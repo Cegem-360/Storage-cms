@@ -678,5 +678,9 @@
     "Monthly Token Limit": "Monthly Token Limit",
     "Maximum number of AI tokens per month. Set to 0 for unlimited.": "Maximum number of AI tokens per month. Set to 0 for unlimited.",
     "Current Month Usage": "Current Month Usage",
-    "Unlimited": "Unlimited"
+    "Unlimited": "Unlimited",
+    "Quantity Discount Tiers": "Quantity Discount Tiers",
+    "Min. Quantity": "Min. Quantity",
+    "Max. Quantity": "Max. Quantity",
+    "Tiers": "Tiers"
 }
