@@ -87,8 +87,12 @@ final class UsersTable
                     ->falseLabel(__('Inactive only')),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (User $record): string => route('dashboard.users.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (User $record): string => route('filament.admin.resources.users.edit', $record))
+                    ->url(fn (User $record): string => route('dashboard.users.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

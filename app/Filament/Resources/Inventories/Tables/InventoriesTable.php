@@ -89,7 +89,7 @@ final class InventoriesTable
             ])
             ->recordActions([
                 Action::make('edit')
-                    ->url(fn (Inventory $record): string => route('filament.admin.resources.inventories.edit', $record))
+                    ->url(fn (Inventory $record): string => route('dashboard.inventories.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

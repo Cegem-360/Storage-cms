@@ -79,8 +79,12 @@ final class CategoriesTable
                     ->sortable(),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Category $record): string => route('dashboard.categories.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Category $record): string => route('filament.admin.resources.categories.edit', $record))
+                    ->url(fn (Category $record): string => route('dashboard.categories.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

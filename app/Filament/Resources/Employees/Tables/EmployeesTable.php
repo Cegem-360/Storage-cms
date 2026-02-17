@@ -107,8 +107,12 @@ final class EmployeesTable
                     ->falseLabel(__('Inactive only')),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Employee $record): string => route('dashboard.employees.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Employee $record): string => route('filament.admin.resources.employees.edit', $record))
+                    ->url(fn (Employee $record): string => route('dashboard.employees.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

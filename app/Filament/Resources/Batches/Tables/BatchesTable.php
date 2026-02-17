@@ -99,7 +99,7 @@ final class BatchesTable
             ])
             ->recordActions([
                 Action::make('edit')
-                    ->url(fn (Batch $record): string => route('filament.admin.resources.batches.edit', $record))
+                    ->url(fn (Batch $record): string => route('dashboard.batches.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

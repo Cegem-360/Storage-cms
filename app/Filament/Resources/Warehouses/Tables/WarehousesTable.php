@@ -87,8 +87,12 @@ final class WarehousesTable
                     ->sortable(),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Warehouse $record): string => route('dashboard.warehouses.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Warehouse $record): string => route('filament.admin.resources.warehouses.edit', $record))
+                    ->url(fn (Warehouse $record): string => route('dashboard.warehouses.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

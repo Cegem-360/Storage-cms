@@ -99,7 +99,7 @@ final class CnCodesTable
             ])
             ->recordActions([
                 Action::make('edit')
-                    ->url(fn (CnCode $record): string => route('filament.admin.resources.cn-codes.edit', $record))
+                    ->url(fn (CnCode $record): string => route('dashboard.cn-codes.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

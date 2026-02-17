@@ -105,8 +105,12 @@ final class OrdersTable
                         ->toArray()),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Order $record): string => route('dashboard.orders.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Order $record): string => route('filament.admin.resources.orders.edit', $record))
+                    ->url(fn (Order $record): string => route('dashboard.orders.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

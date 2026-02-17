@@ -90,8 +90,12 @@ final class CustomersTable
                     ->badge(),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Customer $record): string => route('dashboard.customers.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Customer $record): string => route('filament.admin.resources.customers.edit', $record))
+                    ->url(fn (Customer $record): string => route('dashboard.customers.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

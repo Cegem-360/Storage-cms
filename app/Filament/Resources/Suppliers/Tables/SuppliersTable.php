@@ -102,8 +102,12 @@ final class SuppliersTable
                     ->sortable(),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Supplier $record): string => route('dashboard.suppliers.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Supplier $record): string => route('filament.admin.resources.suppliers.edit', $record))
+                    ->url(fn (Supplier $record): string => route('dashboard.suppliers.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

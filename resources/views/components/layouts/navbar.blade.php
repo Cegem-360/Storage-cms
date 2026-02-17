@@ -6,7 +6,7 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
                     <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="{{ config('app.name') }}"
                         class="h-10">
-                    <span class="text-sm font-semibold text-amber-600">Beszerzés</span>
+                    <span class="text-sm font-semibold text-amber-600">{{ __('Procurement') }}</span>
                 </a>
             </div>
 
@@ -15,25 +15,25 @@
                 {{-- Features --}}
                 <a href="#funkciok"
                     class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                    Funkciók
+                    {{ __('Functions') }}
                 </a>
 
                 {{-- Integrations --}}
                 <a href="#integraciok"
                     class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                    Integrációk
+                    {{ __('Integrations') }}
                 </a>
 
                 {{-- Pricing --}}
                 <a href="#arak"
                     class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                    Árak
+                    {{ __('Pricing') }}
                 </a>
 
                 {{-- FAQ --}}
                 <a href="#gyik"
                     class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                    GYIK
+                    {{ __('FAQ') }}
                 </a>
             </div>
 
@@ -44,14 +44,14 @@
 
                 @guest
                     {{-- Log in --}}
-                    <a href="/admin/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                        Bejelentkezés
+                    <a href="{{ route('filament.admin.auth.login') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                        {{ __('Login') }}
                     </a>
 
                     {{-- Get Started (filled) --}}
-                    <a href="/admin/register"
+                    <a href="https://cegem360.eu/admin/register"
                         class="inline-flex items-center gap-1 px-5 py-2 text-sm font-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors">
-                        Ingyenes próba
+                        {{ __('Free Trial') }}
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -61,9 +61,9 @@
 
                 @auth
                     {{-- Dashboard link --}}
-                    <a href="{{ route('filament.admin.pages.dashboard') }}"
+                    <a href="{{ route('dashboard') }}"
                         class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                        Dashboard
+                        {{ __('Dashboard') }}
                     </a>
 
                     {{-- User dropdown --}}
@@ -90,7 +90,7 @@
                                 @csrf
                                 <button type="submit"
                                     class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                    Kijelentkezés
+                                    {{ __('Logout') }}
                                 </button>
                             </form>
                         </div>
@@ -133,19 +133,19 @@
             <hr class="border-gray-200">
 
             @guest
-                <a href="/admin/login" class="block py-2 text-sm font-medium text-gray-700">Bejelentkezés</a>
-                <a href="/admin/register"
+                <a href="{{ route('filament.admin.auth.login') }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Login') }}</a>
+                <a href="https://cegem360.eu/admin/register"
                     class="block w-full text-center py-2.5 text-sm font-medium text-white bg-amber-600 rounded-full">
-                    Ingyenes próba
+                    {{ __('Free Trial') }}
                 </a>
             @endguest
 
             @auth
-                <a href="{{ route('filament.admin.pages.dashboard') }}" class="block py-2 text-sm font-medium text-gray-700">Dashboard</a>
+                <a href="{{ route('dashboard') }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Dashboard') }}</a>
                 <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                     @csrf
                     <button type="submit" class="block w-full text-left py-2 text-sm font-medium text-red-600">
-                        Kijelentkezés
+                        {{ __('Logout') }}
                     </button>
                 </form>
             @endauth

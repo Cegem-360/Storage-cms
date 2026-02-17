@@ -127,8 +127,12 @@ final class StocksTable
                     ),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Stock $record): string => route('dashboard.stocks.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Stock $record): string => route('filament.admin.resources.stocks.edit', $record))
+                    ->url(fn (Stock $record): string => route('dashboard.stocks.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

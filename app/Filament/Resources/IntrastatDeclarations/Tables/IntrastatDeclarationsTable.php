@@ -135,7 +135,7 @@ final class IntrastatDeclarationsTable
             ])
             ->recordActions([
                 Action::make('edit')
-                    ->url(fn (IntrastatDeclaration $record): string => route('filament.admin.resources.intrastat-declarations.edit', $record))
+                    ->url(fn (IntrastatDeclaration $record): string => route('dashboard.intrastat-declarations.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

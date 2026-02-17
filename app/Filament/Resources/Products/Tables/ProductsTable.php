@@ -138,8 +138,12 @@ final class ProductsTable
                     ->options(ProductStatus::class),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Product $record): string => route('dashboard.products.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Product $record): string => route('filament.admin.resources.products.edit', $record))
+                    ->url(fn (Product $record): string => route('dashboard.products.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

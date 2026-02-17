@@ -89,8 +89,12 @@ final class ReceiptsTable
                     ->sortable(),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (Receipt $record): string => route('dashboard.receipts.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (Receipt $record): string => route('filament.admin.resources.receipts.edit', $record))
+                    ->url(fn (Receipt $record): string => route('dashboard.receipts.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])

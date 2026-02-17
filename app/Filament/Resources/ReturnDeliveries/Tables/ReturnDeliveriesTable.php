@@ -138,8 +138,12 @@ final class ReturnDeliveriesTable
                     ->options(ReturnStatus::class),
             ])
             ->recordActions([
+                Action::make('view')
+                    ->url(fn (ReturnDelivery $record): string => route('dashboard.return-deliveries.view', $record))
+                    ->icon(Heroicon::Eye)
+                    ->color('gray'),
                 Action::make('edit')
-                    ->url(fn (ReturnDelivery $record): string => route('filament.admin.resources.return-deliveries.edit', $record))
+                    ->url(fn (ReturnDelivery $record): string => route('dashboard.return-deliveries.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),
             ])
