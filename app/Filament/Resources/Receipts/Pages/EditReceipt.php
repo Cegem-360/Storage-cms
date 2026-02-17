@@ -32,7 +32,7 @@ final class EditReceipt extends EditRecord
                 ->requiresConfirmation()
                 ->modalHeading(__('Generate Billingo Invoice'))
                 ->modalDescription(__('This will create an invoice in Billingo for this receipt.'))
-                ->visible(fn () => $this->record->status === ReceiptStatus::COMPLETED
+                ->visible(fn (): bool => $this->record->status === ReceiptStatus::COMPLETED
                     && (bool) auth()->user()->team->getSetting('billingo_enabled', false))
                 ->action(function (BillingoService $billingoService): void {
                     $result = $billingoService->createInvoiceFromReceipt(

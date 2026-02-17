@@ -8,12 +8,14 @@
     "nightwatch_mcp": false,
     "packages": [
         "filament/filament",
-        "filament/blueprint"
+        "filament/blueprint",
+        "laravel/ai"
     ],
     "sail": false,
     "skills": [
         "mcp-development",
         "pest-testing",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "developing-with-ai-sdk"
     ]
 }

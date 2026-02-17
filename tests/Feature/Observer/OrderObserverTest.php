@@ -16,9 +16,7 @@ it('dispatches OrderDelivered event when order status changes to delivered', fun
 
     $order->update(['status' => OrderStatus::DELIVERED]);
 
-    Event::assertDispatched(OrderDelivered::class, function (OrderDelivered $event) use ($order): bool {
-        return $event->order->is($order);
-    });
+    Event::assertDispatched(OrderDelivered::class, fn (OrderDelivered $event): bool => $event->order->is($order));
 });
 
 it('does not dispatch OrderDelivered event for non-delivered status changes', function (): void {
@@ -54,7 +52,5 @@ it('dispatches OrderDelivered event for sales orders too', function (): void {
 
     $order->update(['status' => OrderStatus::DELIVERED]);
 
-    Event::assertDispatched(OrderDelivered::class, function (OrderDelivered $event) use ($order): bool {
-        return $event->order->is($order);
-    });
+    Event::assertDispatched(OrderDelivered::class, fn (OrderDelivered $event): bool => $event->order->is($order));
 });

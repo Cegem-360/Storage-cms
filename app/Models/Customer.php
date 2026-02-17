@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class Customer extends Model
 {
@@ -47,6 +48,7 @@ final class Customer extends Model
         $this->increment('balance', $amount);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

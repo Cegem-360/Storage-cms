@@ -7,11 +7,13 @@ namespace App\Filament\Resources\Employees\Pages;
 use App\Filament\Resources\Employees\EmployeeResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Override;
 
 final class ViewEmployee extends ViewRecord
 {
     protected static string $resource = EmployeeResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

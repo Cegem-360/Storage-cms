@@ -19,7 +19,7 @@ final class TeamFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name) . '-' . Str::random(5),
+            'slug' => Str::slug($name).'-'.Str::random(5),
             'is_active' => true,
         ];
     }

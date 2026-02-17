@@ -3,5 +3,5 @@
     'subtitle' => $this->record->name,
     'backUrl' => route('dashboard.products'),
     'editUrl' => route('dashboard.products.edit', $this->record),
-    'headerActions' => $this->generateBarcodeAction . $this->printLabelAction,
+    'headerActions' => [$this->generateBarcodeAction, $this->printLabelAction],
 ])

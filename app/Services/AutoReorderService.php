@@ -30,7 +30,7 @@ final class AutoReorderService
 
         $order = Order::query()->create([
             'team_id' => $team->id,
-            'order_number' => 'PO-'.now()->format('Ymd').'-'.mb_str_pad((string) (Order::withoutGlobalScopes()->count() + 1), 4, '0', STR_PAD_LEFT),
+            'order_number' => 'PO-'.now()->format('Ymd').'-'.mb_str_pad((string) (Order::query()->withoutGlobalScopes()->count() + 1), 4, '0', STR_PAD_LEFT),
             'type' => OrderType::PURCHASE,
             'supplier_id' => $product->supplier_id,
             'status' => OrderStatus::DRAFT,

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Override;
 
 final class Inventory extends Model
 {
@@ -111,6 +112,7 @@ final class Inventory extends Model
         });
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

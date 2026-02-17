@@ -40,7 +40,7 @@ final class BillingoService
             ];
         }
 
-        $items = $receipt->receiptLines->map(fn ($line) => [
+        $items = $receipt->receiptLines->map(fn ($line): array => [
             'name' => $line->product?->name ?? __('Product'),
             'unit_price' => (float) $line->unit_price,
             'unit_price_type' => 'gross',

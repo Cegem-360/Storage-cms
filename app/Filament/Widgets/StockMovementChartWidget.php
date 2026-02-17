@@ -6,7 +6,8 @@ namespace App\Filament\Widgets;
 
 use App\Models\StockMovement;
 use Filament\Widgets\ChartWidget;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
+use Override;
 
 final class StockMovementChartWidget extends ChartWidget
 {
@@ -16,11 +17,13 @@ final class StockMovementChartWidget extends ChartWidget
 
     protected ?string $maxHeight = '300px';
 
+    #[Override]
     public function getHeading(): ?string
     {
         return __('Stock Movements (Last 30 Days)');
     }
 
+    #[Override]
     protected function getData(): array
     {
         $inboundData = [];
@@ -28,14 +31,14 @@ final class StockMovementChartWidget extends ChartWidget
         $labels = [];
 
         for ($i = 29; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i);
+            $date = Date::now()->subDays($i);
             $labels[] = $date->format('M d');
 
-            $inboundData[] = StockMovement::whereDate('created_at', $date)
+            $inboundData[] = StockMovement::query()->whereDate('created_at', $date)
                 ->where('quantity', '>', 0)
                 ->sum('quantity');
 
-            $outboundData[] = abs(StockMovement::whereDate('created_at', $date)
+            $outboundData[] = abs(StockMovement::query()->whereDate('created_at', $date)
                 ->where('quantity', '<', 0)
                 ->sum('quantity'));
         }
@@ -66,6 +69,7 @@ final class StockMovementChartWidget extends ChartWidget
         return 'line';
     }
 
+    #[Override]
     protected function getOptions(): array
     {
         return [

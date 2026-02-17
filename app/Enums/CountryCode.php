@@ -256,7 +256,7 @@ enum CountryCode: string implements HasLabel
 
     public static function euMembers(): array
     {
-        return array_filter(self::cases(), fn ($country) => $country->isEuMember());
+        return array_filter(self::cases(), fn (CountryCode $country): bool => $country->isEuMember());
     }
 
     public static function fromAddress(array|string|null $address): ?self

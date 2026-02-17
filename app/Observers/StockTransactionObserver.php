@@ -21,6 +21,6 @@ final class StockTransactionObserver
             return;
         }
 
-        InboundStockReceived::dispatch($stockTransaction);
+        event(new InboundStockReceived($stockTransaction));
     }
 }

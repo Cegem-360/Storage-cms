@@ -8,6 +8,7 @@ use App\Models\CnCode;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Override;
 
 final class CnCodeImport extends Importer
 {
@@ -36,16 +37,17 @@ final class CnCodeImport extends Importer
     {
         $body = 'CN kódok importálása befejeződött. '.number_format($import->successful_rows).' sor sikeresen importálva.';
 
-        if ($failedRowsCount = $import->getFailedRowsCount()) {
+        if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
             $body .= ' '.number_format($failedRowsCount).' sor sikertelen.';
         }
 
         return $body;
     }
 
+    #[Override]
     public function resolveRecord(): ?CnCode
     {
-        return CnCode::firstOrNew([
+        return CnCode::query()->firstOrNew([
             'code' => $this->data['code'],
         ]);
     }

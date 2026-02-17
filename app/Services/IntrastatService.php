@@ -111,19 +111,16 @@ final class IntrastatService
         $year = (int) $date->format('Y');
         $month = (int) $date->format('m');
 
-        return IntrastatDeclaration::firstOrCreate(
-            [
-                'direction' => $direction,
-                'reference_year' => $year,
-                'reference_month' => $month,
-            ],
-            [
-                'declaration_number' => sprintf('%s-%s-%02d', $direction->value, $year, $month),
-                'declaration_date' => $date,
-                'status' => IntrastatStatus::DRAFT,
-                'team_id' => auth()->user()?->team_id,
-            ]
-        );
+        return IntrastatDeclaration::query()->firstOrCreate([
+            'direction' => $direction,
+            'reference_year' => $year,
+            'reference_month' => $month,
+        ], [
+            'declaration_number' => sprintf('%s-%s-%02d', $direction->value, $year, $month),
+            'declaration_date' => $date,
+            'status' => IntrastatStatus::DRAFT,
+            'team_id' => auth()->user()?->team_id,
+        ]);
     }
 
     private function createInboundLinesForOrder(Order $order): void

@@ -8,11 +8,13 @@ use App\Filament\Resources\SupplierPrices\SupplierPriceResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
+use Override;
 
 final class EditSupplierPrice extends EditRecord
 {
     protected static string $resource = SupplierPriceResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

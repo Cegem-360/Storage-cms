@@ -33,7 +33,7 @@ final class QrCodeService
             ->margin(1)
             ->generate($data);
 
-        return base64_encode($png->toHtml());
+        return base64_encode((string) $png->toHtml());
     }
 
     public static function generateDataUri(string $data, int $size = 200): string

@@ -38,7 +38,7 @@ final class IntrastatDeclarationForm
                                             ->label('Irány')
                                             ->options(IntrastatDirection::class)
                                             ->required()
-                                            ->disabled(fn (?string $operation) => $operation === 'edit'),
+                                            ->disabled(fn (?string $operation): bool => $operation === 'edit'),
 
                                         Select::make('status')
                                             ->label('Státusz')
@@ -95,7 +95,7 @@ final class IntrastatDeclarationForm
                                     ])
                                     ->columns(2),
                             ])
-                            ->visible(fn ($get) => $get('submitted_at') !== null),
+                            ->visible(fn ($get): bool => $get('submitted_at') !== null),
 
                         Tab::make('Összesítő adatok')
                             ->schema([
@@ -106,25 +106,25 @@ final class IntrastatDeclarationForm
                                             ->numeric()
                                             ->readOnly()
                                             ->suffix('Ft')
-                                            ->formatStateUsing(fn ($state) => $state ? number_format($state, 2, ',', ' ') : '0'),
+                                            ->formatStateUsing(fn ($state): string => $state ? number_format($state, 2, ',', ' ') : '0'),
 
                                         TextInput::make('total_statistical_value')
                                             ->label('Összes statisztikai érték (HUF)')
                                             ->numeric()
                                             ->readOnly()
                                             ->suffix('Ft')
-                                            ->formatStateUsing(fn ($state) => $state ? number_format($state, 2, ',', ' ') : '0'),
+                                            ->formatStateUsing(fn ($state): string => $state ? number_format($state, 2, ',', ' ') : '0'),
 
                                         TextInput::make('total_net_mass')
                                             ->label('Összes nettó tömeg (kg)')
                                             ->numeric()
                                             ->readOnly()
                                             ->suffix('kg')
-                                            ->formatStateUsing(fn ($state) => $state ? number_format($state, 3, ',', ' ') : '0'),
+                                            ->formatStateUsing(fn ($state): string => $state ? number_format($state, 3, ',', ' ') : '0'),
                                     ])
                                     ->columns(3),
                             ])
-                            ->visible(fn (?string $operation) => $operation === 'edit'),
+                            ->visible(fn (?string $operation): bool => $operation === 'edit'),
                     ])
                     ->columnSpanFull(),
             ]);

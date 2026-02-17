@@ -11,6 +11,7 @@ use App\Enums\IntrastatTransportMode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Override;
 
 final class IntrastatLine extends Model
 {
@@ -63,6 +64,7 @@ final class IntrastatLine extends Model
         return $this->belongsTo(CnCode::class);
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

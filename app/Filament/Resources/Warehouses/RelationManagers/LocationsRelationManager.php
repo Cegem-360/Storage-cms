@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 final class LocationsRelationManager extends RelationManager
 {
@@ -24,6 +25,7 @@ final class LocationsRelationManager extends RelationManager
 
     protected static ?string $title = 'Warehouse Locations';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema

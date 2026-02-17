@@ -684,5 +684,13 @@
     "pcs": "db",
     "Completed": "Befejezve",
     "Confirmed": "Megerősítve",
-    "Pending": "Függőben"
+    "Pending": "Függőben",
+    "AI Assistant": "AI Asszisztens",
+    "I can help you with stock levels, orders, products, and suppliers. Ask me anything about your data!": "Segíthetek készletszintekkel, rendelésekkel, termékekkel és beszállítókkal kapcsolatban. Kérdezz bármit az adataidról!",
+    "Which products are low on stock?": "Mely termékek fogynak el?",
+    "Show me recent orders": "Mutasd a legutóbbi rendeléseket",
+    "List active suppliers": "Listázd az aktív beszállítókat",
+    "Stock overview by warehouse": "Készletáttekintés raktáranként",
+    "Send": "Küldés",
+    "An error occurred while processing your request. Please check the AI configuration in Settings.": "Hiba történt a kérés feldolgozásakor. Kérjük, ellenőrizd az AI beállításokat a Beállításokban."
 }

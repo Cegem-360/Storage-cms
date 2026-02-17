@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Override;
 
 #[ObservedBy(StockTransactionObserver::class)]
 final class StockTransaction extends Model
@@ -64,6 +65,7 @@ final class StockTransaction extends Model
         return $this->remaining_quantity > 0;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

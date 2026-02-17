@@ -7,11 +7,13 @@ namespace App\Filament\Resources\SupplierPrices\Pages;
 use App\Filament\Resources\SupplierPrices\SupplierPriceResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
+use Override;
 
 final class ViewSupplierPrice extends ViewRecord
 {
     protected static string $resource = SupplierPriceResource::class;
 
+    #[Override]
     protected function getHeaderActions(): array
     {
         return [

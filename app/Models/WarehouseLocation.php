@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,16 +36,18 @@ final class WarehouseLocation extends Model
         return $this->hasMany(Stock::class);
     }
 
-    public function getDisplayNameAttribute(): string
+    protected function displayName(): Attribute
     {
-        $parts = array_filter([
-            $this->zone,
-            $this->row,
-            $this->shelf,
-            $this->level,
-        ]);
+        return Attribute::make(get: function (): string {
+            $parts = array_filter([
+                $this->zone,
+                $this->row,
+                $this->shelf,
+                $this->level,
+            ]);
 
-        return $this->code.' ('.implode(' / ', $parts).')';
+            return $this->code.' ('.implode(' / ', $parts).')';
+        });
     }
 
     #[Override]

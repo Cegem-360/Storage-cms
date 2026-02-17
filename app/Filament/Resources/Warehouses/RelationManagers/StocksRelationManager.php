@@ -17,11 +17,13 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Override;
 
 final class StocksRelationManager extends RelationManager
 {
     protected static string $relationship = 'stocks';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema

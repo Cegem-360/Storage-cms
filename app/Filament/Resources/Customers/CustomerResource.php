@@ -18,6 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Override;
 use UnitEnum;
 
 final class CustomerResource extends Resource
@@ -26,21 +27,25 @@ final class CustomerResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::MASTER_DATA;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return CustomerForm::configure($schema);
     }
 
+    #[Override]
     public static function infolist(Schema $schema): Schema
     {
         return CustomerInfolist::configure($schema);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return CustomersTable::configure($table);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -48,6 +53,7 @@ final class CustomerResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [
@@ -58,6 +64,7 @@ final class CustomerResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

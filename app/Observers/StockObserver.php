@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notification as BaseNotification;
 use Illuminate\Support\Facades\Notification;
 
-final class StockObserver
+final readonly class StockObserver
 {
-    public function __construct(private readonly AutoReorderService $autoReorderService) {}
+    public function __construct(private AutoReorderService $autoReorderService) {}
 
     public function updated(Stock $stock): void
     {

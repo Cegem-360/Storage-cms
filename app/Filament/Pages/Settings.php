@@ -46,7 +46,7 @@ final class Settings extends Page
 
     public function mount(): void
     {
-        $team = $this->getTeam();
+        $team = auth()->user()->team;
         $team->load('settings');
 
         $this->form->fill([
@@ -142,7 +142,7 @@ final class Settings extends Page
     public function save(): void
     {
         $data = $this->form->getState();
-        $team = $this->getTeam();
+        $team = auth()->user()->team;
 
         $team->setSetting('low_stock_threshold', $data['low_stock_threshold']);
         $team->setSetting('auto_reorder_enabled', $data['auto_reorder_enabled']);

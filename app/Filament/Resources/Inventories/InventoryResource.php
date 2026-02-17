@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Override;
 use UnitEnum;
 
 final class InventoryResource extends Resource
@@ -25,16 +26,19 @@ final class InventoryResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return InventoryForm::configure($schema);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return InventoriesTable::configure($table);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -42,6 +46,7 @@ final class InventoryResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [
@@ -51,6 +56,7 @@ final class InventoryResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

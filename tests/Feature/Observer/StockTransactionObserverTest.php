@@ -6,6 +6,7 @@ use App\Enums\StockTransactionType;
 use App\Events\InboundStockReceived;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Receipt;
 use App\Models\StockTransaction;
 use Illuminate\Support\Facades\Event;
 
@@ -22,9 +23,7 @@ it('dispatches InboundStockReceived event for inbound transaction with order ref
         'reference_id' => $order->id,
     ]);
 
-    Event::assertDispatched(InboundStockReceived::class, function (InboundStockReceived $event) use ($transaction): bool {
-        return $event->stockTransaction->is($transaction);
-    });
+    Event::assertDispatched(InboundStockReceived::class, fn (InboundStockReceived $event): bool => $event->stockTransaction->is($transaction));
 });
 
 it('does not dispatch event for outbound stock transaction', function (): void {
@@ -54,7 +53,7 @@ it('does not dispatch event when reference type is not Order', function (): void
 
     StockTransaction::factory()->create([
         'type' => StockTransactionType::INBOUND,
-        'reference_type' => 'App\\Models\\Receipt',
+        'reference_type' => Receipt::class,
         'reference_id' => 1,
     ]);
 

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\TeamSettingFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class TeamSetting extends Model
 {
-    /** @use HasFactory<\Database\Factories\TeamSettingFactory> */
+    /** @use HasFactory<TeamSettingFactory> */
     use HasFactory;
 
     protected $fillable = [

@@ -43,7 +43,7 @@ final class StockExporter extends Exporter
     {
         $body = 'Készlet exportálása befejeződött. '.number_format($export->successful_rows).' sor sikeresen exportálva.';
 
-        if ($failedRowsCount = $export->getFailedRowsCount()) {
+        if (($failedRowsCount = $export->getFailedRowsCount()) !== 0) {
             $body .= ' '.number_format($failedRowsCount).' sor sikertelen.';
         }
 

@@ -44,16 +44,16 @@ final class ExpectedArrivals extends Component
             ->where('type', OrderType::PURCHASE)
             ->whereIn('status', [OrderStatus::CONFIRMED, OrderStatus::PROCESSING])
             ->whereNotNull('delivery_date')
-            ->when($this->search !== '', function ($query) {
+            ->when($this->search !== '', function ($query): void {
                 $search = '%'.$this->search.'%';
-                $query->where(function ($q) use ($search) {
+                $query->where(function ($q) use ($search): void {
                     $q->where('order_number', 'like', $search)
-                        ->orWhereHas('supplier', function ($supplierQuery) use ($search) {
+                        ->orWhereHas('supplier', function ($supplierQuery) use ($search): void {
                             $supplierQuery->where('name', 'like', $search);
                         });
                 });
             })
-            ->orderBy('delivery_date', 'asc')
+            ->oldest('delivery_date')
             ->paginate($this->perPage);
     }
 }

@@ -46,7 +46,7 @@ it('creates intrastat arrival lines for purchase order with EU supplier', functi
         'unit_price' => 100,
     ]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     expect(IntrastatDeclaration::query()->count())->toBe(1);
@@ -80,7 +80,7 @@ it('does not create intrastat lines when supplier has no EU tax number', functio
 
     OrderLine::factory()->create(['order_id' => $order->id]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -111,7 +111,7 @@ it('creates intrastat dispatch lines for sales order with EU customer', function
         'unit_price' => 200,
     ]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     expect(IntrastatDeclaration::query()->count())->toBe(1);
@@ -143,7 +143,7 @@ it('does not create intrastat lines for non-EU customer', function (): void {
 
     OrderLine::factory()->create(['order_id' => $order->id]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -168,7 +168,7 @@ it('creates declaration with correct month and year from delivery date', functio
 
     OrderLine::factory()->create(['order_id' => $order->id]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     $declaration = IntrastatDeclaration::query()->first();
@@ -198,7 +198,7 @@ it('reuses existing declaration for same month and direction', function (): void
         'product_id' => $product->id,
     ]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order1));
 
     expect(IntrastatDeclaration::query()->count())->toBe(1);
@@ -247,7 +247,7 @@ it('calculates totals correctly when lines are added', function (): void {
         'unit_price' => 100,
     ]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     $declaration = IntrastatDeclaration::query()->first();
@@ -281,7 +281,7 @@ it('skips order lines without cn_code on the product', function (): void {
         'product_id' => $productWithoutCode->id,
     ]);
 
-    $listener = app(CreateIntrastatLinesForDeliveredOrder::class);
+    $listener = resolve(CreateIntrastatLinesForDeliveredOrder::class);
     $listener->handle(new OrderDelivered($order));
 
     expect(IntrastatLine::query()->count())->toBe(1);

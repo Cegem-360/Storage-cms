@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class Employee extends Model
 {
@@ -45,6 +46,7 @@ final class Employee extends Model
         return $this->warehouse_id === $warehouse->id || $this->user->is_super_admin;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

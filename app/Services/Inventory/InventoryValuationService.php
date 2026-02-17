@@ -48,7 +48,7 @@ final class InventoryValuationService
             return 0.0;
         }
 
-        $totalCost = $transactions->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
+        $totalCost = $transactions->sum(fn ($t): float => $t->remaining_quantity * (float) $t->unit_cost);
 
         return $stock->quantity * ($totalCost / $totalQuantity);
     }
@@ -64,26 +64,26 @@ final class InventoryValuationService
     {
         return $warehouse->stocks()
             ->get()
-            ->sum(fn (Stock $stock) => $this->calculateStockValue($stock));
+            ->sum(fn (Stock $stock): float => $this->calculateStockValue($stock));
     }
 
     public function getProductTotalValue(Product $product): float
     {
         return $product->stocks()
             ->get()
-            ->sum(fn (Stock $stock) => $this->calculateStockValue($stock));
+            ->sum(fn (Stock $stock): float => $this->calculateStockValue($stock));
     }
 
     public function getCategoryTotalValue(int $categoryId): float
     {
         $products = Product::query()->where('category_id', $categoryId)->get();
 
-        return $products->sum(fn (Product $product) => $this->getProductTotalValue($product));
+        return $products->sum(fn (Product $product): float => $this->getProductTotalValue($product));
     }
 
     public function recordStockIn(Stock $stock, int $quantity, float $unitCost, ?string $referenceType = null, ?int $referenceId = null, ?string $notes = null): StockTransaction
     {
-        $transaction = StockTransaction::create([
+        $transaction = StockTransaction::query()->create([
             'stock_id' => $stock->id,
             'product_id' => $stock->product_id,
             'warehouse_id' => $stock->warehouse_id,
@@ -132,8 +132,7 @@ final class InventoryValuationService
 
     private function consumeAverage(Stock $stock, int $quantity, ?string $referenceType, ?int $referenceId, ?string $notes): Collection
     {
-        $inTransactions = $this->inboundTransactionsQuery($stock)
-            ->orderBy('created_at', 'asc')
+        $inTransactions = $this->inboundTransactionsQuery($stock)->oldest()
             ->get();
 
         $totalQuantity = $inTransactions->sum('remaining_quantity');
@@ -142,10 +141,10 @@ final class InventoryValuationService
             return collect();
         }
 
-        $totalCost = $inTransactions->sum(fn ($t) => $t->remaining_quantity * (float) $t->unit_cost);
+        $totalCost = $inTransactions->sum(fn ($t): float => $t->remaining_quantity * (float) $t->unit_cost);
         $averageCost = $totalCost / $totalQuantity;
 
-        $outTransaction = StockTransaction::create([
+        $outTransaction = StockTransaction::query()->create([
             'stock_id' => $stock->id,
             'product_id' => $stock->product_id,
             'warehouse_id' => $stock->warehouse_id,
@@ -208,7 +207,7 @@ final class InventoryValuationService
 
             $consumeQty = min($inTransaction->remaining_quantity, $remainingToConsume);
 
-            $outTransaction = StockTransaction::create([
+            $outTransaction = StockTransaction::query()->create([
                 'stock_id' => $stock->id,
                 'product_id' => $stock->product_id,
                 'warehouse_id' => $stock->warehouse_id,

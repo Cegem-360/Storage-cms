@@ -644,5 +644,13 @@
     "pcs": "pcs",
     "Completed": "Completed",
     "Confirmed": "Confirmed",
-    "Pending": "Pending"
+    "Pending": "Pending",
+    "AI Assistant": "AI Assistant",
+    "I can help you with stock levels, orders, products, and suppliers. Ask me anything about your data!": "I can help you with stock levels, orders, products, and suppliers. Ask me anything about your data!",
+    "Which products are low on stock?": "Which products are low on stock?",
+    "Show me recent orders": "Show me recent orders",
+    "List active suppliers": "List active suppliers",
+    "Stock overview by warehouse": "Stock overview by warehouse",
+    "Send": "Send",
+    "An error occurred while processing your request. Please check the AI configuration in Settings.": "An error occurred while processing your request. Please check the AI configuration in Settings."
 }

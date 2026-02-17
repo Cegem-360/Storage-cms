@@ -116,7 +116,7 @@ final class Stock extends Model
         parent::boot();
 
         self::creating(function (self $stock): void {
-            $alreadyExists = self::withoutGlobalScopes()
+            $alreadyExists = self::query()->withoutGlobalScopes()
                 ->where('product_id', $stock->product_id)
                 ->where('warehouse_id', $stock->warehouse_id)
                 ->where('team_id', $stock->team_id)

@@ -10,6 +10,7 @@ use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Override;
 
 final class IntrastatDeclaration extends Model
 {
@@ -50,6 +51,7 @@ final class IntrastatDeclaration extends Model
         return $this->status->isEditable();
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

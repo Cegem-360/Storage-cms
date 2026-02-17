@@ -39,7 +39,7 @@ final class ExpectedStockArrivals extends Page implements HasTable
                     ->where('type', OrderType::PURCHASE)
                     ->whereIn('status', [OrderStatus::CONFIRMED, OrderStatus::PROCESSING, OrderStatus::SHIPPED])
                     ->whereNotNull('delivery_date')
-                    ->orderBy('delivery_date', 'asc')
+                    ->oldest('delivery_date')
             )
             ->columns([
                 TextColumn::make('order_number')

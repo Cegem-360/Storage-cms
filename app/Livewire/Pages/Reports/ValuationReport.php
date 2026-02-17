@@ -24,7 +24,7 @@ final class ValuationReport extends Component
     public function render(): View
     {
         return view('livewire.pages.reports.valuation-report', [
-            'warehouses' => Warehouse::orderBy('name')->get(),
+            'warehouses' => Warehouse::query()->orderBy('name')->get(),
             'valuationData' => $this->getValuationData(),
             'totals' => $this->getTotals(),
         ]);
@@ -39,7 +39,7 @@ final class ValuationReport extends Component
         $stocks = $query->get();
 
         if ($this->groupBy === 'warehouse') {
-            return $stocks->groupBy('warehouse_id')->map(function ($items, $warehouseId) {
+            return $stocks->groupBy('warehouse_id')->map(function ($items, $warehouseId): array {
                 $warehouse = $items->first()->warehouse;
 
                 return [
@@ -51,7 +51,7 @@ final class ValuationReport extends Component
             });
         }
 
-        return $stocks->groupBy(fn ($stock) => $stock->product?->category_id)->map(function ($items, $categoryId) {
+        return $stocks->groupBy(fn ($stock) => $stock->product?->category_id)->map(function ($items, $categoryId): array {
             $category = $items->first()->product?->category;
 
             return [

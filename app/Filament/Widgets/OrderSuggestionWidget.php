@@ -85,7 +85,7 @@ final class OrderSuggestionWidget extends BaseWidget
                     ->color('primary')
                     ->action(function (Product $record): void {
                         $team = auth()->user()->team;
-                        $order = app(AutoReorderService::class)->createDraftOrder($record, $team);
+                        $order = resolve(AutoReorderService::class)->createDraftOrder($record, $team);
 
                         if ($order) {
                             Notification::make()

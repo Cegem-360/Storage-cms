@@ -7,10 +7,12 @@ namespace App\Models;
 use App\Enums\MovementStatus;
 use App\Enums\MovementType;
 use App\Models\Concerns\BelongsToTeam;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class StockMovement extends Model
 {
@@ -59,17 +61,6 @@ final class StockMovement extends Model
         return $this->belongsTo(Employee::class, 'executed_by');
     }
 
-    // Query scopes
-    public function scopePlanned($query)
-    {
-        return $query->where('status', MovementStatus::PLANNED);
-    }
-
-    public function scopeCompleted($query)
-    {
-        return $query->where('status', MovementStatus::COMPLETED);
-    }
-
     // Helper methods
     public function isPlanned(): bool
     {
@@ -86,6 +77,20 @@ final class StockMovement extends Model
         return $this->status === MovementStatus::CANCELLED;
     }
 
+    // Query scopes
+    #[Scope]
+    protected function planned($query)
+    {
+        return $query->where('status', MovementStatus::PLANNED);
+    }
+
+    #[Scope]
+    protected function completed($query)
+    {
+        return $query->where('status', MovementStatus::COMPLETED);
+    }
+
+    #[Override]
     protected function casts(): array
     {
         return [

@@ -11,6 +11,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Collection;
 
 final class ProductInfolist
 {
@@ -154,7 +155,7 @@ final class ProductInfolist
                     ->schema([
                         RepeatableEntry::make('expected_arrivals')
                             ->label('')
-                            ->state(fn (Product $record) => $record->getExpectedArrivals())
+                            ->state(fn (Product $record): Collection => $record->getExpectedArrivals())
                             ->schema([
                                 TextEntry::make('order_number')
                                     ->label('Order #'),

@@ -9,6 +9,7 @@ use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Number;
+use Override;
 
 final class SupplierPriceImporter extends Importer
 {
@@ -53,7 +54,7 @@ final class SupplierPriceImporter extends Importer
             'count' => Number::format($import->successful_rows),
         ]);
 
-        if ($failedRowsCount = $import->getFailedRowsCount()) {
+        if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
             $body .= ' '.__(':count row(s) failed to import.', [
                 'count' => Number::format($failedRowsCount),
             ]);
@@ -62,9 +63,10 @@ final class SupplierPriceImporter extends Importer
         return $body;
     }
 
+    #[Override]
     public function resolveRecord(): SupplierPrice
     {
-        return SupplierPrice::firstOrNew([
+        return SupplierPrice::query()->firstOrNew([
             'product_id' => $this->data['product_id'] ?? null,
             'supplier_id' => $this->data['supplier_id'] ?? null,
         ]);

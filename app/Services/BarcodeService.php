@@ -18,6 +18,6 @@ final class BarcodeService
             $sum += (int) $ean12[$i] * ($i % 2 === 0 ? 1 : 3);
         }
 
-        return $ean12.(string) ((10 - ($sum % 10)) % 10);
+        return $ean12.((10 - ($sum % 10)) % 10);
     }
 }

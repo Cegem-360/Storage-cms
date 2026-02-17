@@ -86,6 +86,75 @@
             </div>
         </div>
 
+        {{-- AI Assistant Settings --}}
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ __('AI Assistant Settings') }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ __('Configure AI assistant provider and credentials') }}</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- AI Provider --}}
+                <div>
+                    <label for="aiProvider" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ __('AI Provider') }}
+                    </label>
+                    <select
+                        id="aiProvider"
+                        wire:model="aiProvider"
+                        class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                    >
+                        <option value="openai">OpenAI</option>
+                        <option value="anthropic">Anthropic</option>
+                        <option value="gemini">Google Gemini</option>
+                        <option value="groq">Groq</option>
+                        <option value="deepseek">DeepSeek</option>
+                        <option value="mistral">Mistral</option>
+                        <option value="xai">xAI (Grok)</option>
+                        <option value="openrouter">OpenRouter</option>
+                    </select>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Select the AI service provider') }}</p>
+                    @error('aiProvider')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- AI Model --}}
+                <div>
+                    <label for="aiModel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ __('AI Model') }}
+                    </label>
+                    <input
+                        type="text"
+                        id="aiModel"
+                        wire:model="aiModel"
+                        placeholder="gpt-4o-mini"
+                        class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                    >
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Model identifier (e.g. gpt-4o-mini, claude-sonnet-4-5-20250929)') }}</p>
+                    @error('aiModel')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- AI API Key --}}
+                <div class="md:col-span-2">
+                    <label for="aiApiKey" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ __('API Key') }}
+                    </label>
+                    <input
+                        type="password"
+                        id="aiApiKey"
+                        wire:model="aiApiKey"
+                        placeholder="sk-..."
+                        class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                    >
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Your API key for the selected provider. This is stored securely per team.') }}</p>
+                    @error('aiApiKey')
+                        <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
+        </div>
+
         {{-- Save button --}}
         <div class="flex justify-end">
             <button

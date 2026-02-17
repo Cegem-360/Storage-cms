@@ -14,6 +14,7 @@ use App\Models\Team;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class TeamResource extends Resource
@@ -24,21 +25,25 @@ final class TeamResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    #[Override]
     public static function canAccess(): bool
     {
         return auth()->user()?->is_super_admin ?? false;
     }
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return TeamForm::configure($schema);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return TeamsTable::configure($table);
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

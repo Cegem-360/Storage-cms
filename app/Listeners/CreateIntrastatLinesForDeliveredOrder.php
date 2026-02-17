@@ -8,9 +8,9 @@ use App\Events\OrderDelivered;
 use App\Services\IntrastatService;
 use Illuminate\Contracts\Events\ShouldHandleEventsAfterCommit;
 
-final class CreateIntrastatLinesForDeliveredOrder implements ShouldHandleEventsAfterCommit
+final readonly class CreateIntrastatLinesForDeliveredOrder implements ShouldHandleEventsAfterCommit
 {
-    public function __construct(private readonly IntrastatService $intrastatService) {}
+    public function __construct(private IntrastatService $intrastatService) {}
 
     public function handle(OrderDelivered $event): void
     {

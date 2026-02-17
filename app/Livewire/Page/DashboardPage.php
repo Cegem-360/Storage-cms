@@ -11,7 +11,7 @@ use App\Models\Stock;
 use App\Models\StockMovement;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -24,25 +24,25 @@ final class DashboardPage extends Component
     #[Computed]
     public function totalProducts(): int
     {
-        return Product::count();
+        return Product::query()->count();
     }
 
     #[Computed]
     public function totalStock(): int
     {
-        return (int) Stock::sum('quantity');
+        return (int) Stock::query()->sum('quantity');
     }
 
     #[Computed]
     public function lowStockCount(): int
     {
-        return (int) Stock::whereColumn('quantity', '<', 'minimum_stock')->count();
+        return (int) Stock::query()->whereColumn('quantity', '<', 'minimum_stock')->count();
     }
 
     #[Computed]
     public function pendingOrders(): int
     {
-        return (int) Order::whereIn('status', [OrderStatus::DRAFT, OrderStatus::CONFIRMED, OrderStatus::PROCESSING])->count();
+        return (int) Order::query()->whereIn('status', [OrderStatus::DRAFT, OrderStatus::CONFIRMED, OrderStatus::PROCESSING])->count();
     }
 
     #[Computed]
@@ -71,14 +71,14 @@ final class DashboardPage extends Component
         $labels = [];
 
         for ($i = 29; $i >= 0; $i--) {
-            $date = Carbon::now()->subDays($i);
+            $date = Date::now()->subDays($i);
             $labels[] = $date->format('M d');
 
-            $inboundData[] = (int) StockMovement::whereDate('created_at', $date)
+            $inboundData[] = (int) StockMovement::query()->whereDate('created_at', $date)
                 ->where('quantity', '>', 0)
                 ->sum('quantity');
 
-            $outboundData[] = abs((int) StockMovement::whereDate('created_at', $date)
+            $outboundData[] = abs((int) StockMovement::query()->whereDate('created_at', $date)
                 ->where('quantity', '<', 0)
                 ->sum('quantity'));
         }

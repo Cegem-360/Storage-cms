@@ -53,7 +53,7 @@ Route::post('/tokens/create', function (Request $request): array {
     return ['token' => $user->createToken($request->device_name)->plainTextToken];
 });
 
-Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(function () {
+Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(function (): void {
     Route::get('/user', fn (Request $request) => $request->user());
 
     Route::delete('/tokens/revoke', function (Request $request): Response {
@@ -64,7 +64,7 @@ Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(funct
         return response()->noContent();
     });
 
-    Route::prefix('v1')->group(function () {
+    Route::prefix('v1')->group(function (): void {
         // Full CRUD resources
         Route::apiResources([
             'products' => ProductController::class,

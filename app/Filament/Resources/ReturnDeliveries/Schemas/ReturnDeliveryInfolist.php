@@ -63,7 +63,7 @@ final class ReturnDeliveryInfolist
                             ->visible(fn ($record) => $record->isSupplierReturn()),
                     ])
                     ->columns(2)
-                    ->visible(fn ($record) => $record->order_id || $record->customer_id || $record->supplier_id),
+                    ->visible(fn ($record): bool => $record->order_id || $record->customer_id || $record->supplier_id),
 
                 Section::make('Return Items')
                     ->schema([

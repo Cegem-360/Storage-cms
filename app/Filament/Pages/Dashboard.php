@@ -12,6 +12,7 @@ use App\Filament\Widgets\StockStatsWidget;
 use BackedEnum;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Support\Icons\Heroicon;
+use Override;
 
 final class Dashboard extends BaseDashboard
 {
@@ -19,6 +20,7 @@ final class Dashboard extends BaseDashboard
 
     protected static ?string $title = 'Dashboard';
 
+    #[Override]
     public function getWidgets(): array
     {
         return [
@@ -30,7 +32,8 @@ final class Dashboard extends BaseDashboard
         ];
     }
 
-    public function getColumns(): int|array
+    #[Override]
+    public function getColumns(): array
     {
         return [
             'default' => 1,

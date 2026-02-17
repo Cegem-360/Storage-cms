@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Concerns\BelongsToTeam;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Date;
+use Override;
 
 final class Batch extends Model
 {
@@ -58,7 +59,7 @@ final class Batch extends Model
             return PHP_INT_MAX;
         }
 
-        return max(0, Carbon::now()->diffInDays($this->expiry_date, false));
+        return max(0, Date::now()->diffInDays($this->expiry_date, false));
     }
 
     public function getTrackingNumber(): string
@@ -77,6 +78,7 @@ final class Batch extends Model
         // TODO: Implement history tracking
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

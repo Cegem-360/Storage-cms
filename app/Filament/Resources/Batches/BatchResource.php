@@ -14,6 +14,7 @@ use App\Models\Batch;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class BatchResource extends Resource
@@ -24,16 +25,19 @@ final class BatchResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'batch_number';
 
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return BatchForm::configure($schema);
     }
 
+    #[Override]
     public static function table(Table $table): Table
     {
         return BatchesTable::configure($table);
     }
 
+    #[Override]
     public static function getRelations(): array
     {
         return [
@@ -41,6 +45,7 @@ final class BatchResource extends Resource
         ];
     }
 
+    #[Override]
     public static function getPages(): array
     {
         return [

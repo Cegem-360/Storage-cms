@@ -13,7 +13,7 @@ final class OrderObserver
     public function updated(Order $order): void
     {
         if ($order->isDirty('status') && $order->status === OrderStatus::DELIVERED) {
-            OrderDelivered::dispatch($order);
+            event(new OrderDelivered($order));
         }
     }
 }

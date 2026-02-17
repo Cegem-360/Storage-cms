@@ -24,7 +24,7 @@ final class StockOverview extends Component
     public function render(): View
     {
         return view('livewire.pages.reports.stock-overview', [
-            'warehouses' => Warehouse::orderBy('name')->get(),
+            'warehouses' => Warehouse::query()->orderBy('name')->get(),
             'stockData' => $this->getStockData(),
         ]);
     }
@@ -34,9 +34,9 @@ final class StockOverview extends Component
         return Stock::query()
             ->with(['product', 'warehouse'])
             ->when($this->warehouseId, fn ($query) => $query->where('warehouse_id', $this->warehouseId))
-            ->when($this->search !== '', function ($query) {
+            ->when($this->search !== '', function ($query): void {
                 $search = '%'.$this->search.'%';
-                $query->whereHas('product', function ($q) use ($search) {
+                $query->whereHas('product', function ($q) use ($search): void {
                     $q->where('name', 'like', $search)
                         ->orWhere('sku', 'like', $search);
                 });

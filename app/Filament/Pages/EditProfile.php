@@ -7,21 +7,25 @@ namespace App\Filament\Pages;
 use Filament\Auth\Pages\EditProfile as BaseEditProfile;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Override;
 
 final class EditProfile extends BaseEditProfile
 {
     protected string $view = 'filament.pages.edit-profile';
 
+    #[Override]
     public function getHeading(): string
     {
         return '';
     }
 
+    #[Override]
     public function getBreadcrumbs(): array
     {
         return [];
     }
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema

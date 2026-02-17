@@ -54,7 +54,7 @@ final class CreateOrder extends Component implements HasActions, HasSchemas
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        if (isset($data['order_number']) && Order::where('order_number', $data['order_number'])->exists()) {
+        if (isset($data['order_number']) && Order::query()->where('order_number', $data['order_number'])->exists()) {
             $data['order_number'] = $this->generateOrderNumber();
         }
 
@@ -65,7 +65,7 @@ final class CreateOrder extends Component implements HasActions, HasSchemas
     {
         do {
             $orderNumber = 'ORD-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6));
-        } while (Order::where('order_number', $orderNumber)->exists());
+        } while (Order::query()->where('order_number', $orderNumber)->exists());
 
         return $orderNumber;
     }

@@ -49,7 +49,7 @@ it('creates intrastat line for inbound transaction with EU supplier', function (
         'reference_id' => $order->id,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     expect(IntrastatDeclaration::query()->count())->toBe(1);
@@ -88,7 +88,7 @@ it('does not create intrastat line when supplier has no EU tax number', function
         'reference_id' => $order->id,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -114,7 +114,7 @@ it('does not create intrastat line when product has no cn_code', function (): vo
         'reference_id' => $order->id,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -126,7 +126,7 @@ it('does not create intrastat line for outbound transaction type', function (): 
         'type' => StockTransactionType::OUTBOUND,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -140,7 +140,7 @@ it('does not create intrastat line when transaction has no order reference', fun
         'reference_id' => null,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     expect(IntrastatDeclaration::query()->count())->toBe(0);
@@ -172,7 +172,7 @@ it('calculates net mass using net_weight_kg field', function (): void {
         'reference_id' => $order->id,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction));
 
     $line = IntrastatLine::query()->first();
@@ -197,7 +197,7 @@ it('reuses existing declaration for same month', function (): void {
         'reference_id' => $order1->id,
     ]);
 
-    $listener = app(CreateIntrastatLineForInboundTransaction::class);
+    $listener = resolve(CreateIntrastatLineForInboundTransaction::class);
     $listener->handle(new InboundStockReceived($transaction1));
 
     expect(IntrastatDeclaration::query()->count())->toBe(1);

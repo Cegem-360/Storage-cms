@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class Warehouse extends Model
 {
@@ -76,6 +77,7 @@ final class Warehouse extends Model
         return $this->is_consignment;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

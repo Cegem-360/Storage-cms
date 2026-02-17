@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Livewire\Page\DashboardPage;
 use App\Livewire\Page\ProfilePage;
 use App\Livewire\Page\SettingsPage;
+use App\Livewire\Pages\AiAssistant;
 use App\Livewire\Pages\Batches\CreateBatch;
 use App\Livewire\Pages\Batches\EditBatch;
 use App\Livewire\Pages\Batches\ListBatches;
@@ -147,6 +148,9 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard')->group(funct
     Route::get('/stock-overview', StockOverview::class)->name('.stock-overview');
     Route::get('/expected-arrivals', ExpectedArrivals::class)->name('.expected-arrivals');
     Route::get('/valuation-report', ValuationReport::class)->name('.valuation-report');
+
+    // AI Assistant
+    Route::get('/ai-assistant', AiAssistant::class)->name('.ai-assistant');
 
     // Customers
     Route::get('/customers', ListCustomers::class)->name('.customers');

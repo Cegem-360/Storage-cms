@@ -55,7 +55,7 @@ final class IntrastatXmlExporter
             $this->addData($row, $transactionField, $line->transaction_type->value);
 
             $countryCode = $this->resolveCountryCode($line, $declaration->direction);
-            if ($countryCode) {
+            if ($countryCode instanceof CountryCode) {
                 $this->addData($row, 'SZAORSZ', $countryCode->value);
             }
 
@@ -108,7 +108,7 @@ final class IntrastatXmlExporter
             $item->addChild('CN_CODE', $line->cn_code);
 
             $countryCode = $this->resolveCountryCode($line, $declaration->direction);
-            if ($countryCode) {
+            if ($countryCode instanceof CountryCode) {
                 $item->addChild('COUNTRY_CODE', $countryCode->value);
             }
 

@@ -62,7 +62,7 @@ final class InventoryValuationReport extends Page implements HasTable
                     ->searchable()
                     ->live()
                     ->afterStateUpdated(fn () => $this->resetTable())
-                    ->visible(fn () => $this->groupBy !== 'warehouse'),
+                    ->visible(fn (): bool => $this->groupBy !== 'warehouse'),
 
                 Select::make('categoryFilter')
                     ->label('Filter by Category')
@@ -71,7 +71,7 @@ final class InventoryValuationReport extends Page implements HasTable
                     ->searchable()
                     ->live()
                     ->afterStateUpdated(fn () => $this->resetTable())
-                    ->visible(fn () => in_array($this->groupBy, ['product', 'category'])),
+                    ->visible(fn (): bool => in_array($this->groupBy, ['product', 'category'])),
             ])
             ->columns(3);
     }
@@ -107,7 +107,7 @@ final class InventoryValuationReport extends Page implements HasTable
     {
         return Product::query()
             ->with(['stocks.warehouse', 'category'])
-            ->when($this->warehouseFilter, function (Builder $q) {
+            ->when($this->warehouseFilter, function (Builder $q): void {
                 $q->whereHas('stocks', fn (Builder $sq) => $sq->where('warehouse_id', $this->warehouseFilter));
             })
             ->when($this->categoryFilter, fn (Builder $q) => $q->where('category_id', $this->categoryFilter));
@@ -131,7 +131,7 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected function getWarehouseColumns(): array
     {
-        $service = app(InventoryValuationService::class);
+        $service = resolve(InventoryValuationService::class);
 
         return [
             TextColumn::make('name')
@@ -165,7 +165,7 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected function getProductColumns(): array
     {
-        $service = app(InventoryValuationService::class);
+        $service = resolve(InventoryValuationService::class);
 
         return [
             TextColumn::make('sku')
@@ -206,7 +206,7 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected function getCategoryColumns(): array
     {
-        $service = app(InventoryValuationService::class);
+        $service = resolve(InventoryValuationService::class);
 
         return [
             TextColumn::make('name')
@@ -226,13 +226,10 @@ final class InventoryValuationReport extends Page implements HasTable
 
             TextColumn::make('total_quantity')
                 ->label('Total Quantity')
-                ->state(function (Category $record): int|string {
-
-                    return Stock::query()
-                        ->whereHas('product',
-                            fn (Builder $q) => $q->where('category_id', $record->id))
-                        ->sum('quantity');
-                })
+                ->state(fn (Category $record): int|string => Stock::query()
+                    ->whereHas('product',
+                        fn (Builder $q) => $q->where('category_id', $record->id))
+                    ->sum('quantity'))
                 ->numeric()
                 ->alignEnd(),
 

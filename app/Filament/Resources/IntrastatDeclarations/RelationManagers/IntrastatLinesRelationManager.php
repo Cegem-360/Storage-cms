@@ -24,11 +24,13 @@ use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 final class IntrastatLinesRelationManager extends RelationManager
 {
     protected static string $relationship = 'intrastatLines';
 
+    #[Override]
     public function form(Schema $schema): Schema
     {
         return $schema
@@ -43,9 +45,9 @@ final class IntrastatLinesRelationManager extends RelationManager
                                     ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->afterStateUpdated(function ($state, $set) {
+                                    ->afterStateUpdated(function ($state, $set): void {
                                         if ($state) {
-                                            $product = Product::find($state);
+                                            $product = Product::query()->find($state);
                                             if ($product) {
                                                 $set('cn_code', $product->cn_code);
                                                 $set('country_of_origin', $product->country_of_origin);
@@ -72,13 +74,13 @@ final class IntrastatLinesRelationManager extends RelationManager
                                 Select::make('cn_code_id')
                                     ->label('CN kód')
                                     ->relationship('cnCode', 'code')
-                                    ->getOptionLabelFromRecordUsing(fn (CnCode $record) => "{$record->code} - {$record->description}")
+                                    ->getOptionLabelFromRecordUsing(fn (CnCode $record): string => "{$record->code} - {$record->description}")
                                     ->searchable(['code', 'description'])
                                     ->preload()
                                     ->live()
-                                    ->afterStateUpdated(function ($state, $set) {
+                                    ->afterStateUpdated(function ($state, $set): void {
                                         if ($state) {
-                                            $cnCode = CnCode::find($state);
+                                            $cnCode = CnCode::query()->find($state);
                                             if ($cnCode) {
                                                 $set('cn_code', $cnCode->code);
                                                 $set('supplementary_unit', $cnCode->supplementary_unit);

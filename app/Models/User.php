@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Override;
 
 final class User extends Authenticatable implements FilamentUser
 {
@@ -48,6 +49,7 @@ final class User extends Authenticatable implements FilamentUser
         return true;
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [

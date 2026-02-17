@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Override;
 
 final class Product extends Model
 {
@@ -130,7 +131,7 @@ final class Product extends Model
                 OrderStatus::SHIPPED,
             ])
             ->whereNotNull('delivery_date')
-            ->orderBy('delivery_date', 'asc')
+            ->oldest('delivery_date')
             ->get();
     }
 
@@ -141,6 +142,7 @@ final class Product extends Model
             ->sum('quantity');
     }
 
+    #[Override]
     protected function casts(): array
     {
         return [
