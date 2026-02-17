@@ -48,12 +48,28 @@ final class AiAssistant extends Component
             return;
         }
 
+        if ($team->hasExceededTokenLimit()) {
+            $this->messages[] = [
+                'role' => 'assistant',
+                'content' => __('Monthly AI token limit has been reached. Please contact your administrator.'),
+            ];
+            $this->isLoading = false;
+            $this->dispatch('ai-message-received');
+
+            return;
+        }
+
         config()->set("ai.providers.{$provider}.key", $apiKey);
 
         try {
             $response = (new StorageAssistant($team))
                 ->withHistory($this->messages)
                 ->prompt($userMessage, provider: $provider, model: $model);
+
+            $team->recordTokenUsage(
+                $response->usage->promptTokens,
+                $response->usage->completionTokens,
+            );
 
             $this->messages[] = [
                 'role' => 'assistant',
@@ -71,6 +87,26 @@ final class AiAssistant extends Component
         $this->isLoading = false;
 
         $this->dispatch('ai-message-received');
+    }
+
+    /**
+     * @return array{used: int, limit: int, percentage: float, hasLimit: bool, exceeded: bool}
+     */
+    public function getTokenUsageInfo(): array
+    {
+        $team = auth()->user()->team;
+        $limit = (int) $team->getSetting('ai_monthly_token_limit', 0);
+        $usage = $team->aiTokenUsages()
+            ->where('month', now()->format('Y-m'))
+            ->first();
+
+        return [
+            'used' => $usage?->total_tokens ?? 0,
+            'limit' => $limit,
+            'percentage' => $team->getTokenUsagePercentage(),
+            'hasLimit' => $limit > 0,
+            'exceeded' => $team->hasExceededTokenLimit(),
+        ];
     }
 
     public function clearChat(): void

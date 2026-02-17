@@ -692,5 +692,21 @@
     "List active suppliers": "Listázd az aktív beszállítókat",
     "Stock overview by warehouse": "Készletáttekintés raktáranként",
     "Send": "Küldés",
-    "An error occurred while processing your request. Please check the AI configuration in Settings.": "Hiba történt a kérés feldolgozásakor. Kérjük, ellenőrizd az AI beállításokat a Beállításokban."
+    "An error occurred while processing your request. Please check the AI configuration in Settings.": "Hiba történt a kérés feldolgozásakor. Kérjük, ellenőrizd az AI beállításokat a Beállításokban.",
+    "AI Assistant Settings": "AI Asszisztens beállítások",
+    "Configure AI assistant provider and credentials": "AI asszisztens szolgáltató és hitelesítő adatok konfigurálása",
+    "Select the AI service provider": "Válaszd ki az AI szolgáltatót",
+    "API Key": "API Kulcs",
+    "Model identifier (e.g. gpt-4o-mini, claude-sonnet-4-5-20250929)": "Modell azonosító (pl. gpt-4o-mini, claude-sonnet-4-5-20250929)",
+    "Your API key for the selected provider. This is stored securely per team.": "A kiválasztott szolgáltató API kulcsa. Csapatonként biztonságosan tároljuk.",
+    "Select the model for the AI assistant": "Válaszd ki az AI asszisztens modelljét",
+    "Monthly AI Usage": "Havi AI használat",
+    "tokens": "token",
+    "Monthly AI token limit has been reached. Please contact your administrator.": "A havi AI token korlát elérve. Kérjük, vedd fel a kapcsolatot az adminisztrátorral.",
+    "AI Token Limits": "AI Token korlátok",
+    "Configure monthly AI token usage limits for this team": "Havi AI token használati korlátok beállítása ehhez a csapathoz",
+    "Monthly Token Limit": "Havi token korlát",
+    "Maximum number of AI tokens per month. Set to 0 for unlimited.": "Maximális AI tokenek havonta. Állítsd 0-ra a korlátlan használathoz.",
+    "Current Month Usage": "Aktuális havi használat",
+    "Unlimited": "Korlátlan"
 }

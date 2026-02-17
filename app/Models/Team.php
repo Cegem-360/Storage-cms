@@ -36,6 +36,11 @@ final class Team extends Model
         return $this->hasMany(TeamSetting::class);
     }
 
+    public function aiTokenUsages(): HasMany
+    {
+        return $this->hasMany(AiTokenUsage::class);
+    }
+
     public function getSetting(string $key, mixed $default = null): mixed
     {
         return $this->settings->firstWhere('key', $key)?->value ?? $default;
@@ -49,6 +54,50 @@ final class Team extends Model
         );
 
         $this->unsetRelation('settings');
+    }
+
+    public function recordTokenUsage(int $promptTokens, int $completionTokens): void
+    {
+        $usage = $this->aiTokenUsages()->firstOrCreate(
+            ['month' => now()->format('Y-m')],
+            ['prompt_tokens' => 0, 'completion_tokens' => 0, 'total_tokens' => 0],
+        );
+
+        $usage->increment('prompt_tokens', $promptTokens);
+        $usage->increment('completion_tokens', $completionTokens);
+        $usage->increment('total_tokens', $promptTokens + $completionTokens);
+    }
+
+    public function hasExceededTokenLimit(): bool
+    {
+        $limit = (int) $this->getSetting('ai_monthly_token_limit', 0);
+
+        if ($limit === 0) {
+            return false;
+        }
+
+        $usage = $this->aiTokenUsages()
+            ->where('month', now()->format('Y-m'))
+            ->first();
+
+        return $usage !== null && $usage->total_tokens >= $limit;
+    }
+
+    public function getTokenUsagePercentage(): float
+    {
+        $limit = (int) $this->getSetting('ai_monthly_token_limit', 0);
+
+        if ($limit === 0) {
+            return 0.0;
+        }
+
+        $usage = $this->aiTokenUsages()
+            ->where('month', now()->format('Y-m'))
+            ->first();
+
+        $used = $usage?->total_tokens ?? 0;
+
+        return min(100.0, ($used / $limit) * 100);
     }
 
     /**

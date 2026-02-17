@@ -652,5 +652,21 @@
     "List active suppliers": "List active suppliers",
     "Stock overview by warehouse": "Stock overview by warehouse",
     "Send": "Send",
-    "An error occurred while processing your request. Please check the AI configuration in Settings.": "An error occurred while processing your request. Please check the AI configuration in Settings."
+    "An error occurred while processing your request. Please check the AI configuration in Settings.": "An error occurred while processing your request. Please check the AI configuration in Settings.",
+    "AI Assistant Settings": "AI Assistant Settings",
+    "Configure AI assistant provider and credentials": "Configure AI assistant provider and credentials",
+    "Select the AI service provider": "Select the AI service provider",
+    "API Key": "API Key",
+    "Model identifier (e.g. gpt-4o-mini, claude-sonnet-4-5-20250929)": "Model identifier (e.g. gpt-4o-mini, claude-sonnet-4-5-20250929)",
+    "Your API key for the selected provider. This is stored securely per team.": "Your API key for the selected provider. This is stored securely per team.",
+    "Select the model for the AI assistant": "Select the model for the AI assistant",
+    "Monthly AI Usage": "Monthly AI Usage",
+    "tokens": "tokens",
+    "Monthly AI token limit has been reached. Please contact your administrator.": "Monthly AI token limit has been reached. Please contact your administrator.",
+    "AI Token Limits": "AI Token Limits",
+    "Configure monthly AI token usage limits for this team": "Configure monthly AI token usage limits for this team",
+    "Monthly Token Limit": "Monthly Token Limit",
+    "Maximum number of AI tokens per month. Set to 0 for unlimited.": "Maximum number of AI tokens per month. Set to 0 for unlimited.",
+    "Current Month Usage": "Current Month Usage",
+    "Unlimited": "Unlimited"
 }

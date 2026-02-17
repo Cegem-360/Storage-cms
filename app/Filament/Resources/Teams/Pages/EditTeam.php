@@ -20,4 +20,36 @@ final class EditTeam extends EditRecord
             DeleteAction::make(),
         ];
     }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['ai_monthly_token_limit'] = (int) $this->record->getSetting('ai_monthly_token_limit', 0);
+
+        return $data;
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<string, mixed>
+     */
+    #[Override]
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        unset($data['ai_monthly_token_limit']);
+
+        return $data;
+    }
+
+    protected function afterSave(): void
+    {
+        $this->record->setSetting(
+            'ai_monthly_token_limit',
+            (int) $this->data['ai_monthly_token_limit'],
+        );
+    }
 }

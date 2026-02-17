@@ -99,7 +99,7 @@
                     </label>
                     <select
                         id="aiProvider"
-                        wire:model="aiProvider"
+                        wire:model.live="aiProvider"
                         class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
                     >
                         <option value="openai">OpenAI</option>
@@ -122,14 +122,16 @@
                     <label for="aiModel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         {{ __('AI Model') }}
                     </label>
-                    <input
-                        type="text"
+                    <select
                         id="aiModel"
                         wire:model="aiModel"
-                        placeholder="gpt-4o-mini"
-                        class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                        class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
                     >
-                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Model identifier (e.g. gpt-4o-mini, claude-sonnet-4-5-20250929)') }}</p>
+                        @foreach ($this->getAvailableModels() as $modelId => $modelName)
+                            <option value="{{ $modelId }}">{{ $modelName }}</option>
+                        @endforeach
+                    </select>
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Select the model for the AI assistant') }}</p>
                     @error('aiModel')
                         <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
                     @enderror

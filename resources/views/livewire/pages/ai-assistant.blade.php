@@ -18,6 +18,30 @@
         @endif
     </div>
 
+    {{-- Token usage indicator --}}
+    @php $usageInfo = $this->getTokenUsageInfo(); @endphp
+    @if ($usageInfo['hasLimit'])
+        <div class="mb-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 px-4 py-3">
+            <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-medium text-gray-600 dark:text-gray-400">{{ __('Monthly AI Usage') }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">
+                    {{ number_format($usageInfo['used']) }} / {{ number_format($usageInfo['limit']) }} {{ __('tokens') }}
+                </span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                <div
+                    class="h-1.5 rounded-full transition-all {{ $usageInfo['percentage'] >= 90 ? 'bg-red-500' : ($usageInfo['percentage'] >= 70 ? 'bg-amber-500' : 'bg-green-500') }}"
+                    style="width: {{ min(100, $usageInfo['percentage']) }}%"
+                ></div>
+            </div>
+            @if ($usageInfo['exceeded'])
+                <p class="mt-1.5 text-xs text-red-600 dark:text-red-400">
+                    {{ __('Monthly AI token limit has been reached. Please contact your administrator.') }}
+                </p>
+            @endif
+        </div>
+    @endif
+
     {{-- Chat area --}}
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 flex flex-col" style="height: calc(100vh - 220px); min-height: 400px;">
 
