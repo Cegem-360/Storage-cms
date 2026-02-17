@@ -19,6 +19,7 @@ final class OrderLine extends Model
         'quantity',
         'unit_price',
         'discount_percent',
+        'tax_percent',
         'note',
     ];
 
@@ -38,8 +39,11 @@ final class OrderLine extends Model
         return [
             'unit_price' => 'decimal:2',
             'discount_percent' => 'decimal:2',
+            'tax_percent' => 'decimal:2',
             'subtotal' => 'float',
             'discount_amount' => 'float',
+            'tax_amount' => 'float',
+            'total_with_tax' => 'float',
         ];
     }
 }

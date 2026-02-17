@@ -30,6 +30,7 @@ final class OrderLineFactory extends Factory
             'quantity' => $quantity,
             'unit_price' => $unitPrice,
             'discount_percent' => $discountPercent,
+            'tax_percent' => fake()->randomElement([0, 5, 18, 27]),
             'note' => fake()->optional()->sentence(),
         ];
     }

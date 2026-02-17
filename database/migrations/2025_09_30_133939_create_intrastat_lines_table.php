@@ -23,9 +23,10 @@ return new class() extends Migration
             $table->foreignIdFor(Order::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Product::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Supplier::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('cn_code_id')->nullable()->constrained('cn_codes')->nullOnDelete();
 
             // KN kód (Kombinált Nómenklatúra) - 8 jegyű termékkód
-            $table->string('cn_code', 8);
+            $table->string('cn_code', 8)->nullable();
 
             // Mennyiségi adatok
             $table->decimal('quantity', 15, 2);

@@ -93,7 +93,21 @@ final class Order extends Model
     protected function calculatedTotal(): Attribute
     {
         return Attribute::make(
+            get: fn (): float => (float) $this->orderLines->sum(fn (OrderLine $line): float => $line->total_with_tax),
+        );
+    }
+
+    protected function calculatedNetTotal(): Attribute
+    {
+        return Attribute::make(
             get: fn (): float => (float) $this->orderLines->sum(fn (OrderLine $line): float => $line->subtotal),
+        );
+    }
+
+    protected function calculatedTaxTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => (float) $this->orderLines->sum(fn (OrderLine $line): float => $line->tax_amount),
         );
     }
 

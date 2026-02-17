@@ -5,20 +5,46 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Orders\Pages;
 
 use App\Filament\Resources\Orders\OrderResource;
+use App\Filament\Resources\Orders\Schemas\OrderForm;
 use App\Models\Order;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Schemas\Components\Wizard\Step;
 use Override;
 
 final class CreateOrder extends CreateRecord
 {
+    use CreateRecord\Concerns\HasWizard;
+
     protected static string $resource = OrderResource::class;
+
+    /**
+     * @return array<int, Step>
+     */
+    protected function getSteps(): array
+    {
+        return [
+            Step::make(__('Order Details'))
+                ->description(__('Basic order information'))
+                ->schema(OrderForm::getOrderInfoFields())
+                ->columns(2),
+
+            Step::make(__('Order Items'))
+                ->description(__('Add products to the order'))
+                ->schema([
+                    OrderForm::getOrderLineRepeater(),
+                ]),
+
+            Step::make(__('Shipping & Summary'))
+                ->description(__('Shipping address and order review'))
+                ->schema(OrderForm::getShippingFields())
+                ->columns(2),
+        ];
+    }
 
     #[Override]
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Verify order number is unique before creating
         if (isset($data['order_number']) && Order::query()->where('order_number', $data['order_number'])->exists()) {
-            // Generate a new unique order number if duplicate found
             $data['order_number'] = $this->generateOrderNumber();
         }
 

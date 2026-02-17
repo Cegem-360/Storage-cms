@@ -17,97 +17,133 @@ final class OrderInfolist
     {
         return $schema
             ->components([
-                Section::make('Order Information')
+                Section::make(__('Order Information'))
                     ->schema([
                         TextEntry::make('order_number')
-                            ->label('Order Number'),
+                            ->label(__('Order Number')),
                         TextEntry::make('type')
-                            ->label('Order Type'),
+                            ->label(__('Order Type')),
                         TextEntry::make('customer.name')
-                            ->label('Customer')
+                            ->label(__('Customer'))
                             ->placeholder('-'),
                         TextEntry::make('supplier.company_name')
-                            ->label('Supplier')
+                            ->label(__('Supplier'))
                             ->placeholder('-'),
                         TextEntry::make('status')
-                            ->label('Status')
+                            ->label(__('Status'))
                             ->badge(),
                         TextEntry::make('order_date')
-                            ->label('Order Date')
+                            ->label(__('Order Date'))
                             ->date(),
                         TextEntry::make('delivery_date')
-                            ->label('Delivery Date')
+                            ->label(__('Delivery Date'))
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('total_amount')
-                            ->label('Total Amount')
+                            ->label(__('Total Amount'))
                             ->money('HUF'),
                         TextEntry::make('shipping_address')
-                            ->label('Shipping Address')
+                            ->label(__('Shipping Address'))
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make('Order Items')
+                Section::make(__('Order Items'))
                     ->schema([
                         RepeatableEntry::make('orderLines')
                             ->label('')
                             ->schema([
                                 TextEntry::make('product.name')
-                                    ->label('Product'),
+                                    ->label(__('Product')),
                                 TextEntry::make('quantity')
-                                    ->label('Quantity')
+                                    ->label(__('Quantity'))
                                     ->numeric(),
                                 TextEntry::make('unit_price')
-                                    ->label('Unit Price')
+                                    ->label(__('Unit Price'))
                                     ->money('HUF'),
                                 TextEntry::make('discount_percent')
-                                    ->label('Discount')
+                                    ->label(__('Discount'))
+                                    ->suffix('%'),
+                                TextEntry::make('tax_percent')
+                                    ->label(__('Tax %'))
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
-                                    ->label('Subtotal')
+                                    ->label(__('Net Total'))
                                     ->state(fn ($record): string => Number::currency($record->subtotal, in: 'HUF', locale: 'hu')),
+                                TextEntry::make('tax_amount')
+                                    ->label(__('Tax Amount'))
+                                    ->state(fn ($record): string => Number::currency($record->tax_amount, in: 'HUF', locale: 'hu')),
+                                TextEntry::make('total_with_tax')
+                                    ->label(__('Gross Total'))
+                                    ->state(fn ($record): string => Number::currency($record->total_with_tax, in: 'HUF', locale: 'hu')),
                                 TextEntry::make('note')
-                                    ->label('Note')
+                                    ->label(__('Note'))
                                     ->placeholder('-'),
                             ])
                             ->columns(3),
                     ]),
 
-                Section::make('Document History')
+                Section::make(__('Order Totals'))
+                    ->schema([
+                        TextEntry::make('calculated_net_total')
+                            ->label(__('Net Total'))
+                            ->state(fn (Order $record): string => Number::currency(
+                                $record->calculated_net_total,
+                                in: 'HUF',
+                                locale: 'hu',
+                            )),
+                        TextEntry::make('calculated_tax_total')
+                            ->label(__('Tax Total'))
+                            ->state(fn (Order $record): string => Number::currency(
+                                $record->calculated_tax_total,
+                                in: 'HUF',
+                                locale: 'hu',
+                            )),
+                        TextEntry::make('calculated_total')
+                            ->label(__('Gross Total'))
+                            ->state(fn (Order $record): string => Number::currency(
+                                $record->calculated_total,
+                                in: 'HUF',
+                                locale: 'hu',
+                            ))
+                            ->weight('bold'),
+                    ])
+                    ->columns(3),
+
+                Section::make(__('Document History'))
                     ->schema([
                         RepeatableEntry::make('receipts')
                             ->label('')
                             ->schema([
                                 TextEntry::make('receipt_number')
-                                    ->label('Receipt Number'),
+                                    ->label(__('Receipt Number')),
                                 TextEntry::make('receipt_date')
-                                    ->label('Receipt Date')
+                                    ->label(__('Receipt Date'))
                                     ->date(),
                                 TextEntry::make('status')
-                                    ->label('Status')
+                                    ->label(__('Status'))
                                     ->badge(),
                                 TextEntry::make('total_amount')
-                                    ->label('Total Amount')
+                                    ->label(__('Total Amount'))
                                     ->money('HUF'),
                             ])
                             ->columns(4)
                             ->placeholder(__('No receipts yet')),
                     ]),
 
-                Section::make('Timestamps')
+                Section::make(__('Timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label('Created At')
+                            ->label(__('Created At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label('Updated At')
+                            ->label(__('Updated At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('deleted_at')
-                            ->label('Deleted At')
+                            ->label(__('Deleted At'))
                             ->dateTime()
                             ->visible(fn (Order $record): bool => $record->trashed()),
                     ])

@@ -24,6 +24,8 @@ return new class() extends Migration
             $table->integer('capacity')->nullable();
             $table->unsignedBigInteger('manager_id')->nullable(); // FK nélkül először
             $table->boolean('is_active')->default(true);
+            $table->boolean('is_consignment')->default(false);
+            $table->foreignId('owner_supplier_id')->nullable()->constrained('suppliers')->nullOnDelete();
             $table->string('valuation_method')->default('fifo');
             $table->timestamps();
             $table->softDeletes();

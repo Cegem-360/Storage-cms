@@ -86,6 +86,7 @@ it('calculates total correctly', function (): void {
         'quantity' => 2,
         'unit_price' => 25.00,
         'discount_percent' => 0,
+        'tax_percent' => 0,
     ]);
 
     OrderLine::factory()->create([
@@ -94,6 +95,7 @@ it('calculates total correctly', function (): void {
         'quantity' => 1,
         'unit_price' => 30.00,
         'discount_percent' => 10, // 10% discount
+        'tax_percent' => 0,
     ]);
 
     $total = $order->calculated_total;
@@ -133,6 +135,7 @@ it('can refresh total amount', function (): void {
         'quantity' => 3,
         'unit_price' => 15.00,
         'discount_percent' => 0,
+        'tax_percent' => 0,
     ]);
 
     $order->refreshTotal();
@@ -149,6 +152,7 @@ it('can add order line', function (): void {
         'quantity' => 1,
         'unit_price' => 50.00,
         'discount_percent' => 0,
+        'tax_percent' => 0,
     ]);
 
     $order->addLine($orderLine);
