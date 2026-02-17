@@ -77,7 +77,6 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                         ->label('Related Order')
                         ->afterStateUpdated(function (Set $set, int $state): void {
                             $order = Order::query()->find($state);
-                            dump($order);
                             $set('customer_id', $order?->customer_id);
                             $set('supplier_id', $order?->supplier_id);
                         })

@@ -26,7 +26,7 @@ final class EditProfile extends BaseEditProfile
     {
         return $schema
             ->components([
-                Section::make(__('Profile Information'))
+                Section::make('Profile Information')
                     ->description(__('Update your account profile information.'))
                     ->components([
                         $this->getNameFormComponent(),
@@ -34,7 +34,7 @@ final class EditProfile extends BaseEditProfile
                     ])
                     ->columns(2),
 
-                Section::make(__('Update Password'))
+                Section::make('Update Password')
                     ->description(__('Ensure your account is using a long, random password to stay secure.'))
                     ->components([
                         $this->getPasswordFormComponent(),

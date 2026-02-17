@@ -9,6 +9,7 @@ use App\Filament\Resources\Warehouses\Pages\CreateWarehouse;
 use App\Filament\Resources\Warehouses\Pages\EditWarehouse;
 use App\Filament\Resources\Warehouses\Pages\ListWarehouses;
 use App\Filament\Resources\Warehouses\Pages\ViewWarehouse;
+use App\Filament\Resources\Warehouses\RelationManagers\LocationsRelationManager;
 use App\Filament\Resources\Warehouses\RelationManagers\StocksRelationManager;
 use App\Filament\Resources\Warehouses\Schemas\WarehouseForm;
 use App\Filament\Resources\Warehouses\Schemas\WarehouseInfolist;
@@ -47,6 +48,7 @@ final class WarehouseResource extends Resource
     public static function getRelations(): array
     {
         return [
+            LocationsRelationManager::class,
             StocksRelationManager::class,
         ];
     }

@@ -115,4 +115,15 @@ describe('SupplierPrice Filament Resource', function (): void {
                 'currency' => 'required',
             ]);
     });
+
+    it('can delete a supplier price', function (): void {
+        $supplierPrice = SupplierPrice::factory()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditSupplierPrice::class, ['record' => $supplierPrice->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertModelMissing($supplierPrice);
+    });
 });

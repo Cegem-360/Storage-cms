@@ -81,4 +81,41 @@ describe('Team Filament Resource', function (): void {
             ->call('create')
             ->assertHasFormErrors(['slug' => 'unique']);
     });
+
+    it('validates required fields on create', function (): void {
+        Livewire::test(CreateTeam::class)
+            ->fillForm([
+                'name' => null,
+                'slug' => null,
+            ])
+            ->call('create')
+            ->assertHasFormErrors([
+                'name' => 'required',
+                'slug' => 'required',
+            ]);
+    });
+
+    it('validates required fields on edit', function (): void {
+        $team = Team::factory()->create();
+
+        Livewire::test(EditTeam::class, ['record' => $team->getRouteKey()])
+            ->fillForm([
+                'name' => null,
+                'slug' => null,
+            ])
+            ->call('save')
+            ->assertHasFormErrors([
+                'name' => 'required',
+                'slug' => 'required',
+            ]);
+    });
+
+    it('can delete a team', function (): void {
+        $team = Team::factory()->create();
+
+        Livewire::test(EditTeam::class, ['record' => $team->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertModelMissing($team);
+    });
 });

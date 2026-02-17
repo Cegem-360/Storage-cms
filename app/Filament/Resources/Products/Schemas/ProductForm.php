@@ -12,8 +12,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -24,114 +24,103 @@ final class ProductForm
     {
         return $schema
             ->components([
-                Section::make('Basic Information')
-                    ->schema([
-                        TextInput::make('sku')
-                            ->label('SKU')
-                            ->required()
-                            ->scopedUnique(ignoreRecord: true)
-                            ->maxLength(100),
-                        TextInput::make('name')
-                            ->label('Product Name')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('barcode')
-                            ->label('Barcode')
-                            ->maxLength(100)
-                            ->afterContent(
-                                Action::make('generateBarcode')
-                                    ->label('Generate Barcode')
-                                    ->icon(Heroicon::OutlinedQrCode)
-                                    ->color('gray')
-                                    ->action(function (Set $set): void {
-                                        $set('barcode', BarcodeService::generateEan13());
-
-                                        Notification::make()
-                                            ->title(__('Barcode generated successfully'))
-                                            ->success()
-                                            ->send();
-                                    }),
-                            ),
-                        Textarea::make('description')
-                            ->label('Description')
-                            ->rows(3)
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2),
-
-                Section::make('Classification')
-                    ->schema([
-                        Select::make('category_id')
-                            ->label('Category')
-                            ->relationship('category', 'name')
-                            ->required()
-                            ->searchable()
-                            ->preload()
-                            ->createOptionForm([
+                Tabs::make()
+                    ->tabs([
+                        Tab::make('Basic Information')
+                            ->schema([
+                                TextInput::make('sku')
+                                    ->label('SKU')
+                                    ->required()
+                                    ->scopedUnique(ignoreRecord: true)
+                                    ->maxLength(100),
                                 TextInput::make('name')
+                                    ->label('Product Name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('barcode')
+                                    ->label('Barcode')
+                                    ->maxLength(100)
+                                    ->afterContent(
+                                        Action::make('generateBarcode')
+                                            ->label('Generate Barcode')
+                                            ->icon(Heroicon::OutlinedQrCode)
+                                            ->color('gray')
+                                            ->action(function (Set $set): void {
+                                                $set('barcode', BarcodeService::generateEan13());
+
+                                                Notification::make()
+                                                    ->title(__('Barcode generated successfully'))
+                                                    ->success()
+                                                    ->send();
+                                            }),
+                                    ),
+                                Select::make('category_id')
+                                    ->label('Category')
+                                    ->relationship('category', 'name')
+                                    ->required()
+                                    ->searchable()
+                                    ->preload()
+                                    ->createOptionForm([
+                                        TextInput::make('name')
+                                            ->required(),
+                                    ]),
+                                Select::make('supplier_id')
+                                    ->label('Primary Supplier')
+                                    ->relationship('supplier', 'company_name')
+                                    ->required()
+                                    ->searchable()
+                                    ->preload(),
+                                Select::make('status')
+                                    ->label('Status')
+                                    ->options(ProductStatus::class)
+                                    ->default(ProductStatus::ACTIVE)
                                     ->required(),
-                            ]),
-                        Select::make('supplier_id')
-                            ->label('Primary Supplier')
-                            ->relationship('supplier', 'company_name')
-                            ->required()
-                            ->searchable()
-                            ->preload(),
-                        Select::make('status')
-                            ->label('Status')
-                            ->options(ProductStatus::class)
-                            ->default(ProductStatus::ACTIVE)
-                            ->required(),
-                    ])
-                    ->columns(3),
+                                Textarea::make('description')
+                                    ->label('Description')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+                            ])
+                            ->columns(3),
 
-                Section::make('Measurements')
-                    ->schema([
-                        Select::make('unit_of_measure')
-                            ->label('Unit of Measure')
-                            ->options(UnitType::class)
-                            ->default(UnitType::PIECE)
-                            ->required(),
-                        TextInput::make('weight')
-                            ->label('Weight (kg)')
-                            ->numeric()
-                            ->minValue(0)
-                            ->suffix('kg'),
-                        TextInput::make('dimensions.length')
-                            ->label('Length (cm)')
-                            ->numeric()
-                            ->minValue(0)
-                            ->suffix('cm'),
-                        TextInput::make('dimensions.width')
-                            ->label('Width (cm)')
-                            ->numeric()
-                            ->minValue(0)
-                            ->suffix('cm'),
-                        TextInput::make('dimensions.height')
-                            ->label('Height (cm)')
-                            ->numeric()
-                            ->minValue(0)
-                            ->suffix('cm'),
-                    ])
-                    ->columns(3)
-                    ->collapsible(),
+                        Tab::make('Measurements & Pricing')
+                            ->schema([
+                                Select::make('unit_of_measure')
+                                    ->label('Unit of Measure')
+                                    ->options(UnitType::class)
+                                    ->default(UnitType::PIECE)
+                                    ->required(),
+                                TextInput::make('weight')
+                                    ->label('Weight (kg)')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('kg'),
+                                TextInput::make('dimensions.length')
+                                    ->label('Length (cm)')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('cm'),
+                                TextInput::make('dimensions.width')
+                                    ->label('Width (cm)')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('cm'),
+                                TextInput::make('dimensions.height')
+                                    ->label('Height (cm)')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->suffix('cm'),
+                                TextInput::make('price')
+                                    ->label('Price')
+                                    ->required()
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->default(0)
+                                    ->prefix('Ft')
+                                    ->suffix('/ unit'),
+                            ])
+                            ->columns(3),
 
-                Section::make('Pricing')
-                    ->schema([
-                        TextInput::make('price')
-                            ->label('Price')
-                            ->required()
-                            ->numeric()
-                            ->minValue(0)
-                            ->default(0)
-                            ->prefix('Ft')
-                            ->suffix('/ unit'),
-                    ])
-                    ->columns(1),
-
-                Section::make('Stock Management')
-                    ->schema([
-                        Grid::make(3)
+                        Tab::make('Stock Management')
                             ->schema([
                                 TextInput::make('min_stock')
                                     ->label('Minimum Stock')
@@ -154,9 +143,10 @@ final class ProductForm
                                     ->minValue(0)
                                     ->default(0)
                                     ->helperText(__('Maximum stock level to maintain')),
-                            ]),
+                            ])
+                            ->columns(3),
                     ])
-                    ->collapsible(),
+                    ->columnSpanFull(),
             ]);
     }
 }

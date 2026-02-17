@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Filament\Resources\IntrastatOutbounds\Pages\CreateIntrastatOutbound;
+use App\Filament\Resources\IntrastatOutbounds\Pages\EditIntrastatOutbound;
 use App\Filament\Resources\IntrastatOutbounds\Pages\ListIntrastatOutbounds;
 use App\Models\IntrastatDeclaration;
 use App\Models\User;
@@ -30,5 +32,43 @@ describe('IntrastatOutbound Filament Resource', function (): void {
 
         Livewire::test(ListIntrastatOutbounds::class)
             ->assertCanSeeTableRecords($declarations);
+    });
+
+    it('can render the create page', function (): void {
+        Livewire::test(CreateIntrastatOutbound::class)
+            ->assertOk();
+    });
+
+    it('can render the edit page', function (): void {
+        $declaration = IntrastatDeclaration::factory()
+            ->dispatch()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditIntrastatOutbound::class, ['record' => $declaration->getRouteKey()])
+            ->assertOk();
+    });
+
+    it('can edit an intrastat outbound', function (): void {
+        $declaration = IntrastatDeclaration::factory()
+            ->dispatch()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditIntrastatOutbound::class, ['record' => $declaration->getRouteKey()])
+            ->call('save')
+            ->assertHasNoFormErrors();
+    });
+
+    it('can delete an intrastat outbound', function (): void {
+        $declaration = IntrastatDeclaration::factory()
+            ->dispatch()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditIntrastatOutbound::class, ['record' => $declaration->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertModelMissing($declaration);
     });
 });

@@ -120,4 +120,15 @@ describe('Warehouse Filament Resource', function (): void {
                 'type' => 'required',
             ]);
     });
+
+    it('can delete a warehouse', function (): void {
+        $warehouse = Warehouse::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(EditWarehouse::class, ['record' => $warehouse->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertSoftDeleted('warehouses', [
+            'id' => $warehouse->id,
+        ]);
+    });
 });

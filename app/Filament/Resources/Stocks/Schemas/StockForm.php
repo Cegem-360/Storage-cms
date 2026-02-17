@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Stocks\Schemas;
 
 use App\Enums\StockStatus;
+use App\Models\WarehouseLocation;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 final class StockForm
@@ -20,7 +22,16 @@ final class StockForm
                     ->required(),
                 Select::make('warehouse_id')
                     ->relationship('warehouse', 'name')
-                    ->required(),
+                    ->required()
+                    ->live(),
+                Select::make('warehouse_location_id')
+                    ->label(__('Warehouse Locations'))
+                    ->options(fn (Get $get) => WarehouseLocation::query()
+                        ->where('warehouse_id', $get('warehouse_id'))
+                        ->where('is_active', true)
+                        ->pluck('code', 'id'))
+                    ->searchable()
+                    ->visible(fn (Get $get): bool => filled($get('warehouse_id'))),
                 TextInput::make('quantity')
                     ->required()
                     ->numeric()

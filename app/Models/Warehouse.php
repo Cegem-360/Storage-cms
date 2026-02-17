@@ -54,6 +54,11 @@ final class Warehouse extends Model
         return $this->hasMany(Employee::class);
     }
 
+    public function locations(): HasMany
+    {
+        return $this->hasMany(WarehouseLocation::class);
+    }
+
     // Helper methods
     public function getAvailableCapacity(): int
     {

@@ -63,7 +63,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::BODY_END,
-                fn (): string => Blade::render('<x-ai-assistant-button />'),
+                fn (): string => Blade::render('@livewire(\'ai-assistant-chat\')'),
             );
     }
 }

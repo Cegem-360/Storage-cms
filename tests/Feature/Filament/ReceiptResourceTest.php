@@ -130,3 +130,16 @@ it('can render the view page', function (): void {
     Livewire::test(ViewReceipt::class, ['record' => $receipt->getRouteKey()])
         ->assertOk();
 });
+
+it('can delete a receipt', function (): void {
+    $receipt = Receipt::factory()
+        ->recycle($this->user->team)
+        ->create();
+
+    Livewire::test(EditReceipt::class, ['record' => $receipt->getRouteKey()])
+        ->callAction('delete');
+
+    $this->assertSoftDeleted('receipts', [
+        'id' => $receipt->id,
+    ]);
+});

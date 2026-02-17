@@ -17,7 +17,7 @@ final class OrderInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Order Information'))
+                Section::make('Order Information')
                     ->schema([
                         TextEntry::make('order_number')
                             ->label('Order Number'),
@@ -49,7 +49,7 @@ final class OrderInfolist
                     ])
                     ->columns(2),
 
-                Section::make(__('Order Items'))
+                Section::make('Order Items')
                     ->schema([
                         RepeatableEntry::make('orderLines')
                             ->label('')
@@ -75,7 +75,7 @@ final class OrderInfolist
                             ->columns(3),
                     ]),
 
-                Section::make(__('Document History'))
+                Section::make('Document History')
                     ->schema([
                         RepeatableEntry::make('receipts')
                             ->label('')
@@ -96,7 +96,7 @@ final class OrderInfolist
                             ->placeholder(__('No receipts yet')),
                     ]),
 
-                Section::make(__('Timestamps'))
+                Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->label('Created At')

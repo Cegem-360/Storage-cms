@@ -15,7 +15,7 @@ final class ReceiptInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Receipt Information'))
+                Section::make('Receipt Information')
                     ->schema([
                         TextEntry::make('receipt_number')
                             ->label('Receipt Number'),
@@ -43,7 +43,7 @@ final class ReceiptInfolist
                     ])
                     ->columns(2),
 
-                Section::make(__('Receipt Items'))
+                Section::make('Receipt Items')
                     ->schema([
                         RepeatableEntry::make('receiptLines')
                             ->label('')
@@ -80,7 +80,7 @@ final class ReceiptInfolist
                             ->columns(3),
                     ]),
 
-                Section::make(__('Timestamps'))
+                Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->label('Created At')

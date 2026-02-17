@@ -131,4 +131,15 @@ describe('Category Filament Resource', function (): void {
                 'code' => 'required',
             ]);
     });
+
+    it('can delete a category', function (): void {
+        $category = Category::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(EditCategory::class, ['record' => $category->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertSoftDeleted('categories', [
+            'id' => $category->id,
+        ]);
+    });
 });

@@ -8,6 +8,8 @@ use App\Enums\CustomerType;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 final class CustomerForm
@@ -16,70 +18,75 @@ final class CustomerForm
     {
         return $schema
             ->components([
-                Section::make('Customer Information')
-                    ->schema([
-                        TextInput::make('customer_code')
-                            ->required(),
-                        TextInput::make('name')
-                            ->required(),
-                        TextInput::make('email')
-                            ->label('Email address')
-                            ->email()
-                            ->required(),
-                        TextInput::make('phone')
-                            ->tel(),
-                        Select::make('type')
-                            ->options(CustomerType::class)
-                            ->enum(CustomerType::class),
-                    ])
-                    ->columns(2),
+                Tabs::make()
+                    ->tabs([
+                        Tab::make('Customer Information')
+                            ->schema([
+                                TextInput::make('customer_code')
+                                    ->required(),
+                                TextInput::make('name')
+                                    ->required(),
+                                TextInput::make('email')
+                                    ->label('Email address')
+                                    ->email()
+                                    ->required(),
+                                TextInput::make('phone')
+                                    ->tel(),
+                                Select::make('type')
+                                    ->options(CustomerType::class)
+                                    ->enum(CustomerType::class),
+                            ])
+                            ->columns(2),
 
-                Section::make('Billing Address')
-                    ->schema([
-                        TextInput::make('billing_address.street')
-                            ->label('Street'),
-                        TextInput::make('billing_address.city')
-                            ->label('City'),
-                        TextInput::make('billing_address.state')
-                            ->label('State'),
-                        TextInput::make('billing_address.postal_code')
-                            ->label('Postal Code'),
-                        TextInput::make('billing_address.country')
-                            ->label('Country'),
-                    ])
-                    ->columns(2)
-                    ->collapsible(),
+                        Tab::make('Addresses')
+                            ->schema([
+                                Section::make('Billing Address')
+                                    ->schema([
+                                        TextInput::make('billing_address.street')
+                                            ->label('Street'),
+                                        TextInput::make('billing_address.city')
+                                            ->label('City'),
+                                        TextInput::make('billing_address.state')
+                                            ->label('State'),
+                                        TextInput::make('billing_address.postal_code')
+                                            ->label('Postal Code'),
+                                        TextInput::make('billing_address.country')
+                                            ->label('Country'),
+                                    ])
+                                    ->columns(2),
 
-                Section::make('Shipping Address')
-                    ->schema([
-                        TextInput::make('shipping_address.street')
-                            ->label('Street'),
-                        TextInput::make('shipping_address.city')
-                            ->label('City'),
-                        TextInput::make('shipping_address.state')
-                            ->label('State'),
-                        TextInput::make('shipping_address.postal_code')
-                            ->label('Postal Code'),
-                        TextInput::make('shipping_address.country')
-                            ->label('Country'),
-                    ])
-                    ->columns(2)
-                    ->collapsible(),
+                                Section::make('Shipping Address')
+                                    ->schema([
+                                        TextInput::make('shipping_address.street')
+                                            ->label('Street'),
+                                        TextInput::make('shipping_address.city')
+                                            ->label('City'),
+                                        TextInput::make('shipping_address.state')
+                                            ->label('State'),
+                                        TextInput::make('shipping_address.postal_code')
+                                            ->label('Postal Code'),
+                                        TextInput::make('shipping_address.country')
+                                            ->label('Country'),
+                                    ])
+                                    ->columns(2),
+                            ]),
 
-                Section::make('Financial Information')
-                    ->schema([
-                        TextInput::make('credit_limit')
-                            ->required()
-                            ->numeric()
-                            ->default(0.0)
-                            ->prefix('HUF'),
-                        TextInput::make('balance')
-                            ->required()
-                            ->numeric()
-                            ->default(0.0)
-                            ->prefix('HUF'),
+                        Tab::make('Financial Information')
+                            ->schema([
+                                TextInput::make('credit_limit')
+                                    ->required()
+                                    ->numeric()
+                                    ->default(0.0)
+                                    ->prefix('HUF'),
+                                TextInput::make('balance')
+                                    ->required()
+                                    ->numeric()
+                                    ->default(0.0)
+                                    ->prefix('HUF'),
+                            ])
+                            ->columns(2),
                     ])
-                    ->columns(2),
+                    ->columnSpanFull(),
             ]);
     }
 }

@@ -182,4 +182,15 @@ describe('Product Filament Resource', function (): void {
 
         expect($product->fresh()->name)->toBe('Updated Name');
     });
+
+    it('can delete a product', function (): void {
+        $product = Product::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(EditProduct::class, ['record' => $product->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertSoftDeleted('products', [
+            'id' => $product->id,
+        ]);
+    });
 });

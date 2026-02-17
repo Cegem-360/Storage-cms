@@ -118,3 +118,16 @@ it('can render the view page', function (): void {
     Livewire::test(ViewOrder::class, ['record' => $order->getRouteKey()])
         ->assertOk();
 });
+
+it('can delete an order', function (): void {
+    $order = Order::factory()
+        ->recycle($this->user->team)
+        ->create();
+
+    Livewire::test(EditOrder::class, ['record' => $order->getRouteKey()])
+        ->callAction('delete');
+
+    $this->assertSoftDeleted('orders', [
+        'id' => $order->id,
+    ]);
+});

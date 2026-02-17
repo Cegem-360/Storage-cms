@@ -15,7 +15,7 @@ final class SupplierPriceInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Price Information'))
+                Section::make('Price Information')
                     ->schema([
                         TextEntry::make('supplier.company_name')
                             ->label('Supplier'),
@@ -35,7 +35,7 @@ final class SupplierPriceInfolist
                     ])
                     ->columns(2),
 
-                Section::make(__('Validity'))
+                Section::make('Validity')
                     ->schema([
                         TextEntry::make('valid_from')
                             ->label('Valid From')
@@ -55,7 +55,7 @@ final class SupplierPriceInfolist
                     ])
                     ->columns(2),
 
-                Section::make(__('Timestamps'))
+                Section::make('Timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->label('Created At')

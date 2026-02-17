@@ -129,3 +129,16 @@ it('can update an inventory', function (): void {
         'type' => InventoryType::CYCLE->value,
     ]);
 });
+
+it('can delete an inventory', function (): void {
+    $inventory = Inventory::factory()
+        ->recycle($this->user->team)
+        ->create();
+
+    Livewire::test(EditInventory::class, ['record' => $inventory->getRouteKey()])
+        ->callAction('delete');
+
+    $this->assertSoftDeleted('inventories', [
+        'id' => $inventory->id,
+    ]);
+});

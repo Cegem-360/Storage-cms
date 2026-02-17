@@ -28,6 +28,7 @@ final class Stock extends Model
         'team_id',
         'product_id',
         'warehouse_id',
+        'warehouse_location_id',
         'quantity',
         'reserved_quantity',
         'minimum_stock',
@@ -51,6 +52,11 @@ final class Stock extends Model
     public function batch(): BelongsTo
     {
         return $this->belongsTo(Batch::class);
+    }
+
+    public function warehouseLocation(): BelongsTo
+    {
+        return $this->belongsTo(WarehouseLocation::class);
     }
 
     public function transactions(): HasMany

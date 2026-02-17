@@ -149,4 +149,15 @@ describe('Stock Filament Resource', function (): void {
                 'maximum_stock' => 'required',
             ]);
     });
+
+    it('can delete a stock', function (): void {
+        $stock = Stock::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(EditStock::class, ['record' => $stock->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertSoftDeleted('stocks', [
+            'id' => $stock->id,
+        ]);
+    });
 });

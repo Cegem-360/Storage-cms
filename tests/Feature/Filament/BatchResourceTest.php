@@ -156,4 +156,15 @@ describe('Batch Filament Resource', function (): void {
 
         expect($batch->fresh()->quantity)->toBe(50);
     });
+
+    it('can delete a batch', function (): void {
+        $batch = Batch::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(EditBatch::class, ['record' => $batch->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertSoftDeleted('batches', [
+            'id' => $batch->id,
+        ]);
+    });
 });

@@ -164,4 +164,15 @@ describe('IntrastatDeclaration Filament Resource', function (): void {
 
         expect($declaration->fresh()->notes)->toBe('Some update');
     });
+
+    it('can delete an intrastat declaration', function (): void {
+        $declaration = IntrastatDeclaration::factory()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditIntrastatDeclaration::class, ['record' => $declaration->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertModelMissing($declaration);
+    });
 });

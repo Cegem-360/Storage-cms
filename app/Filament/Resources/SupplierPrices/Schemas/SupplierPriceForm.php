@@ -18,7 +18,7 @@ final class SupplierPriceForm
     {
         return $schema
             ->components([
-                Section::make(__('Price Information'))
+                Section::make('Price Information')
                     ->schema([
                         Select::make('supplier_id')
                             ->label('Supplier')
@@ -54,7 +54,7 @@ final class SupplierPriceForm
                     ])
                     ->columns(2),
 
-                Section::make(__('Validity'))
+                Section::make('Validity')
                     ->schema([
                         DatePicker::make('valid_from')
                             ->label('Valid From'),

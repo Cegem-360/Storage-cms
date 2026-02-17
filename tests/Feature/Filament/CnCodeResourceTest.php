@@ -122,4 +122,13 @@ describe('CnCode Filament Resource', function (): void {
 
         expect($cnCode->fresh()->description)->toBe('Updated description');
     });
+
+    it('can delete a cn code', function (): void {
+        $cnCode = CnCode::factory()->create();
+
+        Livewire::test(EditCnCode::class, ['record' => $cnCode->getRouteKey()])
+            ->callAction('delete');
+
+        $this->assertModelMissing($cnCode);
+    });
 });
