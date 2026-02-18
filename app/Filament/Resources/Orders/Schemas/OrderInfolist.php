@@ -114,22 +114,62 @@ final class OrderInfolist
                 Section::make(__('Document History'))
                     ->schema([
                         RepeatableEntry::make('receipts')
-                            ->label('')
+                            ->label(__('Receipts'))
                             ->schema([
                                 TextEntry::make('receipt_number')
                                     ->label(__('Receipt Number')),
                                 TextEntry::make('receipt_date')
-                                    ->label(__('Receipt Date'))
+                                    ->label(__('Date'))
                                     ->date(),
                                 TextEntry::make('status')
                                     ->label(__('Status'))
                                     ->badge(),
                                 TextEntry::make('total_amount')
-                                    ->label(__('Total Amount'))
+                                    ->label(__('Total'))
                                     ->money('HUF'),
                             ])
                             ->columns(4)
                             ->placeholder(__('No receipts yet')),
+
+                        RepeatableEntry::make('returnDeliveries')
+                            ->label(__('Return Deliveries'))
+                            ->schema([
+                                TextEntry::make('return_number')
+                                    ->label(__('Return Number')),
+                                TextEntry::make('return_date')
+                                    ->label(__('Date'))
+                                    ->date(),
+                                TextEntry::make('status')
+                                    ->label(__('Status'))
+                                    ->badge(),
+                                TextEntry::make('total_amount')
+                                    ->label(__('Total'))
+                                    ->money('HUF'),
+                            ])
+                            ->columns(4)
+                            ->placeholder(__('No return deliveries yet')),
+
+                        RepeatableEntry::make('invoices')
+                            ->label(__('Invoices'))
+                            ->schema([
+                                TextEntry::make('invoice_number')
+                                    ->label(__('Invoice Number')),
+                                TextEntry::make('invoice_date')
+                                    ->label(__('Date'))
+                                    ->date(),
+                                TextEntry::make('due_date')
+                                    ->label(__('Due Date'))
+                                    ->date()
+                                    ->placeholder('-'),
+                                TextEntry::make('status')
+                                    ->label(__('Status'))
+                                    ->badge(),
+                                TextEntry::make('total_amount')
+                                    ->label(__('Total'))
+                                    ->money('HUF'),
+                            ])
+                            ->columns(5)
+                            ->placeholder(__('No invoices yet')),
                     ]),
 
                 Section::make(__('Timestamps'))

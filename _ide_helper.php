@@ -24242,6 +24242,145 @@ namespace Livewire {
             }
     }
 
+namespace Madbox99\UserTeamSync\Facades {
+    /**
+     * @see PublisherService
+     */
+    class UserTeamSync {
+        /**
+         * @return \Madbox99\UserTeamSync\Publisher\array<string, array{url: string, api_key: ?string, active: bool}>
+         * @static
+         */
+        public static function getApps()
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->getApps();
+        }
+
+        /**
+         * @return \Madbox99\UserTeamSync\Publisher\array<string, array{url: string, api_key: ?string, active: bool}>
+         * @static
+         */
+        public static function getActiveApps()
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->getActiveApps();
+        }
+
+        /**
+         * @static
+         */
+        public static function getApiKey($appName)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->getApiKey($appName);
+        }
+
+        /**
+         * @static
+         */
+        public static function getDefaultApiKey()
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->getDefaultApiKey();
+        }
+
+        /**
+         * @return \Madbox99\UserTeamSync\Publisher\array{url: string, api_key: ?string, active: bool}|null
+         * @static
+         */
+        public static function getApp($appName)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->getApp($appName);
+        }
+
+        /**
+         * @static
+         */
+        public static function createUser($email, $name, $password, $role, $ownerEmail)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->createUser($email, $name, $password, $role, $ownerEmail);
+        }
+
+        /**
+         * @param array<string, mixed> $changedData
+         * @static
+         */
+        public static function syncUser($email, $changedData)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->syncUser($email, $changedData);
+        }
+
+        /**
+         * @static
+         */
+        public static function syncPassword($email, $password)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->syncPassword($email, $password);
+        }
+
+        /**
+         * @static
+         */
+        public static function createTeam($teamName, $userEmail, $slug = null, $userName = null)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->createTeam($teamName, $userEmail, $slug, $userName);
+        }
+
+        /**
+         * @static
+         */
+        public static function toggleUserActive($userEmail, $isActive, $appKey)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->toggleUserActive($userEmail, $isActive, $appKey);
+        }
+
+        /**
+         * @param array{url: string, api_key: ?string, active: bool} $app
+         * @static
+         */
+        public static function makeHttpClient($app)
+        {
+            /** @var \Madbox99\UserTeamSync\Publisher\PublisherService $instance */
+            return $instance->makeHttpClient($app);
+        }
+
+            }
+    }
+
+namespace Prism\Prism\Facades {
+    /**
+     */
+    class PrismServer {
+        /**
+         * @param \Closure():PendingRequest|callable():PendingRequest $prism
+         * @static
+         */
+        public static function register($name, $prism)
+        {
+            /** @var \Prism\Prism\PrismServer $instance */
+            return $instance->register($name, $prism);
+        }
+
+        /**
+         * @return \Prism\Prism\Collection<int, array{name: string, prism: Closure():PendingRequest|callable():PendingRequest}>
+         * @static
+         */
+        public static function prisms()
+        {
+            /** @var \Prism\Prism\PrismServer $instance */
+            return $instance->prisms();
+        }
+
+            }
+    }
+
 namespace SimpleSoftwareIO\QrCode\Facades {
     /**
      */
@@ -24565,6 +24704,28 @@ namespace SimpleSoftwareIO\QrCode\Facades {
 
 namespace Illuminate\Support {
     /**
+     * @template TKey of array-key
+     * @template-covariant TValue
+     * @implements \ArrayAccess<TKey, TValue>
+     * @implements \Illuminate\Support\Enumerable<TKey, TValue>
+     */
+    class Collection {
+        /**
+         * @see \Laravel\Ai\AiServiceProvider::boot()
+         * @param \Closure|array|string $by
+         * @param string $query
+         * @param int|null $limit
+         * @param array|string|null $provider
+         * @param string|null $model
+         * @static
+         */
+        public static function rerank($by, $query, $limit = null, $provider = null, $model = null)
+        {
+            return \Illuminate\Support\Collection::rerank($by, $query, $limit, $provider, $model);
+        }
+
+            }
+    /**
      */
     class Str {
         /**
@@ -24590,6 +24751,19 @@ namespace Illuminate\Support {
         public static function sanitizeHtml()
         {
             return \Illuminate\Support\Stringable::sanitizeHtml();
+        }
+
+        /**
+         * @see \Laravel\Ai\AiServiceProvider::boot()
+         * @param string|null $provider
+         * @param int|null $dimensions
+         * @param string|null $model
+         * @param int|bool|null $cache
+         * @static
+         */
+        public static function toEmbeddings($provider = null, $dimensions = null, $model = null, $cache = null)
+        {
+            return \Illuminate\Support\Stringable::toEmbeddings($provider, $dimensions, $model, $cache);
         }
 
             }
@@ -33220,6 +33394,8 @@ namespace  {
     class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Livewire extends \Livewire\Livewire {}
+    class UserTeamSync extends \Madbox99\UserTeamSync\Facades\UserTeamSync {}
+    class PrismServer extends \Prism\Prism\Facades\PrismServer {}
     class QrCode extends \SimpleSoftwareIO\QrCode\Facades\QrCode {}
 }
 

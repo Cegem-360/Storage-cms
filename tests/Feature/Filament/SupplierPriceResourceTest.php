@@ -128,3 +128,63 @@ describe('SupplierPrice Filament Resource', function (): void {
         $this->assertModelMissing($supplierPrice);
     });
 });
+
+describe('SupplierPrice Tiers in Filament', function (): void {
+    it('can create a supplier price with tiers', function (): void {
+        $supplier = Supplier::factory()->recycle($this->user->team)->create();
+        $product = Product::factory()->recycle($this->user->team)->create();
+
+        Livewire::test(CreateSupplierPrice::class)
+            ->fillForm([
+                'supplier_id' => $supplier->id,
+                'product_id' => $product->id,
+                'price' => 500,
+                'currency' => 'HUF',
+                'minimum_order_quantity' => 1,
+                'is_active' => true,
+            ])
+            ->set('data.tiers', [
+                ['min_quantity' => 1, 'max_quantity' => 10, 'price' => 500],
+                ['min_quantity' => 11, 'max_quantity' => 50, 'price' => 450],
+                ['min_quantity' => 51, 'max_quantity' => null, 'price' => 400],
+            ])
+            ->call('create')
+            ->assertHasNoFormErrors();
+
+        $supplierPrice = SupplierPrice::query()->latest()->first();
+
+        expect($supplierPrice)->not->toBeNull()
+            ->and($supplierPrice->tiers)->toHaveCount(3);
+    });
+
+    it('can view supplier price with tiers', function (): void {
+        $supplierPrice = SupplierPrice::factory()
+            ->recycle($this->user->team)
+            ->create();
+
+        SupplierPriceTier::create([
+            'supplier_price_id' => $supplierPrice->id,
+            'min_quantity' => 1,
+            'max_quantity' => 10,
+            'price' => 500.0000,
+        ]);
+
+        Livewire::test(ViewSupplierPrice::class, ['record' => $supplierPrice->getRouteKey()])
+            ->assertOk();
+    });
+
+    it('can edit supplier price and add tiers', function (): void {
+        $supplierPrice = SupplierPrice::factory()
+            ->recycle($this->user->team)
+            ->create();
+
+        Livewire::test(EditSupplierPrice::class, ['record' => $supplierPrice->getRouteKey()])
+            ->set('data.tiers', [
+                ['min_quantity' => 10, 'max_quantity' => 50, 'price' => 400],
+            ])
+            ->call('save')
+            ->assertHasNoFormErrors();
+
+        expect($supplierPrice->fresh()->tiers)->toHaveCount(1);
+    });
+});

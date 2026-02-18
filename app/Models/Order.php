@@ -58,6 +58,16 @@ final class Order extends Model
         return $this->hasMany(Receipt::class);
     }
 
+    public function returnDeliveries(): HasMany
+    {
+        return $this->hasMany(ReturnDelivery::class);
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
     public function addLine(OrderLine $line): void
     {
         $this->orderLines()->save($line);

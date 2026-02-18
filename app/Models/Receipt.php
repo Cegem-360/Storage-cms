@@ -52,6 +52,11 @@ final class Receipt extends Model
         return $this->hasMany(ReceiptLine::class);
     }
 
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
     public function addLine(ReceiptLine $line): void
     {
         $this->receiptLines()->save($line);

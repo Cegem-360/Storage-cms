@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\V1\IntrastatDeclarationController;
 use App\Http\Controllers\Api\V1\IntrastatLineController;
 use App\Http\Controllers\Api\V1\InventoryController;
 use App\Http\Controllers\Api\V1\InventoryLineController;
+use App\Http\Controllers\Api\V1\InvoiceController;
+use App\Http\Controllers\Api\V1\InvoiceLineController;
 use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\OrderLineController;
 use App\Http\Controllers\Api\V1\ProductController;
@@ -89,6 +91,7 @@ Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(funct
             'inventories' => InventoryController::class,
             'return-deliveries' => ReturnDeliveryController::class,
             'intrastat-declarations' => IntrastatDeclarationController::class,
+            'invoices' => InvoiceController::class,
         ], ['only' => ['index', 'show']]);
 
         // Super admin only
@@ -100,5 +103,6 @@ Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(funct
         Route::apiResource('inventories.lines', InventoryLineController::class)->only(['index', 'show']);
         Route::apiResource('return-deliveries.lines', ReturnDeliveryLineController::class)->only(['index', 'show']);
         Route::apiResource('intrastat-declarations.lines', IntrastatLineController::class)->only(['index', 'show']);
+        Route::apiResource('invoices.lines', InvoiceLineController::class)->only(['index', 'show']);
     });
 });
