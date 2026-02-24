@@ -203,7 +203,7 @@ final class CreateReturnDelivery extends Component implements HasActions, HasSch
                                 ->collapsible(),
                         ]),
                 ])
-                    ->skippableSteps()
+                    ->skippable()
                     ->submitAction(new HtmlString(Blade::render(<<<'BLADE'
                         <x-filament::button type="submit" size="sm">
                             {{ __('Create') }}
