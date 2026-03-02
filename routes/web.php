@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\ForceTeamScope;
 use App\Livewire\Page\DashboardPage;
 use App\Livewire\Page\ProfilePage;
 use App\Livewire\Page\SettingsPage;
@@ -93,7 +94,7 @@ Route::middleware(['guest'])->group(function (): void {
 });
 
 // Authenticated dashboard routes
-Route::middleware(['auth'])->prefix('dashboard')->name('dashboard')->group(function (): void {
+Route::middleware(['auth', ForceTeamScope::class])->prefix('dashboard')->name('dashboard')->group(function (): void {
     Route::get('/', DashboardPage::class);
     Route::get('/profile', ProfilePage::class)->name('.profile');
     Route::get('/settings', SettingsPage::class)->name('.settings');

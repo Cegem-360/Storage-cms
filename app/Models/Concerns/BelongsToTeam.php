@@ -23,7 +23,7 @@ trait BelongsToTeam
             /** @var User $user */
             $user = Auth::user();
 
-            if ($user->is_super_admin) {
+            if ($user->is_super_admin && ! app()->bound('force_team_scope')) {
                 return;
             }
 
