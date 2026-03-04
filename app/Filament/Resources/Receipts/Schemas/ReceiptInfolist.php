@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Receipts\Schemas;
 
+use App\Models\Team;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -35,7 +36,7 @@ final class ReceiptInfolist
                             ->badge(),
                         TextEntry::make('total_amount')
                             ->label('Total Amount')
-                            ->money('HUF'),
+                            ->money(Team::currency()),
                         TextEntry::make('notes')
                             ->label('Notes')
                             ->placeholder('-')
@@ -62,7 +63,7 @@ final class ReceiptInfolist
                                     ->color(fn ($record): string => $record->isDiscrepant() ? 'danger' : 'success'),
                                 TextEntry::make('unit_price')
                                     ->label('Unit Price')
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                                 TextEntry::make('condition')
                                     ->label('Condition')
                                     ->badge(),

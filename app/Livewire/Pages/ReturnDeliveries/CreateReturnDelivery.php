@@ -10,6 +10,7 @@ use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
 use App\Models\Order;
 use App\Models\ReturnDelivery;
+use App\Models\Team;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\DatePicker;
@@ -173,7 +174,7 @@ final class CreateReturnDelivery extends Component implements HasActions, HasSch
                                         ->numeric()
                                         ->required()
                                         ->default(0)
-                                        ->prefix('HUF')
+                                        ->prefix(Team::currency())
                                         ->columnSpan(2),
 
                                     Select::make('condition')

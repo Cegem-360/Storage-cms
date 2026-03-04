@@ -6,6 +6,7 @@ namespace App\Filament\Widgets;
 
 use App\Enums\OrderType;
 use App\Models\Order;
+use App\Models\Team;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -38,35 +39,35 @@ final class RecentOrdersWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('order_number')
-                    ->label('Order #')
+                    ->label(__('Order'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('supplier.name')
-                    ->label('Supplier')
+                    ->label(__('Supplier'))
                     ->searchable()
                     ->sortable()
                     ->limit(25),
 
                 TextColumn::make('order_date')
-                    ->label('Order Date')
+                    ->label(__('Order Date'))
                     ->date()
                     ->sortable(),
 
                 TextColumn::make('delivery_date')
-                    ->label('Expected Delivery')
+                    ->label(__('Expected Delivery'))
                     ->date()
                     ->sortable()
                     ->placeholder(__('Not set')),
 
                 TextColumn::make('status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->badge()
                     ->sortable(),
 
                 TextColumn::make('total_amount')
-                    ->label('Total')
-                    ->money('HUF')
+                    ->label(__('Total'))
+                    ->money(Team::currency())
                     ->sortable(),
             ])
             ->paginated(false)

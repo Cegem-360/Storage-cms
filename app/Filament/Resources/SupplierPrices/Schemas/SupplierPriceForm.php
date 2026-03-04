@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SupplierPrices\Schemas;
 
+use App\Models\Team;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -37,7 +38,7 @@ final class SupplierPriceForm
                             ->label(__('Price'))
                             ->numeric()
                             ->required()
-                            ->prefix('HUF'),
+                            ->prefix(Team::currency()),
                         TextInput::make('currency')
                             ->label(__('Currency'))
                             ->default('HUF')
@@ -89,14 +90,14 @@ final class SupplierPriceForm
                                     ->label(__('Price'))
                                     ->numeric()
                                     ->required()
-                                    ->prefix('HUF'),
+                                    ->prefix(Team::currency()),
                             ])
                             ->columns(3)
                             ->defaultItems(0)
                             ->reorderable(false)
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => isset($state['min_quantity'], $state['price'])
-                                ? "{$state['min_quantity']}+ ".__('pcs')." → {$state['price']} HUF"
+                                ? "{$state['min_quantity']}+ ".__('pcs')." → {$state['price']} ".Team::currency()
                                 : null
                             ),
                     ]),

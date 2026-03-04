@@ -8,6 +8,7 @@ use App\Enums\NavigationGroup;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Team;
 use App\Models\Warehouse;
 use App\Services\Inventory\InventoryValuationService;
 use Filament\Forms\Components\Select;
@@ -156,7 +157,7 @@ final class InventoryValuationReport extends Page implements HasTable
             TextColumn::make('total_value')
                 ->label('Total Value')
                 ->state(fn (Warehouse $record) => $service->getWarehouseTotalValue($record))
-                ->money('HUF')
+                ->money(Team::currency())
                 ->alignEnd()
                 ->weight('bold')
                 ->color('success'),
@@ -197,7 +198,7 @@ final class InventoryValuationReport extends Page implements HasTable
             TextColumn::make('total_value')
                 ->label('Total Value')
                 ->state(fn (Product $record) => $service->getProductTotalValue($record))
-                ->money('HUF')
+                ->money(Team::currency())
                 ->alignEnd()
                 ->weight('bold')
                 ->color('success'),
@@ -236,7 +237,7 @@ final class InventoryValuationReport extends Page implements HasTable
             TextColumn::make('total_value')
                 ->label('Total Value')
                 ->state(fn (Category $record) => $service->getCategoryTotalValue($record->id))
-                ->money('HUF')
+                ->money(Team::currency())
                 ->alignEnd()
                 ->weight('bold')
                 ->color('success'),

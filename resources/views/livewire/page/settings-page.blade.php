@@ -18,6 +18,31 @@
     @endif
 
     <form wire:submit="save" class="space-y-6">
+        {{-- General Settings --}}
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ __('General Settings') }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">{{ __('Configure general system preferences') }}</p>
+
+            <div class="max-w-md">
+                <label for="currency" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ __('Default Currency') }}
+                </label>
+                <select
+                    id="currency"
+                    wire:model="currency"
+                    class="w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition"
+                >
+                    <option value="HUF">HUF - {{ __('Hungarian Forint') }}</option>
+                    <option value="EUR">EUR - {{ __('Euro') }}</option>
+                    <option value="USD">USD - {{ __('US Dollar') }}</option>
+                </select>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ __('Currency used for prices and financial reports') }}</p>
+                @error('currency')
+                    <p class="mt-1 text-xs text-red-600 dark:text-red-400">{{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+
         {{-- Inventory Settings --}}
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">{{ __('Inventory Settings') }}</h2>

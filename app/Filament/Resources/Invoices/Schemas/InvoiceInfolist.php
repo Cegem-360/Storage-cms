@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Invoices\Schemas;
 
 use App\Models\Invoice;
+use App\Models\Team;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -70,7 +71,7 @@ final class InvoiceInfolist
                                     ->numeric(),
                                 TextEntry::make('unit_price')
                                     ->label(__('Unit Price'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                                 TextEntry::make('discount_percent')
                                     ->label(__('Discount'))
                                     ->suffix('%'),
@@ -79,13 +80,13 @@ final class InvoiceInfolist
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
                                     ->label(__('Subtotal'))
-                                    ->state(fn ($record): string => Number::currency((float) $record->subtotal, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency((float) $record->subtotal, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('tax_amount')
                                     ->label(__('Tax Amount'))
-                                    ->state(fn ($record): string => Number::currency((float) $record->tax_amount, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency((float) $record->tax_amount, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('line_total')
                                     ->label(__('Line Total'))
-                                    ->state(fn ($record): string => Number::currency((float) $record->line_total, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency((float) $record->line_total, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('note')
                                     ->label(__('Note'))
                                     ->placeholder('-'),
@@ -99,21 +100,21 @@ final class InvoiceInfolist
                             ->label(__('Subtotal'))
                             ->state(fn (Invoice $record): string => Number::currency(
                                 $record->calculated_subtotal,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             )),
                         TextEntry::make('calculated_tax_total')
                             ->label(__('Tax Total'))
                             ->state(fn (Invoice $record): string => Number::currency(
                                 $record->calculated_tax_total,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             )),
                         TextEntry::make('calculated_total')
                             ->label(__('Total'))
                             ->state(fn (Invoice $record): string => Number::currency(
                                 $record->calculated_total,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             ))
                             ->weight('bold'),

@@ -10,6 +10,7 @@ use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
 use App\Filament\Resources\ReturnDeliveries\ReturnDeliveryResource;
 use App\Models\Order;
+use App\Models\Team;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -150,7 +151,7 @@ final class CreateReturnDeliveryWithSteps extends CreateRecord
                                 ->numeric()
                                 ->required()
                                 ->default(0)
-                                ->prefix('HUF')
+                                ->prefix(Team::currency())
                                 ->columnSpan(2),
 
                             Select::make('condition')

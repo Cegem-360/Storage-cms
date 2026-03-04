@@ -46,41 +46,41 @@ final class OrderSuggestionWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('sku')
-                    ->label('SKU')
+                    ->label(__('SKU'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('name')
-                    ->label('Product')
+                    ->label(__('Product'))
                     ->searchable()
                     ->sortable()
                     ->limit(30),
 
                 TextColumn::make('current_stock')
-                    ->label('Current Stock')
+                    ->label(__('Current Stock'))
                     ->state(fn (Product $record): int => $record->getTotalStock())
                     ->numeric()
                     ->color('danger'),
 
                 TextColumn::make('reorder_point')
-                    ->label('Reorder Point')
+                    ->label(__('Reorder Point'))
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('suggested_qty')
-                    ->label('Suggested Qty')
+                    ->label(__('Suggested Qty'))
                     ->state(fn (Product $record): int => $record->calculateReorderQuantity())
                     ->numeric()
                     ->color('primary')
                     ->weight('bold'),
 
                 TextColumn::make('supplier.company_name')
-                    ->label('Supplier')
+                    ->label(__('Supplier'))
                     ->sortable(),
             ])
             ->recordActions([
                 Action::make('create_order')
-                    ->label('Create Order')
+                    ->label(__('Create Order'))
                     ->icon(Heroicon::OutlinedShoppingCart)
                     ->color('primary')
                     ->action(function (Product $record): void {

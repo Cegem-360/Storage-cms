@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SupplierPrices\Tables;
 
+use App\Models\Team;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -30,7 +31,7 @@ final class SupplierPricesTable
                     ->sortable(),
                 TextColumn::make('price')
                     ->label('Price')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('currency')
                     ->label('Currency')

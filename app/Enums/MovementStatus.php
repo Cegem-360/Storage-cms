@@ -17,10 +17,10 @@ enum MovementStatus: string implements HasColor, HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::PLANNED => 'Planned',
-            self::IN_PROGRESS => 'In Progress',
-            self::COMPLETED => 'Completed',
-            self::CANCELLED => 'Cancelled',
+            self::PLANNED => __('Planned'),
+            self::IN_PROGRESS => __('In Progress'),
+            self::COMPLETED => __('Completed'),
+            self::CANCELLED => __('Cancelled'),
         };
     }
 

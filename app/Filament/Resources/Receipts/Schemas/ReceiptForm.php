@@ -9,6 +9,7 @@ use App\Enums\ReceiptStatus;
 use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Receipt;
+use App\Models\Team;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -146,7 +147,7 @@ final class ReceiptForm
                                             ->label('Unit Price')
                                             ->numeric()
                                             ->default(0)
-                                            ->prefix('HUF')
+                                            ->prefix(Team::currency())
                                             ->columnSpan(1),
 
                                         Select::make('condition')
@@ -179,7 +180,7 @@ final class ReceiptForm
                                     ->label('Total')
                                     ->state(fn (Receipt $record): string => Number::currency(
                                         $record?->calculated_total ?? 0,
-                                        in: 'HUF',
+                                        in: Team::currency(),
                                         locale: 'hu',
                                     )),
                             ])

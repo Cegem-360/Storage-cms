@@ -7,12 +7,10 @@ namespace App\Livewire\Page;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 #[Layout('components.layouts.dashboard')]
-#[Title('Settings')]
 final class SettingsPage extends Component
 {
     /** @var array<string, array<string, string>> */
@@ -61,6 +59,9 @@ final class SettingsPage extends Component
         ],
     ];
 
+    #[Validate('required|in:HUF,EUR,USD')]
+    public string $currency = 'HUF';
+
     #[Validate('required|integer|min:1')]
     public int $lowStockThreshold = 10;
 
@@ -97,6 +98,7 @@ final class SettingsPage extends Component
         $team = auth()->user()->team;
         $team->load('settings');
 
+        $this->currency = $team->getCurrency();
         $this->lowStockThreshold = (int) $team->getSetting('low_stock_threshold', 10);
         $this->autoReorderEnabled = (bool) $team->getSetting('auto_reorder_enabled', false);
         $this->notificationEmail = $team->getSetting('notification_email');
@@ -111,6 +113,7 @@ final class SettingsPage extends Component
 
         $team = auth()->user()->team;
 
+        $team->setSetting('currency', $this->currency);
         $team->setSetting('low_stock_threshold', $this->lowStockThreshold);
         $team->setSetting('auto_reorder_enabled', $this->autoReorderEnabled);
         $team->setSetting('notification_email', $this->notificationEmail);
@@ -123,6 +126,7 @@ final class SettingsPage extends Component
 
     public function render(): Factory|View
     {
-        return view('livewire.page.settings-page');
+        return view('livewire.page.settings-page')
+            ->title(__('Settings'));
     }
 }

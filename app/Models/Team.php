@@ -21,6 +21,11 @@ final class Team extends Model
         'is_active',
     ];
 
+    public static function currency(): string
+    {
+        return auth()->user()?->team?->getCurrency() ?? 'HUF';
+    }
+
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
@@ -39,6 +44,11 @@ final class Team extends Model
     public function aiTokenUsages(): HasMany
     {
         return $this->hasMany(AiTokenUsage::class);
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->getSetting('currency', 'HUF');
     }
 
     public function getSetting(string $key, mixed $default = null): mixed

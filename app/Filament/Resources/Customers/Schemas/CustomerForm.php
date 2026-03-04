@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Customers\Schemas;
 
 use App\Enums\CustomerType;
+use App\Models\Team;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -20,14 +21,13 @@ final class CustomerForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('Customer Information')
+                        Tab::make(__('Customer Information'))
                             ->schema([
-                                TextInput::make('customer_code')
-                                    ->required(),
+                                TextInput::make('customer_code'),
                                 TextInput::make('name')
                                     ->required(),
                                 TextInput::make('email')
-                                    ->label('Email address')
+                                    ->label(__('Email address'))
                                     ->email()
                                     ->required(),
                                 TextInput::make('phone')
@@ -38,51 +38,49 @@ final class CustomerForm
                             ])
                             ->columns(2),
 
-                        Tab::make('Addresses')
+                        Tab::make(__('Addresses'))
                             ->schema([
-                                Section::make('Billing Address')
+                                Section::make(__('Billing Address'))
                                     ->schema([
                                         TextInput::make('billing_address.street')
-                                            ->label('Street'),
+                                            ->label(__('Street')),
                                         TextInput::make('billing_address.city')
-                                            ->label('City'),
+                                            ->label(__('City')),
                                         TextInput::make('billing_address.state')
-                                            ->label('State'),
+                                            ->label(__('State')),
                                         TextInput::make('billing_address.postal_code')
-                                            ->label('Postal Code'),
+                                            ->label(__('Postal Code')),
                                         TextInput::make('billing_address.country')
-                                            ->label('Country'),
+                                            ->label(__('Country')),
                                     ])
                                     ->columns(2),
 
-                                Section::make('Shipping Address')
+                                Section::make(__('Shipping Address'))
                                     ->schema([
                                         TextInput::make('shipping_address.street')
-                                            ->label('Street'),
+                                            ->label(__('Street')),
                                         TextInput::make('shipping_address.city')
-                                            ->label('City'),
+                                            ->label(__('City')),
                                         TextInput::make('shipping_address.state')
-                                            ->label('State'),
+                                            ->label(__('State')),
                                         TextInput::make('shipping_address.postal_code')
-                                            ->label('Postal Code'),
+                                            ->label(__('Postal Code')),
                                         TextInput::make('shipping_address.country')
-                                            ->label('Country'),
+                                            ->label(__('Country')),
                                     ])
                                     ->columns(2),
                             ]),
 
-                        Tab::make('Financial Information')
+                        Tab::make(__('Financial Information'))
                             ->schema([
                                 TextInput::make('credit_limit')
-                                    ->required()
                                     ->numeric()
                                     ->default(0.0)
-                                    ->prefix('HUF'),
+                                    ->prefix(Team::currency()),
                                 TextInput::make('balance')
-                                    ->required()
                                     ->numeric()
                                     ->default(0.0)
-                                    ->prefix('HUF'),
+                                    ->prefix(Team::currency()),
                             ])
                             ->columns(2),
                     ])

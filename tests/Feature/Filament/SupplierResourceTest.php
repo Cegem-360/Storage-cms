@@ -82,12 +82,10 @@ describe('Supplier Resource', function (): void {
     it('validates required fields on create', function (): void {
         Livewire::test(CreateSupplier::class)
             ->fillForm([
-                'code' => null,
                 'company_name' => null,
             ])
             ->call('create')
             ->assertHasFormErrors([
-                'code' => 'required',
                 'company_name' => 'required',
             ]);
     });

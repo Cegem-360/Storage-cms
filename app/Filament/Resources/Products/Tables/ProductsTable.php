@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Products\Tables;
 
 use App\Enums\ProductStatus;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -128,7 +129,7 @@ final class ProductsTable
                     ->label('Supplier')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('status')
                     ->badge(),

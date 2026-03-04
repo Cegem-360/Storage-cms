@@ -83,12 +83,12 @@ final class StockStatsWidget extends StatsOverviewWidget
                 ->descriptionIcon(Heroicon::OutlinedTruck)
                 ->color('info'),
 
-            Stat::make(__('Monthly Purchase Cost'), Number::currency((float) $monthlyPurchaseCost, in: 'HUF', locale: 'hu', precision: 0))
+            Stat::make(__('Monthly Purchase Cost'), Number::currency((float) $monthlyPurchaseCost, in: Team::currency(), locale: 'hu', precision: 0))
                 ->description(__("This month's purchases"))
                 ->descriptionIcon(Heroicon::OutlinedBanknotes)
                 ->color('warning'),
 
-            Stat::make(__('Inventory Value'), Number::currency((float) $inventoryValue, in: 'HUF', locale: 'hu', precision: 0))
+            Stat::make(__('Inventory Value'), Number::currency((float) $inventoryValue, in: Team::currency(), locale: 'hu', precision: 0))
                 ->description(__('Total stock value'))
                 ->descriptionIcon(Heroicon::OutlinedCalculator)
                 ->color('success'),

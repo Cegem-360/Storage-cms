@@ -8,6 +8,7 @@ use App\Enums\InvoiceStatus;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderLine;
+use App\Models\Team;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -135,7 +136,7 @@ final class InvoiceForm
                                             ->numeric()
                                             ->required()
                                             ->default(0)
-                                            ->prefix('HUF'),
+                                            ->prefix(Team::currency()),
                                         TextInput::make('discount_percent')
                                             ->label(__('Discount %'))
                                             ->numeric()
@@ -162,21 +163,21 @@ final class InvoiceForm
                                     ->label(__('Subtotal'))
                                     ->state(fn (Invoice $record): string => Number::currency(
                                         $record?->calculated_subtotal ?? 0,
-                                        in: 'HUF',
+                                        in: Team::currency(),
                                         locale: 'hu',
                                     )),
                                 TextEntry::make('calculated_tax_total')
                                     ->label(__('Tax Total'))
                                     ->state(fn (Invoice $record): string => Number::currency(
                                         $record?->calculated_tax_total ?? 0,
-                                        in: 'HUF',
+                                        in: Team::currency(),
                                         locale: 'hu',
                                     )),
                                 TextEntry::make('calculated_total')
                                     ->label(__('Total'))
                                     ->state(fn (Invoice $record): string => Number::currency(
                                         $record?->calculated_total ?? 0,
-                                        in: 'HUF',
+                                        in: Team::currency(),
                                         locale: 'hu',
                                     ))
                                     ->weight('bold'),

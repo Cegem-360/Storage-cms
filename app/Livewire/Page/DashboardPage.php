@@ -14,11 +14,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Date;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.dashboard')]
-#[Title('Dashboard')]
 final class DashboardPage extends Component
 {
     #[Computed]
@@ -92,6 +90,7 @@ final class DashboardPage extends Component
 
     public function render(): Factory|View
     {
-        return view('livewire.page.dashboard-page');
+        return view('livewire.page.dashboard-page')
+            ->title(__('Dashboard'));
     }
 }

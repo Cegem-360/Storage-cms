@@ -8,6 +8,7 @@ use App\Enums\NavigationGroup;
 use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Supplier;
+use App\Models\Team;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -107,7 +108,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
                 TextColumn::make('total_order_value')
                     ->label('Total Order Value')
                     ->state(fn (Supplier $record): float => (float) $record->orders->sum('total_amount'))
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->alignEnd()
                     ->weight('bold')
                     ->color('success'),

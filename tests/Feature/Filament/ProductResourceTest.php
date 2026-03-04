@@ -102,17 +102,13 @@ describe('Product Filament Resource', function (): void {
     it('validates required fields on create', function (): void {
         Livewire::test(CreateProduct::class)
             ->fillForm([
-                'sku' => null,
                 'name' => null,
                 'category_id' => null,
-                'supplier_id' => null,
             ])
             ->call('create')
             ->assertHasFormErrors([
-                'sku' => 'required',
                 'name' => 'required',
                 'category_id' => 'required',
-                'supplier_id' => 'required',
             ]);
     });
 

@@ -6,6 +6,7 @@ namespace App\Filament\Resources\IntrastatOutbounds\Tables;
 
 use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -48,7 +49,7 @@ final class IntrastatOutboundsTable
                     }),
                 TextColumn::make('total_invoice_value')
                     ->label('Összérték')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('intrastatLines_count')
                     ->label('Tételek száma')

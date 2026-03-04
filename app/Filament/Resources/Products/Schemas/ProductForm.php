@@ -26,23 +26,22 @@ final class ProductForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('Basic Information')
+                        Tab::make(__('Basic Information'))
                             ->schema([
                                 TextInput::make('sku')
-                                    ->label('SKU')
-                                    ->required()
+                                    ->label(__('SKU'))
                                     ->scopedUnique(ignoreRecord: true)
                                     ->maxLength(100),
                                 TextInput::make('name')
-                                    ->label('Product Name')
+                                    ->label(__('Product Name'))
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('barcode')
-                                    ->label('Barcode')
+                                    ->label(__('Barcode'))
                                     ->maxLength(100)
                                     ->afterContent(
                                         Action::make('generateBarcode')
-                                            ->label('Generate Barcode')
+                                            ->label(__('Generate Barcode'))
                                             ->icon(Heroicon::OutlinedQrCode)
                                             ->color('gray')
                                             ->action(function (Set $set): void {
@@ -55,7 +54,7 @@ final class ProductForm
                                             }),
                                     ),
                                 Select::make('category_id')
-                                    ->label('Category')
+                                    ->label(__('Category'))
                                     ->relationship('category', 'name')
                                     ->required()
                                     ->searchable()
@@ -65,80 +64,76 @@ final class ProductForm
                                             ->required(),
                                     ]),
                                 Select::make('supplier_id')
-                                    ->label('Primary Supplier')
+                                    ->label(__('Primary Supplier'))
                                     ->relationship('supplier', 'company_name')
-                                    ->required()
                                     ->searchable()
                                     ->preload(),
                                 Select::make('status')
-                                    ->label('Status')
+                                    ->label(__('Status'))
                                     ->options(ProductStatus::class)
                                     ->default(ProductStatus::ACTIVE)
                                     ->required(),
                                 Textarea::make('description')
-                                    ->label('Description')
+                                    ->label(__('Description'))
                                     ->rows(3)
                                     ->columnSpanFull(),
                             ])
                             ->columns(3),
 
-                        Tab::make('Measurements & Pricing')
+                        Tab::make(__('Measurements & Pricing'))
                             ->schema([
                                 Select::make('unit_of_measure')
-                                    ->label('Unit of Measure')
+                                    ->label(__('Unit of Measure'))
                                     ->options(UnitType::class)
                                     ->default(UnitType::PIECE)
                                     ->required(),
                                 TextInput::make('weight')
-                                    ->label('Weight (kg)')
+                                    ->label(__('Weight (kg)'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->suffix('kg'),
                                 TextInput::make('dimensions.length')
-                                    ->label('Length (cm)')
+                                    ->label(__('Length (cm)'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->suffix('cm'),
                                 TextInput::make('dimensions.width')
-                                    ->label('Width (cm)')
+                                    ->label(__('Width (cm)'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->suffix('cm'),
                                 TextInput::make('dimensions.height')
-                                    ->label('Height (cm)')
+                                    ->label(__('Height (cm)'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->suffix('cm'),
                                 TextInput::make('price')
-                                    ->label('Price')
+                                    ->label(__('Price'))
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
                                     ->prefix('Ft')
-                                    ->suffix('/ unit'),
+                                    ->suffix(__('/ unit')),
                             ])
                             ->columns(3),
 
-                        Tab::make('Stock Management')
+                        Tab::make(__('Stock Management'))
                             ->schema([
                                 TextInput::make('min_stock')
-                                    ->label('Minimum Stock')
-                                    ->required()
+                                    ->label(__('Minimum Stock'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
                                     ->helperText(__('Alert when stock falls below this level')),
                                 TextInput::make('reorder_point')
-                                    ->label('Reorder Point')
-                                    ->required()
+                                    ->label(__('Reorder Point'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
                                     ->helperText(__('Trigger reorder when reaching this level')),
                                 TextInput::make('max_stock')
-                                    ->label('Maximum Stock')
-                                    ->required()
+                                    ->label(__('Maximum Stock'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)

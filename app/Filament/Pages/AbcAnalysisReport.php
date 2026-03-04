@@ -6,6 +6,7 @@ namespace App\Filament\Pages;
 
 use App\Enums\NavigationGroup;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -62,7 +63,7 @@ final class AbcAnalysisReport extends Page implements HasTable
                 TextColumn::make('total_stock_value')
                     ->label('Total Stock Value')
                     ->state(fn (Product $record): float => $this->calculateStockValue($record))
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(query: fn (Builder $query, string $direction): Builder => $query->orderByRaw(
                         '(SELECT COALESCE(SUM(stocks.quantity * stocks.unit_cost), 0) FROM stocks WHERE stocks.product_id = products.id AND stocks.deleted_at IS NULL) '.$direction
                     ))

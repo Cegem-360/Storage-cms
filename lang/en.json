@@ -706,5 +706,70 @@
     "No invoices yet": "No invoices yet",
     "Export": "Export",
     "Your invoice export has completed and :count row(s) exported.": "Your invoice export has completed and :count row(s) exported.",
-    ":count row(s) failed to export.": ":count row(s) failed to export."
+    ":count row(s) failed to export.": ":count row(s) failed to export.",
+
+    "Retail Customer": "Retail Customer",
+    "Wholesale Customer": "Wholesale Customer",
+    "Distributor": "Distributor",
+    "Internal": "Internal",
+    "VIP Customer": "VIP Customer",
+
+    "Good": "Good",
+    "New": "New",
+    "Minor Damage": "Minor Damage",
+    "Damaged": "Damaged",
+    "Defective": "Defective",
+    "Expired": "Expired",
+
+    "Planned": "Planned",
+
+    "Piece": "Piece",
+    "Kilogram": "Kilogram",
+    "Gram": "Gram",
+    "Ton": "Ton",
+    "Liter": "Liter",
+    "Milliliter": "Milliliter",
+    "Meter": "Meter",
+    "Centimeter": "Centimeter",
+    "Square Meter": "Square Meter",
+    "Cubic Meter": "Cubic Meter",
+    "Box": "Box",
+    "Pallet": "Pallet",
+    "Pack": "Pack",
+    "Bottle": "Bottle",
+    "Can": "Can",
+
+    "Main Warehouse": "Main Warehouse",
+    "Distribution Center": "Distribution Center",
+    "Retail Store": "Retail Store",
+    "Return Center": "Return Center",
+    "Quarantine": "Quarantine",
+
+    "Wrong Item": "Wrong Item",
+    "Not as Described": "Not as Described",
+    "Quality Issue": "Quality Issue",
+    "Overstocked": "Overstocked",
+    "Customer Change of Mind": "Customer Change of Mind",
+    "Other": "Other",
+
+    "Pending Inspection": "Pending Inspection",
+    "Inspected": "Inspected",
+    "Approved": "Approved",
+    "Processed": "Processed",
+    "Restocked": "Restocked",
+    "Refunded": "Refunded",
+
+    "Customer Return": "Customer Return",
+    "Supplier Return": "Supplier Return",
+
+    "Full Inventory": "Full Inventory",
+    "Cycle Count": "Cycle Count",
+    "Spot Check": "Spot Check",
+    "Annual Inventory": "Annual Inventory",
+    "Complete inventory count of all items": "Complete inventory count of all items",
+    "Periodic count of specific items or categories": "Periodic count of specific items or categories",
+    "Random or targeted count of select items": "Random or targeted count of select items",
+    "Yearly comprehensive inventory count": "Yearly comprehensive inventory count",
+
+    "Default Currency": "Default Currency"
 }

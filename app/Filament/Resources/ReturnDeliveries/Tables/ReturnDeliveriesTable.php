@@ -7,6 +7,7 @@ namespace App\Filament\Resources\ReturnDeliveries\Tables;
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
 use App\Models\ReturnDelivery;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -64,7 +65,7 @@ final class ReturnDeliveriesTable
 
                 TextColumn::make('total_amount')
                     ->label('Total')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('reason')
@@ -130,7 +131,7 @@ final class ReturnDeliveriesTable
                     ->sortable(),
                 TextColumn::make('total_amount')
                     ->label('Amount')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
             ])
             ->filters([

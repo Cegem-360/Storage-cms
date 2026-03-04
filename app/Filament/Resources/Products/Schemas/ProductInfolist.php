@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use App\Enums\ProductStatus;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
@@ -86,7 +87,7 @@ final class ProductInfolist
                     ->schema([
                         TextEntry::make('price')
                             ->label('Price')
-                            ->money('HUF')
+                            ->money(Team::currency())
                             ->suffix(' / unit'),
                     ])
                     ->columns(1),

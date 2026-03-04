@@ -17,11 +17,11 @@ enum CustomerType: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::RETAIL => 'Retail Customer',
-            self::WHOLESALE => 'Wholesale Customer',
-            self::DISTRIBUTOR => 'Distributor',
-            self::INTERNAL => 'Internal',
-            self::VIP => 'VIP Customer',
+            self::RETAIL => __('Retail Customer'),
+            self::WHOLESALE => __('Wholesale Customer'),
+            self::DISTRIBUTOR => __('Distributor'),
+            self::INTERNAL => __('Internal'),
+            self::VIP => __('VIP Customer'),
         };
     }
 

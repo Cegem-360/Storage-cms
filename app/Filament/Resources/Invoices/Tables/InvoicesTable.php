@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Invoices\Tables;
 
 use App\Enums\InvoiceStatus;
+use App\Models\Team;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -53,7 +54,7 @@ final class InvoicesTable
                     ->sortable(),
                 TextColumn::make('total_amount')
                     ->label(__('Total'))
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('Created At'))

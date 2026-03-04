@@ -53,39 +53,39 @@ final class LowStockWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('product.sku')
-                    ->label('SKU')
+                    ->label(__('SKU'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('product.name')
-                    ->label('Product')
+                    ->label(__('Product'))
                     ->searchable()
                     ->sortable()
                     ->limit(30),
 
                 TextColumn::make('warehouse.name')
-                    ->label('Warehouse')
+                    ->label(__('Warehouse'))
                     ->sortable(),
 
                 TextColumn::make('quantity')
-                    ->label('Current')
+                    ->label(__('Current'))
                     ->numeric()
                     ->sortable()
                     ->color('danger'),
 
                 TextColumn::make('minimum_stock')
-                    ->label('Minimum')
+                    ->label(__('Minimum'))
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('available_quantity')
-                    ->label('Available Stock')
+                    ->label(__('Available Stock'))
                     ->state(fn (Stock $record): int => $record->getAvailableQuantity())
                     ->numeric()
                     ->color('warning'),
 
                 TextColumn::make('difference')
-                    ->label('Shortage')
+                    ->label(__('Shortage'))
                     ->state(function (Stock $record) use ($teamThreshold): int {
                         $minimum = $record->minimum_stock > 0
                             ? $record->minimum_stock

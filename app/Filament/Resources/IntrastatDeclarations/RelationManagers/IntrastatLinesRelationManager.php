@@ -9,6 +9,7 @@ use App\Enums\IntrastatTransactionType;
 use App\Enums\IntrastatTransportMode;
 use App\Models\CnCode;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -225,7 +226,7 @@ final class IntrastatLinesRelationManager extends RelationManager
 
                 TextColumn::make('invoice_value')
                     ->label('Érték')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('country_of_origin')

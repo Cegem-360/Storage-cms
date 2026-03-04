@@ -83,13 +83,11 @@ describe('Customer Resource', function (): void {
     it('validates required fields on create', function (): void {
         Livewire::test(CreateCustomer::class)
             ->fillForm([
-                'customer_code' => null,
                 'name' => null,
                 'email' => null,
             ])
             ->call('create')
             ->assertHasFormErrors([
-                'customer_code' => 'required',
                 'name' => 'required',
                 'email' => 'required',
             ]);

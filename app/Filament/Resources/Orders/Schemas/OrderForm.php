@@ -7,6 +7,7 @@ namespace App\Filament\Resources\Orders\Schemas;
 use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
@@ -124,7 +125,7 @@ final class OrderForm
                     ->numeric()
                     ->required()
                     ->default(0)
-                    ->prefix('HUF')
+                    ->prefix(Team::currency())
                     ->live(debounce: 500)
                     ->columnSpan(1),
 
@@ -160,7 +161,7 @@ final class OrderForm
                         $tax = (float) ($get('tax_percent') ?? 27);
                         $net = $quantity * $unitPrice * (1 - $discount / 100);
 
-                        return Number::currency($net * (1 + $tax / 100), in: 'HUF', locale: 'hu');
+                        return Number::currency($net * (1 + $tax / 100), in: Team::currency(), locale: 'hu');
                     })
                     ->columnSpan(1),
 
@@ -202,21 +203,21 @@ final class OrderForm
                         ->label(__('Net Total'))
                         ->state(fn ($record): string => Number::currency(
                             $record?->calculated_net_total ?? 0,
-                            in: 'HUF',
+                            in: Team::currency(),
                             locale: 'hu',
                         )),
                     TextEntry::make('calculated_tax_total')
                         ->label(__('Tax Total'))
                         ->state(fn ($record): string => Number::currency(
                             $record?->calculated_tax_total ?? 0,
-                            in: 'HUF',
+                            in: Team::currency(),
                             locale: 'hu',
                         )),
                     TextEntry::make('calculated_total')
                         ->label(__('Gross Total'))
                         ->state(fn ($record): string => Number::currency(
                             $record?->calculated_total ?? 0,
-                            in: 'HUF',
+                            in: Team::currency(),
                             locale: 'hu',
                         ))
                         ->weight('bold'),

@@ -7,6 +7,7 @@ namespace App\Filament\Resources\IntrastatDeclarations\Tables;
 use App\Enums\IntrastatDirection;
 use App\Enums\IntrastatStatus;
 use App\Models\IntrastatDeclaration;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -58,7 +59,7 @@ final class IntrastatDeclarationsTable
 
                 TextColumn::make('total_invoice_value')
                     ->label('Összes érték')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('total_net_mass')

@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Inventories\RelationManagers;
 
 use App\Enums\DiscrepancyType;
 use App\Models\Product;
+use App\Models\Team;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -190,12 +191,12 @@ final class InventoryLinesRelationManager extends RelationManager
 
                 TextColumn::make('unit_cost')
                     ->label('Egységár')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('variance_value')
                     ->label('Eltérés értéke')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable()
                     ->color(fn (Model $record): string => $record->hasVariance() ? 'danger' : 'success'),
 

@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Orders\Tables;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -91,7 +92,7 @@ final class OrdersTable
                     ->sortable(),
                 TextColumn::make('total_amount')
                     ->label('Total')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Date')

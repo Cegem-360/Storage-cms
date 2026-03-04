@@ -41,7 +41,7 @@ final class SuppliersTable
                 TextColumn::make('contact_person')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label(__('Email address'))
                     ->searchable(),
                 TextColumn::make('phone')
                     ->searchable(),
@@ -85,28 +85,30 @@ final class SuppliersTable
         return $table
             ->columns([
                 TextColumn::make('company_name')
-                    ->label('Name')
+                    ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('contact_person')
-                    ->label('Contact')
+                    ->label(__('Contact'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('email')
-                    ->label('Email')
+                    ->label(__('Email'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('products_count')
-                    ->label('Products')
+                    ->label(__('Products'))
                     ->counts('products')
                     ->sortable(),
             ])
             ->recordActions([
                 Action::make('view')
+                    ->label(__('View'))
                     ->url(fn (Supplier $record): string => route('dashboard.suppliers.view', $record))
                     ->icon(Heroicon::Eye)
                     ->color('gray'),
                 Action::make('edit')
+                    ->label(__('Edit'))
                     ->url(fn (Supplier $record): string => route('dashboard.suppliers.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),

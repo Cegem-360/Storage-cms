@@ -20,10 +20,9 @@ final class SupplierForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('Company')
+                        Tab::make(__('Company'))
                             ->schema([
-                                TextInput::make('code')
-                                    ->required(),
+                                TextInput::make('code'),
                                 TextInput::make('company_name')
                                     ->required(),
                                 TextInput::make('trade_name'),
@@ -37,54 +36,55 @@ final class SupplierForm
                             ])
                             ->columns(2),
 
-                        Tab::make('Addresses')
+                        Tab::make(__('Addresses'))
                             ->schema([
-                                Section::make('Headquarters Address')
+                                Section::make(__('Headquarters Address'))
                                     ->schema([
                                         TextInput::make('headquarters.street')
-                                            ->label('Street'),
+                                            ->label(__('Street')),
                                         Grid::make(2)
                                             ->schema([
                                                 TextInput::make('headquarters.city')
-                                                    ->label('City'),
+                                                    ->label(__('City')),
                                                 TextInput::make('headquarters.state')
-                                                    ->label('State'),
+                                                    ->label(__('State')),
                                             ]),
                                         Grid::make(2)
                                             ->schema([
                                                 TextInput::make('headquarters.zip')
-                                                    ->label('Zip Code'),
+                                                    ->label(__('Zip Code')),
                                                 TextInput::make('headquarters.country')
-                                                    ->label('Country'),
+                                                    ->label(__('Country')),
                                             ]),
                                     ]),
 
-                                Section::make('Mailing Address')
+                                Section::make(__('Mailing Address'))
                                     ->schema([
                                         TextInput::make('mailing_address.street')
-                                            ->label('Street'),
+                                            ->label(__('Street')),
                                         Grid::make(2)
                                             ->schema([
                                                 TextInput::make('mailing_address.city')
-                                                    ->label('City'),
+                                                    ->label(__('City')),
                                                 TextInput::make('mailing_address.state')
-                                                    ->label('State'),
+                                                    ->label(__('State')),
                                             ]),
                                         Grid::make(2)
                                             ->schema([
                                                 TextInput::make('mailing_address.zip')
-                                                    ->label('Zip Code'),
+                                                    ->label(__('Zip Code')),
                                                 TextInput::make('mailing_address.country')
-                                                    ->label('Country'),
+                                                    ->label(__('Country')),
                                             ]),
                                     ]),
                             ]),
 
-                        Tab::make('Contact')
+                        Tab::make(__('Contact'))
                             ->schema([
-                                TextInput::make('contact_person'),
+                                TextInput::make('contact_person')
+                                    ->label(__('Contact Person')),
                                 TextInput::make('email')
-                                    ->label('Email address')
+                                    ->label(__('Email address'))
                                     ->email(),
                                 TextInput::make('phone')
                                     ->tel(),

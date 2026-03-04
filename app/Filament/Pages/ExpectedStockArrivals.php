@@ -8,6 +8,7 @@ use App\Enums\NavigationGroup;
 use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Order;
+use App\Models\Team;
 use Filament\Pages\Page;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -79,7 +80,7 @@ final class ExpectedStockArrivals extends Page implements HasTable
 
                 TextColumn::make('total_amount')
                     ->label('Total Value')
-                    ->money('HUF')
+                    ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('orderLines')

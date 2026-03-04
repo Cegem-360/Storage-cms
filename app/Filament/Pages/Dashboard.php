@@ -18,7 +18,12 @@ final class Dashboard extends BaseDashboard
 {
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHome;
 
-    protected static ?string $title = 'Dashboard';
+    protected static ?string $title = null;
+
+    public function getTitle(): string
+    {
+        return __('Dashboard');
+    }
 
     #[Override]
     public function getWidgets(): array

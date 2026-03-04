@@ -8,6 +8,7 @@ use App\Enums\ProductCondition;
 use App\Enums\ReturnReason;
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
+use App\Models\Team;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -29,19 +30,19 @@ final class ReturnDeliveryForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('Return Details')
+                        Tab::make(__('Return Details'))
                             ->schema([
-                                Section::make('Return Information')
+                                Section::make(__('Return Information'))
                                     ->schema([
                                         TextInput::make('return_number')
-                                            ->label('Return Number')
+                                            ->label(__('Return Number'))
                                             ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                                             ->required()
                                             ->maxLength(100)
                                             ->scopedUnique(ignoreRecord: true),
 
                                         Select::make('type')
-                                            ->label('Return Type')
+                                            ->label(__('Return Type'))
                                             ->options(ReturnType::class)
                                             ->enum(ReturnType::class)
                                             ->required()
@@ -50,13 +51,13 @@ final class ReturnDeliveryForm
 
                                         Select::make('warehouse_id')
                                             ->relationship('warehouse', 'name')
-                                            ->label('Warehouse')
+                                            ->label(__('Warehouse'))
                                             ->searchable()
                                             ->preload()
                                             ->required(),
 
                                         DatePicker::make('return_date')
-                                            ->label('Return Date')
+                                            ->label(__('Return Date'))
                                             ->default(now())
                                             ->required(),
 
@@ -71,32 +72,32 @@ final class ReturnDeliveryForm
                                     ])
                                     ->columns(2),
 
-                                Section::make('Related Records')
+                                Section::make(__('Related Records'))
                                     ->schema([
                                         Select::make('order_id')
                                             ->relationship('order', 'order_number')
-                                            ->label('Related Order')
+                                            ->label(__('Related Order'))
                                             ->searchable()
                                             ->preload()
                                             ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                                         Select::make('customer_id')
                                             ->relationship('order.customer', 'name')
-                                            ->label('Customer')
+                                            ->label(__('Customer'))
                                             ->searchable()
                                             ->preload()
                                             ->visible(fn (Get $get): bool => $get('type') === ReturnType::CUSTOMER_RETURN),
 
                                         Select::make('supplier_id')
                                             ->relationship('order.supplier', 'company_name')
-                                            ->label('Supplier')
+                                            ->label(__('Supplier'))
                                             ->searchable()
                                             ->preload()
                                             ->visible(fn (Get $get): bool => $get('type') === ReturnType::SUPPLIER_RETURN),
 
                                         Select::make('processed_by')
                                             ->relationship('processedBy', 'first_name')
-                                            ->label('Processed By')
+                                            ->label(__('Processed By'))
                                             ->searchable()
                                             ->preload()
                                             ->required(),
@@ -104,11 +105,11 @@ final class ReturnDeliveryForm
                                     ->columns(2),
 
                                 Textarea::make('notes')
-                                    ->label('Notes')
+                                    ->label(__('Notes'))
                                     ->columnSpanFull(),
                             ]),
 
-                        Tab::make('Return Items')
+                        Tab::make(__('Return Items'))
                             ->schema([
                                 Repeater::make('returnDeliveryLines')
                                     ->relationship()
@@ -131,7 +132,7 @@ final class ReturnDeliveryForm
                                             ->numeric()
                                             ->required()
                                             ->default(0)
-                                            ->prefix('HUF')
+                                            ->prefix(Team::currency())
                                             ->columnSpan(2),
 
                                         Select::make('condition')
@@ -146,11 +147,11 @@ final class ReturnDeliveryForm
                                             ->columnSpan(2),
 
                                         TextInput::make('batch_number')
-                                            ->label('Batch Number')
+                                            ->label(__('Batch Number'))
                                             ->columnSpan(2),
 
                                         Textarea::make('note')
-                                            ->label('Note')
+                                            ->label(__('Note'))
                                             ->columnSpan(4),
                                     ])
                                     ->columns(4)
@@ -159,13 +160,13 @@ final class ReturnDeliveryForm
                                     ->collapsible(),
                             ]),
 
-                        Tab::make('Summary')
+                        Tab::make(__('Summary'))
                             ->schema([
                                 TextEntry::make('total_amount')
-                                    ->label('Total Amount')
+                                    ->label(__('Total Amount'))
                                     ->state(fn ($record): string => Number::currency(
                                         (float) ($record?->total_amount ?? 0),
-                                        in: 'HUF',
+                                        in: Team::currency(),
                                         locale: 'hu',
                                     )),
                             ])

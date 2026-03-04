@@ -21,56 +21,56 @@ final class BatchForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('General')
+                        Tab::make(__('General'))
                             ->schema([
                                 TextInput::make('batch_number')
-                                    ->label('Batch Number')
+                                    ->label(__('Batch Number'))
                                     ->required()
                                     ->scopedUnique(ignoreRecord: true)
                                     ->maxLength(100),
                                 Select::make('product_id')
-                                    ->label('Product')
+                                    ->label(__('Product'))
                                     ->relationship('product', 'name')
                                     ->required()
                                     ->searchable()
                                     ->preload(),
                                 Select::make('supplier_id')
-                                    ->label('Supplier')
+                                    ->label(__('Supplier'))
                                     ->relationship('supplier', 'company_name')
                                     ->required()
                                     ->searchable()
                                     ->preload(),
                                 DatePicker::make('manufacture_date')
-                                    ->label('Manufacture Date'),
+                                    ->label(__('Manufacture Date')),
                                 DatePicker::make('expiry_date')
-                                    ->label('Expiry Date'),
+                                    ->label(__('Expiry Date')),
                                 TextInput::make('quantity')
-                                    ->label('Quantity')
+                                    ->label(__('Quantity'))
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0),
                                 Select::make('quality_status')
-                                    ->label('Quality Status')
+                                    ->label(__('Quality Status'))
                                     ->options(QualityStatus::class)
                                     ->default(QualityStatus::PENDING_CHECK)
                                     ->required(),
                             ])
                             ->columns(2),
 
-                        Tab::make('Serial Numbers')
+                        Tab::make(__('Serial Numbers'))
                             ->schema([
                                 Repeater::make('serial_numbers')
-                                    ->label('Serial Numbers')
+                                    ->label(__('Serial Numbers'))
                                     ->schema([
                                         TextInput::make('serial')
-                                            ->label('Serial Number')
+                                            ->label(__('Serial Number'))
                                             ->required(),
                                     ])
                                     ->columns(1)
                                     ->collapsible()
                                     ->defaultItems(0)
-                                    ->addActionLabel('Add Serial Number'),
+                                    ->addActionLabel(__('Add Serial Number')),
                             ]),
                     ])
                     ->columnSpanFull(),

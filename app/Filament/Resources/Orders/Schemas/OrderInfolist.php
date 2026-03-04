@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Orders\Schemas;
 
 use App\Models\Order;
+use App\Models\Team;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -41,7 +42,7 @@ final class OrderInfolist
                             ->placeholder('-'),
                         TextEntry::make('total_amount')
                             ->label(__('Total Amount'))
-                            ->money('HUF'),
+                            ->money(Team::currency()),
                         TextEntry::make('shipping_address')
                             ->label(__('Shipping Address'))
                             ->placeholder('-')
@@ -61,7 +62,7 @@ final class OrderInfolist
                                     ->numeric(),
                                 TextEntry::make('unit_price')
                                     ->label(__('Unit Price'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                                 TextEntry::make('discount_percent')
                                     ->label(__('Discount'))
                                     ->suffix('%'),
@@ -70,13 +71,13 @@ final class OrderInfolist
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
                                     ->label(__('Net Total'))
-                                    ->state(fn ($record): string => Number::currency($record->subtotal, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency($record->subtotal, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('tax_amount')
                                     ->label(__('Tax Amount'))
-                                    ->state(fn ($record): string => Number::currency($record->tax_amount, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency($record->tax_amount, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('total_with_tax')
                                     ->label(__('Gross Total'))
-                                    ->state(fn ($record): string => Number::currency($record->total_with_tax, in: 'HUF', locale: 'hu')),
+                                    ->state(fn ($record): string => Number::currency($record->total_with_tax, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('note')
                                     ->label(__('Note'))
                                     ->placeholder('-'),
@@ -90,21 +91,21 @@ final class OrderInfolist
                             ->label(__('Net Total'))
                             ->state(fn (Order $record): string => Number::currency(
                                 $record->calculated_net_total,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             )),
                         TextEntry::make('calculated_tax_total')
                             ->label(__('Tax Total'))
                             ->state(fn (Order $record): string => Number::currency(
                                 $record->calculated_tax_total,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             )),
                         TextEntry::make('calculated_total')
                             ->label(__('Gross Total'))
                             ->state(fn (Order $record): string => Number::currency(
                                 $record->calculated_total,
-                                in: 'HUF',
+                                in: Team::currency(),
                                 locale: 'hu',
                             ))
                             ->weight('bold'),
@@ -126,7 +127,7 @@ final class OrderInfolist
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                             ])
                             ->columns(4)
                             ->placeholder(__('No receipts yet')),
@@ -144,7 +145,7 @@ final class OrderInfolist
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                             ])
                             ->columns(4)
                             ->placeholder(__('No return deliveries yet')),
@@ -166,7 +167,7 @@ final class OrderInfolist
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                             ])
                             ->columns(5)
                             ->placeholder(__('No invoices yet')),

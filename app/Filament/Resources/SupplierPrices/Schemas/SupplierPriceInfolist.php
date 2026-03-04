@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SupplierPrices\Schemas;
 
+use App\Models\Team;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
@@ -24,7 +25,7 @@ final class SupplierPriceInfolist
                             ->label(__('Product')),
                         TextEntry::make('price')
                             ->label(__('Price'))
-                            ->money('HUF'),
+                            ->money(Team::currency()),
                         TextEntry::make('currency')
                             ->label(__('Currency')),
                         TextEntry::make('minimum_order_quantity')
@@ -70,7 +71,7 @@ final class SupplierPriceInfolist
                                     ->placeholder('∞'),
                                 TextEntry::make('price')
                                     ->label(__('Price'))
-                                    ->money('HUF'),
+                                    ->money(Team::currency()),
                             ])
                             ->columns(3),
                     ])

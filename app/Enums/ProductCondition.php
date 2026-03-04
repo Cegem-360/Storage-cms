@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum ProductCondition: string
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasLabel;
+
+enum ProductCondition: string implements HasColor, HasLabel
 {
     case GOOD = 'good';
     case NEW = 'new';
@@ -13,19 +16,19 @@ enum ProductCondition: string
     case DEFECTIVE = 'defective';
     case EXPIRED = 'expired';
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
-            self::GOOD => 'Good',
-            self::NEW => 'New',
-            self::MINOR_DAMAGE => 'Minor Damage',
-            self::DAMAGED => 'Damaged',
-            self::DEFECTIVE => 'Defective',
-            self::EXPIRED => 'Expired',
+            self::GOOD => __('Good'),
+            self::NEW => __('New'),
+            self::MINOR_DAMAGE => __('Minor Damage'),
+            self::DAMAGED => __('Damaged'),
+            self::DEFECTIVE => __('Defective'),
+            self::EXPIRED => __('Expired'),
         };
     }
 
-    public function color(): string
+    public function getColor(): string
     {
         return match ($this) {
             self::GOOD => 'success',
@@ -40,7 +43,7 @@ enum ProductCondition: string
     public function canBeRestocked(): bool
     {
         return match ($this) {
-            self::GOOD, self::MINOR_DAMAGE => true,self::NEW => true,
+            self::GOOD, self::MINOR_DAMAGE, self::NEW => true,
             default => false,
         };
     }
