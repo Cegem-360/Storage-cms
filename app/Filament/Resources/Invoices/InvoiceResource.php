@@ -27,9 +27,11 @@ final class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static ?int $navigationSort = 4;
 
     #[Override]
     public static function form(Schema $schema): Schema

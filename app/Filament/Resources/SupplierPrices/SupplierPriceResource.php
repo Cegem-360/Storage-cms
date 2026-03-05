@@ -25,7 +25,7 @@ final class SupplierPriceResource extends Resource
 {
     protected static ?string $model = SupplierPrice::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
 

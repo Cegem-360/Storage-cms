@@ -27,9 +27,11 @@ final class StockResource extends Resource
 {
     protected static ?string $model = Stock::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+
+    protected static ?int $navigationSort = 4;
 
     #[Override]
     public static function form(Schema $schema): Schema

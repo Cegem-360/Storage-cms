@@ -201,38 +201,33 @@
 /* ============================================
    Per-group icon colors
    Matches dashboard sidebar colored icons
-   Group order: 1=ungrouped, 2=Master Data, 3=Inventory,
-   4=Purchasing, 5=Reports, 6=Intrastat, 7=Administration
+   Group order: 1=ungrouped(Dashboard), 2=Inventory Management,
+   3=Sales, 4=Reports, 5=Administration, 6=Intrastat
    ============================================ */
 
-/* Master Data (2nd group): amber-400 */
+/* Inventory Management (2nd group): amber-400 */
 .fi-sidebar-nav-groups > :nth-child(2) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-amber-400;
 }
 
-/* Inventory (3rd group): amber-400 */
+/* Sales (3rd group): green-400 */
 .fi-sidebar-nav-groups > :nth-child(3) .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-amber-400;
-}
-
-/* Purchasing (4th group): green-400 */
-.fi-sidebar-nav-groups > :nth-child(4) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-green-400;
 }
 
-/* Reports (5th group): blue-400 */
-.fi-sidebar-nav-groups > :nth-child(5) .fi-sidebar-item-btn > .fi-icon {
+/* Reports (4th group): blue-400 */
+.fi-sidebar-nav-groups > :nth-child(4) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-blue-400;
+}
+
+/* Administration (5th group): purple-400 */
+.fi-sidebar-nav-groups > :nth-child(5) .fi-sidebar-item-btn > .fi-icon {
+    @apply !text-purple-400;
 }
 
 /* Intrastat (6th group): cyan-400 */
 .fi-sidebar-nav-groups > :nth-child(6) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-cyan-400;
-}
-
-/* Administration (7th group): purple-400 */
-.fi-sidebar-nav-groups > :nth-child(7) .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-purple-400;
 }
 
 /* Override: active/hover icons always white regardless of group */

@@ -31,6 +31,8 @@ final class EmployeeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
+    protected static ?int $navigationSort = 1;
+
     #[Override]
     public static function form(Schema $schema): Schema
     {

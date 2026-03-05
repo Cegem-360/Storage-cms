@@ -33,7 +33,7 @@ final class SupplierPerformanceReport extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'Supplier Performance';
 
-    protected static ?int $navigationSort = 25;
+    protected static ?int $navigationSort = 5;
 
     public function table(Table $table): Table
     {

@@ -23,9 +23,11 @@ final class BatchResource extends Resource
 {
     protected static ?string $model = Batch::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
+
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $recordTitleAttribute = 'batch_number';
 

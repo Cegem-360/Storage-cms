@@ -25,7 +25,7 @@ final class ExpectedStockArrivals extends Page implements HasTable
 
     protected string $view = 'filament.pages.expected-stock-arrivals';
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
@@ -33,7 +33,7 @@ final class ExpectedStockArrivals extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'Expected Arrivals';
 
-    protected static ?int $navigationSort = 11;
+    protected static ?int $navigationSort = 2;
 
     public function table(Table $table): Table
     {

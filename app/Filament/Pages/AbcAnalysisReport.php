@@ -32,7 +32,7 @@ final class AbcAnalysisReport extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'ABC Analysis';
 
-    protected static ?int $navigationSort = 20;
+    protected static ?int $navigationSort = 4;
 
     /**
      * @var Collection<int, array{id: int, value: float, cumulative_percentage: float, category: string}>|null

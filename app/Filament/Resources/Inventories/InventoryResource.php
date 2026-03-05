@@ -26,9 +26,11 @@ final class InventoryResource extends Resource
 {
     protected static ?string $model = Inventory::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
+
+    protected static ?int $navigationSort = 6;
 
     #[Override]
     public static function form(Schema $schema): Schema

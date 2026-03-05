@@ -32,7 +32,7 @@ final class CnCodeResource extends Resource
     #[Override]
     public static function getNavigationLabel(): string
     {
-        return 'CN Kódok';
+        return __('CN Codes');
     }
 
     #[Override]
@@ -44,7 +44,7 @@ final class CnCodeResource extends Resource
     #[Override]
     public static function getPluralModelLabel(): string
     {
-        return 'CN Kódok';
+        return __('CN Codes');
     }
 
     #[Override]

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages;
 
+use App\Enums\NavigationGroup;
 use App\Models\Team;
 use BackedEnum;
 use Filament\Actions\Action;
@@ -16,6 +17,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Override;
+use UnitEnum;
 
 final class Settings extends Page
 {
@@ -24,9 +26,11 @@ final class Settings extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::ADMINISTRATION;
+
     protected static ?string $slug = 'settings';
 
-    protected static ?int $navigationSort = 99;
+    protected static ?int $navigationSort = 2;
 
     protected string $view = 'filament.pages.settings';
 

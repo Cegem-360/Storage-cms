@@ -24,9 +24,13 @@ final class IntrastatDeclarationResource extends Resource
 {
     protected static ?string $model = IntrastatDeclaration::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::ADMINISTRATION;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INTRASTAT;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocument;
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Declarations';
 
     #[Override]
     public static function form(Schema $schema): Schema

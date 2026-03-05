@@ -31,7 +31,7 @@ final class WarehouseStockOverview extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'Stock by Warehouse';
 
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 1;
 
     public function table(Table $table): Table
     {

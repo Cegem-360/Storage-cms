@@ -43,7 +43,7 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected static ?string $navigationLabel = 'Valuation Report';
 
-    protected static ?int $navigationSort = 15;
+    protected static ?int $navigationSort = 3;
 
     public function form(Schema $form): Schema
     {

@@ -28,13 +28,13 @@ final class ReturnDeliveryResource extends Resource
 {
     protected static ?string $model = ReturnDelivery::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY_MANAGEMENT;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowUturnLeft;
 
     protected static ?string $navigationLabel = 'Return Deliveries';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 8;
 
     #[Override]
     public static function form(Schema $schema): Schema

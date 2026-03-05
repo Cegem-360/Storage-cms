@@ -27,13 +27,13 @@ final class IntrastatInboundResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowDownTray;
 
-    protected static ?string $navigationLabel = 'Beszállítás (Arrival)';
+    protected static ?string $navigationLabel = 'Arrivals';
 
     protected static ?string $modelLabel = 'Beszállítás';
 
     protected static ?string $pluralModelLabel = 'Beszállítások';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     #[Override]
     public static function getEloquentQuery(): Builder

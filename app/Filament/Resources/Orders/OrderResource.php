@@ -27,9 +27,11 @@ final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+    protected static string|UnitEnum|null $navigationGroup = NavigationGroup::SALES;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
+
+    protected static ?int $navigationSort = 2;
 
     #[Override]
     public static function form(Schema $schema): Schema
