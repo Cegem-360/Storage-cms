@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Orders\Schemas;
 
 use App\Enums\OrderStatus;
 use App\Enums\OrderType;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Team;
 use Filament\Forms\Components\Component;
@@ -64,7 +65,18 @@ final class OrderForm
                 ->label(__('Customer'))
                 ->relationship('customer', 'name')
                 ->searchable()
-                ->preload(),
+                ->preload()
+                ->live()
+                ->afterStateUpdated(function (?string $state, Set $set): void {
+                    if ($state) {
+                        $customer = Customer::query()->find($state);
+                        $address = $customer?->shipping_address ?? [];
+                        $set('shipping_address.street', $address['street'] ?? null);
+                        $set('shipping_address.city', $address['city'] ?? null);
+                        $set('shipping_address.zip', $address['zip'] ?? null);
+                        $set('shipping_address.country', $address['country'] ?? null);
+                    }
+                }),
             Select::make('supplier_id')
                 ->label(__('Supplier'))
                 ->relationship('supplier', 'company_name')

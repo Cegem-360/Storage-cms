@@ -32,8 +32,7 @@ it('displays confirmed purchase orders with delivery dates', function (): void {
         ->create(['delivery_date' => now()->addDays(5)]);
 
     Livewire::test(ExpectedArrivals::class)
-        ->assertOk()
-        ->assertSee($order->order_number);
+        ->assertCanSeeTableRecords([$order]);
 });
 
 it('does not display draft orders', function (): void {
@@ -46,8 +45,7 @@ it('does not display draft orders', function (): void {
         ->create(['delivery_date' => now()->addDays(5)]);
 
     Livewire::test(ExpectedArrivals::class)
-        ->assertOk()
-        ->assertDontSee($order->order_number);
+        ->assertCanNotSeeTableRecords([$order]);
 });
 
 it('does not display orders without delivery date', function (): void {
@@ -60,8 +58,7 @@ it('does not display orders without delivery date', function (): void {
         ->create(['delivery_date' => null]);
 
     Livewire::test(ExpectedArrivals::class)
-        ->assertOk()
-        ->assertDontSee($order->order_number);
+        ->assertCanNotSeeTableRecords([$order]);
 });
 
 it('requires authentication', function (): void {

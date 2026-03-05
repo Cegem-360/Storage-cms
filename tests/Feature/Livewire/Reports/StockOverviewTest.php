@@ -29,15 +29,13 @@ it('displays stock data grouped by warehouse', function (): void {
     $warehouse = Warehouse::factory()->recycle($team)->create();
     $product = Product::factory()->recycle($team)->create();
 
-    Stock::factory()->recycle($team)->recycle($warehouse)->create([
+    $stock = Stock::factory()->recycle($team)->recycle($warehouse)->create([
         'product_id' => $product->id,
         'quantity' => 100,
     ]);
 
     Livewire::test(StockOverview::class)
-        ->assertOk()
-        ->assertSee($product->sku)
-        ->assertSee($warehouse->name);
+        ->assertCanSeeTableRecords([$stock]);
 });
 
 it('requires authentication', function (): void {

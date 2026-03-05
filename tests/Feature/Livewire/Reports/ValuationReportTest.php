@@ -29,15 +29,14 @@ it('displays stock valuations with unit cost', function (): void {
     $warehouse = Warehouse::factory()->recycle($team)->create();
     $product = Product::factory()->recycle($team)->create(['price' => 100.00]);
 
-    Stock::factory()->recycle($team)->recycle($warehouse)->create([
+    $stock = Stock::factory()->recycle($team)->recycle($warehouse)->create([
         'product_id' => $product->id,
         'quantity' => 10,
         'unit_cost' => 50.0000,
     ]);
 
     Livewire::test(ValuationReport::class)
-        ->assertOk()
-        ->assertSee($product->sku);
+        ->assertCanSeeTableRecords([$stock]);
 });
 
 it('falls back to product price when unit cost is zero', function (): void {
@@ -48,15 +47,14 @@ it('falls back to product price when unit cost is zero', function (): void {
         'standard_cost' => null,
     ]);
 
-    Stock::factory()->recycle($team)->recycle($warehouse)->create([
+    $stock = Stock::factory()->recycle($team)->recycle($warehouse)->create([
         'product_id' => $product->id,
         'quantity' => 5,
         'unit_cost' => 0,
     ]);
 
     Livewire::test(ValuationReport::class)
-        ->assertOk()
-        ->assertSee($product->sku);
+        ->assertCanSeeTableRecords([$stock]);
 });
 
 it('requires authentication', function (): void {
