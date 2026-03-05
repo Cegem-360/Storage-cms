@@ -108,12 +108,10 @@ describe('Category Filament Resource', function (): void {
         Livewire::test(CreateCategory::class)
             ->fillForm([
                 'name' => null,
-                'code' => null,
             ])
             ->call('create')
             ->assertHasFormErrors([
                 'name' => 'required',
-                'code' => 'required',
             ]);
     });
 
@@ -123,12 +121,10 @@ describe('Category Filament Resource', function (): void {
         Livewire::test(EditCategory::class, ['record' => $category->getRouteKey()])
             ->fillForm([
                 'name' => null,
-                'code' => null,
             ])
             ->call('save')
             ->assertHasFormErrors([
                 'name' => 'required',
-                'code' => 'required',
             ]);
     });
 

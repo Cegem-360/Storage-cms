@@ -17,13 +17,12 @@ final class ReturnDeliveryInfolist
     {
         return $schema
             ->components([
-                Section::make('Return Information')
+                Section::make('return_information')
                     ->schema([
-                        TextEntry::make('return_number')
-                            ->label('Return Number'),
+                        TextEntry::make('return_number'),
 
                         TextEntry::make('type')
-                            ->label('Return Type')
+                            ->label(__('Return Type'))
                             ->badge(),
 
                         TextEntry::make('status')
@@ -33,82 +32,75 @@ final class ReturnDeliveryInfolist
                             ->badge(),
 
                         TextEntry::make('warehouse.name')
-                            ->label('Warehouse'),
+                            ->label(__('Warehouse')),
 
                         TextEntry::make('return_date')
                             ->date(),
 
                         TextEntry::make('processedBy.first_name')
-                            ->label('Processed By')
+                            ->label(__('Processed By'))
                             ->formatStateUsing(fn (ReturnDelivery $record): string => $record->processedBy
                                 ? $record->processedBy->first_name.' '.$record->processedBy->last_name
                                 : '-'),
                     ])
                     ->columns(3),
 
-                Section::make('Related Records')
+                Section::make('related_records')
                     ->schema([
                         TextEntry::make('order.order_number')
-                            ->label('Related Order')
+                            ->label(__('Related Order'))
                             ->placeholder('-')
                             ->visible(fn ($record) => $record->isCustomerReturn()),
 
                         TextEntry::make('order.customer.name')
-                            ->label('Customer')
+                            ->label(__('Customer'))
                             ->placeholder('-')
                             ->visible(fn ($record) => $record->isCustomerReturn()),
 
                         TextEntry::make('order.supplier.company_name')
-                            ->label('Supplier')
+                            ->label(__('Supplier'))
                             ->placeholder('-')
                             ->visible(fn ($record) => $record->isSupplierReturn()),
                     ])
                     ->columns(2)
                     ->visible(fn ($record): bool => $record->order_id || $record->customer_id || $record->supplier_id),
 
-                Section::make('Return Items')
+                Section::make('return_items')
                     ->schema([
                         RepeatableEntry::make('returnDeliveryLines')
                             ->label('')
                             ->schema([
                                 TextEntry::make('product.name')
-                                    ->label('Product'),
+                                    ->label(__('Product')),
 
                                 TextEntry::make('quantity')
-                                    ->label('Quantity')
                                     ->numeric(),
 
                                 TextEntry::make('unit_price')
-                                    ->label('Unit Price')
                                     ->money(Team::currency()),
 
                                 TextEntry::make('condition')
                                     ->badge(),
 
                                 TextEntry::make('return_reason')
-                                    ->label('Reason')
                                     ->badge(),
 
                                 TextEntry::make('batch_number')
-                                    ->label('Batch')
                                     ->placeholder('-'),
 
                                 TextEntry::make('note')
-                                    ->label('Note')
                                     ->placeholder('-')
                                     ->columnSpanFull(),
                             ])
                             ->columns(3),
                     ]),
 
-                Section::make('Additional Information')
+                Section::make('additional_information')
                     ->schema([
                         TextEntry::make('total_amount')
-                            ->label('Total Amount')
                             ->money(Team::currency()),
 
                         TextEntry::make('notes')
-                            ->label('Notes')
                             ->placeholder('-')
                             ->columnSpanFull(),
 

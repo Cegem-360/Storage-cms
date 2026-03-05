@@ -50,7 +50,6 @@ final class RecentOrdersWidget extends BaseWidget
                     ->limit(25),
 
                 TextColumn::make('order_date')
-                    ->label(__('Order Date'))
                     ->date()
                     ->sortable(),
 
@@ -61,7 +60,6 @@ final class RecentOrdersWidget extends BaseWidget
                     ->placeholder(__('Not set')),
 
                 TextColumn::make('status')
-                    ->label(__('Status'))
                     ->badge()
                     ->sortable(),
 

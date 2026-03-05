@@ -57,18 +57,15 @@ final class OrderSuggestionWidget extends BaseWidget
                     ->limit(30),
 
                 TextColumn::make('current_stock')
-                    ->label(__('Current Stock'))
                     ->state(fn (Product $record): int => $record->getTotalStock())
                     ->numeric()
                     ->color('danger'),
 
                 TextColumn::make('reorder_point')
-                    ->label(__('Reorder Point'))
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('suggested_qty')
-                    ->label(__('Suggested Qty'))
                     ->state(fn (Product $record): int => $record->calculateReorderQuantity())
                     ->numeric()
                     ->color('primary')

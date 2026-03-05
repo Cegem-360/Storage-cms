@@ -24,7 +24,6 @@ final class InvoicesTable
         return $table
             ->columns([
                 TextColumn::make('invoice_number')
-                    ->label(__('Invoice Number'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('order.order_number')
@@ -40,16 +39,13 @@ final class InvoicesTable
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('invoice_date')
-                    ->label(__('Invoice Date'))
                     ->date()
                     ->sortable(),
                 TextColumn::make('due_date')
-                    ->label(__('Due Date'))
                     ->date()
                     ->sortable()
                     ->placeholder('-'),
                 TextColumn::make('status')
-                    ->label(__('Status'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('total_amount')
@@ -57,7 +53,6 @@ final class InvoicesTable
                     ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('Created At'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -65,7 +60,6 @@ final class InvoicesTable
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('status')
-                    ->label(__('Status'))
                     ->options(InvoiceStatus::class),
                 TrashedFilter::make(),
             ])

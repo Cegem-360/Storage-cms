@@ -50,6 +50,7 @@ final class Settings extends Page
         $team->load('settings');
 
         $this->form->fill([
+            'currency' => $team->getSetting('currency', 'HUF'),
             'low_stock_threshold' => $team->getSetting('low_stock_threshold', 10),
             'auto_reorder_enabled' => (bool) $team->getSetting('auto_reorder_enabled', false),
             'notification_email' => $team->getSetting('notification_email'),
@@ -66,11 +67,25 @@ final class Settings extends Page
     {
         return $schema
             ->components([
-                Section::make('Inventory Settings')
+                Section::make('general_settings')
+                    ->description(__('Configure general system preferences'))
+                    ->schema([
+                        Select::make('currency')
+                            ->label(__('Default Currency'))
+                            ->options([
+                                'HUF' => __('Hungarian Forint').' (HUF)',
+                                'EUR' => __('Euro').' (EUR)',
+                                'USD' => __('US Dollar').' (USD)',
+                            ])
+                            ->default('HUF')
+                            ->required()
+                            ->helperText(__('Currency used for prices and financial reports')),
+                    ]),
+
+                Section::make('inventory_settings')
                     ->description(__('Configure inventory management preferences'))
                     ->schema([
                         TextInput::make('low_stock_threshold')
-                            ->label('Low Stock Threshold')
                             ->helperText(__('Default threshold for low stock alerts'))
                             ->numeric()
                             ->required()
@@ -78,22 +93,21 @@ final class Settings extends Page
                             ->default(10),
 
                         Toggle::make('auto_reorder_enabled')
-                            ->label('Enable Auto Reorder')
+                            ->label(__('Enable Auto Reorder'))
                             ->helperText(__('Automatically create purchase orders when stock falls below reorder point')),
                     ])
                     ->columns(2),
 
-                Section::make('Notification Settings')
+                Section::make('notification_settings')
                     ->description(__('Configure system notification preferences'))
                     ->schema([
                         TextInput::make('notification_email')
-                            ->label('Notification Email')
                             ->helperText(__('Email address for system alerts'))
                             ->email()
                             ->maxLength(255),
                     ]),
 
-                Section::make('AI Assistant')
+                Section::make('ai_assistant')
                     ->description(__('Configure AI assistant for intelligent help'))
                     ->schema([
                         Select::make('ai_provider')
@@ -118,7 +132,7 @@ final class Settings extends Page
                     ])
                     ->columns(2),
 
-                Section::make('Billingo')
+                Section::make('billingo')
                     ->description(__('Configure Billingo invoice integration'))
                     ->schema([
                         Toggle::make('billingo_enabled')
@@ -144,6 +158,7 @@ final class Settings extends Page
         $data = $this->form->getState();
         $team = auth()->user()->team;
 
+        $team->setSetting('currency', $data['currency']);
         $team->setSetting('low_stock_threshold', $data['low_stock_threshold']);
         $team->setSetting('auto_reorder_enabled', $data['auto_reorder_enabled']);
         $team->setSetting('notification_email', $data['notification_email']);
@@ -165,7 +180,7 @@ final class Settings extends Page
     {
         return [
             Action::make('save')
-                ->label('Save Settings')
+                ->label(__('Save Settings'))
                 ->action('save')
                 ->icon(Heroicon::Check),
         ];

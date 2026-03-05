@@ -20,7 +20,7 @@ final class SupplierPriceForm
     {
         return $schema
             ->components([
-                Section::make(__('Price Information'))
+                Section::make('price_information')
                     ->schema([
                         Select::make('supplier_id')
                             ->label(__('Supplier'))
@@ -29,18 +29,15 @@ final class SupplierPriceForm
                             ->preload()
                             ->required(),
                         Select::make('product_id')
-                            ->label(__('Product'))
                             ->relationship('product', 'name')
                             ->searchable()
                             ->preload()
                             ->required(),
                         TextInput::make('price')
-                            ->label(__('Price'))
                             ->numeric()
                             ->required()
                             ->prefix(Team::currency()),
                         TextInput::make('currency')
-                            ->label(__('Currency'))
                             ->default('HUF')
                             ->required()
                             ->maxLength(3),
@@ -56,22 +53,19 @@ final class SupplierPriceForm
                     ])
                     ->columns(2),
 
-                Section::make(__('Validity'))
+                Section::make('validity')
                     ->schema([
-                        DatePicker::make('valid_from')
-                            ->label(__('Valid From')),
-                        DatePicker::make('valid_until')
-                            ->label(__('Valid Until')),
+                        DatePicker::make('valid_from'),
+                        DatePicker::make('valid_until'),
                         Toggle::make('is_active')
                             ->label(__('Active'))
                             ->default(true),
                         Textarea::make('notes')
-                            ->label(__('Notes'))
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make(__('Quantity Discount Tiers'))
+                Section::make('quantity_discount_tiers')
                     ->schema([
                         Repeater::make('tiers')
                             ->label('')
@@ -87,7 +81,6 @@ final class SupplierPriceForm
                                     ->numeric()
                                     ->nullable(),
                                 TextInput::make('price')
-                                    ->label(__('Price'))
                                     ->numeric()
                                     ->required()
                                     ->prefix(Team::currency()),

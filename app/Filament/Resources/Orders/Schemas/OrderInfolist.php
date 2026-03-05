@@ -18,10 +18,9 @@ final class OrderInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Order Information'))
+                Section::make('order_information')
                     ->schema([
-                        TextEntry::make('order_number')
-                            ->label(__('Order Number')),
+                        TextEntry::make('order_number'),
                         TextEntry::make('type')
                             ->label(__('Order Type')),
                         TextEntry::make('customer.name')
@@ -31,26 +30,21 @@ final class OrderInfolist
                             ->label(__('Supplier'))
                             ->placeholder('-'),
                         TextEntry::make('status')
-                            ->label(__('Status'))
                             ->badge(),
                         TextEntry::make('order_date')
-                            ->label(__('Order Date'))
                             ->date(),
                         TextEntry::make('delivery_date')
-                            ->label(__('Delivery Date'))
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('total_amount')
-                            ->label(__('Total Amount'))
                             ->money(Team::currency()),
                         TextEntry::make('shipping_address')
-                            ->label(__('Shipping Address'))
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make(__('Order Items'))
+                Section::make('order_items')
                     ->schema([
                         RepeatableEntry::make('orderLines')
                             ->label('')
@@ -58,10 +52,8 @@ final class OrderInfolist
                                 TextEntry::make('product.name')
                                     ->label(__('Product')),
                                 TextEntry::make('quantity')
-                                    ->label(__('Quantity'))
                                     ->numeric(),
                                 TextEntry::make('unit_price')
-                                    ->label(__('Unit Price'))
                                     ->money(Team::currency()),
                                 TextEntry::make('discount_percent')
                                     ->label(__('Discount'))
@@ -73,19 +65,17 @@ final class OrderInfolist
                                     ->label(__('Net Total'))
                                     ->state(fn ($record): string => Number::currency($record->subtotal, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('tax_amount')
-                                    ->label(__('Tax Amount'))
                                     ->state(fn ($record): string => Number::currency($record->tax_amount, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('total_with_tax')
                                     ->label(__('Gross Total'))
                                     ->state(fn ($record): string => Number::currency($record->total_with_tax, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('note')
-                                    ->label(__('Note'))
                                     ->placeholder('-'),
                             ])
                             ->columns(3),
                     ]),
 
-                Section::make(__('Order Totals'))
+                Section::make('order_totals')
                     ->schema([
                         TextEntry::make('calculated_net_total')
                             ->label(__('Net Total'))
@@ -112,18 +102,15 @@ final class OrderInfolist
                     ])
                     ->columns(3),
 
-                Section::make(__('Document History'))
+                Section::make('document_history')
                     ->schema([
                         RepeatableEntry::make('receipts')
-                            ->label(__('Receipts'))
                             ->schema([
-                                TextEntry::make('receipt_number')
-                                    ->label(__('Receipt Number')),
+                                TextEntry::make('receipt_number'),
                                 TextEntry::make('receipt_date')
                                     ->label(__('Date'))
                                     ->date(),
                                 TextEntry::make('status')
-                                    ->label(__('Status'))
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
@@ -133,15 +120,12 @@ final class OrderInfolist
                             ->placeholder(__('No receipts yet')),
 
                         RepeatableEntry::make('returnDeliveries')
-                            ->label(__('Return Deliveries'))
                             ->schema([
-                                TextEntry::make('return_number')
-                                    ->label(__('Return Number')),
+                                TextEntry::make('return_number'),
                                 TextEntry::make('return_date')
                                     ->label(__('Date'))
                                     ->date(),
                                 TextEntry::make('status')
-                                    ->label(__('Status'))
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
@@ -151,19 +135,15 @@ final class OrderInfolist
                             ->placeholder(__('No return deliveries yet')),
 
                         RepeatableEntry::make('invoices')
-                            ->label(__('Invoices'))
                             ->schema([
-                                TextEntry::make('invoice_number')
-                                    ->label(__('Invoice Number')),
+                                TextEntry::make('invoice_number'),
                                 TextEntry::make('invoice_date')
                                     ->label(__('Date'))
                                     ->date(),
                                 TextEntry::make('due_date')
-                                    ->label(__('Due Date'))
                                     ->date()
                                     ->placeholder('-'),
                                 TextEntry::make('status')
-                                    ->label(__('Status'))
                                     ->badge(),
                                 TextEntry::make('total_amount')
                                     ->label(__('Total'))
@@ -173,18 +153,15 @@ final class OrderInfolist
                             ->placeholder(__('No invoices yet')),
                     ]),
 
-                Section::make(__('Timestamps'))
+                Section::make('timestamps')
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('deleted_at')
-                            ->label(__('Deleted At'))
                             ->dateTime()
                             ->visible(fn (Order $record): bool => $record->trashed()),
                     ])

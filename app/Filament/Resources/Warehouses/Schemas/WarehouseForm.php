@@ -29,8 +29,10 @@ final class WarehouseForm
                 TextInput::make('capacity')
                     ->numeric(),
                 Select::make('manager_id')
+                    ->label(__('Manager'))
                     ->relationship('manager', 'full_name'),
                 Toggle::make('is_active')
+                    ->label(__('Active'))
                     ->required(),
             ]);
     }

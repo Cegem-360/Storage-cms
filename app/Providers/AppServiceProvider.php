@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegistrationResponse;
+use Filament\Actions\Action;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationResponseContract;
 use Filament\Forms\Components\Field;
@@ -45,5 +46,6 @@ final class AppServiceProvider extends ServiceProvider
         SelectFilter::configureUsing(fn (SelectFilter $c) => $c->translateLabel());
         Tab::configureUsing(fn (Tab $c) => $c->translateLabel());
         Section::configureUsing(fn (Section $c) => $c->translateLabel());
+        Action::configureUsing(fn (Action $c) => $c->translateLabel());
     }
 }

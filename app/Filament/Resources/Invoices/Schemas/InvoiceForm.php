@@ -29,10 +29,9 @@ final class InvoiceForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Invoice Information'))
+                        Tab::make('invoice_information')
                             ->schema([
                                 TextInput::make('invoice_number')
-                                    ->label(__('Invoice Number'))
                                     ->default(fn (): string => 'INV-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                                     ->required(),
                                 Select::make('order_id')
@@ -82,57 +81,47 @@ final class InvoiceForm
                                     ->searchable()
                                     ->preload(),
                                 Select::make('issued_by')
-                                    ->label(__('Issued By'))
                                     ->relationship('issuedBy', 'first_name')
                                     ->searchable()
                                     ->preload()
                                     ->required(),
                                 DatePicker::make('invoice_date')
-                                    ->label(__('Invoice Date'))
                                     ->default(now())
                                     ->required(),
                                 DatePicker::make('due_date')
-                                    ->label(__('Due Date'))
                                     ->default(now()->addDays(30)),
                                 Select::make('status')
-                                    ->label(__('Status'))
                                     ->options(InvoiceStatus::class)
                                     ->default(InvoiceStatus::DRAFT)
                                     ->required(),
                                 TextInput::make('currency')
-                                    ->label(__('Currency'))
                                     ->default('HUF')
                                     ->maxLength(3)
                                     ->required(),
-                                TextInput::make('payment_method')
-                                    ->label(__('Payment Method')),
+                                TextInput::make('payment_method'),
                                 Textarea::make('notes')
-                                    ->label(__('Notes'))
                                     ->columnSpanFull(),
                             ])
                             ->columns(2),
 
-                        Tab::make(__('Invoice Items'))
+                        Tab::make('invoice_items')
                             ->schema([
                                 Repeater::make('invoiceLines')
                                     ->label('')
                                     ->relationship()
                                     ->schema([
                                         Select::make('product_id')
-                                            ->label(__('Product'))
                                             ->relationship('product', 'name')
                                             ->searchable()
                                             ->preload()
                                             ->required()
                                             ->columnSpan(2),
                                         TextInput::make('quantity')
-                                            ->label(__('Quantity'))
                                             ->numeric()
                                             ->required()
                                             ->default(1)
                                             ->minValue(1),
                                         TextInput::make('unit_price')
-                                            ->label(__('Unit Price'))
                                             ->numeric()
                                             ->required()
                                             ->default(0)
@@ -148,7 +137,6 @@ final class InvoiceForm
                                             ->default(27)
                                             ->suffix('%'),
                                         Textarea::make('note')
-                                            ->label(__('Note'))
                                             ->columnSpan(2),
                                     ])
                                     ->columns(4)
@@ -157,7 +145,7 @@ final class InvoiceForm
                                     ->collapsible(),
                             ]),
 
-                        Tab::make(__('Summary'))
+                        Tab::make('summary')
                             ->schema([
                                 TextEntry::make('calculated_subtotal')
                                     ->label(__('Subtotal'))

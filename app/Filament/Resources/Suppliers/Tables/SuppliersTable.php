@@ -93,7 +93,6 @@ final class SuppliersTable
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('email')
-                    ->label(__('Email'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('products_count')
@@ -103,12 +102,10 @@ final class SuppliersTable
             ])
             ->recordActions([
                 Action::make('view')
-                    ->label(__('View'))
                     ->url(fn (Supplier $record): string => route('dashboard.suppliers.view', $record))
                     ->icon(Heroicon::Eye)
                     ->color('gray'),
                 Action::make('edit')
-                    ->label(__('Edit'))
                     ->url(fn (Supplier $record): string => route('dashboard.suppliers.edit', $record))
                     ->icon(Heroicon::PencilSquare)
                     ->color('gray'),

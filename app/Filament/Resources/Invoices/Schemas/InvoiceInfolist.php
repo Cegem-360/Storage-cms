@@ -18,10 +18,9 @@ final class InvoiceInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Invoice Information'))
+                Section::make('invoice_information')
                     ->schema([
-                        TextEntry::make('invoice_number')
-                            ->label(__('Invoice Number')),
+                        TextEntry::make('invoice_number'),
                         TextEntry::make('order.order_number')
                             ->label(__('Order'))
                             ->placeholder('-'),
@@ -38,28 +37,22 @@ final class InvoiceInfolist
                             ->label(__('Issued By'))
                             ->placeholder('-'),
                         TextEntry::make('invoice_date')
-                            ->label(__('Invoice Date'))
                             ->date(),
                         TextEntry::make('due_date')
-                            ->label(__('Due Date'))
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('status')
-                            ->label(__('Status'))
                             ->badge(),
-                        TextEntry::make('currency')
-                            ->label(__('Currency')),
+                        TextEntry::make('currency'),
                         TextEntry::make('payment_method')
-                            ->label(__('Payment Method'))
                             ->placeholder('-'),
                         TextEntry::make('notes')
-                            ->label(__('Notes'))
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make(__('Invoice Items'))
+                Section::make('invoice_items')
                     ->schema([
                         RepeatableEntry::make('invoiceLines')
                             ->label('')
@@ -67,10 +60,8 @@ final class InvoiceInfolist
                                 TextEntry::make('product.name')
                                     ->label(__('Product')),
                                 TextEntry::make('quantity')
-                                    ->label(__('Quantity'))
                                     ->numeric(),
                                 TextEntry::make('unit_price')
-                                    ->label(__('Unit Price'))
                                     ->money(Team::currency()),
                                 TextEntry::make('discount_percent')
                                     ->label(__('Discount'))
@@ -79,22 +70,18 @@ final class InvoiceInfolist
                                     ->label(__('Tax %'))
                                     ->suffix('%'),
                                 TextEntry::make('subtotal')
-                                    ->label(__('Subtotal'))
                                     ->state(fn ($record): string => Number::currency((float) $record->subtotal, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('tax_amount')
-                                    ->label(__('Tax Amount'))
                                     ->state(fn ($record): string => Number::currency((float) $record->tax_amount, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('line_total')
-                                    ->label(__('Line Total'))
                                     ->state(fn ($record): string => Number::currency((float) $record->line_total, in: Team::currency(), locale: 'hu')),
                                 TextEntry::make('note')
-                                    ->label(__('Note'))
                                     ->placeholder('-'),
                             ])
                             ->columns(3),
                     ]),
 
-                Section::make(__('Invoice Totals'))
+                Section::make('invoice_totals')
                     ->schema([
                         TextEntry::make('calculated_subtotal')
                             ->label(__('Subtotal'))
@@ -121,18 +108,15 @@ final class InvoiceInfolist
                     ])
                     ->columns(3),
 
-                Section::make(__('Timestamps'))
+                Section::make('timestamps')
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('deleted_at')
-                            ->label(__('Deleted At'))
                             ->dateTime()
                             ->visible(fn (Invoice $record): bool => $record->trashed()),
                     ])

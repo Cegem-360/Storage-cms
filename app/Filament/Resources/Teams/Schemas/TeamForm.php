@@ -16,14 +16,13 @@ final class TeamForm
     {
         return $schema
             ->components([
-                Section::make(__('General'))
+                Section::make('general')
                     ->schema([
                         TextInput::make('name')
                             ->label(__('Team Name'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('slug')
-                            ->label(__('Slug'))
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(100),
@@ -34,7 +33,7 @@ final class TeamForm
                     ])
                     ->columns(2),
 
-                Section::make(__('AI Token Limits'))
+                Section::make('ai_token_limits')
                     ->description(__('Configure monthly AI token usage limits for this team'))
                     ->schema([
                         TextInput::make('ai_monthly_token_limit')

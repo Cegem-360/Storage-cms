@@ -20,30 +20,27 @@ final class ProductInfolist
     {
         return $schema
             ->components([
-                Section::make('Basic Information')
+                Section::make('basic_information')
                     ->schema([
                         TextEntry::make('sku')
-                            ->label('SKU'),
+                            ->label(__('SKU')),
                         TextEntry::make('name')
-                            ->label('Product Name'),
+                            ->label(__('Product Name')),
                         TextEntry::make('barcode')
-                            ->label('Barcode')
                             ->placeholder('-'),
                         TextEntry::make('description')
-                            ->label('Description')
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make('Classification')
+                Section::make('classification')
                     ->schema([
                         TextEntry::make('category.name')
-                            ->label('Category'),
+                            ->label(__('Category')),
                         TextEntry::make('supplier.company_name')
-                            ->label('Primary Supplier'),
+                            ->label(__('Primary Supplier')),
                         TextEntry::make('status')
-                            ->label('Status')
                             ->badge()
                             ->color(fn (ProductStatus $state): string => match ($state) {
                                 ProductStatus::ACTIVE => 'success',
@@ -55,27 +52,25 @@ final class ProductInfolist
                     ])
                     ->columns(3),
 
-                Section::make('Measurements')
+                Section::make('measurements')
                     ->schema([
-                        TextEntry::make('unit_of_measure')
-                            ->label('Unit of Measure'),
+                        TextEntry::make('unit_of_measure'),
                         TextEntry::make('weight')
-                            ->label('Weight')
                             ->numeric()
                             ->suffix(' kg')
                             ->placeholder('-'),
                         Grid::make(3)
                             ->schema([
                                 TextEntry::make('dimensions.length')
-                                    ->label('Length')
+                                    ->label(__('Length'))
                                     ->suffix(' cm')
                                     ->placeholder('-'),
                                 TextEntry::make('dimensions.width')
-                                    ->label('Width')
+                                    ->label(__('Width'))
                                     ->suffix(' cm')
                                     ->placeholder('-'),
                                 TextEntry::make('dimensions.height')
-                                    ->label('Height')
+                                    ->label(__('Height'))
                                     ->suffix(' cm')
                                     ->placeholder('-'),
                             ]),
@@ -83,39 +78,35 @@ final class ProductInfolist
                     ->columns(2)
                     ->collapsible(),
 
-                Section::make('Pricing')
+                Section::make('pricing')
                     ->schema([
                         TextEntry::make('price')
-                            ->label('Price')
                             ->money(Team::currency())
                             ->suffix(' / unit'),
                     ])
                     ->columns(1),
 
-                Section::make('Stock Management')
+                Section::make('stock_management')
                     ->schema([
                         TextEntry::make('min_stock')
-                            ->label('Minimum Stock')
                             ->numeric(),
                         TextEntry::make('reorder_point')
-                            ->label('Reorder Point')
                             ->numeric(),
                         TextEntry::make('max_stock')
-                            ->label('Maximum Stock')
                             ->numeric(),
                     ])
                     ->columns(3)
                     ->collapsible(),
 
-                Section::make('Stock by Warehouse')
+                Section::make('stock_by_warehouse')
                     ->schema([
                         RepeatableEntry::make('stocks')
                             ->label('')
                             ->schema([
                                 TextEntry::make('warehouse.name')
-                                    ->label('Warehouse'),
+                                    ->label(__('Warehouse')),
                                 TextEntry::make('quantity')
-                                    ->label('Available Quantity')
+                                    ->label(__('Available Quantity'))
                                     ->numeric()
                                     ->badge()
                                     ->color(fn ($state, $record): string => match (true) {
@@ -124,25 +115,24 @@ final class ProductInfolist
                                         default => 'success',
                                     }),
                                 TextEntry::make('reserved_quantity')
-                                    ->label('Reserved')
+                                    ->label(__('Reserved'))
                                     ->numeric()
                                     ->badge()
                                     ->color('warning'),
                                 TextEntry::make('Available')
-                                    ->label('Available')
+                                    ->label(__('Available'))
                                     ->state(fn ($record): int => $record->getAvailableQuantity())
                                     ->numeric()
                                     ->badge()
                                     ->color('info'),
                                 TextEntry::make('status')
-                                    ->label('Status')
                                     ->badge(),
                             ])
                             ->columns(5)
                             ->columnSpanFull()
                             ->contained(false),
                         TextEntry::make('Total Stock')
-                            ->label('Total Stock Across All Warehouses')
+                            ->label(__('Total Stock Across All Warehouses'))
                             ->state(fn (Product $record): int => $record->getTotalStock())
                             ->numeric()
                             ->size('lg')
@@ -152,18 +142,18 @@ final class ProductInfolist
                     ])
                     ->collapsible(),
 
-                Section::make('Expected Arrivals')
+                Section::make('expected_arrivals')
                     ->schema([
                         RepeatableEntry::make('expected_arrivals')
                             ->label('')
                             ->state(fn (Product $record): Collection => $record->getExpectedArrivals())
                             ->schema([
                                 TextEntry::make('order_number')
-                                    ->label('Order #'),
+                                    ->label(__('Order #')),
                                 TextEntry::make('supplier.name')
-                                    ->label('Supplier'),
+                                    ->label(__('Supplier')),
                                 TextEntry::make('delivery_date')
-                                    ->label('Expected Date')
+                                    ->label(__('Expected Date'))
                                     ->date()
                                     ->badge()
                                     ->color(function ($record): string {
@@ -176,7 +166,6 @@ final class ProductInfolist
                                         };
                                     }),
                                 TextEntry::make('quantity')
-                                    ->label('Quantity')
                                     ->state(fn ($record, Product $rootRecord): int => $record->orderLines
                                         ->where('product_id', $rootRecord->id)
                                         ->sum('quantity'))
@@ -191,7 +180,7 @@ final class ProductInfolist
                             ->contained(false)
                             ->visible(fn (Product $record): bool => $record->getExpectedArrivals()->isNotEmpty()),
                         TextEntry::make('Total Expected')
-                            ->label('Total Expected Quantity')
+                            ->label(__('Total Expected Quantity'))
                             ->state(fn (Product $record): int => $record->getTotalExpectedQuantity())
                             ->numeric()
                             ->size('lg')
@@ -203,7 +192,7 @@ final class ProductInfolist
                     ->collapsible()
                     ->visible(fn (Product $record): bool => $record->getExpectedArrivals()->isNotEmpty()),
 
-                Section::make('Timestamps')
+                Section::make('timestamps')
                     ->schema([
                         TextEntry::make('created_at')
                             ->dateTime()

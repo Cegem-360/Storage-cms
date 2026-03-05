@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Team;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -31,15 +32,15 @@ final class OrderForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Order Information'))
+                        Tab::make('order_information')
                             ->schema(self::getOrderInfoFields()),
 
-                        Tab::make(__('Order Items'))
+                        Tab::make('order_items')
                             ->schema([
                                 self::getOrderLineRepeater(),
                             ]),
 
-                        Tab::make(__('Summary'))
+                        Tab::make('summary')
                             ->schema(self::getSummaryFields())
                             ->visibleOn(['edit', 'view']),
                     ])
@@ -54,7 +55,6 @@ final class OrderForm
     {
         return [
             TextInput::make('order_number')
-                ->label(__('Order Number'))
                 ->default(fn (): string => 'ORD-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
                 ->required(),
             Select::make('type')
@@ -73,17 +73,13 @@ final class OrderForm
                 ->searchable()
                 ->preload(),
             Select::make('status')
-                ->label(__('Status'))
                 ->options(OrderStatus::class)
                 ->default(OrderStatus::DRAFT)
                 ->required(),
             DatePicker::make('order_date')
-                ->label(__('Order Date'))
                 ->required(),
-            DatePicker::make('delivery_date')
-                ->label(__('Delivery Date')),
+            DatePicker::make('delivery_date'),
             Textarea::make('shipping_address')
-                ->label(__('Shipping Address'))
                 ->columnSpanFull(),
         ];
     }
@@ -95,7 +91,6 @@ final class OrderForm
             ->relationship()
             ->schema([
                 Select::make('product_id')
-                    ->label(__('Product'))
                     ->relationship('product', 'name')
                     ->searchable()
                     ->preload()
@@ -112,7 +107,6 @@ final class OrderForm
                     ->columnSpan(3),
 
                 TextInput::make('quantity')
-                    ->label(__('Quantity'))
                     ->numeric()
                     ->required()
                     ->default(1)
@@ -121,7 +115,6 @@ final class OrderForm
                     ->columnSpan(1),
 
                 TextInput::make('unit_price')
-                    ->label(__('Unit Price'))
                     ->numeric()
                     ->required()
                     ->default(0)
@@ -152,9 +145,9 @@ final class OrderForm
                     ->live()
                     ->columnSpan(1),
 
-                TextEntry::make('line_total')
+                Placeholder::make('line_total')
                     ->label(__('Gross Total'))
-                    ->state(function (Get $get): string {
+                    ->content(function (Get $get): string {
                         $quantity = (float) ($get('quantity') ?? 0);
                         $unitPrice = (float) ($get('unit_price') ?? 0);
                         $discount = (float) ($get('discount_percent') ?? 0);
@@ -166,7 +159,6 @@ final class OrderForm
                     ->columnSpan(1),
 
                 Textarea::make('note')
-                    ->label(__('Note'))
                     ->columnSpan(8),
             ])
             ->columns(8)
@@ -186,7 +178,6 @@ final class OrderForm
     {
         return [
             Textarea::make('shipping_address')
-                ->label(__('Shipping Address'))
                 ->columnSpanFull(),
         ];
     }
@@ -197,7 +188,7 @@ final class OrderForm
     public static function getSummaryFields(): array
     {
         return [
-            Section::make(__('Order Totals'))
+            Section::make('order_totals')
                 ->schema([
                     TextEntry::make('calculated_net_total')
                         ->label(__('Net Total'))

@@ -29,11 +29,16 @@ final class OrdersTable
                 TextColumn::make('order_number')
                     ->searchable(),
                 TextColumn::make('type')
+                    ->label(__('Order Type'))
                     ->searchable(),
-                TextColumn::make('customer.id')
-                    ->searchable(),
-                TextColumn::make('supplier.id')
-                    ->searchable(),
+                TextColumn::make('customer.name')
+                    ->label(__('Customer'))
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('supplier.company_name')
+                    ->label(__('Supplier'))
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('status')
                     ->badge()
                     ->searchable(),
@@ -44,7 +49,8 @@ final class OrdersTable
                     ->date()
                     ->sortable(),
                 TextColumn::make('total_amount')
-                    ->numeric()
+                    ->label(__('Total'))
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -80,22 +86,21 @@ final class OrdersTable
         return $table
             ->columns([
                 TextColumn::make('order_number')
-                    ->label('Order #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('supplier.company_name')
-                    ->label('Supplier/Customer')
+                    ->label(__('Supplier/Customer'))
                     ->placeholder('-')
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('total_amount')
-                    ->label('Total')
+                    ->label(__('Total'))
                     ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label('Date')
+                    ->label(__('Date'))
                     ->date()
                     ->sortable(),
             ])

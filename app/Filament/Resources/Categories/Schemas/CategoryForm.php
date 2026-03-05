@@ -18,7 +18,7 @@ final class CategoryForm
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('code')
-                    ->required(),
+                    ->maxLength(50),
                 Select::make('parent_id')
                     ->relationship('parent', 'name'),
                 Textarea::make('description')

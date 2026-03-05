@@ -30,12 +30,11 @@ final class ReturnDeliveryForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Return Details'))
+                        Tab::make('return_details')
                             ->schema([
-                                Section::make(__('Return Information'))
+                                Section::make('return_information')
                                     ->schema([
                                         TextInput::make('return_number')
-                                            ->label(__('Return Number'))
                                             ->default(fn (): string => 'RET-'.mb_strtoupper(uniqid()))
                                             ->required()
                                             ->maxLength(100)
@@ -57,7 +56,6 @@ final class ReturnDeliveryForm
                                             ->required(),
 
                                         DatePicker::make('return_date')
-                                            ->label(__('Return Date'))
                                             ->default(now())
                                             ->required(),
 
@@ -72,7 +70,7 @@ final class ReturnDeliveryForm
                                     ])
                                     ->columns(2),
 
-                                Section::make(__('Related Records'))
+                                Section::make('related_records')
                                     ->schema([
                                         Select::make('order_id')
                                             ->relationship('order', 'order_number')
@@ -97,7 +95,6 @@ final class ReturnDeliveryForm
 
                                         Select::make('processed_by')
                                             ->relationship('processedBy', 'first_name')
-                                            ->label(__('Processed By'))
                                             ->searchable()
                                             ->preload()
                                             ->required(),
@@ -105,11 +102,10 @@ final class ReturnDeliveryForm
                                     ->columns(2),
 
                                 Textarea::make('notes')
-                                    ->label(__('Notes'))
                                     ->columnSpanFull(),
                             ]),
 
-                        Tab::make(__('Return Items'))
+                        Tab::make('return_items')
                             ->schema([
                                 Repeater::make('returnDeliveryLines')
                                     ->relationship()
@@ -147,11 +143,9 @@ final class ReturnDeliveryForm
                                             ->columnSpan(2),
 
                                         TextInput::make('batch_number')
-                                            ->label(__('Batch Number'))
                                             ->columnSpan(2),
 
                                         Textarea::make('note')
-                                            ->label(__('Note'))
                                             ->columnSpan(4),
                                     ])
                                     ->columns(4)
@@ -160,10 +154,9 @@ final class ReturnDeliveryForm
                                     ->collapsible(),
                             ]),
 
-                        Tab::make(__('Summary'))
+                        Tab::make('summary')
                             ->schema([
                                 TextEntry::make('total_amount')
-                                    ->label(__('Total Amount'))
                                     ->state(fn ($record): string => Number::currency(
                                         (float) ($record?->total_amount ?? 0),
                                         in: Team::currency(),

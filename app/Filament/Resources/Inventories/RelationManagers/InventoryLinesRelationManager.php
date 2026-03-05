@@ -36,10 +36,10 @@ final class InventoryLinesRelationManager extends RelationManager
     {
         return $schema
             ->components([
-                Section::make('Termék adatok')
+                Section::make('product_data')
                     ->schema([
                         Select::make('product_id')
-                            ->label('Termék')
+                            ->label(__('Product'))
                             ->relationship('product', 'name')
                             ->searchable()
                             ->preload()
@@ -66,22 +66,19 @@ final class InventoryLinesRelationManager extends RelationManager
                         Group::make()
                             ->schema([
                                 TextInput::make('batch_number')
-                                    ->label('Tétel szám')
                                     ->maxLength(255),
 
-                                DatePicker::make('expiry_date')
-                                    ->label('Lejárati dátum'),
+                                DatePicker::make('expiry_date'),
                             ])
                             ->columns(2),
                     ]),
 
-                Section::make('Mennyiségi adatok')
+                Section::make('quantity_data')
                     ->columnSpanFull()
                     ->schema([
                         Group::make()
                             ->schema([
                                 TextInput::make('system_quantity')
-                                    ->label('Rendszer mennyiség')
                                     ->numeric()
                                     ->required()
                                     ->minValue(0)
@@ -89,7 +86,6 @@ final class InventoryLinesRelationManager extends RelationManager
                                     ->dehydrated(),
 
                                 TextInput::make('actual_quantity')
-                                    ->label('Tényleges mennyiség')
                                     ->numeric()
                                     ->required()
                                     ->minValue(0)
@@ -104,11 +100,10 @@ final class InventoryLinesRelationManager extends RelationManager
                                     }),
 
                                 TextInput::make('unit_cost')
-                                    ->label('Egységár')
                                     ->numeric()
                                     ->required()
                                     ->minValue(0)
-                                    ->prefix('Ft')
+                                    ->prefix(Team::currency())
                                     ->live()
                                     ->afterStateUpdated(function ($state, Get $get, Set $set): void {
                                         $systemQuantity = $get('system_quantity') ?? 0;
@@ -122,7 +117,6 @@ final class InventoryLinesRelationManager extends RelationManager
                             ->columns(3),
 
                         TextInput::make('variance_value')
-                            ->label('Eltérés értéke')
                             ->afterStateHydrated(function ($state, $get, $set): void {
                                 $systemQuantity = $get('system_quantity') ?? 0;
                                 $actualQuantity = $get('actual_quantity') ?? 0;
@@ -133,19 +127,18 @@ final class InventoryLinesRelationManager extends RelationManager
                             })
                             ->numeric()
                             ->disabled()
-                            ->prefix('Ft')
+                            ->prefix(Team::currency())
                             ->dehydrated(false),
                     ]),
 
-                Section::make('Állapot és megjegyzés')
+                Section::make('status_notes')
+                    ->label(__('Status & Notes'))
                     ->schema([
                         Select::make('condition')
                             ->options(DiscrepancyType::class)
-                            ->enum(DiscrepancyType::class)
-                            ->label('Állapot'),
+                            ->enum(DiscrepancyType::class),
 
                         Textarea::make('note')
-                            ->label('Megjegyzés')
                             ->rows(3)
                             ->columnSpanFull(),
                     ]),
@@ -158,28 +151,27 @@ final class InventoryLinesRelationManager extends RelationManager
             ->recordTitleAttribute('product.name')
             ->columns([
                 TextColumn::make('product.name')
-                    ->label('Termék')
+                    ->label(__('Product'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('batch_number')
-                    ->label('Tétel szám')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
 
                 TextColumn::make('system_quantity')
-                    ->label('Rendszer')
+                    ->label(__('System Qty'))
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('actual_quantity')
-                    ->label('Tényleges')
+                    ->label(__('Actual Qty'))
                     ->numeric()
                     ->sortable(),
 
                 TextColumn::make('variance_quantity')
-                    ->label('Eltérés')
+                    ->label(__('Variance'))
                     ->numeric()
                     ->badge()
                     ->color(fn (Model $record): string => match ($record->getDiscrepancyType()) {
@@ -190,23 +182,19 @@ final class InventoryLinesRelationManager extends RelationManager
                     ->sortable(),
 
                 TextColumn::make('unit_cost')
-                    ->label('Egységár')
                     ->money(Team::currency())
                     ->sortable(),
 
                 TextColumn::make('variance_value')
-                    ->label('Eltérés értéke')
                     ->money(Team::currency())
                     ->sortable()
                     ->color(fn (Model $record): string => $record->hasVariance() ? 'danger' : 'success'),
 
                 TextColumn::make('condition')
-                    ->label('Állapot')
                     ->toggleable()
                     ->searchable(),
 
                 TextColumn::make('expiry_date')
-                    ->label('Lejárat')
                     ->date()
                     ->sortable()
                     ->toggleable(),

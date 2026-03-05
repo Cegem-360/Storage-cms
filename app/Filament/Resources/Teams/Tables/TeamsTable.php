@@ -18,11 +18,9 @@ final class TeamsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
-                    ->label(__('Slug'))
                     ->searchable(),
                 IconColumn::make('is_active')
                     ->label(__('Active'))

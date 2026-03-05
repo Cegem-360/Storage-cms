@@ -6,6 +6,7 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use App\Enums\ProductStatus;
 use App\Enums\UnitType;
+use App\Models\Team;
 use App\Services\BarcodeService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -26,7 +27,7 @@ final class ProductForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Basic Information'))
+                        Tab::make('basic_information')
                             ->schema([
                                 TextInput::make('sku')
                                     ->label(__('SKU'))
@@ -37,7 +38,6 @@ final class ProductForm
                                     ->required()
                                     ->maxLength(255),
                                 TextInput::make('barcode')
-                                    ->label(__('Barcode'))
                                     ->maxLength(100)
                                     ->afterContent(
                                         Action::make('generateBarcode')
@@ -61,7 +61,10 @@ final class ProductForm
                                     ->preload()
                                     ->createOptionForm([
                                         TextInput::make('name')
+                                            ->label(__('Category Name'))
                                             ->required(),
+                                        TextInput::make('code')
+                                            ->maxLength(50),
                                     ]),
                                 Select::make('supplier_id')
                                     ->label(__('Primary Supplier'))
@@ -69,21 +72,19 @@ final class ProductForm
                                     ->searchable()
                                     ->preload(),
                                 Select::make('status')
-                                    ->label(__('Status'))
                                     ->options(ProductStatus::class)
                                     ->default(ProductStatus::ACTIVE)
                                     ->required(),
                                 Textarea::make('description')
-                                    ->label(__('Description'))
                                     ->rows(3)
                                     ->columnSpanFull(),
                             ])
                             ->columns(3),
 
-                        Tab::make(__('Measurements & Pricing'))
+                        Tab::make('measurements_pricing')
+                            ->label(__('Measurements & Pricing'))
                             ->schema([
                                 Select::make('unit_of_measure')
-                                    ->label(__('Unit of Measure'))
                                     ->options(UnitType::class)
                                     ->default(UnitType::PIECE)
                                     ->required(),
@@ -108,32 +109,28 @@ final class ProductForm
                                     ->minValue(0)
                                     ->suffix('cm'),
                                 TextInput::make('price')
-                                    ->label(__('Price'))
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
-                                    ->prefix('Ft')
+                                    ->prefix(Team::currency())
                                     ->suffix(__('/ unit')),
                             ])
                             ->columns(3),
 
-                        Tab::make(__('Stock Management'))
+                        Tab::make('stock_management')
                             ->schema([
                                 TextInput::make('min_stock')
-                                    ->label(__('Minimum Stock'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
                                     ->helperText(__('Alert when stock falls below this level')),
                                 TextInput::make('reorder_point')
-                                    ->label(__('Reorder Point'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)
                                     ->helperText(__('Trigger reorder when reaching this level')),
                                 TextInput::make('max_stock')
-                                    ->label(__('Maximum Stock'))
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0)

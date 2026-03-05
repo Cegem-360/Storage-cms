@@ -20,7 +20,7 @@ final class SupplierForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Company'))
+                        Tab::make('company')
                             ->schema([
                                 TextInput::make('code'),
                                 TextInput::make('company_name')
@@ -32,13 +32,14 @@ final class SupplierForm
                                 TextInput::make('bank_account_number'),
                                 TextInput::make('rating'),
                                 Toggle::make('is_active')
+                                    ->label(__('Active'))
                                     ->required(),
                             ])
                             ->columns(2),
 
-                        Tab::make(__('Addresses'))
+                        Tab::make('addresses')
                             ->schema([
-                                Section::make(__('Headquarters Address'))
+                                Section::make('headquarters_address')
                                     ->schema([
                                         TextInput::make('headquarters.street')
                                             ->label(__('Street')),
@@ -58,7 +59,7 @@ final class SupplierForm
                                             ]),
                                     ]),
 
-                                Section::make(__('Mailing Address'))
+                                Section::make('mailing_address')
                                     ->schema([
                                         TextInput::make('mailing_address.street')
                                             ->label(__('Street')),
@@ -79,10 +80,9 @@ final class SupplierForm
                                     ]),
                             ]),
 
-                        Tab::make(__('Contact'))
+                        Tab::make('contact')
                             ->schema([
-                                TextInput::make('contact_person')
-                                    ->label(__('Contact Person')),
+                                TextInput::make('contact_person'),
                                 TextInput::make('email')
                                     ->label(__('Email address'))
                                     ->email(),

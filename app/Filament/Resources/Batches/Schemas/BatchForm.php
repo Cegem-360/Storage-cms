@@ -21,15 +21,13 @@ final class BatchForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('General'))
+                        Tab::make('general')
                             ->schema([
                                 TextInput::make('batch_number')
-                                    ->label(__('Batch Number'))
                                     ->required()
                                     ->scopedUnique(ignoreRecord: true)
                                     ->maxLength(100),
                                 Select::make('product_id')
-                                    ->label(__('Product'))
                                     ->relationship('product', 'name')
                                     ->required()
                                     ->searchable()
@@ -40,28 +38,23 @@ final class BatchForm
                                     ->required()
                                     ->searchable()
                                     ->preload(),
-                                DatePicker::make('manufacture_date')
-                                    ->label(__('Manufacture Date')),
-                                DatePicker::make('expiry_date')
-                                    ->label(__('Expiry Date')),
+                                DatePicker::make('manufacture_date'),
+                                DatePicker::make('expiry_date'),
                                 TextInput::make('quantity')
-                                    ->label(__('Quantity'))
                                     ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->default(0),
                                 Select::make('quality_status')
-                                    ->label(__('Quality Status'))
                                     ->options(QualityStatus::class)
                                     ->default(QualityStatus::PENDING_CHECK)
                                     ->required(),
                             ])
                             ->columns(2),
 
-                        Tab::make(__('Serial Numbers'))
+                        Tab::make('serial_numbers')
                             ->schema([
                                 Repeater::make('serial_numbers')
-                                    ->label(__('Serial Numbers'))
                                     ->schema([
                                         TextInput::make('serial')
                                             ->label(__('Serial Number'))

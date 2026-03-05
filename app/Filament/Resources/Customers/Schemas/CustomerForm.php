@@ -21,7 +21,7 @@ final class CustomerForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make(__('Customer Information'))
+                        Tab::make('customer_information')
                             ->schema([
                                 TextInput::make('customer_code'),
                                 TextInput::make('name')
@@ -38,9 +38,9 @@ final class CustomerForm
                             ])
                             ->columns(2),
 
-                        Tab::make(__('Addresses'))
+                        Tab::make('addresses')
                             ->schema([
-                                Section::make(__('Billing Address'))
+                                Section::make('billing_address')
                                     ->schema([
                                         TextInput::make('billing_address.street')
                                             ->label(__('Street')),
@@ -55,7 +55,7 @@ final class CustomerForm
                                     ])
                                     ->columns(2),
 
-                                Section::make(__('Shipping Address'))
+                                Section::make('shipping_address')
                                     ->schema([
                                         TextInput::make('shipping_address.street')
                                             ->label(__('Street')),
@@ -71,7 +71,7 @@ final class CustomerForm
                                     ->columns(2),
                             ]),
 
-                        Tab::make(__('Financial Information'))
+                        Tab::make('financial_information')
                             ->schema([
                                 TextInput::make('credit_limit')
                                     ->numeric()

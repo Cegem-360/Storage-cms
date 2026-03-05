@@ -21,6 +21,7 @@ final class InventoryForm
                 TextInput::make('inventory_number')
                     ->required(),
                 Select::make('warehouse_id')
+                    ->label(__('Warehouse'))
                     ->relationship('warehouse', 'name')
                     ->required(),
                 Select::make('conducted_by')
@@ -39,7 +40,8 @@ final class InventoryForm
                     ->enum(InventoryType::class)
                     ->required(),
 
-                RichEditor::make('notes')->columnSpanFull(),
+                RichEditor::make('notes')
+                    ->columnSpanFull(),
             ]);
     }
 }

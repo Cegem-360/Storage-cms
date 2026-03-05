@@ -24,11 +24,11 @@ final class ListSuppliers extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(SupplierImporter::class)
-                ->label('Importálás')
+                ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()
                 ->exporter(SupplierExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

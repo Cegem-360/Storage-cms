@@ -20,32 +20,28 @@ final class BatchesTable
         return $table
             ->columns([
                 TextColumn::make('batch_number')
-                    ->label('Batch Number')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('product.name')
-                    ->label('Product')
+                    ->label(__('Product'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('supplier.company_name')
-                    ->label('Supplier')
+                    ->label(__('Supplier'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('quantity')
-                    ->label('Quantity')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('manufacture_date')
-                    ->label('Manufacture Date')
                     ->date()
                     ->sortable(),
                 TextColumn::make('expiry_date')
-                    ->label('Expiry Date')
                     ->date()
                     ->sortable()
                     ->color(fn ($record): ?string => $record->isExpired() ? 'danger' : null),
                 TextColumn::make('quality_status')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'APPROVED' => 'success',
@@ -55,7 +51,6 @@ final class BatchesTable
                         default => 'gray',
                     }),
                 TextColumn::make('created_at')
-                    ->label('Created')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -79,20 +74,17 @@ final class BatchesTable
         return $table
             ->columns([
                 TextColumn::make('batch_number')
-                    ->label('Batch #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('product.name')
-                    ->label('Product')
+                    ->label(__('Product'))
                     ->searchable(),
                 TextColumn::make('warehouse.name')
-                    ->label('Warehouse')
+                    ->label(__('Warehouse'))
                     ->searchable(),
                 TextColumn::make('quantity')
-                    ->label('Quantity')
                     ->numeric(),
                 TextColumn::make('expiry_date')
-                    ->label('Expiry Date')
                     ->date()
                     ->sortable()
                     ->color(fn ($record): ?string => $record->isExpired() ? 'danger' : null),

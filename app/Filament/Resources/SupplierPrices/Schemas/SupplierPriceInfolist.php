@@ -17,17 +17,15 @@ final class SupplierPriceInfolist
     {
         return $schema
             ->components([
-                Section::make(__('Price Information'))
+                Section::make('price_information')
                     ->schema([
                         TextEntry::make('supplier.company_name')
                             ->label(__('Supplier')),
                         TextEntry::make('product.name')
                             ->label(__('Product')),
                         TextEntry::make('price')
-                            ->label(__('Price'))
                             ->money(Team::currency()),
-                        TextEntry::make('currency')
-                            ->label(__('Currency')),
+                        TextEntry::make('currency'),
                         TextEntry::make('minimum_order_quantity')
                             ->label(__('Min. Order Quantity'))
                             ->numeric(),
@@ -37,27 +35,24 @@ final class SupplierPriceInfolist
                     ])
                     ->columns(2),
 
-                Section::make(__('Validity'))
+                Section::make('validity')
                     ->schema([
                         TextEntry::make('valid_from')
-                            ->label(__('Valid From'))
                             ->date()
                             ->placeholder('-'),
                         TextEntry::make('valid_until')
-                            ->label(__('Valid Until'))
                             ->date()
                             ->placeholder('-'),
                         IconEntry::make('is_active')
                             ->label(__('Active'))
                             ->boolean(),
                         TextEntry::make('notes')
-                            ->label(__('Notes'))
                             ->placeholder('-')
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
 
-                Section::make(__('Quantity Discount Tiers'))
+                Section::make('quantity_discount_tiers')
                     ->schema([
                         RepeatableEntry::make('tiers')
                             ->label('')
@@ -70,21 +65,18 @@ final class SupplierPriceInfolist
                                     ->numeric()
                                     ->placeholder('∞'),
                                 TextEntry::make('price')
-                                    ->label(__('Price'))
                                     ->money(Team::currency()),
                             ])
                             ->columns(3),
                     ])
                     ->visible(fn ($record): bool => $record->tiers->isNotEmpty()),
 
-                Section::make(__('Timestamps'))
+                Section::make('timestamps')
                     ->schema([
                         TextEntry::make('created_at')
-                            ->label(__('Created At'))
                             ->dateTime()
                             ->placeholder('-'),
                         TextEntry::make('updated_at')
-                            ->label(__('Updated At'))
                             ->dateTime()
                             ->placeholder('-'),
                     ])

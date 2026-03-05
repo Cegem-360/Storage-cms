@@ -27,11 +27,11 @@ final class ReturnDeliveriesTable
         return $table
             ->columns([
                 TextColumn::make('return_number')
-                    ->label('Return #')
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('type')
+                    ->label(__('Return Type'))
                     ->badge()
                     ->sortable(),
 
@@ -40,31 +40,30 @@ final class ReturnDeliveriesTable
                     ->sortable(),
 
                 TextColumn::make('warehouse.name')
-                    ->label('Warehouse')
+                    ->label(__('Warehouse'))
                     ->searchable()
                     ->sortable(),
 
                 TextColumn::make('return_date')
-                    ->label('Date')
                     ->date()
                     ->sortable(),
 
                 TextColumn::make('customer.name')
-                    ->label('Customer')
+                    ->label(__('Customer'))
                     ->searchable()
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(),
 
                 TextColumn::make('supplier.name')
-                    ->label('Supplier')
+                    ->label(__('Supplier'))
                     ->searchable()
                     ->sortable()
                     ->placeholder('-')
                     ->toggleable(),
 
                 TextColumn::make('total_amount')
-                    ->label('Total')
+                    ->label(__('Total'))
                     ->money(Team::currency())
                     ->sortable(),
 
@@ -112,25 +111,23 @@ final class ReturnDeliveriesTable
         return $table
             ->columns([
                 TextColumn::make('return_number')
-                    ->label('Return #')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('order.order_number')
-                    ->label('Order')
+                    ->label(__('Order'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('warehouse.name')
-                    ->label('Warehouse')
+                    ->label(__('Warehouse'))
                     ->searchable(),
                 TextColumn::make('status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('return_date')
-                    ->label('Date')
                     ->date()
                     ->sortable(),
                 TextColumn::make('total_amount')
-                    ->label('Amount')
+                    ->label(__('Total'))
                     ->money(Team::currency())
                     ->sortable(),
             ])
