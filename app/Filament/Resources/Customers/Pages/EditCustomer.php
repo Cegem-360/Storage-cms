@@ -26,4 +26,10 @@ final class EditCustomer extends EditRecord
             RestoreAction::make(),
         ];
     }
+
+    #[Override]
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        return CreateCustomer::syncShippingAddress($data);
+    }
 }
