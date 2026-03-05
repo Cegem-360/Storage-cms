@@ -22,6 +22,7 @@ final class CustomerForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('customer_information')
+                            ->label(__('Customer Information'))
                             ->schema([
                                 TextInput::make('customer_code'),
                                 TextInput::make('name')
@@ -39,6 +40,7 @@ final class CustomerForm
                             ->columns(2),
 
                         Tab::make('addresses')
+                            ->label(__('Addresses'))
                             ->schema([
                                 Section::make('billing_address')
                                     ->schema([
@@ -72,6 +74,7 @@ final class CustomerForm
                             ]),
 
                         Tab::make('financial_information')
+                            ->label(__('Financial Information'))
                             ->schema([
                                 TextInput::make('credit_limit')
                                     ->numeric()

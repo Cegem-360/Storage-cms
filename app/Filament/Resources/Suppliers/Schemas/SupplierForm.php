@@ -21,6 +21,7 @@ final class SupplierForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('company')
+                            ->label(__('Company'))
                             ->schema([
                                 TextInput::make('code'),
                                 TextInput::make('company_name')
@@ -38,6 +39,7 @@ final class SupplierForm
                             ->columns(2),
 
                         Tab::make('addresses')
+                            ->label(__('Addresses'))
                             ->schema([
                                 Section::make('headquarters_address')
                                     ->schema([
@@ -81,6 +83,7 @@ final class SupplierForm
                             ]),
 
                         Tab::make('contact')
+                            ->label(__('Contact'))
                             ->schema([
                                 TextInput::make('contact_person'),
                                 TextInput::make('email')

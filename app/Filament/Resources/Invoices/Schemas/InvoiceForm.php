@@ -30,6 +30,7 @@ final class InvoiceForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('invoice_information')
+                            ->label(__('Invoice Information'))
                             ->schema([
                                 TextInput::make('invoice_number')
                                     ->default(fn (): string => 'INV-'.now()->format('Ymd').'-'.mb_strtoupper(mb_substr(bin2hex(random_bytes(3)), 0, 6)))
@@ -105,6 +106,7 @@ final class InvoiceForm
                             ->columns(2),
 
                         Tab::make('invoice_items')
+                            ->label(__('Invoice Items'))
                             ->schema([
                                 Repeater::make('invoiceLines')
                                     ->label('')
@@ -146,6 +148,7 @@ final class InvoiceForm
                             ]),
 
                         Tab::make('summary')
+                            ->label(__('Summary'))
                             ->schema([
                                 TextEntry::make('calculated_subtotal')
                                     ->label(__('Subtotal'))

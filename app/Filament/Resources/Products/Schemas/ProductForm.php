@@ -28,6 +28,7 @@ final class ProductForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('basic_information')
+                            ->label(__('Basic Information'))
                             ->schema([
                                 TextInput::make('sku')
                                     ->label(__('SKU'))
@@ -119,6 +120,7 @@ final class ProductForm
                             ->columns(3),
 
                         Tab::make('stock_management')
+                            ->label(__('Stock Management'))
                             ->schema([
                                 TextInput::make('min_stock')
                                     ->numeric()

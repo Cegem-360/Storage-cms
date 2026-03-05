@@ -33,14 +33,17 @@ final class OrderForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('order_information')
+                            ->label(__('Order Information'))
                             ->schema(self::getOrderInfoFields()),
 
                         Tab::make('order_items')
+                            ->label(__('Order Items'))
                             ->schema([
                                 self::getOrderLineRepeater(),
                             ]),
 
                         Tab::make('summary')
+                            ->label(__('Summary'))
                             ->schema(self::getSummaryFields())
                             ->visibleOn(['edit', 'view']),
                     ])

@@ -31,6 +31,7 @@ final class ReturnDeliveryForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('return_details')
+                            ->label(__('Return Details'))
                             ->schema([
                                 Section::make('return_information')
                                     ->schema([
@@ -106,6 +107,7 @@ final class ReturnDeliveryForm
                             ]),
 
                         Tab::make('return_items')
+                            ->label(__('Return Items'))
                             ->schema([
                                 Repeater::make('returnDeliveryLines')
                                     ->relationship()
@@ -155,6 +157,7 @@ final class ReturnDeliveryForm
                             ]),
 
                         Tab::make('summary')
+                            ->label(__('Summary'))
                             ->schema([
                                 TextEntry::make('total_amount')
                                     ->state(fn ($record): string => Number::currency(

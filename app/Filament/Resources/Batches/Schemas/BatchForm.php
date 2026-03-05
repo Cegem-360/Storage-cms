@@ -22,6 +22,7 @@ final class BatchForm
                 Tabs::make()
                     ->tabs([
                         Tab::make('general')
+                            ->label(__('General'))
                             ->schema([
                                 TextInput::make('batch_number')
                                     ->required()
@@ -53,6 +54,7 @@ final class BatchForm
                             ->columns(2),
 
                         Tab::make('serial_numbers')
+                            ->label(__('Serial Numbers'))
                             ->schema([
                                 Repeater::make('serial_numbers')
                                     ->schema([
