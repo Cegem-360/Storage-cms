@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Customers\Schemas;
 
 use App\Models\Customer;
+use App\Models\Team;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -21,9 +22,10 @@ final class CustomerInfolist
                 TextEntry::make('phone')
                     ->placeholder('-'),
                 TextEntry::make('credit_limit')
-                    ->numeric(),
+                    ->money(Team::currency()),
                 TextEntry::make('balance')
-                    ->numeric(),
+                    ->money(Team::currency())
+                    ->color(fn (Customer $record): string => $record->isOverCreditLimit() ? 'danger' : 'success'),
                 TextEntry::make('type')
                     ->badge()
                     ->placeholder('-'),

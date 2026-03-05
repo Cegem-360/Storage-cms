@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\CustomerType;
+use App\Enums\InvoiceStatus;
 use App\Models\Concerns\BelongsToTeam;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -37,15 +38,36 @@ final class Customer extends Model
         return $this->hasMany(Order::class);
     }
 
-    // Helper methods
-    public function checkCreditLimit(float $amount): bool
+    public function invoices(): HasMany
     {
-        return ($this->balance + $amount) <= $this->credit_limit;
+        return $this->hasMany(Invoice::class);
     }
 
-    public function updateBalance(float $amount): void
+    // Helper methods
+    public function getOutstandingBalance(): float
     {
-        $this->increment('balance', $amount);
+        return (float) $this->invoices()
+            ->whereNotIn('status', [InvoiceStatus::PAID, InvoiceStatus::CANCELLED])
+            ->sum('total_amount');
+    }
+
+    public function refreshBalance(): void
+    {
+        $this->update(['balance' => $this->getOutstandingBalance()]);
+    }
+
+    public function checkCreditLimit(float $amount = 0): bool
+    {
+        if ((float) $this->credit_limit <= 0) {
+            return true;
+        }
+
+        return ($this->balance + $amount) <= (float) $this->credit_limit;
+    }
+
+    public function isOverCreditLimit(): bool
+    {
+        return ! $this->checkCreditLimit();
     }
 
     #[Override]

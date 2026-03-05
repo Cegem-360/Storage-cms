@@ -38,7 +38,6 @@ final class CustomerController extends Controller
             'billing_address' => ['nullable', 'array'],
             'shipping_address' => ['nullable', 'array'],
             'credit_limit' => ['sometimes', 'numeric', 'min:0'],
-            'balance' => ['sometimes', 'numeric'],
             'type' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -64,7 +63,6 @@ final class CustomerController extends Controller
             'billing_address' => ['nullable', 'array'],
             'shipping_address' => ['nullable', 'array'],
             'credit_limit' => ['sometimes', 'numeric', 'min:0'],
-            'balance' => ['sometimes', 'numeric'],
             'type' => ['nullable', 'string', 'max:255'],
         ]);
 

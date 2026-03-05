@@ -124,11 +124,14 @@ final class CustomerForm
                                 TextInput::make('credit_limit')
                                     ->numeric()
                                     ->default(0.0)
-                                    ->prefix(Team::currency()),
+                                    ->prefix(Team::currency())
+                                    ->helperText(__('Set to 0 for unlimited credit')),
                                 TextInput::make('balance')
                                     ->numeric()
                                     ->default(0.0)
-                                    ->prefix(Team::currency()),
+                                    ->prefix(Team::currency())
+                                    ->disabled()
+                                    ->helperText(__('Automatically calculated from outstanding invoices')),
                             ])
                             ->columns(2),
                     ])

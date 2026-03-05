@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Customers\Tables;
 
 use App\Models\Customer;
+use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,11 +34,12 @@ final class CustomersTable
                 TextColumn::make('phone')
                     ->searchable(),
                 TextColumn::make('credit_limit')
-                    ->numeric()
+                    ->money(Team::currency())
                     ->sortable(),
                 TextColumn::make('balance')
-                    ->numeric()
-                    ->sortable(),
+                    ->money(Team::currency())
+                    ->sortable()
+                    ->color(fn (Customer $record): string => $record->isOverCreditLimit() ? 'danger' : 'success'),
                 TextColumn::make('type')
                     ->badge()
                     ->searchable(),
@@ -82,9 +84,6 @@ final class CustomersTable
                     ->searchable(),
                 TextColumn::make('phone')
                     ->label('Phone')
-                    ->searchable(),
-                TextColumn::make('company')
-                    ->label('Company')
                     ->searchable(),
                 TextColumn::make('type')
                     ->badge(),

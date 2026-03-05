@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 use App\Enums\CustomerType;
+use App\Enums\InvoiceStatus;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -111,24 +113,57 @@ describe('Customer Helper Methods', function (): void {
             ->and($customer->checkCreditLimit(6000))->toBeFalse();
     });
 
-    it('can update balance', function (): void {
+    it('can refresh balance from outstanding invoices', function (): void {
         $customer = Customer::factory()->create([
-            'balance' => 1000,
+            'balance' => 0,
         ]);
 
-        $customer->updateBalance(500);
+        Invoice::factory()->create([
+            'customer_id' => $customer->id,
+            'team_id' => $customer->team_id,
+            'total_amount' => 5000,
+            'status' => InvoiceStatus::ISSUED,
+        ]);
 
-        expect($customer->fresh()->balance)->toBe('1500.00');
+        Invoice::factory()->create([
+            'customer_id' => $customer->id,
+            'team_id' => $customer->team_id,
+            'total_amount' => 3000,
+            'status' => InvoiceStatus::SENT,
+        ]);
+
+        Invoice::factory()->create([
+            'customer_id' => $customer->id,
+            'team_id' => $customer->team_id,
+            'total_amount' => 2000,
+            'status' => InvoiceStatus::PAID,
+        ]);
+
+        $customer->refreshBalance();
+
+        expect($customer->fresh()->balance)->toBe('8000.00');
     });
 
-    it('can decrease balance', function (): void {
+    it('detects when customer is over credit limit', function (): void {
         $customer = Customer::factory()->create([
-            'balance' => 1000,
+            'credit_limit' => 5000,
+            'balance' => 6000,
         ]);
 
-        $customer->updateBalance(-200);
+        expect($customer->isOverCreditLimit())->toBeTrue();
 
-        expect($customer->fresh()->balance)->toBe('800.00');
+        $customer->update(['balance' => 3000]);
+
+        expect($customer->fresh()->isOverCreditLimit())->toBeFalse();
+    });
+
+    it('treats zero credit limit as unlimited', function (): void {
+        $customer = Customer::factory()->create([
+            'credit_limit' => 0,
+            'balance' => 100000,
+        ]);
+
+        expect($customer->isOverCreditLimit())->toBeFalse();
     });
 });
 

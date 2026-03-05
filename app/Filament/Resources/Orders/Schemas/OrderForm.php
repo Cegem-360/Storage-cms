@@ -17,6 +17,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
@@ -70,11 +71,26 @@ final class OrderForm
                 ->afterStateUpdated(function (?string $state, Set $set): void {
                     if ($state) {
                         $customer = Customer::query()->find($state);
-                        $address = $customer?->shipping_address ?? [];
-                        $set('shipping_address.street', $address['street'] ?? null);
-                        $set('shipping_address.city', $address['city'] ?? null);
-                        $set('shipping_address.zip', $address['zip'] ?? null);
-                        $set('shipping_address.country', $address['country'] ?? null);
+
+                        if ($customer) {
+                            $address = $customer->shipping_address ?? [];
+                            $set('shipping_address.street', $address['street'] ?? null);
+                            $set('shipping_address.city', $address['city'] ?? null);
+                            $set('shipping_address.zip', $address['zip'] ?? null);
+                            $set('shipping_address.country', $address['country'] ?? null);
+
+                            if ($customer->isOverCreditLimit()) {
+                                Notification::make()
+                                    ->title(__('Credit limit exceeded'))
+                                    ->body(__('This customer has exceeded their credit limit. Balance: :balance, Limit: :limit', [
+                                        'balance' => Number::currency((float) $customer->balance, in: Team::currency(), locale: 'hu'),
+                                        'limit' => Number::currency((float) $customer->credit_limit, in: Team::currency(), locale: 'hu'),
+                                    ]))
+                                    ->warning()
+                                    ->persistent()
+                                    ->send();
+                            }
+                        }
                     }
                 }),
             Select::make('supplier_id')

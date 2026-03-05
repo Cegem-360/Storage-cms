@@ -41,7 +41,6 @@ describe('Customer Resource', function (): void {
                 'email' => $newCustomer->email,
                 'type' => $newCustomer->type,
                 'credit_limit' => $newCustomer->credit_limit,
-                'balance' => $newCustomer->balance,
             ])
             ->call('create')
             ->assertHasNoFormErrors();
@@ -100,7 +99,6 @@ describe('Customer Resource', function (): void {
                 'name' => 'Test Customer',
                 'email' => 'not-a-valid-email',
                 'credit_limit' => 0,
-                'balance' => 0,
             ])
             ->call('create')
             ->assertHasFormErrors(['email' => 'email']);
