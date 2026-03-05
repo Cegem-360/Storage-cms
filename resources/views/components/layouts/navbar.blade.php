@@ -83,9 +83,11 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                             class="absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                            <a href="{{ route('filament.admin.pages.dashboard') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
-                            <hr class="my-1 border-gray-200">
+                            @if($tenant = auth()->user()->teams->first())
+                                <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => $tenant->slug]) }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
+                                <hr class="my-1 border-gray-200">
+                            @endif
                             <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                                 @csrf
                                 <button type="submit"

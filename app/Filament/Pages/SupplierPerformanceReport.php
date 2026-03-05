@@ -9,6 +9,7 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Supplier;
 use App\Models\Team;
+use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -25,6 +26,8 @@ final class SupplierPerformanceReport extends Page implements HasTable
     protected string $view = 'filament.pages.supplier-performance-report';
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBarSquare;
 
     protected static ?string $title = 'Supplier Performance';
 

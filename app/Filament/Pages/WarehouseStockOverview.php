@@ -8,7 +8,9 @@ use App\Enums\NavigationGroup;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\Warehouse;
+use BackedEnum;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -22,6 +24,8 @@ final class WarehouseStockOverview extends Page implements HasTable
     protected string $view = 'filament.pages.warehouse-stock-overview';
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingStorefront;
 
     protected static ?string $title = 'Warehouse Stock Overview';
 

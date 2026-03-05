@@ -12,8 +12,10 @@ use App\Filament\Resources\IntrastatDeclarations\RelationManagers\IntrastatLines
 use App\Filament\Resources\IntrastatDeclarations\Schemas\IntrastatDeclarationForm;
 use App\Filament\Resources\IntrastatDeclarations\Tables\IntrastatDeclarationsTable;
 use App\Models\IntrastatDeclaration;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Override;
 use UnitEnum;
@@ -23,6 +25,8 @@ final class IntrastatDeclarationResource extends Resource
     protected static ?string $model = IntrastatDeclaration::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::ADMINISTRATION;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocument;
 
     #[Override]
     public static function form(Schema $schema): Schema

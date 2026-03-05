@@ -14,8 +14,10 @@ use App\Filament\Resources\ReturnDeliveries\Schemas\ReturnDeliveryForm;
 use App\Filament\Resources\ReturnDeliveries\Schemas\ReturnDeliveryInfolist;
 use App\Filament\Resources\ReturnDeliveries\Tables\ReturnDeliveriesTable;
 use App\Models\ReturnDelivery;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -27,6 +29,8 @@ final class ReturnDeliveryResource extends Resource
     protected static ?string $model = ReturnDelivery::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowUturnLeft;
 
     protected static ?string $navigationLabel = 'Return Deliveries';
 

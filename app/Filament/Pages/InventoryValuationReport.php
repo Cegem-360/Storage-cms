@@ -11,9 +11,11 @@ use App\Models\Stock;
 use App\Models\Team;
 use App\Models\Warehouse;
 use App\Services\Inventory\InventoryValuationService;
+use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -34,6 +36,8 @@ final class InventoryValuationReport extends Page implements HasTable
     protected string $view = 'filament.pages.inventory-valuation-report';
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
     protected static ?string $title = 'Inventory Valuation Report';
 

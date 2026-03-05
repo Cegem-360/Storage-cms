@@ -11,8 +11,10 @@ use App\Filament\Resources\Batches\Pages\ListBatches;
 use App\Filament\Resources\Batches\Schemas\BatchForm;
 use App\Filament\Resources\Batches\Tables\BatchesTable;
 use App\Models\Batch;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Override;
 use UnitEnum;
@@ -22,6 +24,8 @@ final class BatchResource extends Resource
     protected static ?string $model = Batch::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArchiveBox;
 
     protected static ?string $recordTitleAttribute = 'batch_number';
 

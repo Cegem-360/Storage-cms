@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Filament\Commands\FileGenerators\Resources\ResourceClassGenerator;
 use App\Http\Responses\LoginResponse;
 use App\Http\Responses\RegistrationResponse;
 use Filament\Actions\Action;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse as LoginResponseContract;
 use Filament\Auth\Http\Responses\Contracts\RegistrationResponse as RegistrationResponseContract;
+use Filament\Commands\FileGenerators\Resources\ResourceClassGenerator as BaseResourceClassGenerator;
 use Filament\Forms\Components\Field;
 use Filament\Infolists\Components\Entry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
@@ -34,6 +37,8 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        FilamentTimezone::set('Europe/Budapest');
+        $this->app->bind(BaseResourceClassGenerator::class, ResourceClassGenerator::class);
         $this->configureFilamentTranslations();
     }
 

@@ -9,7 +9,9 @@ use App\Enums\OrderStatus;
 use App\Enums\OrderType;
 use App\Models\Order;
 use App\Models\Team;
+use BackedEnum;
 use Filament\Pages\Page;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -24,6 +26,8 @@ final class ExpectedStockArrivals extends Page implements HasTable
     protected string $view = 'filament.pages.expected-stock-arrivals';
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
     protected static ?string $title = 'Expected Stock Arrivals';
 

@@ -13,8 +13,10 @@ use App\Filament\Resources\Stocks\Schemas\StockForm;
 use App\Filament\Resources\Stocks\Schemas\StockInfolist;
 use App\Filament\Resources\Stocks\Tables\StocksTable;
 use App\Models\Stock;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,6 +28,8 @@ final class StockResource extends Resource
     protected static ?string $model = Stock::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INVENTORY;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     #[Override]
     public static function form(Schema $schema): Schema

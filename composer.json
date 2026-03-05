@@ -22,7 +22,7 @@
         "simplesoftwareio/simple-qrcode": "^4.2"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "*",
+        "barryvdh/laravel-ide-helper": "^3.6",
         "driftingly/rector-laravel": "*",
         "fakerphp/faker": "*",
         "filament/blueprint": "*",

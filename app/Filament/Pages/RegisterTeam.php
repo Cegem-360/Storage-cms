@@ -1,0 +1,58 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Filament\Pages;
+
+use App\Models\Team;
+use Filament\Forms\Components\TextInput;
+use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
+use Override;
+
+final class RegisterTeam extends RegisterTenant
+{
+    public static function getLabel(): string
+    {
+        return __('Register Team');
+    }
+
+    public static function canAccess(): bool
+    {
+        return Gate::allows('create', Team::class);
+    }
+
+    #[Override]
+    public function form(Schema $schema): Schema
+    {
+        return $schema->components([
+            TextInput::make('name')
+                ->label(__('Team Name'))
+                ->required()
+                ->maxLength(255)
+                ->live(onBlur: true)
+                ->afterStateUpdated(static fn (?string $state, Set $set): mixed => $set('slug', Str::slug($state ?? ''))),
+            TextInput::make('slug')
+                ->label(__('Team Slug'))
+                ->required()
+                ->maxLength(255)
+                ->unique(Team::class, 'slug')
+                ->alphaDash()
+                ->helperText(__('This will be used in the URL: /admin/{slug}/...')),
+        ]);
+    }
+
+    #[Override]
+    protected function handleRegistration(array $data): Team
+    {
+        $team = Team::query()->create($data);
+
+        $team->users()->attach(Auth::user());
+
+        return $team;
+    }
+}

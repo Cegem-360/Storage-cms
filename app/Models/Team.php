@@ -8,12 +8,15 @@ use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Override;
 
 final class Team extends Model
 {
     /** @use HasFactory<TeamFactory> */
     use HasFactory;
+
+    public const string CONTAINER_BINDING = 'current_team';
 
     protected $fillable = [
         'name',
@@ -23,7 +26,7 @@ final class Team extends Model
 
     public static function currency(): string
     {
-        return auth()->user()?->team?->getCurrency() ?? 'HUF';
+        return Auth::user()?->team?->getCurrency() ?? 'HUF';
     }
 
     public function users(): HasMany

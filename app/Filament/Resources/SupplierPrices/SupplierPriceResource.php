@@ -13,8 +13,10 @@ use App\Filament\Resources\SupplierPrices\Schemas\SupplierPriceForm;
 use App\Filament\Resources\SupplierPrices\Schemas\SupplierPriceInfolist;
 use App\Filament\Resources\SupplierPrices\Tables\SupplierPricesTable;
 use App\Models\SupplierPrice;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Override;
 use UnitEnum;
@@ -24,6 +26,8 @@ final class SupplierPriceResource extends Resource
     protected static ?string $model = SupplierPrice::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
 
     protected static ?int $navigationSort = 5;
 

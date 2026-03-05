@@ -33,9 +33,19 @@
     @apply !border-b !border-white/10 !px-4;
 }
 
-/* Logo: invert to white (same as dashboard: brightness-0 invert) */
-.fi-sidebar .fi-logo {
+/* Logo: invert to white (same as dashboard: brightness-0 invert) - apply to img only */
+.fi-sidebar .fi-logo img {
     @apply brightness-0 invert;
+}
+
+/* "Beszerzés" label next to sidebar logo */
+.fi-sidebar .fi-sidebar-header a {
+    @apply flex items-center gap-2;
+}
+
+.fi-sidebar .fi-sidebar-header a::after {
+    content: "Beszerzés";
+    @apply text-sm font-semibold text-amber-400 shrink-0;
 }
 
 /* --- Full-height sidebar (fixed, spans from top to bottom, like dashboard) --- */
@@ -191,51 +201,38 @@
 /* ============================================
    Per-group icon colors
    Matches dashboard sidebar colored icons
+   Group order: 1=ungrouped, 2=Master Data, 3=Inventory,
+   4=Purchasing, 5=Reports, 6=Intrastat, 7=Administration
    ============================================ */
 
-/* Customers group: indigo-400 */
-.fi-nav-group-customers .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-indigo-400;
+/* Master Data (2nd group): amber-400 */
+.fi-sidebar-nav-groups > :nth-child(2) .fi-sidebar-item-btn > .fi-icon {
+    @apply !text-amber-400;
 }
 
-/* Sales group: green-400 */
-.fi-nav-group-sales .fi-sidebar-item-btn > .fi-icon {
+/* Inventory (3rd group): amber-400 */
+.fi-sidebar-nav-groups > :nth-child(3) .fi-sidebar-item-btn > .fi-icon {
+    @apply !text-amber-400;
+}
+
+/* Purchasing (4th group): green-400 */
+.fi-sidebar-nav-groups > :nth-child(4) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-green-400;
 }
 
-/* Products group: purple-400 */
-.fi-nav-group-products .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-purple-400;
-}
-
-/* Marketing group: orange-400 */
-.fi-nav-group-marketing .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-orange-400;
-}
-
-/* Activities group: cyan-400 */
-.fi-nav-group-activities .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-cyan-400;
-}
-
-/* Support group: blue-400 */
-.fi-nav-group-support .fi-sidebar-item-btn > .fi-icon {
+/* Reports (5th group): blue-400 */
+.fi-sidebar-nav-groups > :nth-child(5) .fi-sidebar-item-btn > .fi-icon {
     @apply !text-blue-400;
 }
 
-/* Reports group: emerald-400 */
-.fi-nav-group-reports .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-emerald-400;
+/* Intrastat (6th group): cyan-400 */
+.fi-sidebar-nav-groups > :nth-child(6) .fi-sidebar-item-btn > .fi-icon {
+    @apply !text-cyan-400;
 }
 
-/* Settings group: gray-400 (default) */
-.fi-nav-group-settings .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-gray-400;
-}
-
-/* System group: gray-400 (default) */
-.fi-nav-group-system .fi-sidebar-item-btn > .fi-icon {
-    @apply !text-gray-400;
+/* Administration (7th group): purple-400 */
+.fi-sidebar-nav-groups > :nth-child(7) .fi-sidebar-item-btn > .fi-icon {
+    @apply !text-purple-400;
 }
 
 /* Override: active/hover icons always white regardless of group */

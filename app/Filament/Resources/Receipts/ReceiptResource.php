@@ -13,8 +13,10 @@ use App\Filament\Resources\Receipts\Schemas\ReceiptForm;
 use App\Filament\Resources\Receipts\Schemas\ReceiptInfolist;
 use App\Filament\Resources\Receipts\Tables\ReceiptsTable;
 use App\Models\Receipt;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,6 +28,8 @@ final class ReceiptResource extends Resource
     protected static ?string $model = Receipt::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::PURCHASING;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentDuplicate;
 
     #[Override]
     public static function form(Schema $schema): Schema

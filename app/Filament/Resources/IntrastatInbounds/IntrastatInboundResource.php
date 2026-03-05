@@ -11,7 +11,9 @@ use App\Filament\Resources\IntrastatInbounds\Actions\ExportXmlAction;
 use App\Filament\Resources\IntrastatInbounds\Pages\ListIntrastatInbounds;
 use App\Filament\Resources\IntrastatInbounds\Tables\IntrastatInboundsTable;
 use App\Models\IntrastatDeclaration;
+use BackedEnum;
 use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Override;
@@ -22,6 +24,8 @@ final class IntrastatInboundResource extends Resource
     protected static ?string $model = IntrastatDeclaration::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INTRASTAT;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowDownTray;
 
     protected static ?string $navigationLabel = 'Beszállítás (Arrival)';
 

@@ -7,6 +7,7 @@ namespace App\Filament\Pages;
 use App\Enums\NavigationGroup;
 use App\Models\Product;
 use App\Models\Team;
+use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -24,6 +25,8 @@ final class AbcAnalysisReport extends Page implements HasTable
     protected string $view = 'filament.pages.abc-analysis-report';
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::REPORTS;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
     protected static ?string $title = 'ABC Analysis';
 

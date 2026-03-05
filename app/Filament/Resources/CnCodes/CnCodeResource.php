@@ -11,8 +11,10 @@ use App\Filament\Resources\CnCodes\Pages\ListCnCodes;
 use App\Filament\Resources\CnCodes\Schemas\CnCodeForm;
 use App\Filament\Resources\CnCodes\Tables\CnCodesTable;
 use App\Models\CnCode;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Override;
 use UnitEnum;
@@ -22,6 +24,8 @@ final class CnCodeResource extends Resource
     protected static ?string $model = CnCode::class;
 
     protected static string|UnitEnum|null $navigationGroup = NavigationGroup::INTRASTAT;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedHashtag;
 
     protected static ?int $navigationSort = 1;
 
