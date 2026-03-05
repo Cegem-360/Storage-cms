@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
 use App\Models\User;
+use Filament\Forms\Components\Repeater;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
@@ -47,6 +48,8 @@ it('can render the create page', function (): void {
 
 describe('Wizard create', function (): void {
     it('can create an order through wizard steps', function (): void {
+        $undoRepeaterFake = Repeater::fake();
+
         $product = Product::factory()->recycle($this->team)->create(['price' => 1000]);
         $orderNumber = 'ORD-TEST-'.fake()->unique()->numerify('######');
 
@@ -56,20 +59,21 @@ describe('Wizard create', function (): void {
                 'type' => OrderType::SALES->value,
                 'status' => OrderStatus::DRAFT->value,
                 'order_date' => now()->format('Y-m-d'),
-                'shipping_address' => 'Test Address 123',
-            ])
-            ->set('data.orderLines', [
-                [
-                    'product_id' => $product->id,
-                    'quantity' => 2,
-                    'unit_price' => '1000',
-                    'discount_percent' => '0',
-                    'tax_percent' => '27',
+                'order_lines' => [
+                    [
+                        'product_id' => $product->id,
+                        'quantity' => 2,
+                        'unit_price' => '1000',
+                        'discount_percent' => '0',
+                        'tax_percent' => '27',
+                    ],
                 ],
             ])
             ->goToWizardStep(3)
             ->call('create')
             ->assertHasNoFormErrors();
+
+        $undoRepeaterFake();
 
         assertDatabaseHas(Order::class, [
             'order_number' => $orderNumber,
@@ -98,6 +102,8 @@ describe('Wizard create', function (): void {
     });
 
     it('saves order line with tax_percent', function (): void {
+        $undoRepeaterFake = Repeater::fake();
+
         $product = Product::factory()->recycle($this->team)->create(['price' => 500]);
         $orderNumber = 'ORD-TAX-'.fake()->unique()->numerify('######');
 
@@ -107,19 +113,21 @@ describe('Wizard create', function (): void {
                 'type' => OrderType::PURCHASE->value,
                 'status' => OrderStatus::DRAFT->value,
                 'order_date' => now()->format('Y-m-d'),
-            ])
-            ->set('data.orderLines', [
-                [
-                    'product_id' => $product->id,
-                    'quantity' => 10,
-                    'unit_price' => '500',
-                    'discount_percent' => '0',
-                    'tax_percent' => '5',
+                'order_lines' => [
+                    [
+                        'product_id' => $product->id,
+                        'quantity' => 10,
+                        'unit_price' => '500',
+                        'discount_percent' => '0',
+                        'tax_percent' => '5',
+                    ],
                 ],
             ])
             ->goToWizardStep(3)
             ->call('create')
             ->assertHasNoFormErrors();
+
+        $undoRepeaterFake();
 
         $order = Order::query()->where('order_number', $orderNumber)->first();
         $line = $order->orderLines->first();
