@@ -17,11 +17,11 @@ enum OrderType: string implements HasLabel
     public function getLabel(): string
     {
         return match ($this) {
-            self::PURCHASE => __('Purchase Order'),
-            self::SALES => __('Sales Order'),
-            self::SALE => __('Sale Order'),
-            self::TRANSFER => __('Transfer Order'),
-            self::RETURN => __('Return Order'),
+            self::PURCHASE => __('Purchase order'),
+            self::SALES => __('Sales order'),
+            self::SALE => __('Sale order'),
+            self::TRANSFER => __('Transfer order'),
+            self::RETURN => __('Return order'),
         };
     }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Suppliers\Schemas;
 
+use App\Enums\SupplierRating;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Grid;
@@ -31,7 +33,8 @@ final class SupplierForm
                                 TextInput::make('eu_tax_number'),
                                 TextInput::make('company_registration_number'),
                                 TextInput::make('bank_account_number'),
-                                TextInput::make('rating'),
+                                Select::make('rating')
+                                    ->options(SupplierRating::class),
                                 Toggle::make('is_active')
                                     ->label(__('Active'))
                                     ->required(),
@@ -41,7 +44,7 @@ final class SupplierForm
                         Tab::make('addresses')
                             ->label(__('Addresses'))
                             ->schema([
-                                Section::make('headquarters_address')
+                                Section::make(__('Headquarters address'))
                                     ->schema([
                                         TextInput::make('headquarters.street')
                                             ->label(__('Street')),
@@ -61,7 +64,7 @@ final class SupplierForm
                                             ]),
                                     ]),
 
-                                Section::make('mailing_address')
+                                Section::make(__('Mailing address'))
                                     ->schema([
                                         TextInput::make('mailing_address.street')
                                             ->label(__('Street')),

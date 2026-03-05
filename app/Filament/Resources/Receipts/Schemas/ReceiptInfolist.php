@@ -46,7 +46,8 @@ final class ReceiptInfolist
 
                 Section::make('Receipt Items')
                     ->schema([
-                        RepeatableEntry::make('receiptLines')
+                        RepeatableEntry::make('receipt_lines')
+                            ->relationship('receiptLines')
                             ->label('')
                             ->schema([
                                 TextEntry::make('product.name')

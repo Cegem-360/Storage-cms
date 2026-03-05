@@ -207,7 +207,7 @@
         </div>
 
         {{-- Administration section --}}
-       {{--  @auth
+        @auth
             <div>
                 <h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">{{ __('Administration') }}</h3>
                 <ul class="space-y-1">
@@ -221,16 +221,7 @@
                             {{ __('Employees') }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('dashboard.users') }}"
-                            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition
-                                {{ request()->routeIs('dashboard.users*') ? 'bg-white/10 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white' }}">
-                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                            </svg>
-                            {{ __('Users') }}
-                        </a>
-                    </li>
+
                     <li>
                         <a href="{{ route('dashboard.settings') }}"
                             class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition
@@ -242,21 +233,10 @@
                             {{ __('Settings') }}
                         </a>
                     </li>
-                    <li>
-                        <a href="/admin"
-                            class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white transition group">
-                            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            {{ __('Admin Panel') }}
-                            <svg class="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                            </svg>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
-        @endauth --}}
+        @endauth
 
         {{-- Intrastat section --}}
         <div>

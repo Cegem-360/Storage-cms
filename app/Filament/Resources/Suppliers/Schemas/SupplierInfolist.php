@@ -18,7 +18,7 @@ final class SupplierInfolist
     {
         return $schema
             ->components([
-                Section::make('Basic Information')
+                Section::make(__('Basic Information'))
                     ->schema([
                         TextEntry::make('code'),
                         TextEntry::make('company_name'),
@@ -27,15 +27,15 @@ final class SupplierInfolist
                     ])
                     ->columns(2),
 
-                Section::make('Headquarters Address')
+                Section::make(__('Headquarters address'))
                     ->schema([
                         TextEntry::make('headquarters.street')
-                            ->label('Street')
+                            ->label(__('Street'))
                             ->placeholder('-'),
                         Grid::make(2)
                             ->schema([
                                 TextEntry::make('headquarters.city')
-                                    ->label('City')
+                                    ->label(__('City'))
                                     ->placeholder('-'),
                                 TextEntry::make('headquarters.state')
                                     ->label('State')
@@ -53,33 +53,33 @@ final class SupplierInfolist
                     ])
                     ->collapsible(),
 
-                Section::make('Mailing Address')
+                Section::make(__('Mailing Address'))
                     ->schema([
                         TextEntry::make('mailing_address.street')
-                            ->label('Street')
+                            ->label(__('Street'))
                             ->placeholder('-'),
                         Grid::make(2)
                             ->schema([
                                 TextEntry::make('mailing_address.city')
-                                    ->label('City')
+                                    ->label(__('City'))
                                     ->placeholder('-'),
                                 TextEntry::make('mailing_address.state')
-                                    ->label('State')
+                                    ->label(__('State'))
                                     ->placeholder('-'),
                             ]),
                         Grid::make(2)
                             ->schema([
                                 TextEntry::make('mailing_address.zip')
-                                    ->label('Zip Code')
+                                    ->label(__('Zip Code'))
                                     ->placeholder('-'),
                                 TextEntry::make('mailing_address.country')
-                                    ->label('Country')
+                                    ->label(__('Country'))
                                     ->placeholder('-'),
                             ]),
                     ])
                     ->collapsible(),
 
-                Section::make('Company Details')
+                Section::make(__('Company Details'))
                     ->schema([
                         TextEntry::make('tax_number')
                             ->placeholder('-'),
@@ -93,7 +93,7 @@ final class SupplierInfolist
                     ->columns(2)
                     ->collapsible(),
 
-                Section::make('Contact Information')
+                Section::make(__('Contact Information'))
                     ->schema([
                         TextEntry::make('contact_person')
                             ->placeholder('-'),
@@ -107,7 +107,7 @@ final class SupplierInfolist
                     ])
                     ->columns(2),
 
-                Section::make('Status')
+                Section::make(__('Status'))
                     ->schema([
                         TextEntry::make('rating')
                             ->placeholder('-')
@@ -125,7 +125,7 @@ final class SupplierInfolist
                     ])
                     ->columns(2),
 
-                Section::make('Timestamps')
+                Section::make(__('Timestamps'))
                     ->schema([
                         TextEntry::make('created_at')
                             ->dateTime()

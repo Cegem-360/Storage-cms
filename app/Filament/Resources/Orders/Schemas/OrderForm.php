@@ -32,18 +32,13 @@ final class OrderForm
             ->components([
                 Tabs::make()
                     ->tabs([
-                        Tab::make('order_information')
-                            ->label(__('Order Information'))
+                        Tab::make(__('Order information'))
                             ->schema(self::getOrderInfoFields()),
-
-                        Tab::make('order_items')
-                            ->label(__('Order Items'))
+                        Tab::make(__('Order items'))
                             ->schema([
                                 self::getOrderLineRepeater(),
                             ]),
-
-                        Tab::make('summary')
-                            ->label(__('Summary'))
+                        Tab::make(__('Summary'))
                             ->schema(self::getSummaryFields())
                             ->visibleOn(['edit', 'view']),
                     ])
@@ -82,16 +77,26 @@ final class OrderForm
             DatePicker::make('order_date')
                 ->required(),
             DatePicker::make('delivery_date'),
-            Textarea::make('shipping_address')
+            Section::make(__('Shipping address'))
+                ->schema([
+                    TextInput::make('shipping_address.street')
+                        ->label(__('Street')),
+                    TextInput::make('shipping_address.city')
+                        ->label(__('City')),
+                    TextInput::make('shipping_address.zip')
+                        ->label(__('Zip')),
+                    TextInput::make('shipping_address.country')
+                        ->label(__('Country')),
+                ])
+                ->columns(2)
                 ->columnSpanFull(),
         ];
     }
 
     public static function getOrderLineRepeater(): Repeater
     {
-        return Repeater::make('orderLines')
-            ->label('')
-            ->relationship()
+        return Repeater::make('order_lines')
+            ->relationship('orderLines')
             ->schema([
                 Select::make('product_id')
                     ->relationship('product', 'name')
@@ -180,8 +185,14 @@ final class OrderForm
     public static function getShippingFields(): array
     {
         return [
-            Textarea::make('shipping_address')
-                ->columnSpanFull(),
+            TextInput::make('shipping_address.street')
+                ->label(__('Street')),
+            TextInput::make('shipping_address.city')
+                ->label(__('City')),
+            TextInput::make('shipping_address.zip')
+                ->label(__('Zip')),
+            TextInput::make('shipping_address.country')
+                ->label(__('Country')),
         ];
     }
 

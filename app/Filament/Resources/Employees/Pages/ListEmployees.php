@@ -24,11 +24,11 @@ final class ListEmployees extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(EmployeeImporter::class)
-                ->label('Importálás')
+                ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()
                 ->exporter(EmployeeExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

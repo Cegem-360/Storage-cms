@@ -25,23 +25,36 @@ final class EmployeesTable
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
-                    ->searchable(),
-                TextColumn::make('warehouse.name')
-                    ->searchable(),
                 TextColumn::make('employee_code')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('first_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('last_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('position')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('department')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('warehouse.name')
+                    ->label(__('Warehouse'))
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('user.name')
+                    ->label(__('Linked user'))
+                    ->searchable()
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_active')
+                    ->label(__('Active'))
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -58,6 +71,10 @@ final class EmployeesTable
             ])
             ->filters([
                 TrashedFilter::make(),
+                TernaryFilter::make('is_active')
+                    ->label(__('Active'))
+                    ->trueLabel(__('Active only'))
+                    ->falseLabel(__('Inactive only')),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -69,7 +86,8 @@ final class EmployeesTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('last_name', 'asc');
     }
 
     public static function configureDashboard(Table $table): Table
@@ -77,32 +95,32 @@ final class EmployeesTable
         return $table
             ->columns([
                 TextColumn::make('employee_code')
-                    ->label('Code')
+                    ->label(__('Code'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('full_name')
-                    ->label('Name')
+                    ->label(__('Name'))
                     ->state(fn ($record): string => $record->last_name.' '.$record->first_name)
                     ->searchable(['first_name', 'last_name'])
                     ->sortable(['last_name', 'first_name']),
                 TextColumn::make('position')
-                    ->label('Position')
+                    ->label(__('Position'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('department')
-                    ->label('Department')
+                    ->label(__('Department'))
                     ->searchable()
                     ->placeholder('-'),
                 TextColumn::make('warehouse.name')
-                    ->label('Warehouse')
+                    ->label(__('Warehouse'))
                     ->placeholder('-'),
                 IconColumn::make('is_active')
-                    ->label('Active')
+                    ->label(__('Active'))
                     ->boolean(),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label('Active')
+                    ->label(__('Active'))
                     ->trueLabel(__('Active only'))
                     ->falseLabel(__('Inactive only')),
             ])

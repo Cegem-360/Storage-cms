@@ -42,7 +42,7 @@ final class CustomerForm
                         Tab::make('addresses')
                             ->label(__('Addresses'))
                             ->schema([
-                                Section::make('billing_address')
+                                Section::make(__('Billing address'))
                                     ->schema([
                                         TextInput::make('billing_address.street')
                                             ->label(__('Street')),
@@ -57,7 +57,7 @@ final class CustomerForm
                                     ])
                                     ->columns(2),
 
-                                Section::make('shipping_address')
+                                Section::make(__('Shipping address'))
                                     ->schema([
                                         TextInput::make('shipping_address.street')
                                             ->label(__('Street')),
