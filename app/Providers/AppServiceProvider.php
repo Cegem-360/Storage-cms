@@ -18,6 +18,8 @@ use Filament\Forms\Components\Field;
 use Filament\Infolists\Components\Entry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentTimezone;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\Filter;
@@ -28,6 +30,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Madbox99\UserTeamSync\Events\TeamCreatedFromSync;
@@ -56,6 +59,10 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureFilamentTranslations();
         $this->configureRateLimiting();
         $this->registerSyncListeners();
+
+        FilamentAsset::register([
+            Js::make('echo', Vite::asset('resources/js/echo.js'))->module(),
+        ]);
 
         Date::use(CarbonImmutable::class);
 
