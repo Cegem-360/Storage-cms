@@ -38,7 +38,21 @@ final class BatchForm
                                     ->relationship('supplier', 'company_name')
                                     ->required()
                                     ->searchable()
-                                    ->preload(),
+                                    ->preload()
+                                    ->createOptionForm([
+                                        TextInput::make('company_name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('code')
+                                            ->scopedUnique()
+                                            ->maxLength(50),
+                                        TextInput::make('email')
+                                            ->email()
+                                            ->maxLength(255),
+                                        TextInput::make('phone')
+                                            ->tel()
+                                            ->maxLength(50),
+                                    ]),
                                 DatePicker::make('manufacture_date'),
                                 DatePicker::make('expiry_date'),
                                 TextInput::make('quantity')

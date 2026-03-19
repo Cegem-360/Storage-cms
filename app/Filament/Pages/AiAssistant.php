@@ -8,16 +8,14 @@ use App\Ai\Agents\StorageAssistant;
 use BackedEnum;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Override;
-use Throwable;
 
 final class AiAssistant extends Page
 {
     public string $message = '';
-
-    public bool $isLoading = false;
 
     public ?string $conversationId = null;
 
@@ -57,7 +55,6 @@ final class AiAssistant extends Page
 
         $this->messages[] = ['role' => 'user', 'content' => $userMessage];
         $this->message = '';
-        $this->isLoading = true;
 
         $user = Auth::user();
         $team = $user->team;
@@ -68,8 +65,6 @@ final class AiAssistant extends Page
                 'role' => 'assistant',
                 'content' => __('AI API key is not configured. Please set GEMINI_API_KEY in the environment.'),
             ];
-            $this->isLoading = false;
-            $this->dispatch('ai-message-received');
 
             return;
         }
@@ -79,42 +74,34 @@ final class AiAssistant extends Page
                 'role' => 'assistant',
                 'content' => __('Monthly AI token limit has been reached. Please contact your administrator.'),
             ];
-            $this->isLoading = false;
-            $this->dispatch('ai-message-received');
 
             return;
         }
 
-        try {
-            $agent = new StorageAssistant($team);
+        $agent = new StorageAssistant($team);
+        $channel = new PrivateChannel('ai-chat.'.$user->id);
 
-            $response = $this->conversationId
-                ? $agent->continue($this->conversationId, as: $user)->prompt($userMessage)
-                : $agent->forUser($user)->prompt($userMessage);
-
-            $this->conversationId = $response->conversationId;
-
-            $team->recordTokenUsage(
-                $response->usage->promptTokens,
-                $response->usage->completionTokens,
-            );
-
-            $this->messages[] = [
-                'role' => 'assistant',
-                'content' => (string) $response,
-            ];
-        } catch (Throwable $e) {
-            $this->messages[] = [
-                'role' => 'assistant',
-                'content' => __('An error occurred while processing your request. Please check the AI configuration in Settings.'),
-            ];
-
-            report($e);
+        if ($this->conversationId) {
+            $agent->continue($this->conversationId, as: $user)
+                ->broadcastOnQueue($userMessage, $channel)
+                ->then(function ($response) use ($team): void {
+                    $this->conversationId = $response->conversationId;
+                    $team->recordTokenUsage(
+                        $response->usage->promptTokens,
+                        $response->usage->completionTokens,
+                    );
+                });
+        } else {
+            $agent->forUser($user)
+                ->broadcastOnQueue($userMessage, $channel)
+                ->then(function ($response) use ($team): void {
+                    $this->conversationId = $response->conversationId;
+                    $team->recordTokenUsage(
+                        $response->usage->promptTokens,
+                        $response->usage->completionTokens,
+                    );
+                });
         }
-
-        $this->isLoading = false;
-
-        $this->dispatch('ai-message-received');
     }
 
     /**

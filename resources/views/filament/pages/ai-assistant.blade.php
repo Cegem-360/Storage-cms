@@ -18,7 +18,34 @@
         </div>
     @endif
 
-    <div class="flex gap-4" style="height: calc(100vh - 240px); min-height: 450px;">
+    <div
+        class="flex gap-4"
+        style="height: calc(100vh - 240px); min-height: 450px;"
+        x-data="{
+            streaming: false,
+            streamedText: '',
+            init() {
+                if (typeof window.Echo !== 'undefined') {
+                    window.Echo.private('ai-chat.{{ \Illuminate\Support\Facades\Auth::id() }}')
+                        .listen('.ai.stream.delta', (e) => {
+                            if (!this.streaming) {
+                                this.streaming = true;
+                                this.streamedText = '';
+                            }
+                            this.streamedText += e.delta || '';
+                            this.$nextTick(() => {
+                                this.$refs.chatMessages.scrollTop = this.$refs.chatMessages.scrollHeight;
+                            });
+                        })
+                        .listen('.ai.stream.complete', (e) => {
+                            this.streaming = false;
+                            this.streamedText = '';
+                            $wire.$refresh();
+                        });
+                }
+            }
+        }"
+    >
 
         {{-- Sidebar: conversations --}}
         <div class="hidden w-64 shrink-0 flex-col rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 lg:flex">
@@ -60,7 +87,7 @@
         {{-- Chat area --}}
         <div class="flex flex-1 flex-col rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
 
-            {{-- Mobile: new conversation + history toggle --}}
+            {{-- Mobile: new conversation --}}
             <div class="flex items-center justify-between border-b border-gray-200 p-3 dark:border-gray-700 lg:hidden">
                 <button
                     wire:click="newConversation"
@@ -70,10 +97,7 @@
                     {{ __('New') }}
                 </button>
                 @if (count($messages) > 0)
-                    <button
-                        wire:click="clearChat"
-                        class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400"
-                    >
+                    <button wire:click="clearChat" class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400">
                         {{ __('Clear chat') }}
                     </button>
                 @endif
@@ -132,8 +156,21 @@
                     </div>
                 @endforeach
 
-                {{-- Loading indicator --}}
-                <div wire:loading wire:target="sendMessage" class="flex justify-start">
+                {{-- Streaming response --}}
+                <template x-if="streaming">
+                    <div class="flex justify-start">
+                        <div class="mr-3 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30">
+                            <x-filament::icon :icon="Filament\Support\Icons\Heroicon::OutlinedSparkles" class="h-4 w-4 animate-pulse text-amber-600 dark:text-amber-400" />
+                        </div>
+                        <div class="max-w-[75%] rounded-xl bg-gray-100 px-4 py-3 text-sm leading-relaxed text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                            <div class="whitespace-pre-wrap" x-text="streamedText"></div>
+                            <span class="inline-block h-4 w-1 animate-pulse bg-gray-400"></span>
+                        </div>
+                    </div>
+                </template>
+
+                {{-- Loading indicator (wire:loading fallback) --}}
+                <div wire:loading wire:target="sendMessage" x-show="!streaming" class="flex justify-start">
                     <div class="mr-3 mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/30">
                         <x-filament::icon :icon="Filament\Support\Icons\Heroicon::OutlinedSparkles" class="h-4 w-4 animate-spin text-amber-600 dark:text-amber-400" />
                     </div>
@@ -160,17 +197,19 @@
                         autocomplete="off"
                         wire:loading.attr="disabled"
                         wire:target="sendMessage"
+                        x-bind:disabled="streaming"
                     />
                     <button
                         type="submit"
                         class="flex items-center gap-2 rounded-xl bg-primary-500 px-5 py-3 font-medium text-white transition hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-50"
                         wire:loading.attr="disabled"
                         wire:target="sendMessage"
+                        x-bind:disabled="streaming"
                     >
-                        <span wire:loading.remove wire:target="sendMessage">
+                        <span wire:loading.remove wire:target="sendMessage" x-show="!streaming">
                             <x-filament::icon :icon="Filament\Support\Icons\Heroicon::OutlinedPaperAirplane" class="h-4 w-4" />
                         </span>
-                        <svg wire:loading wire:target="sendMessage" class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg wire:loading wire:target="sendMessage" x-show="streaming" class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
