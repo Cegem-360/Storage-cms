@@ -118,6 +118,57 @@ final class AiAssistant extends Page
     }
 
     /**
+     * @return array<int, object{id: string, title: string, created_at: string, message_count: int}>
+     */
+    public function getConversations(): array
+    {
+        return DB::table('agent_conversations')
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->limit(20)
+            ->get()
+            ->map(function ($c): object {
+                $c->message_count = DB::table('agent_conversation_messages')
+                    ->where('conversation_id', $c->id)
+                    ->where('role', 'user')
+                    ->count();
+
+                return $c;
+            })
+            ->all();
+    }
+
+    public function loadConversation(string $id): void
+    {
+        $conversation = DB::table('agent_conversations')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (! $conversation) {
+            return;
+        }
+
+        $this->conversationId = $conversation->id;
+        $this->messages = DB::table('agent_conversation_messages')
+            ->where('conversation_id', $conversation->id)
+            ->orderBy('id')
+            ->get()
+            ->filter(fn ($m): bool => in_array($m->role, ['user', 'assistant']))
+            ->map(fn ($m): array => ['role' => $m->role, 'content' => $m->content])
+            ->values()
+            ->all();
+
+        $this->dispatch('ai-message-received');
+    }
+
+    public function newConversation(): void
+    {
+        $this->messages = [];
+        $this->conversationId = null;
+    }
+
+    /**
      * @return array{used: int, limit: int, percentage: float, hasLimit: bool, exceeded: bool}
      */
     public function getTokenUsageInfo(): array
@@ -145,10 +196,8 @@ final class AiAssistant extends Page
 
     private function loadLatestConversation(): void
     {
-        $user = Auth::user();
-
         $conversation = DB::table('agent_conversations')
-            ->where('user_id', $user->getKey())
+            ->where('user_id', Auth::id())
             ->latest()
             ->first();
 
@@ -161,7 +210,9 @@ final class AiAssistant extends Page
             ->where('conversation_id', $conversation->id)
             ->orderBy('id')
             ->get()
+            ->filter(fn ($m): bool => in_array($m->role, ['user', 'assistant']))
             ->map(fn ($m): array => ['role' => $m->role, 'content' => $m->content])
+            ->values()
             ->all();
     }
 }
