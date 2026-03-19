@@ -36,6 +36,18 @@ final class CategoryResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Category');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Categories');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return CategoryForm::configure($schema);

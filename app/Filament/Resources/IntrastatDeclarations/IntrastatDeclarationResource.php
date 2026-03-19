@@ -30,7 +30,23 @@ final class IntrastatDeclarationResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationLabel = 'Declarations';
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Declarations');
+    }
+
+    #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Intrastat Declaration');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Intrastat Declarations');
+    }
 
     #[Override]
     public static function form(Schema $schema): Schema

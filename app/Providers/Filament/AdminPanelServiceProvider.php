@@ -39,7 +39,7 @@ final class AdminPanelServiceProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('app')
             ->login(Login::class)
             ->profile(EditProfile::class)
             ->brandLogo(asset('images/logo.png'))

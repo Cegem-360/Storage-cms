@@ -19,9 +19,7 @@ final class RecentOrdersWidget extends BaseWidget
 
     protected int|string|array $columnSpan = 'full';
 
-    protected static ?string $heading = null;
-
-    public function getHeading(): ?string
+    public function getHeading(): string
     {
         return __('Recent Purchase Orders');
     }
@@ -68,6 +66,7 @@ final class RecentOrdersWidget extends BaseWidget
                     ->money(Team::currency())
                     ->sortable(),
             ])
+            ->heading(__('Recent Purchase Orders'))
             ->paginated(false)
             ->emptyStateHeading(__('No recent orders'))
             ->emptyStateDescription(__('Create your first purchase order to see it here.'))

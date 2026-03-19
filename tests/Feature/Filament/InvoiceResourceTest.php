@@ -9,7 +9,9 @@ use App\Filament\Resources\Invoices\Pages\ListInvoices;
 use App\Filament\Resources\Invoices\Pages\ViewInvoice;
 use App\Models\Employee;
 use App\Models\Invoice;
+use App\Models\Team;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
@@ -18,8 +20,12 @@ use function Pest\Laravel\assertDatabaseHas;
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 it('can render the list page', function (): void {

@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class WarehouseStockOverview extends Page implements HasTable
@@ -27,11 +28,19 @@ final class WarehouseStockOverview extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingStorefront;
 
-    protected static ?string $title = 'Warehouse Stock Overview';
-
-    protected static ?string $navigationLabel = 'Stock by Warehouse';
-
     protected static ?int $navigationSort = 1;
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Stock by Warehouse');
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return __('Warehouse Stock Overview');
+    }
 
     public function table(Table $table): Table
     {

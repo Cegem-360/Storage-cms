@@ -17,11 +17,9 @@ final class LowStockWidget extends BaseWidget
 {
     protected static ?int $sort = 3;
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
-    protected static ?string $heading = null;
-
-    public function getHeading(): ?string
+    public function getHeading(): string
     {
         return __('Low Stock Alerts');
     }
@@ -97,6 +95,7 @@ final class LowStockWidget extends BaseWidget
                     ->color('danger')
                     ->prefix('-'),
             ])
+            ->heading(__('Low Stock Alerts'))
             ->paginated(false)
             ->emptyStateHeading(__('No low stock alerts'))
             ->emptyStateDescription(__('All products are above minimum stock levels.'))

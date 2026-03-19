@@ -8,10 +8,10 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Team;
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 
 uses(RefreshDatabase::class);
 
@@ -294,14 +294,14 @@ describe('Customer Timestamps', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->created_at)->not->toBeNull()
-            ->and($customer->created_at)->toBeInstanceOf(Carbon::class);
+            ->and($customer->created_at)->toBeInstanceOf(CarbonImmutable::class);
     });
 
     it('has updated_at timestamp', function (): void {
         $customer = Customer::factory()->create();
 
         expect($customer->updated_at)->not->toBeNull()
-            ->and($customer->updated_at)->toBeInstanceOf(Carbon::class);
+            ->and($customer->updated_at)->toBeInstanceOf(CarbonImmutable::class);
     });
 
     it('sets deleted_at timestamp on soft delete', function (): void {
@@ -310,6 +310,6 @@ describe('Customer Timestamps', function (): void {
         $customer->delete();
 
         expect($customer->deleted_at)->not->toBeNull()
-            ->and($customer->deleted_at)->toBeInstanceOf(Carbon::class);
+            ->and($customer->deleted_at)->toBeInstanceOf(CarbonImmutable::class);
     });
 });

@@ -17,6 +17,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Support\Collection;
+use Override;
 use UnitEnum;
 
 final class SupplierPerformanceReport extends Page implements HasTable
@@ -29,11 +30,19 @@ final class SupplierPerformanceReport extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBarSquare;
 
-    protected static ?string $title = 'Supplier Performance';
-
-    protected static ?string $navigationLabel = 'Supplier Performance';
-
     protected static ?int $navigationSort = 5;
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Supplier Performance');
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return __('Supplier Performance');
+    }
 
     public function table(Table $table): Table
     {

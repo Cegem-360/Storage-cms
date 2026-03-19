@@ -72,6 +72,7 @@ final class Settings extends Page
         return $schema
             ->components([
                 Section::make('general_settings')
+                    ->label(__('General Settings'))
                     ->description(__('Configure general system preferences'))
                     ->schema([
                         Select::make('currency')
@@ -87,6 +88,7 @@ final class Settings extends Page
                     ]),
 
                 Section::make('inventory_settings')
+                    ->label(__('Inventory Settings'))
                     ->description(__('Configure inventory management preferences'))
                     ->schema([
                         TextInput::make('low_stock_threshold')
@@ -103,6 +105,7 @@ final class Settings extends Page
                     ->columns(2),
 
                 Section::make('notification_settings')
+                    ->label(__('Notification Settings'))
                     ->description(__('Configure system notification preferences'))
                     ->schema([
                         TextInput::make('notification_email')
@@ -112,6 +115,7 @@ final class Settings extends Page
                     ]),
 
                 Section::make('ai_assistant')
+                    ->label(__('AI Assistant Settings'))
                     ->description(__('Configure AI assistant for intelligent help'))
                     ->schema([
                         Select::make('ai_provider')
@@ -137,6 +141,7 @@ final class Settings extends Page
                     ->columns(2),
 
                 Section::make('billingo')
+                    ->label(__('Billingo'))
                     ->description(__('Configure Billingo invoice integration'))
                     ->schema([
                         Toggle::make('billingo_enabled')

@@ -33,6 +33,18 @@ final class InventoryResource extends Resource
     protected static ?int $navigationSort = 6;
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Inventory count');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Inventories');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return InventoryForm::configure($schema);

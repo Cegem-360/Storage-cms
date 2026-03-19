@@ -4,47 +4,24 @@ declare(strict_types=1);
 
 namespace App\Models\Concerns;
 
+use App\Models\Scopes\TeamScope;
 use App\Models\Team;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Auth;
 
 trait BelongsToTeam
 {
     public static function bootBelongsToTeam(): void
     {
-        static::addGlobalScope('team', function (Builder $query): void {
-            if (! Auth::hasUser()) {
-                return;
+        static::addGlobalScope(new TeamScope());
+
+        static::creating(static function ($model): void {
+            if (empty($model->team_id) && app()->bound(Team::CONTAINER_BINDING)) {
+                $team = resolve(Team::CONTAINER_BINDING);
+
+                if ($team instanceof Team) {
+                    $model->team_id = $team->getKey();
+                }
             }
-
-            /** @var User $user */
-            $user = Auth::user();
-
-            if ($user->is_super_admin && ! app()->bound('force_team_scope')) {
-                return;
-            }
-
-            $query->where(
-                $query->getModel()->getTable().'.team_id',
-                $user->team_id,
-            );
-        });
-
-        static::creating(function (Model $model): void {
-            if (! Auth::hasUser()) {
-                return;
-            }
-
-            if ($model->team_id !== null) {
-                return;
-            }
-
-            /** @var User $user */
-            $user = Auth::user();
-            $model->team_id = $user->team_id;
         });
     }
 

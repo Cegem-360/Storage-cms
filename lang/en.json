@@ -899,5 +899,9 @@
     "Total amount": "Total Amount",
     "Mailing address": "Mailing Address",
     "Billing address": "Billing Address",
-    "New product": "New product"
+    "New product": "New product",
+    "Supplier Price": "Supplier Price",
+    "Employee": "Employee",
+    "Inventory count": "Inventory count",
+    "CN Code": "CN Code"
 }

@@ -34,6 +34,18 @@ final class StockResource extends Resource
     protected static ?int $navigationSort = 4;
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Stock');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Stocks');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return StockForm::configure($schema);

@@ -17,6 +17,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Override;
 use UnitEnum;
 
 final class ExpectedStockArrivals extends Page implements HasTable
@@ -29,11 +30,19 @@ final class ExpectedStockArrivals extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDays;
 
-    protected static ?string $title = 'Expected Stock Arrivals';
-
-    protected static ?string $navigationLabel = 'Expected Arrivals';
-
     protected static ?int $navigationSort = 2;
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Expected Arrivals');
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return __('Expected Stock Arrivals');
+    }
 
     public function table(Table $table): Table
     {

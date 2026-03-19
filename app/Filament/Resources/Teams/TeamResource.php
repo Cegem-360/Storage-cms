@@ -31,6 +31,20 @@ final class TeamResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static bool $isScopedToTenant = false;
+
+    #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Team');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Teams');
+    }
+
     #[Override]
     public static function canAccess(): bool
     {

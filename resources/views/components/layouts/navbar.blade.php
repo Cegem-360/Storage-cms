@@ -61,7 +61,7 @@
 
                 @auth
                     {{-- Dashboard link --}}
-                    <a href="{{ route('dashboard') }}"
+                    <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => auth()->user()->teams->first()?->slug]) }}"
                         class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
                         {{ __('Dashboard') }}
                     </a>
@@ -143,7 +143,7 @@
             @endguest
 
             @auth
-                <a href="{{ route('dashboard') }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Dashboard') }}</a>
+                <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => auth()->user()->teams->first()?->slug]) }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Dashboard') }}</a>
                 <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                     @csrf
                     <button type="submit" class="block w-full text-left py-2 text-sm font-medium text-red-600">

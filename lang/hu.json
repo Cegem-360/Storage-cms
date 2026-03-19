@@ -905,5 +905,8 @@
     "Order lines": "Rendelés sorok",
     "Sales order": "Értékesítési rendelés",
     "Receipt lines": "Bevételezés sorok",
-    "New product": "Új termék"
+    "New product": "Új termék",
+    "Supplier Price": "Beszállítói ár",
+    "Employee": "Alkalmazott",
+    "Inventory count": "Leltár"
 }

@@ -32,9 +32,19 @@ final class ReturnDeliveryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowUturnLeft;
 
-    protected static ?string $navigationLabel = 'Return Deliveries';
-
     protected static ?int $navigationSort = 8;
+
+    #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Return Delivery');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Return Deliveries');
+    }
 
     #[Override]
     public static function form(Schema $schema): Schema

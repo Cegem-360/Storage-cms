@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8235b01a375250980206160ba6dec74b",
+    "content-hash": "f21a8e385e997b59e883b11fbe4a5bfa",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3694,6 +3694,60 @@
                 }
             ],
             "time": "2026-02-28T00:01:19+00:00"
+        },
+        {
+            "name": "madbox-99/laravel-locale-switcher",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MadBox-99/laravel-locale-switcher.git",
+                "reference": "2cfd4798cd8bdcf4e3a4ce595f704847bb293704"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MadBox-99/laravel-locale-switcher/zipball/2cfd4798cd8bdcf4e3a4ce595f704847bb293704",
+                "reference": "2cfd4798cd8bdcf4e3a4ce595f704847bb293704",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^11.0|^12.0",
+                "illuminate/support": "^11.0|^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^9.0|^10.0",
+                "pestphp/pest": "^2.0|^3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MadBox\\LocaleSwitcher\\LocaleSwitcherServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadBox\\LocaleSwitcher\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zoltán Tamás Szabó",
+                    "email": "zoli.szabok@gmail.com"
+                }
+            ],
+            "description": "Simple locale switcher for Laravel applications using cookies.",
+            "support": {
+                "issues": "https://github.com/MadBox-99/laravel-locale-switcher/issues",
+                "source": "https://github.com/MadBox-99/laravel-locale-switcher/tree/main"
+            },
+            "time": "2026-03-12T11:52:05+00:00"
         },
         {
             "name": "madbox-99/laravel-user-team-sync",
@@ -12939,7 +12993,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "madbox-99/laravel-locale-switcher": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

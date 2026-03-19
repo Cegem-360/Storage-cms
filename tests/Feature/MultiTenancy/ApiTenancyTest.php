@@ -58,8 +58,10 @@ describe('API Tenant Isolation', function (): void {
     });
 
     it('rejects user without team assignment', function (): void {
-        $user = User::factory()->create(['team_id' => null]);
-        Sanctum::actingAs($user);
+        $user = User::factory()->create();
+        $user->teams()->detach();
+        $user->update(['team_id' => null]);
+        Sanctum::actingAs($user->fresh());
 
         $response = $this->getJson('/api/v1/products');
 

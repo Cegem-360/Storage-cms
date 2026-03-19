@@ -11,15 +11,21 @@ use App\Filament\Resources\Products\Pages\ViewProduct;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Team;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 describe('Product Filament Resource', function (): void {
@@ -138,10 +144,12 @@ describe('Product Filament Resource', function (): void {
     });
 
     it('allows same sku in different teams', function (): void {
+        Filament::setTenant(null);
         $otherUser = User::factory()->create();
         Product::factory()->recycle($otherUser->team)->create([
             'sku' => 'SHARED-SKU',
         ]);
+        Filament::setTenant($this->user->team);
 
         $category = Category::factory()->recycle($this->user->team)->create();
         $supplier = Supplier::factory()->recycle($this->user->team)->create();
