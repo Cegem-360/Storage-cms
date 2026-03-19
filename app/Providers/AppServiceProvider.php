@@ -60,9 +60,13 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
         $this->registerSyncListeners();
 
-        FilamentAsset::register([
-            Js::make('echo', Vite::asset('resources/js/echo.js'))->module(),
-        ]);
+        $this->app->booted(function (): void {
+            if (! app()->runningInConsole()) {
+                FilamentAsset::register([
+                    Js::make('echo', Vite::asset('resources/js/echo.js'))->module(),
+                ]);
+            }
+        });
 
         Date::use(CarbonImmutable::class);
 
