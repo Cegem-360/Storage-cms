@@ -61,7 +61,7 @@ final class EditInventory extends EditRecord
                     ]);
 
                     return response()->streamDownload(
-                        fn () => print ($pdf->output()),
+                        fn (): int => print ($pdf->output()),
                         "inventory-{$inventory->inventory_number}.pdf"
                     );
                 }),

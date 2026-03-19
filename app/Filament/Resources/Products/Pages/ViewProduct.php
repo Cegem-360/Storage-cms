@@ -58,7 +58,7 @@ final class ViewProduct extends ViewRecord
                     ])->setPaper([0, 0, 226.77, 141.73]); // ~80mm x 50mm
 
                     return response()->streamDownload(
-                        fn () => print ($pdf->output()),
+                        fn (): int => print ($pdf->output()),
                         "label-{$record->sku}.pdf",
                     );
                 }),

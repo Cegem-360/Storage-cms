@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Override;
 use UnitEnum;
 
@@ -48,7 +49,7 @@ final class TeamResource extends Resource
     #[Override]
     public static function canAccess(): bool
     {
-        return auth()->user()?->is_super_admin ?? false;
+        return Auth::user()?->is_super_admin ?? false;
     }
 
     #[Override]

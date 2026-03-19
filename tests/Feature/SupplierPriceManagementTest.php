@@ -146,21 +146,21 @@ describe('Quantity Discount Tiers', function (): void {
     it('can create tiers for a supplier price', function (): void {
         $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 1,
             'max_quantity' => 10,
             'price' => 500.0000,
         ]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 11,
             'max_quantity' => 50,
             'price' => 450.0000,
         ]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 51,
             'max_quantity' => null,
@@ -173,21 +173,21 @@ describe('Quantity Discount Tiers', function (): void {
     it('returns correct tier price for quantity', function (): void {
         $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 1,
             'max_quantity' => 10,
             'price' => 500.0000,
         ]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 11,
             'max_quantity' => 50,
             'price' => 450.0000,
         ]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 51,
             'max_quantity' => null,
@@ -211,7 +211,7 @@ describe('Quantity Discount Tiers', function (): void {
     it('returns base price when quantity does not match any tier', function (): void {
         $supplierPrice = SupplierPrice::factory()->create(['price' => 500.0000]);
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 10,
             'max_quantity' => 50,
@@ -224,7 +224,7 @@ describe('Quantity Discount Tiers', function (): void {
     it('cascades delete when supplier price is deleted', function (): void {
         $supplierPrice = SupplierPrice::factory()->create();
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 1,
             'max_quantity' => 10,

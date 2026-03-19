@@ -11,6 +11,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Support\Facades\Auth;
 use Override;
 
 final class LowStockWidget extends BaseWidget
@@ -105,7 +106,7 @@ final class LowStockWidget extends BaseWidget
     private function getTeamThreshold(): int
     {
         /** @var User|null $user */
-        $user = auth()->user();
+        $user = Auth::user();
 
         if (! $user?->team_id) {
             return 0;

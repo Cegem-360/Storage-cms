@@ -168,7 +168,7 @@ describe('SupplierPrice Tiers in Filament', function (): void {
             ->recycle($this->user->team)
             ->create();
 
-        SupplierPriceTier::create([
+        SupplierPriceTier::query()->create([
             'supplier_price_id' => $supplierPrice->id,
             'min_quantity' => 1,
             'max_quantity' => 10,

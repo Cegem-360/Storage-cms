@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Auth;
 
 final class UserForm
 {
@@ -31,7 +32,7 @@ final class UserForm
                     ->relationship('team', 'name')
                     ->searchable()
                     ->preload()
-                    ->visible(fn (): bool => auth()->user()?->is_super_admin ?? false),
+                    ->visible(fn (): bool => Auth::user()?->is_super_admin ?? false),
                 Toggle::make('is_super_admin')
                     ->required(),
                 Toggle::make('is_active')

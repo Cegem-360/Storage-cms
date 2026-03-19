@@ -72,7 +72,7 @@ final class CustomerForm
                                 Toggle::make('same_as_billing')
                                     ->label(__('Shipping address same as billing'))
                                     ->default(function (?Model $record): bool {
-                                        if (! $record) {
+                                        if (! $record instanceof Model) {
                                             return false;
                                         }
 

@@ -12,6 +12,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Support\Facades\Auth;
 use Override;
 
 final class OrderSuggestionWidget extends BaseWidget
@@ -82,7 +83,7 @@ final class OrderSuggestionWidget extends BaseWidget
                     ->icon(Heroicon::OutlinedShoppingCart)
                     ->color('primary')
                     ->action(function (Product $record): void {
-                        $team = auth()->user()->team;
+                        $team = Auth::user()->team;
                         $order = resolve(AutoReorderService::class)->createDraftOrder($record, $team);
 
                         if ($order) {

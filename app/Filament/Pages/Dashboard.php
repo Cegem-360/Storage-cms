@@ -20,6 +20,7 @@ final class Dashboard extends BaseDashboard
 
     protected static ?string $title = null;
 
+    #[Override]
     public function getTitle(): string
     {
         return __('Dashboard');
