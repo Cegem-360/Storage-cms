@@ -149,7 +149,6 @@ final class AiAssistant extends Page
 
         $conversation = DB::table('agent_conversations')
             ->where('user_id', $user->getKey())
-            ->where('agent', StorageAssistant::class)
             ->latest()
             ->first();
 
