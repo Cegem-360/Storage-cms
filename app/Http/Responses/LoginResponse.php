@@ -14,6 +14,6 @@ final class LoginResponse extends BaseLoginResponse
     #[Override]
     public function toResponse($request): RedirectResponse|Redirector
     {
-        return redirect()->intended(route('dashboard'));
+        return redirect()->intended(route('filament.admin.pages.dashboard'));
     }
 }

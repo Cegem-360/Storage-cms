@@ -14,6 +14,6 @@ final class RegistrationResponse extends BaseRegistrationResponse
     #[Override]
     public function toResponse($request): RedirectResponse|Redirector
     {
-        return to_route('dashboard');
+        return to_route('filament.admin.pages.dashboard');
     }
 }
