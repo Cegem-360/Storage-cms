@@ -24,7 +24,7 @@
                 </div>
                 <div class="flex items-center gap-4">
                     @auth
-                        <a href="{{ route('filament.admin.pages.dashboard') }}" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+                          <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => auth()->user()->teams->first()?->slug]) }}" class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
                             Go to Dashboard
                         </a>
                     @else
