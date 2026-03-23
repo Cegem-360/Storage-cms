@@ -15,10 +15,14 @@ final class RegistrationResponse extends BaseRegistrationResponse
     #[Override]
     public function toResponse($request): RedirectResponse|Redirector
     {
+        $team = Auth::user()->teams->first();
+
+        if (! $team) {
+            return redirect()->route('filament.admin.tenant.registration');
+        }
+
         return redirect()->intended(
-            route('filament.admin.pages.dashboard',
-                ['tenant' => Auth::user()->teams->first()?->slug]
-            )
+            route('filament.admin.pages.dashboard', ['tenant' => $team->slug])
         );
     }
 }
