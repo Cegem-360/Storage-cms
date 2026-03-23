@@ -6,14 +6,12 @@ namespace App\Filament\Resources\Customers\Tables;
 
 use App\Models\Customer;
 use App\Models\Team;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -89,14 +87,8 @@ final class CustomersTable
                     ->badge(),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (Customer $record): string => route('dashboard.customers.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (Customer $record): string => route('dashboard.customers.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('name', 'asc')
             ->paginated([10, 25, 50, 100]);

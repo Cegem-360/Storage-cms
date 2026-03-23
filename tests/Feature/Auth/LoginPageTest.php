@@ -7,7 +7,7 @@ use App\Models\User;
 use Livewire\Livewire;
 
 it('renders the login page for guests', function (): void {
-    $this->get('/admin/login')->assertSuccessful();
+    $this->get('/app/login')->assertSuccessful();
 });
 
 it('renders the login page as a livewire component', function (): void {
@@ -17,9 +17,9 @@ it('renders the login page as a livewire component', function (): void {
 it('redirects authenticated users away from login', function (): void {
     $this->actingAs(User::factory()->create());
 
-    $this->get('/admin/login')->assertRedirect();
+    $this->get('/app/login')->assertRedirect();
 });
 
 it('redirects guests from dashboard to login', function (): void {
-    $this->get('/admin')->assertRedirect('/admin/login');
+    $this->get('/app')->assertRedirect('/app/login');
 });

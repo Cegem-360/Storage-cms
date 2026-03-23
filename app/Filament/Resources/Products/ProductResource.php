@@ -36,6 +36,18 @@ final class ProductResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Product');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Products');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return ProductForm::configure($schema);

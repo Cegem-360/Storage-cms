@@ -13,6 +13,15 @@ use function Pest\Laravel\actingAs;
 
 uses(RefreshDatabase::class);
 
+/**
+ * Helper to act as user and bind their team to the container.
+ */
+function actingAsWithTeam(User $user): void
+{
+    actingAs($user);
+    app()->instance(Team::CONTAINER_BINDING, $user->team);
+}
+
 describe('Team Global Scope', function (): void {
     it('filters records by the authenticated user team', function (): void {
         $teamA = Team::factory()->create();
@@ -22,7 +31,7 @@ describe('Team Global Scope', function (): void {
         Product::factory()->count(2)->recycle($teamB)->create();
         /** @var User $userA */
         $userA = User::factory()->recycle($teamA)->create();
-        actingAs($userA);
+        actingAsWithTeam($userA);
 
         expect(Product::query()->count())->toBe(3);
     });
@@ -35,7 +44,7 @@ describe('Team Global Scope', function (): void {
         Product::factory()->count(2)->recycle($teamB)->create();
         /** @var User $superAdmin */
         $superAdmin = User::factory()->recycle($teamA)->create(['is_super_admin' => true]);
-        actingAs($superAdmin);
+        actingAsWithTeam($superAdmin);
 
         expect(Product::query()->count())->toBe(5);
     });
@@ -45,7 +54,7 @@ describe('Team Global Scope', function (): void {
         $team = Team::factory()->create();
         /** @var User $user */
         $user = User::factory()->recycle($team)->create();
-        actingAs($user);
+        actingAsWithTeam($user);
 
         $warehouse = Warehouse::factory()->create(['team_id' => null]);
 
@@ -57,7 +66,7 @@ describe('Team Global Scope', function (): void {
         $teamB = Team::factory()->create();
         /** @var User $user */
         $user = User::factory()->recycle($teamA)->create(['is_super_admin' => true]);
-        actingAs($user);
+        actingAsWithTeam($user);
 
         $warehouse = Warehouse::factory()->create(['team_id' => $teamB->id]);
 
@@ -75,7 +84,7 @@ describe('Team Global Scope', function (): void {
 
         $userB = User::factory()->recycle($teamB)->create();
         /** @var User $userB */
-        actingAs($userB);
+        actingAsWithTeam($userB);
 
         expect(Product::query()->count())->toBe(4)
             ->and(Customer::query()->count())->toBe(1);
@@ -89,7 +98,7 @@ describe('Team Global Scope', function (): void {
 
         $userB = User::factory()->recycle($teamB)->create();
         /** @var User $userB */
-        actingAs($userB);
+        actingAsWithTeam($userB);
 
         expect(Product::query()->count())->toBe(0);
     });

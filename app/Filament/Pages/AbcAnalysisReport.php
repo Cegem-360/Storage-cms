@@ -16,6 +16,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
+use Override;
 use UnitEnum;
 
 final class AbcAnalysisReport extends Page implements HasTable
@@ -28,16 +29,24 @@ final class AbcAnalysisReport extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
-    protected static ?string $title = 'ABC Analysis';
-
-    protected static ?string $navigationLabel = 'ABC Analysis';
-
     protected static ?int $navigationSort = 4;
 
     /**
      * @var Collection<int, array{id: int, value: float, cumulative_percentage: float, category: string}>|null
      */
     private ?Collection $abcAnalysisCache = null;
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('ABC Analysis');
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return __('ABC Analysis');
+    }
 
     public function table(Table $table): Table
     {

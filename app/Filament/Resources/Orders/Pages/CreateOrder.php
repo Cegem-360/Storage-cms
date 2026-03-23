@@ -8,12 +8,13 @@ use App\Filament\Resources\Orders\OrderResource;
 use App\Filament\Resources\Orders\Schemas\OrderForm;
 use App\Models\Order;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Resources\Pages\CreateRecord\Concerns\HasWizard;
 use Filament\Schemas\Components\Wizard\Step;
 use Override;
 
 final class CreateOrder extends CreateRecord
 {
-    use CreateRecord\Concerns\HasWizard;
+    use HasWizard;
 
     protected static string $resource = OrderResource::class;
 

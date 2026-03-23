@@ -9,15 +9,21 @@ use App\Filament\Resources\Batches\Pages\ListBatches;
 use App\Models\Batch;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Team;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 describe('Batch Filament Resource', function (): void {
@@ -121,10 +127,12 @@ describe('Batch Filament Resource', function (): void {
     });
 
     it('allows same batch_number in different teams', function (): void {
+        Filament::setTenant(null);
         $otherUser = User::factory()->create();
         Batch::factory()->recycle($otherUser->team)->create([
             'batch_number' => 'SHARED-BATCH',
         ]);
+        Filament::setTenant($this->user->team);
 
         $product = Product::factory()->recycle($this->user->team)->create();
         $supplier = Supplier::factory()->recycle($this->user->team)->create();

@@ -34,6 +34,18 @@ final class CustomerResource extends Resource
     protected static ?int $navigationSort = 1;
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Customer');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Customers');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return CustomerForm::configure($schema);

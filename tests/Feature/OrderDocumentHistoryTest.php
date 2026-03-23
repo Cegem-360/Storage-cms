@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Receipt;
 use App\Models\ReturnDelivery;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
@@ -16,6 +17,9 @@ uses(RefreshDatabase::class);
 beforeEach(function (): void {
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setTenant($this->user->team);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::bootCurrentPanel();
 });
 
 it('shows receipts in document history', function (): void {

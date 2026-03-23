@@ -34,6 +34,18 @@ final class UserResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('User');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Users');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return UserForm::configure($schema);

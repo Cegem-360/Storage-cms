@@ -21,6 +21,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Override;
 use UnitEnum;
 
 final class InventoryValuationReport extends Page implements HasTable
@@ -39,11 +40,19 @@ final class InventoryValuationReport extends Page implements HasTable
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
-    protected static ?string $title = 'Inventory Valuation Report';
-
-    protected static ?string $navigationLabel = 'Valuation Report';
-
     protected static ?int $navigationSort = 3;
+
+    #[Override]
+    public static function getNavigationLabel(): string
+    {
+        return __('Valuation Report');
+    }
+
+    #[Override]
+    public function getTitle(): string
+    {
+        return __('Inventory Valuation Report');
+    }
 
     public function form(Schema $form): Schema
     {

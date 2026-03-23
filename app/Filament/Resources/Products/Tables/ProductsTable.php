@@ -7,7 +7,6 @@ namespace App\Filament\Resources\Products\Tables;
 use App\Enums\ProductStatus;
 use App\Models\Product;
 use App\Models\Team;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -139,14 +138,8 @@ final class ProductsTable
                     ->options(ProductStatus::class),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (Product $record): string => route('dashboard.products.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (Product $record): string => route('dashboard.products.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('name', 'asc')
             ->paginated([10, 25, 50, 100]);

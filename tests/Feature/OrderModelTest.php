@@ -8,7 +8,7 @@ use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
 use App\Models\Supplier;
-use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -40,8 +40,8 @@ it('casts dates correctly', function (): void {
         'delivery_date' => '2023-12-15',
     ]);
 
-    expect($order->order_date)->toBeInstanceOf(Carbon::class);
-    expect($order->delivery_date)->toBeInstanceOf(Carbon::class);
+    expect($order->order_date)->toBeInstanceOf(CarbonImmutable::class);
+    expect($order->delivery_date)->toBeInstanceOf(CarbonImmutable::class);
 });
 
 it('belongs to customer', function (): void {

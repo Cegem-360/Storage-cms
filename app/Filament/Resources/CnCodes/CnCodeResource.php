@@ -29,16 +29,12 @@ final class CnCodeResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
-    #[Override]
-    public static function getNavigationLabel(): string
-    {
-        return __('CN Codes');
-    }
+    protected static bool $isScopedToTenant = false;
 
     #[Override]
     public static function getModelLabel(): string
     {
-        return 'CN Kód';
+        return __('CN Code');
     }
 
     #[Override]

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Resources\IntrastatOutbounds\Tables;
 
 use App\Enums\IntrastatStatus;
-use App\Models\IntrastatDeclaration;
 use App\Models\Team;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -105,10 +103,7 @@ final class IntrastatOutboundsTable
                     ->options(IntrastatStatus::class),
             ])
             ->recordActions([
-                Action::make('edit')
-                    ->url(fn (IntrastatDeclaration $record): string => route('dashboard.intrastat-declarations.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                EditAction::make(),
             ])
             ->defaultSort('declaration_date', 'desc')
             ->paginated([10, 25, 50, 100]);

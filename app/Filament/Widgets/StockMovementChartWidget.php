@@ -13,7 +13,7 @@ final class StockMovementChartWidget extends ChartWidget
 {
     protected static ?int $sort = 2;
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
     protected ?string $maxHeight = '300px';
 
@@ -32,7 +32,7 @@ final class StockMovementChartWidget extends ChartWidget
 
         for ($i = 29; $i >= 0; $i--) {
             $date = Date::now()->subDays($i);
-            $labels[] = $date->format('M d');
+            $labels[] = $date->translatedFormat('M d');
 
             $inboundData[] = StockMovement::query()->whereDate('created_at', $date)
                 ->where('quantity', '>', 0)

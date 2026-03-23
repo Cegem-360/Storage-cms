@@ -38,6 +38,18 @@ final class WarehouseResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Warehouse');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Warehouses');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return WarehouseForm::configure($schema);

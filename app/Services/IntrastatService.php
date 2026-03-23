@@ -20,6 +20,7 @@ use App\Models\Product;
 use App\Models\StockTransaction;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 final class IntrastatService
@@ -119,7 +120,7 @@ final class IntrastatService
             'declaration_number' => sprintf('%s-%s-%02d', $direction->value, $year, $month),
             'declaration_date' => $date,
             'status' => IntrastatStatus::DRAFT,
-            'team_id' => auth()->user()?->team_id,
+            'team_id' => Auth::user()?->team_id,
         ]);
     }
 

@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Users\Tables;
 
-use App\Models\User;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
@@ -87,14 +84,8 @@ final class UsersTable
                     ->falseLabel(__('Inactive only')),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (User $record): string => route('dashboard.users.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (User $record): string => route('dashboard.users.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('name', 'asc')
             ->paginated([10, 25, 50, 100]);

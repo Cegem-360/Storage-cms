@@ -34,6 +34,18 @@ final class ReceiptResource extends Resource
     protected static ?int $navigationSort = 3;
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Receipt');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Receipts');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return ReceiptForm::configure($schema);

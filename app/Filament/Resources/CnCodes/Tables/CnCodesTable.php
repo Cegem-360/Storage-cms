@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Resources\CnCodes\Tables;
 
 use App\Filament\Resources\CnCodes\Exports\CnCodeExport;
-use App\Models\CnCode;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ExportBulkAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -98,10 +95,7 @@ final class CnCodesTable
                     ->color('gray'),
             ])
             ->recordActions([
-                Action::make('edit')
-                    ->url(fn (CnCode $record): string => route('dashboard.cn-codes.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                EditAction::make(),
             ])
             ->defaultSort('code', 'asc')
             ->paginated([10, 25, 50, 100]);

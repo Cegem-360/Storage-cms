@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Batches\Tables;
 
-use App\Models\Batch;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -90,10 +87,7 @@ final class BatchesTable
                     ->color(fn ($record): ?string => $record->isExpired() ? 'danger' : null),
             ])
             ->recordActions([
-                Action::make('edit')
-                    ->url(fn (Batch $record): string => route('dashboard.batches.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                EditAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
             ->paginated([10, 25, 50, 100]);

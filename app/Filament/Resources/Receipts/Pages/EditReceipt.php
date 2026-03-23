@@ -15,6 +15,7 @@ use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Auth;
 use Override;
 
 final class EditReceipt extends EditRecord
@@ -33,11 +34,11 @@ final class EditReceipt extends EditRecord
                 ->modalHeading(__('Generate Billingo Invoice'))
                 ->modalDescription(__('This will create an invoice in Billingo for this receipt.'))
                 ->visible(fn (): bool => $this->record->status === ReceiptStatus::COMPLETED
-                    && (bool) auth()->user()->team->getSetting('billingo_enabled', false))
+                    && (bool) Auth::user()->team->getSetting('billingo_enabled', false))
                 ->action(function (BillingoService $billingoService): void {
                     $result = $billingoService->createInvoiceFromReceipt(
                         $this->record,
-                        auth()->user()->team,
+                        Auth::user()->team,
                     );
 
                     if ($result['success']) {

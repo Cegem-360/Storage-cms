@@ -8,15 +8,21 @@ use App\Filament\Resources\IntrastatDeclarations\Pages\CreateIntrastatDeclaratio
 use App\Filament\Resources\IntrastatDeclarations\Pages\EditIntrastatDeclaration;
 use App\Filament\Resources\IntrastatDeclarations\Pages\ListIntrastatDeclarations;
 use App\Models\IntrastatDeclaration;
+use App\Models\Team;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 describe('IntrastatDeclaration Filament Resource', function (): void {
@@ -127,12 +133,14 @@ describe('IntrastatDeclaration Filament Resource', function (): void {
     });
 
     it('allows same declaration_number in different teams', function (): void {
+        Filament::setTenant(null);
         $otherUser = User::factory()->create();
         IntrastatDeclaration::factory()
             ->recycle($otherUser->team)
             ->create([
                 'declaration_number' => 'SHARED-DECL',
             ]);
+        Filament::setTenant($this->user->team);
 
         Livewire::test(CreateIntrastatDeclaration::class)
             ->fillForm([

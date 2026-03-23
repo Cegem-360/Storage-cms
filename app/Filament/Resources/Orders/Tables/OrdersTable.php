@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Orders\Tables;
 
 use App\Enums\OrderStatus;
-use App\Models\Order;
 use App\Models\Team;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -111,14 +108,8 @@ final class OrdersTable
                         ->toArray()),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (Order $record): string => route('dashboard.orders.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (Order $record): string => route('dashboard.orders.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
             ->paginated([10, 25, 50, 100]);

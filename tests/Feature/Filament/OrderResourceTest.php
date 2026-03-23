@@ -11,7 +11,9 @@ use App\Filament\Resources\Orders\Pages\ViewOrder;
 use App\Models\Order;
 use App\Models\OrderLine;
 use App\Models\Product;
+use App\Models\Team;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Repeater;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -21,9 +23,13 @@ use function Pest\Laravel\assertDatabaseHas;
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->team = $this->user->team;
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 it('can render the list page', function (): void {

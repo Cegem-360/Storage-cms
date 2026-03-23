@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Categories\Tables;
 
-use App\Models\Category;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -79,14 +76,8 @@ final class CategoriesTable
                     ->sortable(),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (Category $record): string => route('dashboard.categories.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (Category $record): string => route('dashboard.categories.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('name', 'asc')
             ->paginated([10, 25, 50, 100]);

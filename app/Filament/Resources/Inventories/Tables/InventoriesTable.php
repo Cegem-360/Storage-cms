@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Inventories\Tables;
 
-use App\Models\Inventory;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -88,10 +85,7 @@ final class InventoriesTable
                     ->sortable(),
             ])
             ->recordActions([
-                Action::make('edit')
-                    ->url(fn (Inventory $record): string => route('dashboard.inventories.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                EditAction::make(),
             ])
             ->defaultSort('created_at', 'desc')
             ->paginated([10, 25, 50, 100]);

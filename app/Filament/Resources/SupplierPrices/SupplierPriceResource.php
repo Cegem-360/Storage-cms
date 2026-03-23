@@ -32,6 +32,18 @@ final class SupplierPriceResource extends Resource
     protected static ?int $navigationSort = 5;
 
     #[Override]
+    public static function getModelLabel(): string
+    {
+        return __('Supplier Price');
+    }
+
+    #[Override]
+    public static function getPluralModelLabel(): string
+    {
+        return __('Supplier Prices');
+    }
+
+    #[Override]
     public static function form(Schema $schema): Schema
     {
         return SupplierPriceForm::configure($schema);

@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Filament\Resources\Stocks\Tables;
 
 use App\Models\Stock;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
@@ -127,14 +125,8 @@ final class StocksTable
                     ),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (Stock $record): string => route('dashboard.stocks.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (Stock $record): string => route('dashboard.stocks.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('quantity', 'desc')
             ->paginated([10, 25, 50, 100]);

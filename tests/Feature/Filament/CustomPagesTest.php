@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Filament\Pages\AbcAnalysisReport;
+use App\Filament\Pages\AiAssistant;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\ExpectedStockArrivals;
 use App\Filament\Pages\InventoryValuationReport;
@@ -17,14 +18,19 @@ use App\Models\Team;
 use App\Models\TeamSetting;
 use App\Models\User;
 use App\Models\Warehouse;
+use Filament\Facades\Filament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function (): void {
+    $this->team = Team::factory()->create();
     $this->user = User::factory()->create();
     $this->actingAs($this->user);
+    Filament::setCurrentPanel(Filament::getPanel('admin'));
+    Filament::setTenant($this->user->team);
+    Filament::bootCurrentPanel();
 });
 
 describe('Settings page', function (): void {
@@ -101,6 +107,27 @@ describe('Settings page', function (): void {
             ])
             ->call('save')
             ->assertHasFormErrors(['notification_email' => 'email']);
+    });
+});
+
+describe('AI Assistant page', function (): void {
+    it('can render', function (): void {
+        Livewire::test(AiAssistant::class)
+            ->assertOk();
+    });
+
+    it('can render with empty conversation history', function (): void {
+        Livewire::test(AiAssistant::class)
+            ->assertOk()
+            ->assertSet('messages', [])
+            ->assertSet('conversationId', null);
+    });
+
+    it('can clear chat', function (): void {
+        Livewire::test(AiAssistant::class)
+            ->call('clearChat')
+            ->assertSet('messages', [])
+            ->assertSet('conversationId', null);
     });
 });
 

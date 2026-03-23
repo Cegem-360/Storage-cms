@@ -6,15 +6,13 @@ namespace App\Filament\Resources\ReturnDeliveries\Tables;
 
 use App\Enums\ReturnStatus;
 use App\Enums\ReturnType;
-use App\Models\ReturnDelivery;
 use App\Models\Team;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -136,14 +134,8 @@ final class ReturnDeliveriesTable
                     ->options(ReturnStatus::class),
             ])
             ->recordActions([
-                Action::make('view')
-                    ->url(fn (ReturnDelivery $record): string => route('dashboard.return-deliveries.view', $record))
-                    ->icon(Heroicon::Eye)
-                    ->color('gray'),
-                Action::make('edit')
-                    ->url(fn (ReturnDelivery $record): string => route('dashboard.return-deliveries.edit', $record))
-                    ->icon(Heroicon::PencilSquare)
-                    ->color('gray'),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->defaultSort('return_date', 'desc')
             ->paginated([10, 25, 50, 100]);
