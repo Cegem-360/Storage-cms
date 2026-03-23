@@ -15,7 +15,7 @@
                 {{-- Features --}}
                 <a href="#funkciok"
                     class="px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                    {{ __('Functions') }}
+                    {{ __('Features') }}
                 </a>
 
                 {{-- Integrations --}}
@@ -44,14 +44,14 @@
 
                 @guest
                     {{-- Log in --}}
-                    <a href="{{ route('filament.admin.auth.login') }}" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                        {{ __('Login') }}
+                    <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                        {{ __('Log in') }}
                     </a>
 
                     {{-- Get Started (filled) --}}
-                    <a href="https://cegem360.eu/admin/register"
+                    <a href="https://cegem360.eu/register"
                         class="inline-flex items-center gap-1 px-5 py-2 text-sm font-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors">
-                        {{ __('Free Trial') }}
+                        {{ __('Get started') }}
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -85,14 +85,14 @@
                             class="absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                             @if($tenant = auth()->user()->teams->first())
                                 <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => $tenant->slug]) }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">{{ __('Dashboard') }}</a>
                                 <hr class="my-1 border-gray-200">
                             @endif
                             <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                                 @csrf
                                 <button type="submit"
                                     class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                    {{ __('Logout') }}
+                                    {{ __('Log out') }}
                                 </button>
                             </form>
                         </div>
@@ -119,13 +119,13 @@
     <div x-show="mobileMenuOpen" x-collapse class="lg:hidden border-t border-gray-200 bg-white">
         <div class="px-4 py-4 space-y-3">
             <a href="#funkciok" class="block py-2 text-sm font-medium text-gray-700"
-                @click="mobileMenuOpen = false">Funkciók</a>
+                @click="mobileMenuOpen = false">{{ __('Features') }}</a>
             <a href="#integraciok" class="block py-2 text-sm font-medium text-gray-700"
-                @click="mobileMenuOpen = false">Integrációk</a>
+                @click="mobileMenuOpen = false">{{ __('Integrations') }}</a>
             <a href="#arak" class="block py-2 text-sm font-medium text-gray-700"
-                @click="mobileMenuOpen = false">Árak</a>
+                @click="mobileMenuOpen = false">{{ __('Pricing') }}</a>
             <a href="#gyik" class="block py-2 text-sm font-medium text-gray-700"
-                @click="mobileMenuOpen = false">GYIK</a>
+                @click="mobileMenuOpen = false">{{ __('FAQ') }}</a>
 
             {{-- Language Switcher for Mobile --}}
             <div class="py-2">
@@ -135,10 +135,10 @@
             <hr class="border-gray-200">
 
             @guest
-                <a href="{{ route('filament.admin.auth.login') }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Login') }}</a>
-                <a href="https://cegem360.eu/admin/register"
+                <a href="/login" class="block py-2 text-sm font-medium text-gray-700">{{ __('Log in') }}</a>
+                <a href="https://cegem360.eu/register"
                     class="block w-full text-center py-2.5 text-sm font-medium text-white bg-amber-600 rounded-full">
-                    {{ __('Free Trial') }}
+                    {{ __('Get started') }}
                 </a>
             @endguest
 
@@ -147,7 +147,7 @@
                 <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                     @csrf
                     <button type="submit" class="block w-full text-left py-2 text-sm font-medium text-red-600">
-                        {{ __('Logout') }}
+                        {{ __('Log out') }}
                     </button>
                 </form>
             @endauth
