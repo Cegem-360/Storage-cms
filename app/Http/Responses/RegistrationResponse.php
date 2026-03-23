@@ -6,6 +6,7 @@ namespace App\Http\Responses;
 
 use Filament\Auth\Http\Responses\RegistrationResponse as BaseRegistrationResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportRedirects\Redirector;
 use Override;
 
@@ -14,6 +15,10 @@ final class RegistrationResponse extends BaseRegistrationResponse
     #[Override]
     public function toResponse($request): RedirectResponse|Redirector
     {
-        return to_route('filament.admin.pages.dashboard');
+        return redirect()->intended(
+            route('filament.admin.pages.dashboard',
+                ['tenant' => Auth::user()->teams->first()?->slug]
+            )
+        );
     }
 }
