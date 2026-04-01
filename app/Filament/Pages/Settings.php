@@ -54,6 +54,7 @@ final class Settings extends Page
         $team->load('settings');
 
         $this->form->fill([
+            'default_country' => $team->getSetting('default_country', 'Magyarország'),
             'currency' => $team->getSetting('currency', 'HUF'),
             'low_stock_threshold' => $team->getSetting('low_stock_threshold', 10),
             'auto_reorder_enabled' => (bool) $team->getSetting('auto_reorder_enabled', false),
@@ -72,6 +73,12 @@ final class Settings extends Page
                     ->label(__('General Settings'))
                     ->description(__('Configure general system preferences'))
                     ->schema([
+                        TextInput::make('default_country')
+                            ->label(__('Default country'))
+                            ->helperText(__('Default country for new addresses'))
+                            ->maxLength(255)
+                            ->default('Magyarország'),
+
                         Select::make('currency')
                             ->label(__('Default Currency'))
                             ->options([
@@ -138,6 +145,7 @@ final class Settings extends Page
         $data = $this->form->getState();
         $team = Auth::user()->team;
 
+        $team->setSetting('default_country', $data['default_country']);
         $team->setSetting('currency', $data['currency']);
         $team->setSetting('low_stock_threshold', $data['low_stock_threshold']);
         $team->setSetting('auto_reorder_enabled', $data['auto_reorder_enabled']);

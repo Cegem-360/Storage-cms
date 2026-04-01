@@ -17,6 +17,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 final class CustomerForm
 {
@@ -61,11 +62,12 @@ final class CustomerForm
                                             ->afterStateUpdated(function (?string $state, Set $set): void {
                                                 if ($state && ($city = PostalCodeLookupService::lookup($state))) {
                                                     $set('billing_address.city', $city);
-                                                    $set('billing_address.country', 'Magyarország');
+                                                    $set('billing_address.country', Auth::user()->team->getSetting('default_country', 'Magyarország'));
                                                 }
                                             }),
                                         TextInput::make('billing_address.country')
-                                            ->label(__('Country')),
+                                            ->label(__('Country'))
+                                            ->default(fn (): string => Auth::user()->team->getSetting('default_country', 'Magyarország')),
                                     ])
                                     ->columns(2),
 
@@ -108,11 +110,12 @@ final class CustomerForm
                                             ->afterStateUpdated(function (?string $state, Set $set): void {
                                                 if ($state && ($city = PostalCodeLookupService::lookup($state))) {
                                                     $set('shipping_address.city', $city);
-                                                    $set('shipping_address.country', 'Magyarország');
+                                                    $set('shipping_address.country', Auth::user()->team->getSetting('default_country', 'Magyarország'));
                                                 }
                                             }),
                                         TextInput::make('shipping_address.country')
-                                            ->label(__('Country')),
+                                            ->label(__('Country'))
+                                            ->default(fn (): string => Auth::user()->team->getSetting('default_country', 'Magyarország')),
                                     ])
                                     ->columns(2)
                                     ->visible(fn (Get $get): bool => ! $get('same_as_billing')),
