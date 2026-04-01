@@ -5,17 +5,22 @@
     {{-- ==================== --}}
     {{-- 1. HERO SECTION --}}
     {{-- ==================== --}}
-    <section class="bg-gradient-to-b from-amber-50 to-white pt-24 pb-16 lg:pt-32 lg:pb-24">
+    <section class="bg-linear-to-b from-amber-50 to-white pt-24 pb-16 lg:pt-32 lg:pb-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-4xl mx-auto">
                 {{-- Badge --}}
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium mb-6">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                    </svg>
                     {{ __('New: Mobile barcode receiving') }}
                 </div>
 
                 {{-- H1 --}}
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 font-heading leading-tight">
+                <h1
+                    class="text-4xl sm:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 font-heading leading-tight">
                     {{ __('Warehouse inventory and shipments in one transparent system') }}
                 </h1>
 
@@ -26,16 +31,24 @@
 
                 {{-- CTA Buttons --}}
                 <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-                    <a href="https://cegem360.eu/register" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors shadow-lg">
+                    <a href="https://cegem360.eu/register"
+                        class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors shadow-lg">
                         {{ __('Get started') }}
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                     </a>
-                    <a href="https://cegem360.eu/kapcsolat" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-amber-700 bg-white border-2 border-amber-200 rounded-full hover:bg-amber-50 transition-colors">
+                    <a href="https://cegem360.eu/kapcsolat"
+                        class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-amber-700 bg-white border-2 border-amber-200 rounded-full hover:bg-amber-50 transition-colors">
                         {{ __('Request a demo') }}
                     </a>
-                    <a href="/login" class="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-amber-600 transition-colors">
+                    <a href="/login"
+                        class="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-amber-600 transition-colors">
                         {{ __('Log in to the app') }}
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
                     </a>
                 </div>
             </div>
@@ -44,11 +57,14 @@
             <div class="mt-16 relative">
                 {{-- Background decorations --}}
                 <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-200 rounded-full opacity-20 blur-3xl"></div>
-                    <div class="absolute -bottom-10 -right-10 w-60 h-60 bg-orange-200 rounded-full opacity-20 blur-3xl"></div>
+                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-200 rounded-full opacity-20 blur-3xl">
+                    </div>
+                    <div class="absolute -bottom-10 -right-10 w-60 h-60 bg-orange-200 rounded-full opacity-20 blur-3xl">
+                    </div>
                 </div>
 
-                <div class="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden max-w-5xl mx-auto">
+                <div
+                    class="relative bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden max-w-5xl mx-auto">
                     {{-- Header bar --}}
                     <div class="bg-gray-50 border-b border-gray-200 px-4 py-3 flex items-center gap-3">
                         <div class="flex gap-2">
@@ -57,17 +73,23 @@
                             <div class="w-3 h-3 rounded-full bg-green-400"></div>
                         </div>
                         <div class="flex-1 flex items-center justify-center">
-                            <div class="bg-white border border-gray-200 rounded-lg px-4 py-1.5 flex items-center gap-2 text-sm text-gray-500">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            <div
+                                class="bg-white border border-gray-200 rounded-lg px-4 py-1.5 flex items-center gap-2 text-sm text-gray-500">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
                                 beszerzes.cegem360.eu/dashboard
                             </div>
                         </div>
                     </div>
 
                     {{-- Dashboard canvas --}}
-                    <div class="relative bg-gradient-to-br from-gray-50 via-amber-50/20 to-gray-50 p-6 lg:p-8">
+                    <div class="relative bg-linear-to-br from-gray-50 via-amber-50/20 to-gray-50 p-6 lg:p-8">
                         {{-- Grid pattern --}}
-                        <div class="absolute inset-0 opacity-[0.02]" style="background-image: radial-gradient(circle, #6b7280 1px, transparent 1px); background-size: 24px 24px;"></div>
+                        <div class="absolute inset-0 opacity-[0.02]"
+                            style="background-image: radial-gradient(circle, #6b7280 1px, transparent 1px); background-size: 24px 24px;">
+                        </div>
 
                         <div class="relative" style="z-index: 2;">
                             {{-- Stat boxes --}}
@@ -76,11 +98,13 @@
                                     <div class="text-2xl font-bold text-gray-900 mb-1">1,247</div>
                                     <div class="text-sm text-gray-500">{{ __('Total SKUs') }}</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 shadow-sm border border-amber-200 animate-float-delayed">
+                                <div
+                                    class="bg-white rounded-xl p-4 shadow-sm border border-amber-200 animate-float-delayed">
                                     <div class="text-2xl font-bold text-amber-600 mb-1">12</div>
                                     <div class="text-sm text-amber-600">{{ __('Low stock') }}</div>
                                 </div>
-                                <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-float-delayed-2">
+                                <div
+                                    class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 animate-float-delayed-2">
                                     <div class="text-2xl font-bold text-blue-600 mb-1">8</div>
                                     <div class="text-sm text-gray-500">{{ __('In transit') }}</div>
                                 </div>
@@ -137,13 +161,23 @@
 
                         {{-- Floating status cards --}}
                         <div class="absolute bottom-4 left-4 right-4 flex flex-wrap justify-center gap-3">
-                            <div class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur border border-emerald-200 rounded-full text-sm shadow-md">
-                                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <div
+                                class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur border border-emerald-200 rounded-full text-sm shadow-md">
+                                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg>
                                 <span class="text-gray-700 font-medium">{{ __('Shipment arrived!') }}</span>
                                 <span class="text-gray-500">TRANS-2024-0892</span>
                             </div>
-                            <div class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur border border-amber-200 rounded-full text-sm shadow-md">
-                                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            <div
+                                class="inline-flex items-center gap-2 px-4 py-2.5 bg-white/90 backdrop-blur border border-amber-200 rounded-full text-sm shadow-md">
+                                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
                                 <span class="text-gray-700 font-medium">{{ __('Order suggestion') }}</span>
                                 <span class="text-amber-600">{{ __('3 products below minimum') }}</span>
                             </div>
@@ -170,9 +204,12 @@
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 {{-- Problem 1 --}}
-                <div class="bg-gradient-to-br from-red-50 to-white rounded-2xl p-6 border border-red-100">
+                <div class="bg-linear-to-br from-red-50 to-white rounded-2xl p-6 border border-red-100">
                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-4">
-                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Excel chaos') }}</h3>
                     <p class="text-gray-600 text-sm">
@@ -181,9 +218,13 @@
                 </div>
 
                 {{-- Problem 2 --}}
-                <div class="bg-gradient-to-br from-amber-50 to-white rounded-2xl p-6 border border-amber-100">
+                <div class="bg-linear-to-br from-amber-50 to-white rounded-2xl p-6 border border-amber-100">
                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Stockouts') }}</h3>
                     <p class="text-gray-600 text-sm">
@@ -192,9 +233,13 @@
                 </div>
 
                 {{-- Problem 3 --}}
-                <div class="bg-gradient-to-br from-orange-50 to-white rounded-2xl p-6 border border-orange-100">
+                <div class="bg-linear-to-br from-orange-50 to-white rounded-2xl p-6 border border-orange-100">
                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Lost orders') }}</h3>
                     <p class="text-gray-600 text-sm">
@@ -203,9 +248,13 @@
                 </div>
 
                 {{-- Problem 4 --}}
-                <div class="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-6 border border-purple-100">
+                <div class="bg-linear-to-br from-purple-50 to-white rounded-2xl p-6 border border-purple-100">
                     <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm mb-4">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Manual inventory counting') }}</h3>
                     <p class="text-gray-600 text-sm">
@@ -219,23 +268,40 @@
                 <div class="flex flex-col lg:flex-row items-center gap-8">
                     <div class="flex-1">
                         <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
-                            <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </div>
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-4 font-heading">{{ __('Cégem360 Procurement solves all of this') }}</h3>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4 font-heading">
+                            Cégem360 {{ __('Procurement solves all of this') }}</h3>
                         <p class="text-lg text-gray-600 mb-6">
                             {{ __('Finally one place where you see all inventory, suppliers and shipments - in real time, on any device.') }}
                         </p>
                         <ul class="space-y-3">
                             <li class="flex items-center gap-2 text-gray-700">
-                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg>
                                 {{ __('Real-time inventory tracking') }}
                             </li>
                             <li class="flex items-center gap-2 text-gray-700">
-                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg>
                                 {{ __('Automatic stock alerts') }}
                             </li>
                             <li class="flex items-center gap-2 text-gray-700">
-                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <svg class="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg>
                                 {{ __('Supplier management and evaluation') }}
                             </li>
                         </ul>
@@ -273,15 +339,20 @@
                     {{ __('All the tools for efficient inventory management') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    {{ __('The Cégem360 Procurement-logistics module helps manage warehouses and suppliers in 6 key areas.') }}
+                    {{ __('The :company Procurement-logistics module helps manage warehouses and suppliers in 6 key areas.', ['company' => 'Cégem360 Kft.']) }}
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {{-- Feature 1: Készletkezelés --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Inventory Management') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -289,24 +360,41 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Multi-warehouse and location support') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Minimum stock alerts') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Serial number and expiry date tracking') }}
                         </li>
                     </ul>
                 </div>
 
                 {{-- Feature 2: Beszerzés --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Procurement') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -314,24 +402,41 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Supplier database and rating') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Quote management and comparison') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Order approval workflow') }}
                         </li>
                     </ul>
                 </div>
 
                 {{-- Feature 3: Szállítmánykövetés --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Shipment tracking') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -339,24 +444,41 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Expected arrival times') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Shipment alerts for delays') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Carrier integration') }}
                         </li>
                     </ul>
                 </div>
 
                 {{-- Feature 4: Raktári műveletek --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Warehouse operations') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -364,24 +486,41 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Receiving with barcode or manually') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Issuing and transfers') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Warehouse location management (shelf, row)') }}
                         </li>
                     </ul>
                 </div>
 
                 {{-- Feature 5: Riportok --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Reports and analytics') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -389,24 +528,41 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Inventory turnover metrics') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('ABC analysis') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Supplier performance report') }}
                         </li>
                     </ul>
                 </div>
 
                 {{-- Feature 6: Integrációk --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-shadow">
                     <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                        </svg>
                     </div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-3">{{ __('Integrations') }}</h3>
                     <p class="text-gray-600 mb-4">
@@ -414,15 +570,27 @@
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('WooCommerce, Shopify integration') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('Barcode scanner support') }}
                         </li>
                         <li class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
                             {{ __('EDI supplier connection') }}
                         </li>
                     </ul>
@@ -448,18 +616,25 @@
             {{-- Workflow Steps --}}
             <div class="relative max-w-4xl mx-auto">
                 {{-- Connecting line --}}
-                <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-amber-200 -translate-x-1/2"></div>
+                <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-amber-200 -translate-x-1/2">
+                </div>
 
                 <div class="space-y-8">
                     {{-- Step 1 --}}
                     <div class="relative flex flex-col lg:flex-row items-center gap-6">
                         <div class="flex-1 lg:text-right order-2 lg:order-1">
                             <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ __('Stock decreases') }}</h3>
-                            <p class="text-gray-600 text-sm">{{ __('The system detects stock below minimum level') }}</p>
+                            <p class="text-gray-600 text-sm">{{ __('The system detects stock below minimum level') }}
+                            </p>
                         </div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:opacity-0"><!-- Spacer --></div>
@@ -469,8 +644,13 @@
                     <div class="relative flex flex-col lg:flex-row items-center gap-6">
                         <div class="flex-1 lg:opacity-0 order-2 lg:order-1"><!-- Spacer --></div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:text-left">
@@ -483,11 +663,17 @@
                     <div class="relative flex flex-col lg:flex-row items-center gap-6">
                         <div class="flex-1 lg:text-right order-2 lg:order-1">
                             <h3 class="text-lg font-semibold text-gray-900 mb-1">{{ __('Suggestion') }}</h3>
-                            <p class="text-gray-600 text-sm">{{ __('Order suggestion with the preferred supplier') }}</p>
+                            <p class="text-gray-600 text-sm">{{ __('Order suggestion with the preferred supplier') }}
+                            </p>
                         </div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:opacity-0"><!-- Spacer --></div>
@@ -497,8 +683,13 @@
                     <div class="relative flex flex-col lg:flex-row items-center gap-6">
                         <div class="flex-1 lg:opacity-0 order-2 lg:order-1"><!-- Spacer --></div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:text-left">
@@ -514,8 +705,13 @@
                             <p class="text-gray-600 text-sm">{{ __('Email or EDI to the supplier') }}</p>
                         </div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:opacity-0"><!-- Spacer --></div>
@@ -525,8 +721,13 @@
                     <div class="relative flex flex-col lg:flex-row items-center gap-6">
                         <div class="flex-1 lg:opacity-0 order-2 lg:order-1"><!-- Spacer --></div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                            <div
+                                class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:text-left">
@@ -542,8 +743,13 @@
                             <p class="text-gray-600 text-sm">{{ __('With barcode or manually, stock updates') }}</p>
                         </div>
                         <div class="relative z-10 order-1 lg:order-2">
-                            <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
-                                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                            <div
+                                class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
+                                <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
                             </div>
                         </div>
                         <div class="flex-1 order-3 lg:opacity-0"><!-- Spacer --></div>
@@ -563,7 +769,7 @@
                     {{ __('Connected to the entire ecosystem') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    {{ __('The Procurement module works with webshops, ERP systems and other Cégem360 modules.') }}
+                    {{ __('The Procurement module works with webshops, ERP systems and other :company modules.', ['company' => 'Cégem360 Kft.']) }}
                 </p>
             </div>
 
@@ -571,25 +777,42 @@
             <div class="relative max-w-4xl mx-auto">
                 <div class="flex flex-wrap justify-center items-center gap-4">
                     {{-- WooCommerce --}}
-                    <div class="bg-gradient-to-br from-purple-50 to-white rounded-xl p-4 border border-purple-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-purple-50 to-white rounded-xl p-4 border border-purple-200 w-36 text-center">
                         <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">WooCommerce</span>
                     </div>
 
                     {{-- Shopify --}}
-                    <div class="bg-gradient-to-br from-green-50 to-white rounded-xl p-4 border border-green-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-green-50 to-white rounded-xl p-4 border border-green-200 w-36 text-center">
                         <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">Shopify</span>
                     </div>
 
                     {{-- Gyártás --}}
-                    <div class="bg-gradient-to-br from-indigo-50 to-white rounded-xl p-4 border border-indigo-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-indigo-50 to-white rounded-xl p-4 border border-indigo-200 w-36 text-center">
                         <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">{{ __('Manufacturing') }}</span>
                     </div>
@@ -597,9 +820,13 @@
 
                 {{-- Center - Beszerzés --}}
                 <div class="flex justify-center my-6">
-                    <div class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-center shadow-xl">
+                    <div class="bg-linear-to-br from-amber-500 to-orange-600 rounded-2xl p-6 text-center shadow-xl">
                         <div class="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-3">
-                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
                         </div>
                         <span class="text-white font-semibold">{{ __('Procurement') }}</span>
                     </div>
@@ -607,25 +834,40 @@
 
                 <div class="flex flex-wrap justify-center items-center gap-4">
                     {{-- Értékesítés --}}
-                    <div class="bg-gradient-to-br from-red-50 to-white rounded-xl p-4 border border-red-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-red-50 to-white rounded-xl p-4 border border-red-200 w-36 text-center">
                         <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">{{ __('Sales') }}</span>
                     </div>
 
                     {{-- Kontrolling --}}
-                    <div class="bg-gradient-to-br from-emerald-50 to-white rounded-xl p-4 border border-emerald-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-emerald-50 to-white rounded-xl p-4 border border-emerald-200 w-36 text-center">
                         <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">{{ __('Controlling') }}</span>
                     </div>
 
                     {{-- Vonalkód --}}
-                    <div class="bg-gradient-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 w-36 text-center">
+                    <div
+                        class="bg-linear-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 w-36 text-center">
                         <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                            </svg>
                         </div>
                         <span class="text-sm font-medium text-gray-700">{{ __('Barcode') }}</span>
                     </div>
@@ -674,215 +916,6 @@
     </section>
 
     {{-- ==================== --}}
-    {{-- 7. TESTIMONIALS SECTION --}}
-    {{-- ==================== --}}
-    @if(false)
-    <section class="py-16 lg:py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4 font-heading">
-                    {{ __('What do our clients say?') }}
-                </h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                {{-- Testimonial 1 --}}
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                    <div class="flex items-center gap-1 mb-4">
-                        @for ($i = 0; $i < 5; $i++)
-                            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endfor
-                    </div>
-                    <p class="text-gray-700 mb-6">
-                        {{ __('Tracking inventory in Excel used to be a nightmare. Now one click and I see what\'s missing. Since the automatic alerts, there hasn\'t been a single stockout-related shutdown.') }}
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
-                            TG
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gray-900">{{ __('Gábor Tóth') }}</div>
-                            <div class="text-sm text-gray-500">{{ __('Logistics Manager, Manufacturing company') }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Testimonial 2 --}}
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                    <div class="flex items-center gap-1 mb-4">
-                        @for ($i = 0; $i < 5; $i++)
-                            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endfor
-                    </div>
-                    <p class="text-gray-700 mb-6">
-                        {{ __('Since the system automatically alerts when ordering is needed, there have been no stockouts. Our suppliers are also happier with the predictability.') }}
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
-                            KM
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gray-900">{{ __('Márton Kiss') }}</div>
-                            <div class="text-sm text-gray-500">{{ __('Procurement Manager, Trading company') }}</div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Testimonial 3 --}}
-                <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
-                    <div class="flex items-center gap-1 mb-4">
-                        @for ($i = 0; $i < 5; $i++)
-                            <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        @endfor
-                    </div>
-                    <p class="text-gray-700 mb-6">
-                        {{ __('Barcode receiving reduced inventory counting to a fraction. What used to take an entire weekend is now done in half a day.') }}
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
-                            SB
-                        </div>
-                        <div>
-                            <div class="font-semibold text-gray-900">{{ __('Béla Szabó') }}</div>
-                            <div class="text-sm text-gray-500">{{ __('Warehouse Manager, Industrial supplier') }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-
-    {{-- ==================== --}}
-    {{-- 8. PRICING SECTION --}}
-    {{-- ==================== --}}
-    @if(false)
-    <section id="arak" class="py-16 lg:py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4 font-heading">
-                    {{ __('Simple, transparent pricing') }}
-                </h2>
-                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    {{ __('Choose the package tailored to your company. Every package includes a 14-day free trial.') }}
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                {{-- Starter Tier --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Starter') }}</h3>
-                    <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">{{ __('5,900 Ft') }}</span>
-                        <span class="text-gray-500">{{ __('/month') }}</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-6">{{ __('For small warehouses') }}</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('1 warehouse') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('1,000 SKUs') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Basic reports') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Stock alerts') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Email support') }}
-                        </li>
-                    </ul>
-                    <a href="/admin" class="block w-full py-3 text-center text-sm font-medium text-amber-600 border-2 border-amber-200 rounded-full hover:bg-amber-50 transition-colors">
-                        {{ __('Try it') }}
-                    </a>
-                </div>
-
-                {{-- Professional Tier (Featured) --}}
-                <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-amber-500 relative">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span class="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            {{ __('Most popular') }}
-                        </span>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Professional') }}</h3>
-                    <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">{{ __('11,900 Ft') }}</span>
-                        <span class="text-gray-500">{{ __('/month') }}</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-6">{{ __('For growing companies') }}</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Multiple warehouses') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Unlimited SKUs') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Automatic ordering') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Webshop integration') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Priority support') }}
-                        </li>
-                    </ul>
-                    <a href="/admin" class="block w-full py-3 text-center text-sm font-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors">
-                        {{ __('Start now') }}
-                    </a>
-                </div>
-
-                {{-- Enterprise Tier --}}
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Enterprise') }}</h3>
-                    <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">{{ __('Custom') }}</span>
-                    </div>
-                    <p class="text-gray-600 text-sm mb-6">{{ __('For large enterprises') }}</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('All Professional features') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('EDI supplier connection') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Multi-site support') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('Custom workflows') }}
-                        </li>
-                        <li class="flex items-center gap-2 text-sm text-gray-600">
-                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            {{ __('SLA guarantee') }}
-                        </li>
-                    </ul>
-                    <a href="#" class="block w-full py-3 text-center text-sm font-medium text-gray-700 border-2 border-gray-200 rounded-full hover:bg-gray-50 transition-colors">
-                        {{ __('Request a quote') }}
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-    @endif
-
-    {{-- ==================== --}}
     {{-- 9. FAQ SECTION --}}
     {{-- ==================== --}}
     <section id="gyik" class="py-16 lg:py-24 bg-white">
@@ -896,10 +929,14 @@
             <div class="space-y-4">
                 {{-- FAQ 1 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
-                        <span class="font-medium text-gray-900">{{ __('How can I import my existing inventory data?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
+                        <span
+                            class="font-medium text-gray-900">{{ __('How can I import my existing inventory data?') }}</span>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -911,10 +948,14 @@
 
                 {{-- FAQ 2 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
-                        <span class="font-medium text-gray-900">{{ __('Does it support multi-warehouse operations?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
+                        <span
+                            class="font-medium text-gray-900">{{ __('Does it support multi-warehouse operations?') }}</span>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -926,10 +967,13 @@
 
                 {{-- FAQ 3 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
                         <span class="font-medium text-gray-900">{{ __('How does barcode receiving work?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -941,10 +985,13 @@
 
                 {{-- FAQ 4 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
                         <span class="font-medium text-gray-900">{{ __('Can it connect to my webshop?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -956,10 +1003,13 @@
 
                 {{-- FAQ 5 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
                         <span class="font-medium text-gray-900">{{ __('How do automatic alerts work?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -971,10 +1021,14 @@
 
                 {{-- FAQ 6 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
-                        <span class="font-medium text-gray-900">{{ __('Does it handle expiry dates and serial numbers?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
+                        <span
+                            class="font-medium text-gray-900">{{ __('Does it handle expiry dates and serial numbers?') }}</span>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -986,10 +1040,14 @@
 
                 {{-- FAQ 7 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
-                        <span class="font-medium text-gray-900">{{ __('Can it be used without other Cégem360 modules?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
+                        <span
+                            class="font-medium text-gray-900">{{ __('Can it be used without other :company modules?', ['company' => 'Cégem360 Kft.']) }}</span>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -1001,10 +1059,14 @@
 
                 {{-- FAQ 8 --}}
                 <div class="bg-gray-50 rounded-xl border border-gray-200 overflow-hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="w-full px-6 py-4 text-left flex items-center justify-between">
-                        <span class="font-medium text-gray-900">{{ __('What support do I get for implementation?') }}</span>
-                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    <button @click="open = !open"
+                        class="w-full px-6 py-4 text-left flex items-center justify-between">
+                        <span
+                            class="font-medium text-gray-900">{{ __('What support do I get for implementation?') }}</span>
+                        <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'rotate-180': open }"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div x-show="open" x-collapse>
@@ -1020,25 +1082,33 @@
     {{-- ==================== --}}
     {{-- 10. CTA SECTION --}}
     {{-- ==================== --}}
-    <section class="py-16 lg:py-24 bg-gradient-to-r from-amber-600 to-orange-600">
+    <section class="py-16 lg:py-24 bg-linear-to-r from-amber-600 to-orange-600">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-4 font-heading">
                 {{ __('Ready to bring order to your warehouse?') }}
             </h2>
             <p class="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
-                {{ __('Discover how Cégem360 helps your company grow. No long-term commitment.') }}
+                {{ __('Discover how :company helps your company grow. No long-term commitment.', ['company' => 'Cégem360 Kft.']) }}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="https://cegem360.eu/register" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-amber-600 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg">
+                <a href="https://cegem360.eu/register"
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-amber-600 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-lg">
                     {{ __('Get started') }}
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                 </a>
-                <a href="https://cegem360.eu/kapcsolat" class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white border-2 border-white/30 rounded-full hover:bg-white/10 transition-colors">
+                <a href="https://cegem360.eu/kapcsolat"
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white border-2 border-white/30 rounded-full hover:bg-white/10 transition-colors">
                     {{ __('Request a demo') }}
                 </a>
-                <a href="/login" class="inline-flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors">
+                <a href="/login"
+                    class="inline-flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white transition-colors">
                     {{ __('Log in to the app') }}
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
                 </a>
             </div>
         </div>
