@@ -18,6 +18,7 @@ use Filament\Forms\Components\Field;
 use Filament\Infolists\Components\Entry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Wizard;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentTimezone;
@@ -95,6 +96,7 @@ final class AppServiceProvider extends ServiceProvider
         Tab::configureUsing(fn (Tab $c) => $c->translateLabel());
         Section::configureUsing(fn (Section $c) => $c->translateLabel());
         Action::configureUsing(fn (Action $c) => $c->translateLabel());
+        Wizard::configureUsing(fn (Wizard $c) => $c->translateLabel());
     }
 
     private function registerSyncListeners(): void

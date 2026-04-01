@@ -47,6 +47,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->font('Figtree')
             ->sidebarFullyCollapsibleOnDesktop()
             ->sidebarWidth('15rem')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->collapsibleNavigationGroups(false)
             ->defaultThemeMode(ThemeMode::Light)
             ->brandLogoHeight('2rem')
@@ -65,6 +66,13 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->renderHook(
+                PanelsRenderHook::SIDEBAR_NAV_END,
+                fn (): View => view('filament.sidebar-quick-links'),
+            )->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn (): View => view('filament.sidebar-transition-script'),
+            )
             ->renderHook(
                 PanelsRenderHook::GLOBAL_SEARCH_BEFORE,
                 fn (): View => view('filament.topbar-items'),
@@ -100,6 +108,11 @@ final class AdminPanelServiceProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->spa()
+            ->spaUrlExceptions([
+                '*/language/*',
+                '*/google/oauth/*',
             ]);
     }
 }

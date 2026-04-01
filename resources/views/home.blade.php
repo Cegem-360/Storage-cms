@@ -94,11 +94,11 @@
                                 <div class="divide-y divide-gray-100">
                                     <div class="px-4 py-3 flex items-center justify-between">
                                         <div>
-                                            <div class="font-medium text-gray-900">M8 csavar 50mm</div>
+                                            <div class="font-medium text-gray-900">{{ __('M8 bolt 50mm') }}</div>
                                             <div class="text-sm text-gray-500">SKU-2847</div>
                                         </div>
                                         <div class="text-right">
-                                            <div class="font-medium text-gray-900">2,450 db</div>
+                                            <div class="font-medium text-gray-900">{{ __('2,450 pcs') }}</div>
                                             <div class="text-sm text-emerald-600 flex items-center gap-1 justify-end">
                                                 <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
                                                 {{ __('OK') }}
@@ -107,11 +107,11 @@
                                     </div>
                                     <div class="px-4 py-3 flex items-center justify-between bg-amber-50/50">
                                         <div>
-                                            <div class="font-medium text-gray-900">Golyóscsapágy 6205</div>
+                                            <div class="font-medium text-gray-900">{{ __('Ball bearing 6205') }}</div>
                                             <div class="text-sm text-gray-500">SKU-1093</div>
                                         </div>
                                         <div class="text-right">
-                                            <div class="font-medium text-gray-900">45 db</div>
+                                            <div class="font-medium text-gray-900">{{ __('45 pcs') }}</div>
                                             <div class="text-sm text-amber-600 flex items-center gap-1 justify-end">
                                                 <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
                                                 {{ __('Low') }}
@@ -120,11 +120,11 @@
                                     </div>
                                     <div class="px-4 py-3 flex items-center justify-between bg-red-50/50">
                                         <div>
-                                            <div class="font-medium text-gray-900">Acél lemez 2mm</div>
+                                            <div class="font-medium text-gray-900">{{ __('Steel sheet 2mm') }}</div>
                                             <div class="text-sm text-gray-500">SKU-0521</div>
                                         </div>
                                         <div class="text-right">
-                                            <div class="font-medium text-gray-900">8 tábla</div>
+                                            <div class="font-medium text-gray-900">{{ __('8 sheets') }}</div>
                                             <div class="text-sm text-red-600 flex items-center gap-1 justify-end">
                                                 <span class="w-2 h-2 bg-red-500 rounded-full"></span>
                                                 {{ __('Critical') }}
@@ -681,7 +681,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4 font-heading">
-                    Mit mondanak ügyfeleink?
+                    {{ __('What do our clients say?') }}
                 </h2>
             </div>
 
@@ -694,15 +694,15 @@
                         @endfor
                     </div>
                     <p class="text-gray-700 mb-6">
-                        "Korábban Excelben nyomon követni a készleteket rémálom volt. Most egy kattintás, és látom, mi hiányzik. Az automatikus riasztások óta nem volt készlethiány miatti leállás."
+                        {{ __('Tracking inventory in Excel used to be a nightmare. Now one click and I see what\'s missing. Since the automatic alerts, there hasn\'t been a single stockout-related shutdown.') }}
                     </p>
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
                             TG
                         </div>
                         <div>
-                            <div class="font-semibold text-gray-900">Tóth Gábor</div>
-                            <div class="text-sm text-gray-500">Logisztikai vezető, Gyártó vállalat</div>
+                            <div class="font-semibold text-gray-900">{{ __('Gábor Tóth') }}</div>
+                            <div class="text-sm text-gray-500">{{ __('Logistics Manager, Manufacturing company') }}</div>
                         </div>
                     </div>
                 </div>
@@ -715,15 +715,15 @@
                         @endfor
                     </div>
                     <p class="text-gray-700 mb-6">
-                        "Amióta a rendszer automatikusan jelez, ha rendelni kell, nem volt készlethiány. A beszállítóink is elégedettebbek a kiszámíthatósággal."
+                        {{ __('Since the system automatically alerts when ordering is needed, there have been no stockouts. Our suppliers are also happier with the predictability.') }}
                     </p>
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
                             KM
                         </div>
                         <div>
-                            <div class="font-semibold text-gray-900">Kiss Márton</div>
-                            <div class="text-sm text-gray-500">Beszerzési vezető, Kereskedelmi cég</div>
+                            <div class="font-semibold text-gray-900">{{ __('Márton Kiss') }}</div>
+                            <div class="text-sm text-gray-500">{{ __('Procurement Manager, Trading company') }}</div>
                         </div>
                     </div>
                 </div>
@@ -736,15 +736,15 @@
                         @endfor
                     </div>
                     <p class="text-gray-700 mb-6">
-                        "A vonalkódos bevételezéssel a leltározás töredékére csökkent. Ami korábban egy teljes hétvége volt, az most fél nap alatt megvan."
+                        {{ __('Barcode receiving reduced inventory counting to a fraction. What used to take an entire weekend is now done in half a day.') }}
                     </p>
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 font-semibold">
                             SB
                         </div>
                         <div>
-                            <div class="font-semibold text-gray-900">Szabó Béla</div>
-                            <div class="text-sm text-gray-500">Raktárvezető, Ipari beszállító</div>
+                            <div class="font-semibold text-gray-900">{{ __('Béla Szabó') }}</div>
+                            <div class="text-sm text-gray-500">{{ __('Warehouse Manager, Industrial supplier') }}</div>
                         </div>
                     </div>
                 </div>
@@ -761,46 +761,46 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl sm:text-4xl font-semibold text-gray-900 mb-4 font-heading">
-                    Egyszerű, átlátható árak
+                    {{ __('Simple, transparent pricing') }}
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Válassza ki a cégére szabott csomagot. Minden csomag tartalmaz 14 napos ingyenes próbaidőszakot.
+                    {{ __('Choose the package tailored to your company. Every package includes a 14-day free trial.') }}
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 {{-- Starter Tier --}}
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Starter</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Starter') }}</h3>
                     <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">5 900 Ft</span>
-                        <span class="text-gray-500">/hó</span>
+                        <span class="text-4xl font-bold text-gray-900">{{ __('5,900 Ft') }}</span>
+                        <span class="text-gray-500">{{ __('/month') }}</span>
                     </div>
-                    <p class="text-gray-600 text-sm mb-6">Kis raktárak számára</p>
+                    <p class="text-gray-600 text-sm mb-6">{{ __('For small warehouses') }}</p>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            1 raktár
+                            {{ __('1 warehouse') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            1 000 SKU
+                            {{ __('1,000 SKUs') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Alap riportok
+                            {{ __('Basic reports') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Készletriasztások
+                            {{ __('Stock alerts') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            E-mail támogatás
+                            {{ __('Email support') }}
                         </li>
                     </ul>
                     <a href="/admin" class="block w-full py-3 text-center text-sm font-medium text-amber-600 border-2 border-amber-200 rounded-full hover:bg-amber-50 transition-colors">
-                        Kipróbálom
+                        {{ __('Try it') }}
                     </a>
                 </div>
 
@@ -808,73 +808,73 @@
                 <div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-amber-500 relative">
                     <div class="absolute -top-3 left-1/2 -translate-x-1/2">
                         <span class="bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                            Legnépszerűbb
+                            {{ __('Most popular') }}
                         </span>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Professional</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Professional') }}</h3>
                     <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">11 900 Ft</span>
-                        <span class="text-gray-500">/hó</span>
+                        <span class="text-4xl font-bold text-gray-900">{{ __('11,900 Ft') }}</span>
+                        <span class="text-gray-500">{{ __('/month') }}</span>
                     </div>
-                    <p class="text-gray-600 text-sm mb-6">Növekvő cégek számára</p>
+                    <p class="text-gray-600 text-sm mb-6">{{ __('For growing companies') }}</p>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Több raktár
+                            {{ __('Multiple warehouses') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Korlátlan SKU
+                            {{ __('Unlimited SKUs') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Automatikus rendelés
+                            {{ __('Automatic ordering') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Webshop integráció
+                            {{ __('Webshop integration') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Prioritásos támogatás
+                            {{ __('Priority support') }}
                         </li>
                     </ul>
                     <a href="/admin" class="block w-full py-3 text-center text-sm font-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors">
-                        Kezdés most
+                        {{ __('Start now') }}
                     </a>
                 </div>
 
                 {{-- Enterprise Tier --}}
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Enterprise</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ __('Enterprise') }}</h3>
                     <div class="mb-4">
-                        <span class="text-4xl font-bold text-gray-900">Egyedi</span>
+                        <span class="text-4xl font-bold text-gray-900">{{ __('Custom') }}</span>
                     </div>
-                    <p class="text-gray-600 text-sm mb-6">Nagyvállalatok számára</p>
+                    <p class="text-gray-600 text-sm mb-6">{{ __('For large enterprises') }}</p>
                     <ul class="space-y-3 mb-8">
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Minden Professional funkció
+                            {{ __('All Professional features') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            EDI beszállítói kapcsolat
+                            {{ __('EDI supplier connection') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Multi-site támogatás
+                            {{ __('Multi-site support') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            Egyedi workflow-k
+                            {{ __('Custom workflows') }}
                         </li>
                         <li class="flex items-center gap-2 text-sm text-gray-600">
                             <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                            SLA garancia
+                            {{ __('SLA guarantee') }}
                         </li>
                     </ul>
                     <a href="#" class="block w-full py-3 text-center text-sm font-medium text-gray-700 border-2 border-gray-200 rounded-full hover:bg-gray-50 transition-colors">
-                        Ajánlat kérése
+                        {{ __('Request a quote') }}
                     </a>
                 </div>
             </div>
