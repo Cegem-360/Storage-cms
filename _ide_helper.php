@@ -23067,6 +23067,25 @@ namespace Illuminate\Support\Facades {
             return $instance->renderTranslation();
         }
 
+        /**
+         * @see \Livewire\Blaze\BlazeServiceProvider::registerBladeMacros()
+         * @param mixed $data
+         * @static
+         */
+        public static function pushConsumableComponentData($data)
+        {
+            return \Illuminate\View\Factory::pushConsumableComponentData($data);
+        }
+
+        /**
+         * @see \Livewire\Blaze\BlazeServiceProvider::registerBladeMacros()
+         * @static
+         */
+        public static function popConsumableComponentData()
+        {
+            return \Illuminate\View\Factory::popConsumableComponentData();
+        }
+
             }
     /**
      * @see \Illuminate\Foundation\Vite
@@ -27903,6 +27922,29 @@ namespace Illuminate\View {
         public static function wire($name)
         {
             return \Illuminate\View\ComponentAttributeBag::wire($name);
+        }
+
+            }
+    /**
+     */
+    class Factory {
+        /**
+         * @see \Livewire\Blaze\BlazeServiceProvider::registerBladeMacros()
+         * @param mixed $data
+         * @static
+         */
+        public static function pushConsumableComponentData($data)
+        {
+            return \Illuminate\View\Factory::pushConsumableComponentData($data);
+        }
+
+        /**
+         * @see \Livewire\Blaze\BlazeServiceProvider::registerBladeMacros()
+         * @static
+         */
+        public static function popConsumableComponentData()
+        {
+            return \Illuminate\View\Factory::popConsumableComponentData();
         }
 
             }

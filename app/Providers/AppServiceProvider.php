@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
+use Livewire\Blaze\Blaze;
 use Madbox99\UserTeamSync\Events\TeamCreatedFromSync;
 use Madbox99\UserTeamSync\Events\UserCreatedFromSync;
 
@@ -84,6 +85,8 @@ final class AppServiceProvider extends ServiceProvider
                 ->uncompromised()
             : null
         );
+
+        Blaze::optimize()->in(resource_path('views/components'));
     }
 
     private function configureFilamentTranslations(): void

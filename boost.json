@@ -3,19 +3,22 @@
         "claude_code"
     ],
     "guidelines": true,
-    "herd_mcp": true,
     "mcp": true,
     "nightwatch_mcp": false,
     "packages": [
         "filament/filament",
         "filament/blueprint",
-        "laravel/ai"
+        "laravel/ai",
+        "livewire/blaze"
     ],
     "sail": false,
     "skills": [
+        "laravel-best-practices",
         "mcp-development",
         "pest-testing",
+        "echo-development",
         "tailwindcss-development",
-        "developing-with-ai-sdk"
+        "ai-sdk-development",
+        "blaze-optimize"
     ]
 }
