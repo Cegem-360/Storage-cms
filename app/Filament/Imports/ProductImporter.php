@@ -8,8 +8,8 @@ use App\Models\Product;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class ProductImporter extends Importer
 {
@@ -80,12 +80,23 @@ final class ProductImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): Product
     {
-        return Product::query()->firstOrNew([
-            'sku' => $this->data['sku'],
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return Product::query()->firstOrNew([
+                'sku' => $this->data['sku'],
+            ]);
+        }
+
+        return new Product();
     }
 
     protected function beforeCreate(): void

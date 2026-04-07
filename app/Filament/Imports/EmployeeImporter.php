@@ -8,8 +8,8 @@ use App\Models\Employee;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class EmployeeImporter extends Importer
 {
@@ -54,12 +54,23 @@ final class EmployeeImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): Employee
     {
-        return Employee::query()->firstOrNew([
-            'email' => $this->data['email'],
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return Employee::query()->firstOrNew([
+                'email' => $this->data['email'],
+            ]);
+        }
+
+        return new Employee();
     }
 
     protected function beforeCreate(): void

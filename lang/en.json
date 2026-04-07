@@ -813,6 +813,7 @@
     "Return Reason": "Return Reason",
     "Import": "Import",
     "Import completed, :count row(s) imported.": "Import completed, :count row(s) imported.",
+    "Update existing records": "Update existing records",
     ":count row(s) failed to import.": ":count row(s) failed to import.",
     "Trade Name": "Trade Name",
     "EU Tax Number": "EU Tax Number",

@@ -8,8 +8,8 @@ use App\Models\Batch;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class BatchImporter extends Importer
 {
@@ -57,12 +57,23 @@ final class BatchImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): Batch
     {
-        return Batch::query()->firstOrNew([
-            'batch_number' => $this->data['batch_number'],
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return Batch::query()->firstOrNew([
+                'batch_number' => $this->data['batch_number'],
+            ]);
+        }
+
+        return new Batch();
     }
 
     protected function beforeCreate(): void

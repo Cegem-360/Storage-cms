@@ -8,8 +8,8 @@ use App\Filament\Imports\Columns\ImportColumn;
 use App\Models\SupplierPrice;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class SupplierPriceImporter extends Importer
 {
@@ -63,17 +63,32 @@ final class SupplierPriceImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): SupplierPrice
     {
-        return SupplierPrice::query()->firstOrNew([
-            'product_id' => $this->data['product_id'] ?? null,
-            'supplier_id' => $this->data['supplier_id'] ?? null,
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return SupplierPrice::query()->firstOrNew([
+                'product_id' => $this->data['product_id'] ?? null,
+                'supplier_id' => $this->data['supplier_id'] ?? null,
+            ]);
+        }
+
+        return new SupplierPrice();
     }
 
     protected function beforeCreate(): void
     {
         $this->record->team_id = $this->options['teamId'] ?? null;
+
+        if ($this->record->is_active === null) {
+            $this->record->is_active = true;
+        }
     }
 }

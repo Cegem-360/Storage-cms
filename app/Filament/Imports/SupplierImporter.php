@@ -8,8 +8,8 @@ use App\Filament\Imports\Columns\ImportColumn;
 use App\Models\Supplier;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class SupplierImporter extends Importer
 {
@@ -42,9 +42,7 @@ final class SupplierImporter extends Importer
             ImportColumn::make('phone')
                 ->rules(['max:50']),
             ImportColumn::make('is_active')
-                ->requiredMapping()
-                ->localizedBoolean(default: true)
-                ->rules(['required', 'boolean']),
+                ->localizedBoolean(default: true),
         ];
     }
 
@@ -63,16 +61,31 @@ final class SupplierImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): Supplier
     {
-        return Supplier::query()->firstOrNew([
-            'code' => $this->data['code'],
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return Supplier::query()->firstOrNew([
+                'code' => $this->data['code'],
+            ]);
+        }
+
+        return new Supplier();
     }
 
     protected function beforeCreate(): void
     {
         $this->record->team_id = $this->options['teamId'] ?? null;
+
+        if ($this->record->is_active === null) {
+            $this->record->is_active = true;
+        }
     }
 }

@@ -8,8 +8,8 @@ use App\Models\Category;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Checkbox;
 use Illuminate\Support\Number;
-use Override;
 
 final class CategoryImporter extends Importer
 {
@@ -45,12 +45,23 @@ final class CategoryImporter extends Importer
         return $body;
     }
 
-    #[Override]
+    public static function getOptionsFormComponents(): array
+    {
+        return [
+            Checkbox::make('updateExisting')
+                ->label(__('Update existing records')),
+        ];
+    }
+
     public function resolveRecord(): Category
     {
-        return Category::query()->firstOrNew([
-            'code' => $this->data['code'],
-        ]);
+        if ($this->options['updateExisting'] ?? false) {
+            return Category::query()->firstOrNew([
+                'code' => $this->data['code'],
+            ]);
+        }
+
+        return new Category();
     }
 
     protected function beforeCreate(): void

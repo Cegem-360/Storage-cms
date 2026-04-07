@@ -411,6 +411,7 @@
     "I can help you with stock levels, orders, products, and suppliers. Ask me anything about your data!": "Segíthetek készletszintekkel, rendelésekkel, termékekkel és beszállítókkal kapcsolatban. Kérdezz bármit az adataidról!",
     "Import": "Importálás",
     "Import completed, :count row(s) imported.": "Importálás befejezve, :count sor importálva.",
+    "Update existing records": "Meglévő rekordok frissítése",
     "Import Price List": "Árlista importálás",
     ":count row(s) failed to import.": ":count sor importálása sikertelen.",
     "Imports from EU member states": "Importok EU tagállamokból",
