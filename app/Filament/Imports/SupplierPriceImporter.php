@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Imports;
 
+use App\Filament\Imports\Columns\ImportColumn;
 use App\Models\SupplierPrice;
-use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Number;
@@ -43,14 +43,14 @@ final class SupplierPriceImporter extends Importer
             ImportColumn::make('valid_until')
                 ->rules(['nullable', 'date']),
             ImportColumn::make('is_active')
-                ->boolean(),
+                ->localizedBoolean(default: true),
             ImportColumn::make('notes'),
         ];
     }
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = __('Your supplier price import has completed and :count row(s) imported.', [
+        $body = __('Import completed, :count row(s) imported.', [
             'count' => Number::format($import->successful_rows),
         ]);
 
@@ -70,5 +70,10 @@ final class SupplierPriceImporter extends Importer
             'product_id' => $this->data['product_id'] ?? null,
             'supplier_id' => $this->data['supplier_id'] ?? null,
         ]);
+    }
+
+    protected function beforeCreate(): void
+    {
+        $this->record->team_id = $this->options['teamId'] ?? null;
     }
 }

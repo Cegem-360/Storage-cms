@@ -22,7 +22,7 @@ final class ListStocks extends ListRecords
             CreateAction::make(),
             ExportAction::make()
                 ->exporter(StockExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

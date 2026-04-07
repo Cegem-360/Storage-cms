@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Imports;
 
+use App\Filament\Imports\Columns\ImportColumn;
 use App\Models\Supplier;
-use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Number;
@@ -30,7 +30,7 @@ final class SupplierImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:2']),
             ImportColumn::make('is_eu_member')
-                ->boolean(),
+                ->localizedBoolean(),
             ImportColumn::make('tax_number')
                 ->rules(['max:50']),
             ImportColumn::make('eu_tax_number')
@@ -43,17 +43,21 @@ final class SupplierImporter extends Importer
                 ->rules(['max:50']),
             ImportColumn::make('is_active')
                 ->requiredMapping()
-                ->boolean()
+                ->localizedBoolean(default: true)
                 ->rules(['required', 'boolean']),
         ];
     }
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Beszállítók importálása befejeződött. '.Number::format($import->successful_rows).' '.str('sor')->plural($import->successful_rows).' importálva.';
+        $body = __('Import completed, :count row(s) imported.', [
+            'count' => Number::format($import->successful_rows),
+        ]);
 
         if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
-            $body .= ' '.Number::format($failedRowsCount).' '.str('sor')->plural($failedRowsCount).' importálása sikertelen.';
+            $body .= ' '.__(':count row(s) failed to import.', [
+                'count' => Number::format($failedRowsCount),
+            ]);
         }
 
         return $body;
@@ -65,5 +69,10 @@ final class SupplierImporter extends Importer
         return Supplier::query()->firstOrNew([
             'code' => $this->data['code'],
         ]);
+    }
+
+    protected function beforeCreate(): void
+    {
+        $this->record->team_id = $this->options['teamId'] ?? null;
     }
 }

@@ -22,7 +22,7 @@ final class ListInventories extends ListRecords
             CreateAction::make(),
             ExportAction::make()
                 ->exporter(InventoryExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

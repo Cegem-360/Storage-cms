@@ -10,6 +10,7 @@ use App\Filament\Resources\Customers\CustomerResource;
 use Filament\Actions\CreateAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\ListRecords;
 use Override;
 
@@ -24,11 +25,12 @@ final class ListCustomers extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(CustomerImporter::class)
-                ->label('Importálás')
+                ->options(['teamId' => Filament::getTenant()?->getKey()])
+                ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()
                 ->exporter(CustomerExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

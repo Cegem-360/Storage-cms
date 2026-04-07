@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Imports;
 
+use App\Filament\Imports\Columns\ImportColumn;
 use App\Models\Customer;
-use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
 use Illuminate\Support\Number;
@@ -40,17 +40,21 @@ final class CustomerImporter extends Importer
                 ->rules(['max:255']),
             ImportColumn::make('is_active')
                 ->requiredMapping()
-                ->boolean()
+                ->localizedBoolean(default: true)
                 ->rules(['required', 'boolean']),
         ];
     }
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Your customer import has completed and '.Number::format($import->successful_rows).' '.str('row')->plural($import->successful_rows).' imported.';
+        $body = __('Import completed, :count row(s) imported.', [
+            'count' => Number::format($import->successful_rows),
+        ]);
 
         if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
-            $body .= ' '.Number::format($failedRowsCount).' '.str('row')->plural($failedRowsCount).' failed to import.';
+            $body .= ' '.__(':count row(s) failed to import.', [
+                'count' => Number::format($failedRowsCount),
+            ]);
         }
 
         return $body;
@@ -62,5 +66,10 @@ final class CustomerImporter extends Importer
         return Customer::query()->firstOrNew([
             'email' => $this->data['email'],
         ]);
+    }
+
+    protected function beforeCreate(): void
+    {
+        $this->record->team_id = $this->options['teamId'] ?? null;
     }
 }

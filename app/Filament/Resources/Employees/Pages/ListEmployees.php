@@ -10,6 +10,7 @@ use App\Filament\Resources\Employees\EmployeeResource;
 use Filament\Actions\CreateAction;
 use Filament\Actions\ExportAction;
 use Filament\Actions\ImportAction;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\ListRecords;
 use Override;
 
@@ -24,6 +25,7 @@ final class ListEmployees extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(EmployeeImporter::class)
+                ->options(['teamId' => Filament::getTenant()?->getKey()])
                 ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()

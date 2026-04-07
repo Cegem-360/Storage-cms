@@ -22,7 +22,7 @@ final class ListOrders extends ListRecords
             CreateAction::make(),
             ExportAction::make()
                 ->exporter(OrderExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

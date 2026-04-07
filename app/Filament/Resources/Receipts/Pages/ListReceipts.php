@@ -22,7 +22,7 @@ final class ListReceipts extends ListRecords
             CreateAction::make(),
             ExportAction::make()
                 ->exporter(ReceiptExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

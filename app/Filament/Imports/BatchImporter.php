@@ -44,10 +44,14 @@ final class BatchImporter extends Importer
 
     public static function getCompletedNotificationBody(Import $import): string
     {
-        $body = 'Tételek importálása befejeződött. '.Number::format($import->successful_rows).' '.str('sor')->plural($import->successful_rows).' importálva.';
+        $body = __('Import completed, :count row(s) imported.', [
+            'count' => Number::format($import->successful_rows),
+        ]);
 
         if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
-            $body .= ' '.Number::format($failedRowsCount).' '.str('sor')->plural($failedRowsCount).' importálása sikertelen.';
+            $body .= ' '.__(':count row(s) failed to import.', [
+                'count' => Number::format($failedRowsCount),
+            ]);
         }
 
         return $body;
@@ -59,5 +63,10 @@ final class BatchImporter extends Importer
         return Batch::query()->firstOrNew([
             'batch_number' => $this->data['batch_number'],
         ]);
+    }
+
+    protected function beforeCreate(): void
+    {
+        $this->record->team_id = $this->options['teamId'] ?? null;
     }
 }

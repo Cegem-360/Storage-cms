@@ -28,7 +28,7 @@ final class ListReturnDeliveries extends ListRecords
                 ->url(ReturnDeliveryResource::getUrl('create-with-steps')),
             ExportAction::make()
                 ->exporter(ReturnDeliveryExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

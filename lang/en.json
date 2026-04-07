@@ -812,6 +812,8 @@
     "Status & Notes": "Status & Notes",
     "Return Reason": "Return Reason",
     "Import": "Import",
+    "Import completed, :count row(s) imported.": "Import completed, :count row(s) imported.",
+    ":count row(s) failed to import.": ":count row(s) failed to import.",
     "Trade Name": "Trade Name",
     "EU Tax Number": "EU Tax Number",
     "Company Registration Number": "Company Registration Number",

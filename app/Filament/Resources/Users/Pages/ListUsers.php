@@ -24,11 +24,11 @@ final class ListUsers extends ListRecords
             CreateAction::make(),
             ImportAction::make()
                 ->importer(UserImporter::class)
-                ->label('Importálás')
+                ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()
                 ->exporter(UserExporter::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }

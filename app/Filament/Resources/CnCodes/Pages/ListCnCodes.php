@@ -44,11 +44,11 @@ final class ListCnCodes extends ListRecords
                 }),
             ImportAction::make()
                 ->importer(CnCodeImport::class)
-                ->label('Importálás')
+                ->label(__('Import'))
                 ->color('success'),
             ExportAction::make()
                 ->exporter(CnCodeExport::class)
-                ->label('Exportálás')
+                ->label(__('Export'))
                 ->color('warning'),
         ];
     }
