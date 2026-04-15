@@ -4134,16 +4134,16 @@
         },
         {
             "name": "madbox-99/laravel-user-team-sync",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MadBox-99/laravel-user-team-sync.git",
-                "reference": "b31bba20b05ec400c57278b48c4b93032149836e"
+                "reference": "0757bd5332b08ee1408681c4dc74e68777ef1314"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MadBox-99/laravel-user-team-sync/zipball/b31bba20b05ec400c57278b48c4b93032149836e",
-                "reference": "b31bba20b05ec400c57278b48c4b93032149836e",
+                "url": "https://api.github.com/repos/MadBox-99/laravel-user-team-sync/zipball/0757bd5332b08ee1408681c4dc74e68777ef1314",
+                "reference": "0757bd5332b08ee1408681c4dc74e68777ef1314",
                 "shasum": ""
             },
             "require": {
@@ -4192,9 +4192,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MadBox-99/laravel-user-team-sync/issues",
-                "source": "https://github.com/MadBox-99/laravel-user-team-sync/tree/v1.6.0"
+                "source": "https://github.com/MadBox-99/laravel-user-team-sync/tree/v1.7.0"
             },
-            "time": "2026-04-15T09:13:51+00:00"
+            "time": "2026-04-15T12:32:43+00:00"
         },
         {
             "name": "masterminds/html5",
