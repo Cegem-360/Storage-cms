@@ -4134,25 +4134,25 @@
         },
         {
             "name": "madbox-99/laravel-user-team-sync",
-            "version": "v1.3.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MadBox-99/laravel-user-team-sync.git",
-                "reference": "d5fb2f52ed1a8c32b76ac1fd7b25a0e36935dfd7"
+                "reference": "531f4776d06964a595fad60a8e61a11762d6ff2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MadBox-99/laravel-user-team-sync/zipball/d5fb2f52ed1a8c32b76ac1fd7b25a0e36935dfd7",
-                "reference": "d5fb2f52ed1a8c32b76ac1fd7b25a0e36935dfd7",
+                "url": "https://api.github.com/repos/MadBox-99/laravel-user-team-sync/zipball/531f4776d06964a595fad60a8e61a11762d6ff2b",
+                "reference": "531f4776d06964a595fad60a8e61a11762d6ff2b",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^11.0 || ^12.0",
+                "laravel/framework": "^11.0 || ^12.0 || ^13.0",
                 "php": "^8.3"
             },
             "require-dev": {
                 "laravel/pint": "^1.0",
-                "orchestra/testbench": "^9.0 || ^10.0",
+                "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
                 "pestphp/pest": "^3.0 || ^4.0"
             },
             "type": "library",
@@ -4192,9 +4192,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MadBox-99/laravel-user-team-sync/issues",
-                "source": "https://github.com/MadBox-99/laravel-user-team-sync/tree/v1.3.0"
+                "source": "https://github.com/MadBox-99/laravel-user-team-sync/tree/v1.5.0"
             },
-            "time": "2026-02-12T11:42:30+00:00"
+            "time": "2026-04-15T08:42:24+00:00"
         },
         {
             "name": "masterminds/html5",
