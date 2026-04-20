@@ -61,10 +61,12 @@
 
                 @auth
                     {{-- Dashboard link --}}
-                    <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => auth()->user()->teams->first()?->slug]) }}"
-                        class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-                        {{ __('Dashboard') }}
-                    </a>
+                    @if($navTenant = auth()->user()->teams->first())
+                        <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => $navTenant->slug]) }}"
+                            class="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
+                            {{ __('Dashboard') }}
+                        </a>
+                    @endif
 
                     {{-- User dropdown --}}
                     <div class="relative" @mouseenter="openDropdown = 'user'" @mouseleave="openDropdown = null">
@@ -143,7 +145,9 @@
             @endguest
 
             @auth
-                <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => auth()->user()->teams->first()?->slug]) }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Dashboard') }}</a>
+                @if($mobileTenant = auth()->user()->teams->first())
+                    <a href="{{ route('filament.admin.pages.dashboard', ['tenant' => $mobileTenant->slug]) }}" class="block py-2 text-sm font-medium text-gray-700">{{ __('Dashboard') }}</a>
+                @endif
                 <form method="POST" action="{{ route('filament.admin.auth.logout') }}">
                     @csrf
                     <button type="submit" class="block w-full text-left py-2 text-sm font-medium text-red-600">
