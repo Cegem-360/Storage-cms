@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Filament\Imports;
 
 use App\Filament\Imports\Columns\ImportColumn;
+use App\Filament\Imports\Concerns\LocalizedNotifications;
 use App\Models\Supplier;
 use Filament\Actions\Imports\Importer;
-use Filament\Actions\Imports\Models\Import;
 use Filament\Forms\Components\Checkbox;
-use Illuminate\Support\Number;
 
 final class SupplierImporter extends Importer
 {
+    use LocalizedNotifications;
+
     protected static ?string $model = Supplier::class;
 
     public static function getColumns(): array
@@ -44,21 +45,6 @@ final class SupplierImporter extends Importer
             ImportColumn::make('is_active')
                 ->localizedBoolean(default: true),
         ];
-    }
-
-    public static function getCompletedNotificationBody(Import $import): string
-    {
-        $body = __('Import completed, :count row(s) imported.', [
-            'count' => Number::format($import->successful_rows),
-        ]);
-
-        if (($failedRowsCount = $import->getFailedRowsCount()) !== 0) {
-            $body .= ' '.__(':count row(s) failed to import.', [
-                'count' => Number::format($failedRowsCount),
-            ]);
-        }
-
-        return $body;
     }
 
     public static function getOptionsFormComponents(): array
