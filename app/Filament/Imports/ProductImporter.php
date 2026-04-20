@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Imports;
 
 use App\Filament\Imports\Concerns\LocalizedNotifications;
+use App\Filament\Imports\Concerns\NormalizesNumericState;
 use App\Models\Product;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Checkbox;
 final class ProductImporter extends Importer
 {
     use LocalizedNotifications;
+    use NormalizesNumericState;
 
     protected static ?string $model = Product::class;
 
@@ -34,7 +36,8 @@ final class ProductImporter extends Importer
                 ->rules(['required', 'max:50']),
             ImportColumn::make('weight')
                 ->numeric()
-                ->rules(['integer']),
+                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
+                ->rules(['nullable', 'numeric']),
             ImportColumn::make('dimensions'),
             ImportColumn::make('category')
                 ->requiredMapping()
@@ -47,19 +50,23 @@ final class ProductImporter extends Importer
             ImportColumn::make('min_stock')
                 ->requiredMapping()
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['required', 'integer']),
             ImportColumn::make('max_stock')
                 ->requiredMapping()
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['required', 'integer']),
             ImportColumn::make('reorder_point')
                 ->requiredMapping()
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['required', 'integer']),
             ImportColumn::make('price')
                 ->requiredMapping()
                 ->numeric()
-                ->rules(['required', 'integer']),
+                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
+                ->rules(['required', 'numeric']),
             ImportColumn::make('status')
                 ->requiredMapping()
                 ->rules(['required', 'max:50']),
