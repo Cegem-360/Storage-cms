@@ -36,36 +36,38 @@ final class ProductImporter extends Importer
                 ->rules(['required', 'max:50']),
             ImportColumn::make('weight')
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
+                ->castStateUsing(fn (mixed $originalState): ?float => self::normalizeFloat($originalState))
                 ->rules(['nullable', 'numeric']),
             ImportColumn::make('dimensions'),
             ImportColumn::make('category')
                 ->requiredMapping()
-                ->relationship()
+                ->relationship(resolveUsing: ['code', 'name'])
+                ->helperText(__('Category code or name'))
                 ->rules(['required']),
             ImportColumn::make('supplier')
                 ->requiredMapping()
-                ->relationship()
+                ->relationship(resolveUsing: ['code', 'company_name'])
+                ->helperText(__('Supplier code or company name'))
                 ->rules(['required']),
             ImportColumn::make('min_stock')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['required', 'integer']),
             ImportColumn::make('max_stock')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['required', 'integer']),
             ImportColumn::make('reorder_point')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['required', 'integer']),
             ImportColumn::make('price')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
+                ->castStateUsing(fn (mixed $originalState): ?float => self::normalizeFloat($originalState))
                 ->rules(['required', 'numeric']),
             ImportColumn::make('status')
                 ->requiredMapping()

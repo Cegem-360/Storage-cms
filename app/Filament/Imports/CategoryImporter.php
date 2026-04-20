@@ -26,7 +26,8 @@ final class CategoryImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:50']),
             ImportColumn::make('parent')
-                ->relationship(),
+                ->relationship(resolveUsing: ['code', 'name'])
+                ->helperText(__('Parent category code or name')),
             ImportColumn::make('description'),
         ];
     }

@@ -34,7 +34,8 @@ final class EmployeeImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:255']),
             ImportColumn::make('warehouse')
-                ->relationship()
+                ->relationship(resolveUsing: ['code', 'name'])
+                ->helperText(__('Warehouse code or name'))
                 ->requiredMapping()
                 ->rules(['required']),
         ];

@@ -23,26 +23,28 @@ final class SupplierPriceImporter extends Importer
         return [
             ImportColumn::make('supplier')
                 ->requiredMapping()
-                ->relationship()
+                ->relationship(resolveUsing: ['code', 'company_name'])
+                ->helperText(__('Supplier code or company name'))
                 ->rules(['required']),
             ImportColumn::make('product')
                 ->requiredMapping()
-                ->relationship()
+                ->relationship(resolveUsing: ['sku', 'name'])
+                ->helperText(__('Product SKU or name'))
                 ->rules(['required']),
             ImportColumn::make('price')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
+                ->castStateUsing(fn (mixed $originalState): ?float => self::normalizeFloat($originalState))
                 ->rules(['required', 'numeric', 'min:0']),
             ImportColumn::make('currency')
                 ->rules(['max:3']),
             ImportColumn::make('minimum_order_quantity')
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['nullable', 'integer', 'min:1']),
             ImportColumn::make('lead_time_days')
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['nullable', 'integer', 'min:0']),
             ImportColumn::make('valid_from')
                 ->rules(['nullable', 'date']),

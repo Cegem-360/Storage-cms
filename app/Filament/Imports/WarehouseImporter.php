@@ -33,7 +33,7 @@ final class WarehouseImporter extends Importer
                 ->rules(['required', 'max:50']),
             ImportColumn::make('capacity')
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['nullable', 'integer']),
             ImportColumn::make('is_active')
                 ->localizedBoolean(default: true),

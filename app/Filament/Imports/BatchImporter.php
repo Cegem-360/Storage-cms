@@ -25,11 +25,13 @@ final class BatchImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'max:100']),
             ImportColumn::make('product')
-                ->relationship()
+                ->relationship(resolveUsing: ['sku', 'name'])
+                ->helperText(__('Product SKU or name'))
                 ->requiredMapping()
                 ->rules(['required']),
             ImportColumn::make('supplier')
-                ->relationship()
+                ->relationship(resolveUsing: ['code', 'company_name'])
+                ->helperText(__('Supplier code or company name'))
                 ->requiredMapping()
                 ->rules(['required']),
             ImportColumn::make('manufacture_date')
@@ -39,7 +41,7 @@ final class BatchImporter extends Importer
             ImportColumn::make('quantity')
                 ->requiredMapping()
                 ->numeric()
-                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->castStateUsing(fn (mixed $originalState): ?int => self::normalizeInt($originalState))
                 ->rules(['required', 'integer']),
             ImportColumn::make('quality_status')
                 ->rules(['max:50']),
