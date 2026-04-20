@@ -6,6 +6,7 @@ namespace App\Filament\Imports;
 
 use App\Filament\Imports\Columns\ImportColumn;
 use App\Filament\Imports\Concerns\LocalizedNotifications;
+use App\Filament\Imports\Concerns\NormalizesNumericState;
 use App\Models\Warehouse;
 use Filament\Actions\Imports\Importer;
 use Filament\Forms\Components\Checkbox;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Checkbox;
 final class WarehouseImporter extends Importer
 {
     use LocalizedNotifications;
+    use NormalizesNumericState;
 
     protected static ?string $model = Warehouse::class;
 
@@ -31,7 +33,8 @@ final class WarehouseImporter extends Importer
                 ->rules(['required', 'max:50']),
             ImportColumn::make('capacity')
                 ->numeric()
-                ->rules(['integer']),
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
+                ->rules(['nullable', 'integer']),
             ImportColumn::make('is_active')
                 ->localizedBoolean(default: true),
         ];

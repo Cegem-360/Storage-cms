@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Imports;
 
 use App\Filament\Imports\Concerns\LocalizedNotifications;
+use App\Filament\Imports\Concerns\NormalizesNumericState;
 use App\Models\Batch;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Checkbox;
 final class BatchImporter extends Importer
 {
     use LocalizedNotifications;
+    use NormalizesNumericState;
 
     protected static ?string $model = Batch::class;
 
@@ -37,6 +39,7 @@ final class BatchImporter extends Importer
             ImportColumn::make('quantity')
                 ->requiredMapping()
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['required', 'integer']),
             ImportColumn::make('quality_status')
                 ->rules(['max:50']),

@@ -6,6 +6,7 @@ namespace App\Filament\Imports;
 
 use App\Filament\Imports\Columns\ImportColumn;
 use App\Filament\Imports\Concerns\LocalizedNotifications;
+use App\Filament\Imports\Concerns\NormalizesNumericState;
 use App\Models\SupplierPrice;
 use Filament\Actions\Imports\Importer;
 use Filament\Forms\Components\Checkbox;
@@ -13,6 +14,7 @@ use Filament\Forms\Components\Checkbox;
 final class SupplierPriceImporter extends Importer
 {
     use LocalizedNotifications;
+    use NormalizesNumericState;
 
     protected static ?string $model = SupplierPrice::class;
 
@@ -30,14 +32,17 @@ final class SupplierPriceImporter extends Importer
             ImportColumn::make('price')
                 ->requiredMapping()
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?float => self::normalizeFloat($state))
                 ->rules(['required', 'numeric', 'min:0']),
             ImportColumn::make('currency')
                 ->rules(['max:3']),
             ImportColumn::make('minimum_order_quantity')
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['nullable', 'integer', 'min:1']),
             ImportColumn::make('lead_time_days')
                 ->numeric()
+                ->castStateUsing(fn (int|float|string|null $state): ?int => self::normalizeInt($state))
                 ->rules(['nullable', 'integer', 'min:0']),
             ImportColumn::make('valid_from')
                 ->rules(['nullable', 'date']),
