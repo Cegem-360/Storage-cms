@@ -15,7 +15,6 @@ use App\Models\Team;
 use Filament\Actions\Action;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
-use Madbox99\UserTeamSync\Receiver\Http\Middleware\EnsureUserHasActiveSubscription;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -32,6 +31,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Madbox99\UserTeamSync\Receiver\Http\Middleware\EnsureUserHasActiveSubscription;
 
 final class AdminPanelServiceProvider extends PanelProvider
 {
@@ -95,6 +95,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([])
+            ->databaseNotifications()
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
