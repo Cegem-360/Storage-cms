@@ -31,6 +31,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Madbox99\FilamentChatWidget\FilamentChatWidgetPlugin;
 use Madbox99\UserTeamSync\Receiver\Http\Middleware\EnsureUserHasActiveSubscription;
 
 final class AdminPanelServiceProvider extends PanelProvider
@@ -88,6 +89,9 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->tenantMiddleware([
                 ApplyTenantScopes::class,
             ], isPersistent: true)
+            ->plugins([
+                FilamentChatWidgetPlugin::make(),
+            ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
