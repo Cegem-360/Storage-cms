@@ -37,4 +37,7 @@ return [
         ],
     ],
 
+    'integration_key' => env('INTEGRATION_API_KEY'),
+    'integration_user_email' => env('INTEGRATION_USER_EMAIL'),
+
 ];

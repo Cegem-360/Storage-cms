@@ -29,6 +29,7 @@ use App\Http\Controllers\Api\V1\TeamController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WarehouseController;
 use App\Http\Middleware\EnsureUserBelongsToTeam;
+use App\Http\Middleware\VerifyIntegrationApiKey;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -65,8 +66,11 @@ Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(funct
 
         return response()->noContent();
     });
+});
 
-    Route::prefix('v1')->group(function (): void {
+Route::middleware(VerifyIntegrationApiKey::class)
+    ->prefix('v1')
+    ->group(function (): void {
         // Full CRUD resources
         Route::apiResources([
             'products' => ProductController::class,
@@ -105,4 +109,3 @@ Route::middleware(['auth:sanctum', EnsureUserBelongsToTeam::class])->group(funct
         Route::apiResource('intrastat-declarations.lines', IntrastatLineController::class)->only(['index', 'show']);
         Route::apiResource('invoices.lines', InvoiceLineController::class)->only(['index', 'show']);
     });
-});
