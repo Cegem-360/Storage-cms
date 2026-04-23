@@ -32,6 +32,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Madbox99\FilamentChatWidget\FilamentChatWidgetPlugin;
+use Madbox99\FilamentFormBuilder\FilamentFormBuilderPlugin;
 use Madbox99\UserTeamSync\Receiver\Http\Middleware\EnsureUserHasActiveSubscription;
 
 final class AdminPanelServiceProvider extends PanelProvider
@@ -91,6 +92,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ], isPersistent: true)
             ->plugins([
                 FilamentChatWidgetPlugin::make(),
+                FilamentFormBuilderPlugin::make(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')

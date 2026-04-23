@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.11.0",
         "livewire/blaze": "^1.0",
         "madbox-99/filament-chat-widget": "^0.3.6",
+        "madbox-99/filament-form-builder": "^0.2.0",
         "madbox-99/laravel-locale-switcher": "@dev",
         "madbox-99/laravel-user-team-sync": "^1.3",
         "mbezhanov/faker-provider-collection": "^2.0.2",
