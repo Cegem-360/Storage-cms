@@ -4152,16 +4152,16 @@
         },
         {
             "name": "madbox-99/filament-form-builder",
-            "version": "v0.4.0",
+            "version": "v0.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Cegem-360-Kft/filament-form-builder.git",
-                "reference": "1807cfa37074e8979a1ce38cf6d0c8c0de210d05"
+                "reference": "2b170c7570aa3ba6df6656e2881bf7b5eca0ad6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Cegem-360-Kft/filament-form-builder/zipball/1807cfa37074e8979a1ce38cf6d0c8c0de210d05",
-                "reference": "1807cfa37074e8979a1ce38cf6d0c8c0de210d05",
+                "url": "https://api.github.com/repos/Cegem-360-Kft/filament-form-builder/zipball/2b170c7570aa3ba6df6656e2881bf7b5eca0ad6e",
+                "reference": "2b170c7570aa3ba6df6656e2881bf7b5eca0ad6e",
                 "shasum": ""
             },
             "require": {
@@ -4212,9 +4212,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Cegem-360-Kft/filament-form-builder/issues",
-                "source": "https://github.com/Cegem-360-Kft/filament-form-builder/tree/v0.4.0"
+                "source": "https://github.com/Cegem-360-Kft/filament-form-builder/tree/v0.4.1"
             },
-            "time": "2026-05-26T14:37:37+00:00"
+            "time": "2026-05-27T06:42:41+00:00"
         },
         {
             "name": "madbox-99/laravel-locale-switcher",
