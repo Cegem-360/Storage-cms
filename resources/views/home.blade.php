@@ -477,6 +477,7 @@
                     <div class="text-sm text-gray-400">{{ __('Admin work') }}</div>
                 </div>
             </div>
+            <p class="mt-8 text-center text-xs text-gray-500">* {{ __('Illustrative examples') }}</p>
         </div>
     </section>
 
@@ -613,7 +614,10 @@
                         <x-landing.check-item class="text-sm text-gray-600">{{ __('Multiple warehouses') }}</x-landing.check-item>
                         <x-landing.check-item class="text-sm text-gray-600">{{ __('Unlimited SKUs') }}</x-landing.check-item>
                         <x-landing.check-item class="text-sm text-gray-600">{{ __('Automatic ordering') }}</x-landing.check-item>
+                        {{-- Content audit: webshop integration hidden until confirmed live --}}
+                        @if(false)
                         <x-landing.check-item class="text-sm text-gray-600">{{ __('Webshop integration') }}</x-landing.check-item>
+                        @endif
                         <x-landing.check-item class="text-sm text-gray-600">{{ __('Priority support') }}</x-landing.check-item>
                     </ul>
                     <a href="/admin" class="block w-full py-3 text-center text-sm font-medium text-white bg-amber-600 rounded-full hover:bg-amber-700 transition-colors">
@@ -668,9 +672,12 @@
                     {{ __('With the mobile app you can use your phone camera as a barcode scanner. Simply scan the product, enter the quantity, and the stock updates instantly.') }}
                 </x-landing.faq-item>
 
+                {{-- Content audit: webshop integration claim hidden until confirmed live --}}
+                @if(false)
                 <x-landing.faq-item :question="__('Can it connect to my webshop?')">
                     {{ __('Yes, the Professional package includes WooCommerce and Shopify integration. Stock levels sync automatically, so your webshop always shows real inventory.') }}
                 </x-landing.faq-item>
+                @endif
 
                 <x-landing.faq-item :question="__('How do automatic alerts work?')">
                     {{ __('You can set a minimum stock level for each product. When stock drops below this, the system automatically sends email notifications to designated people and generates order suggestions.') }}
@@ -714,6 +721,24 @@
                     {{ __('Log in to the app') }}
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- Content audit: legal disclaimer + central cegem360.eu legal links --}}
+    <section class="border-t border-gray-200 bg-white py-12">
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div class="rounded-2xl bg-gray-50 p-6 text-sm leading-relaxed text-gray-500 sm:p-8">
+                <p class="mb-3 text-base font-semibold text-gray-700">{{ __('Legal information') }}</p>
+                <div class="space-y-2">
+                    <p>{{ __('We do not guarantee the accuracy of stock data.') }}</p>
+                    <p>{{ __('The figures and results shown on this page are illustrative examples and not guaranteed.') }}</p>
+                </div>
+                <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2">
+                    <a href="https://cegem360.eu/adatvedelmi-tajekoztato" class="font-medium text-gray-700 underline underline-offset-2 hover:text-gray-900">{{ __('Privacy notice') }}</a>
+                    <a href="https://cegem360.eu/adatfeldolgozoi-tajekoztato" class="font-medium text-gray-700 underline underline-offset-2 hover:text-gray-900">{{ __('Data Processing Agreement') }}</a>
+                    <a href="https://cegem360.eu/szolgaltatasi-feltetelek" class="font-medium text-gray-700 underline underline-offset-2 hover:text-gray-900">{{ __('Terms of service') }}</a>
+                </div>
             </div>
         </div>
     </section>
