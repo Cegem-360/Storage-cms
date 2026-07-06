@@ -13,6 +13,11 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function (): void {
+    config(['services.integration_key' => 'test-integration-key']);
+    $this->withHeader('X-Api-Key', 'test-integration-key');
+});
+
 describe('GET /api/v1/products', function (): void {
     it('lists products', function (): void {
         $user = User::factory()->create();
@@ -49,6 +54,8 @@ describe('GET /api/v1/products', function (): void {
     });
 
     it('requires authentication', function (): void {
+        $this->withHeader('X-Api-Key', 'wrong-key');
+
         $response = $this->getJson('/api/v1/products');
 
         $response->assertUnauthorized();

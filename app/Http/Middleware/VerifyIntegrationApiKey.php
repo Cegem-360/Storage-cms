@@ -31,7 +31,7 @@ final class VerifyIntegrationApiKey
 
         abort_unless($user, 503, 'No user available to serve the integration request.');
 
-        Auth::login($user);
+        Auth::guard('web')->login($user);
 
         $team = $user->teams->first();
 

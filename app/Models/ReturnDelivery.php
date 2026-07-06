@@ -25,6 +25,7 @@ final class ReturnDelivery extends Model
 
     protected $fillable = [
         'team_id',
+        'customer_id',
         'return_number',
         'type',
         'order_id',

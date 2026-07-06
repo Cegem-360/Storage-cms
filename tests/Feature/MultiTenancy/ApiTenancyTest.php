@@ -10,6 +10,11 @@ use Laravel\Sanctum\Sanctum;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function (): void {
+    config(['services.integration_key' => 'test-integration-key']);
+    $this->withHeader('X-Api-Key', 'test-integration-key');
+});
+
 describe('API Tenant Isolation', function (): void {
     it('returns only the authenticated user team products via API', function (): void {
         $teamA = Team::factory()->create();

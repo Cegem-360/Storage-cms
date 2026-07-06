@@ -35,6 +35,7 @@ final class Order extends Model
         'delivery_date',
         'total_amount',
         'shipping_address',
+        'notes',
     ];
 
     // Relationships

@@ -29,6 +29,7 @@ final class User extends Authenticatable implements FilamentUser, HasTenants
     protected $fillable = [
         'name',
         'email',
+        'email_verified_at',
         'password',
         'is_super_admin',
         'is_active',

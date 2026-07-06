@@ -17,8 +17,7 @@ final class OrderLineResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->quantity,
             'unit_price' => $this->unit_price,
-            'total_price' => $this->total_price,
-            'notes' => $this->notes,
+            'total_price' => $this->total_with_tax,
             'product' => new ProductResource($this->whenLoaded('product')),
             'created_at' => $this->created_at,
         ];
