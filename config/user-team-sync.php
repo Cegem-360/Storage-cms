@@ -69,7 +69,7 @@ return [
         'api_key' => env('USER_TEAM_SYNC_API_KEY'),
         'route_prefix' => 'api',
         'middleware' => [],
-        'role_driver' => 'spatie',
+        'role_driver' => 'default',
         'default_role' => 'subscriber',
         'default_active' => false,
         'inactive_redirect_url' => null, // in-app 403+logout instead of cross-domain redirect

@@ -33,6 +33,7 @@ final class User extends Authenticatable implements FilamentUser, HasTenants
         'password',
         'is_super_admin',
         'is_active',
+        'role',
         'team_id',
     ];
 
